@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification", "src\Ardalis.Specification\Ardalis.Specification.csproj", "{82576593-5D6E-44CB-8DF9-FCDD91F7DB31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82576593-5D6E-44CB-8DF9-FCDD91F7DB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82576593-5D6E-44CB-8DF9-FCDD91F7DB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82576593-5D6E-44CB-8DF9-FCDD91F7DB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82576593-5D6E-44CB-8DF9-FCDD91F7DB31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}
+	EndGlobalSection
+EndGlobal
