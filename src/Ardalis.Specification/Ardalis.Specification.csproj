@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
     <PackageReleaseNotes>Updated icon</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIconUrl>https://user-images.githubusercontent.com/782127/33497760-facf6550-d69c-11e7-94e4-b3856da259a9.png</PackageIconUrl>
   </PropertyGroup>
