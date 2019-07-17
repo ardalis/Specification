@@ -13,6 +13,7 @@ variables:
   buildConfiguration: 'Release'
   buildPlatform: 'Any CPU'
   solution: '**/*.sln'
+  disable.coverage.autogenerate: 'true'
 
 steps:
 
