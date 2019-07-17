@@ -90,6 +90,7 @@ steps:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**\*.nupkg'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
+    flattenFolders: true
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
 # Publish
