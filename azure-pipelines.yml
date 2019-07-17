@@ -91,7 +91,7 @@ steps:
 # Publish
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
-  artifactName:: Package
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)\Package'
+    artifactName:: Package
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
