@@ -87,7 +87,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy *.nupkg Files'
   inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**\*.nupkg'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
