@@ -51,28 +51,57 @@ steps:
     configuration: '$(buildConfiguration)'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
 
-# Run tests and create coverage report
+# Test with Coverage
+
+# Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: dotnet test
   inputs:
     command: test
-    projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --no-build /p:AltCover=true /p:AltCoverForce=true /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=src\target\reports\coverage\coverage.opencover.xml --collect "Code Coverage"'
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+    projects: 'tests/**/*.csproj'
+    nobuild: true
 
 - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
   displayName: ReportGenerator
   inputs:
-    reports: 'src\target\reports\coverage\coverage.opencover.xml'
-    targetdir: 'src\target\reports\coverage'
+    reports: '$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml'
+    targetdir: '$(Build.SourcesDirectory)/CodeCoverage'
     reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
     assemblyfilters: '-xunit*'
 
+# Publish the code coverage result (summary and web site)
+# The summary allows to view the coverage percentage in the summary tab
+# The web site allows to view which lines are covered directly in Azure Pipeline
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage results'
+  displayName: 'Publish code coverage'
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(build.sourcesdirectory)\src\target\reports\coverage\Cobertura.xml'
-    reportDirectory: '$(build.sourcesdirectory)\src\target\reports\coverage'
+    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+
+# Run tests and create coverage report
+# - task: DotNetCoreCLI@2
+#   displayName: Test
+#   inputs:
+#     command: test
+#     projects: '**/*[Tt]ests/*.csproj'
+#     arguments: '--configuration $(BuildConfiguration) --no-build /p:AltCover=true /p:AltCoverForce=true /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=src\target\reports\coverage\coverage.opencover.xml --collect "Code Coverage"'
+
+# - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+#   displayName: ReportGenerator
+#   inputs:
+#     reports: 'src\target\reports\coverage\coverage.opencover.xml'
+#     targetdir: 'src\target\reports\coverage'
+#     reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+#     assemblyfilters: '-xunit*'
+
+# - task: PublishCodeCoverageResults@1
+#   displayName: 'Publish code coverage results'
+#   inputs:
+#     codeCoverageTool: Cobertura
+#     summaryFileLocation: '$(build.sourcesdirectory)\src\target\reports\coverage\Cobertura.xml'
+#     reportDirectory: '$(build.sourcesdirectory)\src\target\reports\coverage'
 
 - task: CopyFiles@2
   displayName: 'Copy Files'
