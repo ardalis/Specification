@@ -17,11 +17,6 @@ variables:
 
 steps:
 
-# - task: DotNetCoreInstaller@0
-#   displayName: 'Use .NET Core SDK 2.2.300'
-#   inputs:
-#     version: 2.2.300
-
 - task: DotNetCoreCLI@2
   displayName: 'dotnet info'
   inputs:
@@ -96,7 +91,7 @@ steps:
 # Publish
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
-  artifact: Package
+  artifactName:: Package
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)\Package'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
