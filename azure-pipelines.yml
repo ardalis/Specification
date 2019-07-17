@@ -51,6 +51,10 @@ steps:
     configuration: '$(buildConfiguration)'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
 
+- script: dir
+  workingDirectory: $(Build.ArtifactStagingDirectory)
+  displayName: List output folder contents
+
 # Test with Coverage
 
 # Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
@@ -80,31 +84,8 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
     reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
 
-# Run tests and create coverage report
-# - task: DotNetCoreCLI@2
-#   displayName: Test
-#   inputs:
-#     command: test
-#     projects: '**/*[Tt]ests/*.csproj'
-#     arguments: '--configuration $(BuildConfiguration) --no-build /p:AltCover=true /p:AltCoverForce=true /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=src\target\reports\coverage\coverage.opencover.xml --collect "Code Coverage"'
-
-# - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-#   displayName: ReportGenerator
-#   inputs:
-#     reports: 'src\target\reports\coverage\coverage.opencover.xml'
-#     targetdir: 'src\target\reports\coverage'
-#     reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-#     assemblyfilters: '-xunit*'
-
-# - task: PublishCodeCoverageResults@1
-#   displayName: 'Publish code coverage results'
-#   inputs:
-#     codeCoverageTool: Cobertura
-#     summaryFileLocation: '$(build.sourcesdirectory)\src\target\reports\coverage\Cobertura.xml'
-#     reportDirectory: '$(build.sourcesdirectory)\src\target\reports\coverage'
-
 - task: CopyFiles@2
-  displayName: 'Copy Files'
+  displayName: 'Copy *.nupkg Files'
   inputs:
     SourceFolder: '$(Build.ArtifactStagingDirectory)'
     Contents: '**\*.nupkg'
