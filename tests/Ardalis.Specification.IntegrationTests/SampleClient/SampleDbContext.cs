@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ardalis.Specification.IntegrationTests.SampleClient
 {
     public class SampleDbContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         public SampleDbContext(DbContextOptions options) : base(options)
         {
@@ -17,8 +15,16 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
         {
             base.OnModelCreating(modelBuilder);
 
+            var author = new Author { Name = "Steve Smith", Email = "steve@ardalis.com", Id=123 };
+            modelBuilder.Entity<Author>().HasData(author);
+
             var blogBuilder = new BlogBuilder();
-            modelBuilder.Entity<Blog>().HasData(blogBuilder.WithTestValues().Build());
+            var testBlog = blogBuilder.WithTestValues().Build();
+            modelBuilder.Entity<Blog>().HasData(testBlog);
+
+            var post = new Post { AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" };
+            modelBuilder.Entity<Post>().HasData(post);
+
         }
     }
 }

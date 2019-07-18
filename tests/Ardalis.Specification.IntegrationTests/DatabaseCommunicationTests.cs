@@ -1,4 +1,5 @@
 using Ardalis.Specification.IntegrationTests.SampleClient;
+using Ardalis.Specification.IntegrationTests.SampleSpecs;
 using Dapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,17 @@ namespace Ardalis.Specification.IntegrationTests
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
+            result.Posts.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public async Task GetBlogUsingEFRepositoryAndSpecShouldIncludePosts()
+        {
+            var result = (await _blogRepository.ListAsync(new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+
+            result.Should().NotBeNull();
+            result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
+            result.Posts.Count.Should().BeGreaterThan(0);
         }
     }
 }
