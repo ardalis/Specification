@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using System.Collections.Generic;
 
 namespace Ardalis.Specification.IntegrationTests.SampleClient
 {
@@ -10,8 +11,9 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
               new ConsoleLoggerProvider((_, __) => true, true)
                 });
 
-        public DbSet<Blog> Blogs { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         public SampleDbContext(DbContextOptions options) : base(options)
         {
@@ -34,8 +36,13 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
             var testBlog = blogBuilder.WithTestValues().Build();
             modelBuilder.Entity<Blog>().HasData(testBlog);
 
-            var post = new Post { Id=234, AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" };
-            modelBuilder.Entity<Post>().HasData(post);
+            var postList = new List<Post>();
+            postList.Add(new Post { Id=234, AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" });
+            for (int i = 0; i < 100; i++)
+            {
+                postList.Add(new Post { AuthorId = author.Id, BlogId = testBlog.Id, Title = $"Extra post {i}", Id = 300 + i });
+            }
+            modelBuilder.Entity<Post>().HasData(postList);
 
         }
     }

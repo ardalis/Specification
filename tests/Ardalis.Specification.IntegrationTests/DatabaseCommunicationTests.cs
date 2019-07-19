@@ -24,8 +24,8 @@ namespace Ardalis.Specification.IntegrationTests
             optionsBuilder.UseSqlServer(ConnectionString);
             _dbContext = new SampleDbContext(optionsBuilder.Options);
 
-            // Run this if you've made schema changes to force the container to rebuild the db
-            //_dbContext.Database.EnsureDeleted();
+            // Run this if you've made seed data or schema changes to force the container to rebuild the db
+            // _dbContext.Database.EnsureDeleted();
 
             // Note: If the database exists, this will do nothing, so it only creates it once.
             // This is fine since these tests all perform read-only operations
@@ -71,7 +71,20 @@ namespace Ardalis.Specification.IntegrationTests
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
-            result.Posts.Count.Should().BeGreaterThan(0);
+            result.Posts.Count.Should().BeGreaterThan(100);
+        }
+
+        [Fact]
+        public async Task GetSecondPageOfPostsUsingPostsByBlogPaginatedSpec()
+        {
+            int pageSize = 10;
+            int pageIndex = 1; // page 2
+            var postRepo = new EfRepository<Post>(_dbContext);
+            var result = (await postRepo.ListAsync(new PostsByBlogPaginatedSpec(pageIndex * pageSize, pageSize, BlogBuilder.VALID_BLOG_ID))).ToList();
+
+            result.Count.Should().Be(pageSize);
+            result.First().Id.Should().Be(309);
+            result.Last().Id.Should().Be(318);
         }
     }
 }
