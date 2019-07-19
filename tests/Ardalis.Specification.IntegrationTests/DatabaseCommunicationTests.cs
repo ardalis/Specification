@@ -17,6 +17,7 @@ namespace Ardalis.Specification.IntegrationTests
         const string ConnectionString = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
         public SampleDbContext _dbContext;
         public EfRepository<Blog> _blogRepository;
+        public EfRepository<Post> _postRepository;
 
         public DatabaseCommunicationTests()
         {
@@ -32,6 +33,7 @@ namespace Ardalis.Specification.IntegrationTests
             _dbContext.Database.EnsureCreated();
 
             _blogRepository = new EfRepository<Blog>(_dbContext);
+            _postRepository = new EfRepository<Post>(_dbContext);
         }
 
         [Fact]
@@ -75,16 +77,44 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
+        public async Task GetBlogUsingEFRepositoryAndSpecWithStringIncludeShouldIncludePosts()
+        {
+            var result = (await _blogRepository.ListAsync(new BlogWithPostsUsingStringSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+
+            result.Should().NotBeNull();
+            result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
+            result.Posts.Count.Should().BeGreaterThan(100);
+        }
+
+        [Fact]
         public async Task GetSecondPageOfPostsUsingPostsByBlogPaginatedSpec()
         {
             int pageSize = 10;
             int pageIndex = 1; // page 2
-            var postRepo = new EfRepository<Post>(_dbContext);
-            var result = (await postRepo.ListAsync(new PostsByBlogPaginatedSpec(pageIndex * pageSize, pageSize, BlogBuilder.VALID_BLOG_ID))).ToList();
+            var result = (await _postRepository.ListAsync(new PostsByBlogPaginatedSpec(pageIndex * pageSize, pageSize, BlogBuilder.VALID_BLOG_ID))).ToList();
 
             result.Count.Should().Be(pageSize);
             result.First().Id.Should().Be(309);
             result.Last().Id.Should().Be(318);
         }
+
+        [Fact]
+        public async Task GetPostsWithOrderedSpec()
+        {
+            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID))).ToList();
+
+            result.First().Id.Should().Be(234);
+            result.Last().Id.Should().Be(399);
+        }
+
+        [Fact]
+        public async Task GetPostsWithOrderedSpecDescending()
+        {
+            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID, false))).ToList();
+
+            result.First().Id.Should().Be(399);
+            result.Last().Id.Should().Be(234);
+        }
+
     }
 }
