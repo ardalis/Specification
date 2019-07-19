@@ -116,5 +116,23 @@ namespace Ardalis.Specification.IntegrationTests
             result.Last().Id.Should().Be(234);
         }
 
+        // TODO: This could move to the Unit Tests project if specs were in separate project
+        [Fact]
+        public async Task EnableCacheShouldSetCacheKeyProperly()
+        {
+            var spec = new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID);
+
+            spec.CacheKey.Should().Be($"BlogWithPostsSpec-{BlogBuilder.VALID_BLOG_ID}");
+        }
+
+        [Fact]
+        public async Task GroupByShouldWorkProperlyl()
+        {
+            var spec = new PostsGroupedByIdSpec();
+            var result = (await _postRepository.ListAsync(spec)).ToList();
+
+            result.First().Id.Should().Be(301);
+            result.Skip(1).Take(1).First().Id.Should().Be(303);
+        }
     }
 }
