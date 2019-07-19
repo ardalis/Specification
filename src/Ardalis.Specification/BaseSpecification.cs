@@ -13,8 +13,8 @@ namespace Ardalis.Specification
             Criteria = criteria;
         }
         public Expression<Func<T, bool>> Criteria { get; }
-        public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
-        public List<string> IncludeStrings { get; } = new List<string>();
+        public IEnumerable<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+        public IEnumerable<string> IncludeStrings { get; } = new List<string>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
         public Expression<Func<T, object>> GroupBy { get; private set; }
@@ -29,11 +29,11 @@ namespace Ardalis.Specification
 
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
-            Includes.Add(includeExpression);
+            ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
         }
         protected virtual void AddInclude(string includeString)
         {
-            IncludeStrings.Add(includeString);
+            ((List<string>)IncludeStrings).Add(includeString);
         }
         protected virtual void ApplyPaging(int skip, int take)
         {

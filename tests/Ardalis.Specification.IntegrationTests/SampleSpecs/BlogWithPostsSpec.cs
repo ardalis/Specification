@@ -6,7 +6,7 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     {
         public BlogWithPostsSpec(int id) : base(b => b.Id == id)
         {
-            base.Includes.Add(b => b.Posts);
+            AddInclude(b => b.Posts);
             EnableCache(nameof(BlogWithPostsSpec), id);
         }
     }

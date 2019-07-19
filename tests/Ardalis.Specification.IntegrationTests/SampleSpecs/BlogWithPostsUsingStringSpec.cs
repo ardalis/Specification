@@ -6,7 +6,7 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     {
         public BlogWithPostsUsingStringSpec(int id) : base(b => b.Id == id)
         {
-            base.IncludeStrings.Add("Posts");
+            AddInclude("Posts");
         }
     }
 }
