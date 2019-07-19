@@ -24,6 +24,9 @@ namespace Ardalis.Specification.IntegrationTests
             optionsBuilder.UseSqlServer(ConnectionString);
             _dbContext = new SampleDbContext(optionsBuilder.Options);
 
+            // Run this if you've made schema changes to force the container to rebuild the db
+            //_dbContext.Database.EnsureDeleted();
+
             // Note: If the database exists, this will do nothing, so it only creates it once.
             // This is fine since these tests all perform read-only operations
             _dbContext.Database.EnsureCreated();
