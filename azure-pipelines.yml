@@ -53,21 +53,27 @@ steps:
 # Test with Coverage
 
 # Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: test
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
-    projects: 'tests/**/*.csproj'
-    nobuild: true
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet test
+#   inputs:
+#     command: test
+#     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+#     projects: 'tests/**/*.csproj'
+#     nobuild: true
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-  displayName: ReportGenerator
-  inputs:
-    reports: '$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml'
-    targetdir: '$(Build.SourcesDirectory)/CodeCoverage'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-    assemblyfilters: '-xunit*'
+- script: RunTests.bat
+  displayName: Run test script
+
+- script: GetCoverage.bat
+  displayName: Generate code coverage reports
+
+# - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+#   displayName: ReportGenerator
+#   inputs:
+#     reports: '$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml'
+#     targetdir: '$(Build.SourcesDirectory)/CodeCoverage'
+#     reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+#     assemblyfilters: '-xunit*'
 
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
