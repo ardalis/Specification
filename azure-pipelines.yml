@@ -64,10 +64,14 @@ steps:
 #     projects: 'tests/**/*.csproj'
 #     nobuild: true
 
-- script: ./RunTests.sh
+- script: 
+    chmod +x ./RunTests.sh
+    ./RunTests.sh
   displayName: Run test script
 
-- script: ./GetCoverage.sh
+- script: 
+    chmod +x ./GetCoverage.sh
+    ./GetCoverage.sh
   displayName: Generate code coverage reports
 
 # - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
