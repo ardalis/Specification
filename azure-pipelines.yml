@@ -40,12 +40,13 @@ steps:
     restoreSolution: '$(solution)'
 
 # Build    
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
+    command: 'build'
+    #solution: '$(solution)'
+    #platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    arguments: '--output $(Build.ArtifactStagingDirectory)'
+    arguments: '$(solution) --output $(Build.ArtifactStagingDirectory)'
 
 - script: dir
   workingDirectory: $(Build.ArtifactStagingDirectory)
@@ -62,7 +63,7 @@ steps:
 #     projects: 'tests/**/*.csproj'
 #     nobuild: true
 
-- script: RunTests.bat
+- script: RunTests.sh
   displayName: Run test script
 
 - script: GetCoverage.bat
