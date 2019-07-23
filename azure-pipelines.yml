@@ -41,12 +41,13 @@ steps:
 
 # Build    
 - task: DotNetCoreCLI@2
+  displayName: 'Build solution'
   inputs:
     command: 'build'
     #solution: '$(solution)'
     #platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    arguments: '$(solution) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
 
 - script: dir
   workingDirectory: $(Build.ArtifactStagingDirectory)
