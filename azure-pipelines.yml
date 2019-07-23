@@ -69,6 +69,9 @@ steps:
     ./RunTests.sh
   displayName: Run test script
 
+- script: docker-compose up --abort-on-container-exit
+  displayName: Run Docker Compose Up  
+
 - script: 
     chmod +x ./GetCoverage.sh
     ./GetCoverage.sh
