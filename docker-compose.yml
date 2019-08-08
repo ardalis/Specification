@@ -9,6 +9,8 @@ services:
       WAIT_HOSTS: database:1433
     volumes:
         - ./TestResults:/var/temp
+    depends_on:
+      - database
 
   database:
     image: mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
