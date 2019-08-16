@@ -55,30 +55,24 @@ steps:
 
 # Test with Coverage
 
-# Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
-# - task: DotNetCoreCLI@2
-#   displayName: dotnet test
-#   inputs:
-#     command: test
-#     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
-#     projects: 'tests/**/*.csproj'
-#     nobuild: true
+- #script: 
+  #  chmod +x ./RunTests.sh
+  #displayName: Set execution permission on test script
 
-- script: 
-    chmod +x ./RunTests.sh
-    ./RunTests.sh
-  displayName: Run test script
+- #script: 
+  #  ./RunTests.sh
+  #displayName: Run test script
 
 - script: docker-compose up --abort-on-container-exit
   displayName: Run Docker Compose Up  
 
-- script: 
-    chmod +x ./GetCoverage.sh
-  displayName: Set execution permission
+#- script: 
+#    chmod +x ./GetCoverage.sh
+#  displayName: Set execution permission
 
-- script: 
-    ./GetCoverage.sh
-  displayName: Generate code coverage reports
+#- script: 
+#    ./GetCoverage.sh
+#  displayName: Generate code coverage reports
 
 # - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
 #   displayName: ReportGenerator
@@ -94,18 +88,22 @@ steps:
 
 - script: dir
   workingDirectory: $(Build.SourcesDirectory)
-  displayName: List CodeCoverage folder contents
+  displayName: List root folder contents
   
 - script: dir
-  workingDirectory: $(Build.SourcesDirectory)/CodeCoverage
-  displayName: List CodeCoverage folder contents
+  workingDirectory: $(Build.SourcesDirectory)/TestResults
+  displayName: List root/TestResults folder contents
+  
+- script: dir
+  workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
+  displayName: List root/TestResults/coverage folder contents
   
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage'
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
-    reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+    summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/coverage/Cobertura.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/TestResults/coverage'
 
 - task: CopyFiles@2
   displayName: 'Copy *.nupkg Files'
