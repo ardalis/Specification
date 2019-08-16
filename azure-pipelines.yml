@@ -59,7 +59,7 @@ steps:
   displayName: Run Docker Compose Up  
 
 # Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
-- script: mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
+- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
   displayName: Create summary folder
 
 # Publish the code coverage result (summary and web site)
