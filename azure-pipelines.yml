@@ -88,6 +88,11 @@ steps:
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
 # The web site allows to view which lines are covered directly in Azure Pipeline
+
+- script: dir
+  workingDirectory: $(Build.SourcesDirectory)/CodeCoverage
+  displayName: List CodeCoverage folder contents
+  
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage'
   inputs:
