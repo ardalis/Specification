@@ -55,32 +55,8 @@ steps:
 
 # Test with Coverage
 
-- #script: 
-  #  chmod +x ./RunTests.sh
-  #displayName: Set execution permission on test script
-
-- #script: 
-  #  ./RunTests.sh
-  #displayName: Run test script
-
 - script: docker-compose up --abort-on-container-exit
   displayName: Run Docker Compose Up  
-
-#- script: 
-#    chmod +x ./GetCoverage.sh
-#  displayName: Set execution permission
-
-#- script: 
-#    ./GetCoverage.sh
-#  displayName: Generate code coverage reports
-
-# - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-#   displayName: ReportGenerator
-#   inputs:
-#     reports: '$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml'
-#     targetdir: '$(Build.SourcesDirectory)/CodeCoverage'
-#     reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-#     assemblyfilters: '-xunit*'
 
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
