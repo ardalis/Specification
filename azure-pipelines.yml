@@ -73,8 +73,7 @@ steps:
   displayName: Run Docker Compose Up  
 
 - script: 
-    chmod +x ./GetCoverage.sh
-    ./GetCoverage.sh
+    chmod +x ./GetCoverage.sh && ./GetCoverage.sh
   displayName: Generate code coverage reports
 
 # - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
