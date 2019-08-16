@@ -78,6 +78,9 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
   displayName: List root/TestResults/coverage folder contents
   
+- script: chmod 777 . -R
+  workingDirectory: $(Build.SourcesDirectory)
+
 - task: PublishTestResults@1
   displayName: 'Publish test results'
   inputs:
