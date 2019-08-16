@@ -90,6 +90,10 @@ steps:
 # The web site allows to view which lines are covered directly in Azure Pipeline
 
 - script: dir
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: List CodeCoverage folder contents
+  
+- script: dir
   workingDirectory: $(Build.SourcesDirectory)/CodeCoverage
   displayName: List CodeCoverage folder contents
   
