@@ -58,6 +58,10 @@ steps:
 - script: docker-compose up --abort-on-container-exit
   displayName: Run Docker Compose Up  
 
+# Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
+- script: mkdir $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
+  displayName: Create summary folder
+
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
 # The web site allows to view which lines are covered directly in Azure Pipeline
