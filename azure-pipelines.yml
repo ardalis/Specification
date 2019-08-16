@@ -74,6 +74,12 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
   displayName: List root/TestResults/coverage folder contents
   
+- task: PublishTestResults@1
+  displayName: 'Publish test results'
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: '**/TEST-*.trx'
+
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage'
   inputs:
