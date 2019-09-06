@@ -26,7 +26,6 @@ namespace Ardalis.Specification
         public string CacheKey { get; protected set; }
         public bool CacheEnabled { get; private set; }
 
-
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
@@ -70,6 +69,5 @@ namespace Ardalis.Specification
 
             CacheEnabled = true;
         }
-
     }
 }
