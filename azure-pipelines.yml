@@ -59,24 +59,24 @@ steps:
   displayName: Run Docker Compose Up  
 
 # Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
-- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
-  displayName: Create summary folder
+#- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
+#  displayName: Create summary folder
 
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
 # The web site allows to view which lines are covered directly in Azure Pipeline
 
-- script: dir
-  workingDirectory: $(Build.SourcesDirectory)
-  displayName: List root folder contents
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)
+#  displayName: List root folder contents
   
-- script: dir
-  workingDirectory: $(Build.SourcesDirectory)/TestResults
-  displayName: List root/TestResults folder contents
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)/TestResults
+#  displayName: List root/TestResults folder contents
   
-- script: dir
-  workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
-  displayName: List root/TestResults/coverage folder contents
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
+#  displayName: List root/TestResults/coverage folder contents
   
 #- script: chmod 777 . -R
 #  workingDirectory: $(Build.SourcesDirectory)
@@ -87,12 +87,12 @@ steps:
     testResultsFormat: VSTest
     testResultsFiles: '**/TEST-*.trx'
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/coverage/Cobertura.xml'
-    reportDirectory: '$(Build.SourcesDirectory)/TestResults/coverage'
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'Publish code coverage'
+#  inputs:
+#    codeCoverageTool: Cobertura
+#    summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/coverage/Cobertura.xml'
+#    reportDirectory: '$(Build.SourcesDirectory)/TestResults/coverage'
 
 - task: CopyFiles@2
   displayName: 'Copy *.nupkg Files'
