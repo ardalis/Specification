@@ -7,7 +7,8 @@ pr:
 - master
 
 pool:
-  vmImage: 'windows-2019'
+#  vmImage: 'windows-2019'
+  vmImage: 'ubuntu-16.04'
 
 variables:
   buildConfiguration: 'Release'
@@ -39,10 +40,12 @@ steps:
     restoreSolution: '$(solution)'
 
 # Build    
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: 'Build solution'
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
+    command: 'build'
+    #solution: '$(solution)'
+    #platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
 
@@ -52,32 +55,44 @@ steps:
 
 # Test with Coverage
 
-# Run all tests with "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura" to generate the code coverage file
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: test
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
-    projects: 'tests/**/*.csproj'
-    nobuild: true
+- script: docker-compose up --abort-on-container-exit
+  displayName: Run Docker Compose Up  
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-  displayName: ReportGenerator
-  inputs:
-    reports: '$(Build.SourcesDirectory)/tests/**/coverage.cobertura.xml'
-    targetdir: '$(Build.SourcesDirectory)/CodeCoverage'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-    assemblyfilters: '-xunit*'
+# Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
+#- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
+#  displayName: Create summary folder
 
 # Publish the code coverage result (summary and web site)
 # The summary allows to view the coverage percentage in the summary tab
 # The web site allows to view which lines are covered directly in Azure Pipeline
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage'
+
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)
+#  displayName: List root folder contents
+  
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)/TestResults
+#  displayName: List root/TestResults folder contents
+  
+#- script: dir
+#  workingDirectory: $(Build.SourcesDirectory)/TestResults/coverage
+#  displayName: List root/TestResults/coverage folder contents
+  
+#- script: chmod 777 . -R
+#  workingDirectory: $(Build.SourcesDirectory)
+
+- task: PublishTestResults@1
+  displayName: 'Publish test results'
   inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
-    reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+    testResultsFormat: VSTest
+    testResultsFiles: '**/TEST-*.trx'
+
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'Publish code coverage'
+#  inputs:
+#    codeCoverageTool: Cobertura
+#    summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/coverage/Cobertura.xml'
+#    reportDirectory: '$(Build.SourcesDirectory)/TestResults/coverage'
 
 - task: CopyFiles@2
   displayName: 'Copy *.nupkg Files'

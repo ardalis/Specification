@@ -11,6 +11,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification", "src\Ardalis.Specification\Ardalis.Specification.csproj", "{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.IntegrationTests", "tests\Ardalis.Specification.IntegrationTests\Ardalis.Specification.IntegrationTests.csproj", "{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{A74A4C02-5F33-4667-A627-78A5B295A61F}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		RunTests.bat = RunTests.bat
+		RunTests.sh = RunTests.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzurePipeline", "AzurePipeline", "{900638AF-E2F6-4FC9-9A97-E305C23F74FB}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		GetCoverage.sh = GetCoverage.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +42,10 @@ Global
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +53,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981} = {C35FE7A2-2F7B-4094-AA9F-255B75ED919E}
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8} = {61D9F5ED-0A02-4EEF-A573-31267BB67F0B}
+		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7} = {C35FE7A2-2F7B-4094-AA9F-255B75ED919E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}

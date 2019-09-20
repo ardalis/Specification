@@ -10,8 +10,8 @@ namespace Ardalis.Specification
         string CacheKey { get; }
 
         Expression<Func<T, bool>> Criteria { get; }
-        List<Expression<Func<T, object>>> Includes { get; }
-        List<string> IncludeStrings { get; }
+        IEnumerable<Expression<Func<T, object>>> Includes { get; }
+        IEnumerable<string> IncludeStrings { get; }
 
         Expression<Func<T, object>> OrderBy { get; }
         Expression<Func<T, object>> OrderByDescending { get; }
