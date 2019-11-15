@@ -26,24 +26,30 @@ namespace Ardalis.Specification
         public string CacheKey { get; protected set; }
         public bool CacheEnabled { get; private set; }
 
+        public Func<T, object> Selector { get; set; }
+
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
         }
+
         protected virtual void AddInclude(string includeString)
         {
             ((List<string>)IncludeStrings).Add(includeString);
         }
+
         protected virtual void ApplyPaging(int skip, int take)
         {
             Skip = skip;
             Take = take;
             IsPagingEnabled = true;
         }
+
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
+
         protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;

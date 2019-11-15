@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace Ardalis.Specification.IntegrationTests.SampleClient
 {
@@ -32,6 +33,15 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<object>> ListWithProjectionAsync(ISpecification<T> spec)
+        {
+            if (spec is null) throw new ArgumentNullException("spec is required");
+            var subResult = ApplySpecification(spec);
+
+            if (spec.Selector is null) throw new Exception("Specification must have Selector defined.");
+            return subResult.Select(spec.Selector).ToList();
         }
 
         public async Task<int> CountAsync(ISpecification<T> spec)

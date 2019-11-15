@@ -19,6 +19,9 @@ namespace Ardalis.Specification
             query = specification.IncludeStrings.Aggregate(query,
                                     (current, include) => current.Include(include));
 
+            // Apply selector
+            // query = query.Select(specification.Selector);
+
             return query;
         }
     }
