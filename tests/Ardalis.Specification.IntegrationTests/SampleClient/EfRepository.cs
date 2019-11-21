@@ -35,13 +35,12 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
             return await ApplySpecification(spec).ToListAsync();
         }
 
-        public async Task<IReadOnlyList<object>> ListWithProjectionAsync(ISpecification<T> spec)
+        public async Task<IReadOnlyList<TResult>> ListWithProjectionAsync<TResult>(ISpecification<T, TResult> spec)
         {
             if (spec is null) throw new ArgumentNullException("spec is required");
-            var subResult = ApplySpecification(spec);
-
             if (spec.Selector is null) throw new Exception("Specification must have Selector defined.");
-            return subResult.Select(spec.Selector).ToList();
+
+            return await ApplySpecification(spec).ToListAsync();
         }
 
         public async Task<int> CountAsync(ISpecification<T> spec)
@@ -72,6 +71,11 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return EfSpecificationEvaluator<T, int>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+        }
+
+        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
+        {
+            return EfSpecificationEvaluator<T, int, TResult>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
         }
     }
 }
