@@ -73,7 +73,7 @@ namespace Ardalis.Specification
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
 
             // Just to be able to throw exception if the list is empty. "Guard.Against.EmptyList" might be nice extension for GuardClauses.
-            Expression<Func<T, bool>> criteria = Criterias.Count() < 1 ? null : Criterias.FirstOrDefault();
+            var criteria = Criterias.FirstOrDefault();
             Guard.Against.Null(criteria, nameof(criteria));
 
             CacheKey = $"{specificationName}-{string.Join("-", args)}";
