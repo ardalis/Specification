@@ -5,7 +5,7 @@ namespace Ardalis.Specification
 {
     // Keeping both classes here for clarity. Will fix it afterward
 
-    public class EfSpecificationEvaluator<T, TId, TResult> : EfSpecificationEvaluator<T, TId> where T : class, IEntity<TId>
+    public class EfSpecificationEvaluator<T, TId, TResult> where T : class, IEntity<TId>
     {
         public static IQueryable<TResult> GetQuery(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)
         {
