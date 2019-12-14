@@ -26,7 +26,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
         {
             var includeQuery = _includeQueryBuilder.WithObjectAsPreviousProperty();
 
-            // This include does not make much sense, but it should at least do not modify paths.
+            // This include does not make much sense, but it should at least not modify paths.
             var newIncludeQuery = includeQuery.Include(b => b.GetNumberOfSales());
 
             // The resulting paths should not include number of sales.

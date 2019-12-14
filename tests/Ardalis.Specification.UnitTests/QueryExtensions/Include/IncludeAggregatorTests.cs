@@ -22,10 +22,11 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
         {
             var includeAggregator = new IncludeAggregator<Person>();
 
-            // This include does not make much sense, but it should at least do not modify the paths.
+            // This include does not make much sense, but it should at least not modify the paths.
             var includeQuery = includeAggregator.Include(p => p.FavouriteBook.GetNumberOfSales());
 
-            Assert.Contains(includeQuery.Paths, path => path == nameof(Person.FavouriteBook));
+            // The resulting paths should not include number of sales.
+            Assert.DoesNotContain(includeQuery.Paths, path => path == nameof(Book.GetNumberOfSales));
         }
 
         [Fact]

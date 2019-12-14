@@ -24,7 +24,7 @@ namespace Ardalis.Specification.QueryExtensions.Include
         {
             query.Visitor.Visit(selector);
 
-            // If the visitor did not generated a path, return a new IncludeQuery with an unmodified PathMap.
+            // If the visitor did not generate a path, return a new IncludeQuery with an unmodified PathMap.
             if (string.IsNullOrEmpty(query.Visitor.Path))
             {
                 return new IncludeQuery<TEntity, TNewProperty>(query.PathMap);
@@ -46,7 +46,7 @@ namespace Ardalis.Specification.QueryExtensions.Include
         {
             query.Visitor.Visit(selector);
 
-            // If the visitor did not generated a path, return a new IncludeQuery with an unmodified PathMap.
+            // If the visitor did not generate a path, return a new IncludeQuery with an unmodified PathMap.
             if (string.IsNullOrEmpty(query.Visitor.Path))
             {
                 return new IncludeQuery<TEntity, TNewProperty>(query.PathMap);
