@@ -33,4 +33,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="QueryExtensions\Include\" />
+  </ItemGroup>
+
 </Project>
