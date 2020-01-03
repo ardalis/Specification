@@ -6,6 +6,15 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+    // Keeping both classes here for clarity. Will fix it afterward
+
+    public abstract class BaseSpecification<T, TResult> : BaseSpecification<T>, ISpecification<T, TResult>
+    {
+        protected BaseSpecification(Expression<Func<T, bool>> criteria) : base(criteria) { }
+
+        public Expression<Func<T, TResult>> Selector { get; set; }
+    }
+
     public abstract class BaseSpecification<T> : ISpecification<T>
     {
         protected BaseSpecification(Expression<Func<T, bool>> criteria)
@@ -30,20 +39,24 @@ namespace Ardalis.Specification
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
         }
+
         protected virtual void AddInclude(string includeString)
         {
             ((List<string>)IncludeStrings).Add(includeString);
         }
+
         protected virtual void ApplyPaging(int skip, int take)
         {
             Skip = skip;
             Take = take;
             IsPagingEnabled = true;
         }
+
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
+
         protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
