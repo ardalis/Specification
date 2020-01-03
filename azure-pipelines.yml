@@ -55,8 +55,8 @@ steps:
 
 # Test with Coverage
 
-- script: docker-compose up --abort-on-container-exit
-  displayName: Run Docker Compose Up  
+- # script: docker-compose up --abort-on-container-exit
+  # displayName: Run Docker Compose Up  
 
 # Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
 #- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
