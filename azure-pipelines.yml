@@ -103,6 +103,15 @@ steps:
     flattenFolders: true
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
+- task: CopyFiles@2
+  displayName: 'Copy *.nupkg Files (from artifact directory)'
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: '**\*.nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
+    flattenFolders: true
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
 # Publish
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
