@@ -1,11 +1,12 @@
 ﻿using Ardalis.Specification.IntegrationTests.SampleClient;
 using System;
+using System.Linq.Expressions;
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class PostSelectSpecification : BaseSpecification<Post>
+    public class PostSelectSpecification : BaseSpecification<Post, object>
     {
-        public PostSelectSpecification(Func<Post,object> selector) : base(b => true)
+        public PostSelectSpecification(Expression<Func<Post, object>> selector) : base(b => true)
         {
             Selector = selector;
         }

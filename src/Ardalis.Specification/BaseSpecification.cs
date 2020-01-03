@@ -6,6 +6,15 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+    // Keeping both classes here for clarity. Will fix it afterward
+
+    public abstract class BaseSpecification<T, TResult> : BaseSpecification<T>, ISpecification<T, TResult>
+    {
+        protected BaseSpecification(Expression<Func<T, bool>> criteria) : base(criteria) { }
+
+        public Expression<Func<T, TResult>> Selector { get; set; }
+    }
+
     public abstract class BaseSpecification<T> : ISpecification<T>
     {
         protected BaseSpecification(Expression<Func<T, bool>> criteria)
@@ -25,8 +34,6 @@ namespace Ardalis.Specification
 
         public string CacheKey { get; protected set; }
         public bool CacheEnabled { get; private set; }
-
-        public Func<T, object> Selector { get; set; }
 
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
