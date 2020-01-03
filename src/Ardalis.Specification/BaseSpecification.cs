@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Specification.QueryExtensions.Include;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Ardalis.Specification
@@ -46,6 +46,12 @@ namespace Ardalis.Specification
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
+        }
+        
+        protected virtual void AddIncludes<TProperty>(Func<IncludeAggregator<T>, IIncludeQuery<T, TProperty>> includeGenerator)
+        {
+            var includeQuery = includeGenerator(new IncludeAggregator<T>());
+            ((List<string>)IncludeStrings).AddRange(includeQuery.Paths);
         }
 
         protected virtual void AddInclude(string includeString)

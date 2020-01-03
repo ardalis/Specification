@@ -87,6 +87,17 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
+        public async Task GetBlogWithPostsAndAuthorsWithChainableIncludeSpecShouldIncludePostsAndAuthors()
+        {
+            var result = (await _blogRepository.ListAsync(new BlogWithPostsAndAuthorSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+
+            result.Should().NotBeNull();
+            result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
+            result.Posts.Count.Should().BeGreaterThan(100);
+            result.Posts.Select(p => p.Author).ToList().Count.Should().BeGreaterThan(0);
+        }
+
+        [Fact]
         public async Task GetSecondPageOfPostsUsingPostsByBlogPaginatedSpec()
         {
             int pageSize = 10;
