@@ -6,13 +6,26 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+    // Keeping both classes here for clarity. Will fix it afterward
+
+    public abstract class BaseSpecification<T, TResult> : BaseSpecification<T>, ISpecification<T, TResult>
+    {
+        protected BaseSpecification(Expression<Func<T, bool>> criteria) : base(criteria) { }
+
+        public Expression<Func<T, TResult>> Selector { get; set; }
+    }
+
     public abstract class BaseSpecification<T> : ISpecification<T>
     {
+        protected BaseSpecification()
+        {
+        }
         protected BaseSpecification(Expression<Func<T, bool>> criteria)
         {
-            Criteria = criteria;
+            AddCriteria(criteria);
         }
-        public Expression<Func<T, bool>> Criteria { get; }
+
+        public IEnumerable<Expression<Func<T, bool>>> Criterias { get; } = new List<Expression<Func<T, bool>>>();
         public IEnumerable<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
@@ -26,29 +39,38 @@ namespace Ardalis.Specification
         public string CacheKey { get; protected set; }
         public bool CacheEnabled { get; private set; }
 
+        protected virtual void AddCriteria(Expression<Func<T, bool>> criteria)
+        {
+            ((List<Expression<Func<T, bool>>>)Criterias).Add(criteria);
+        }
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
         }
+        
         protected virtual void AddIncludes<TProperty>(Func<IncludeAggregator<T>, IIncludeQuery<T, TProperty>> includeGenerator)
         {
             var includeQuery = includeGenerator(new IncludeAggregator<T>());
             ((List<string>)IncludeStrings).AddRange(includeQuery.Paths);
         }
+
         protected virtual void AddInclude(string includeString)
         {
             ((List<string>)IncludeStrings).Add(includeString);
         }
+
         protected virtual void ApplyPaging(int skip, int take)
         {
             Skip = skip;
             Take = take;
             IsPagingEnabled = true;
         }
+
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
+
         protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
@@ -68,7 +90,10 @@ namespace Ardalis.Specification
         protected void EnableCache(string specificationName, params object[] args)
         {
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-            Guard.Against.Null(Criteria, nameof(Criteria));
+
+            // Just to be able to throw exception if the list is empty. "Guard.Against.EmptyList" might be nice extension for GuardClauses.
+            var criteria = Criterias.FirstOrDefault();
+            Guard.Against.Null(criteria, nameof(criteria));
 
             CacheKey = $"{specificationName}-{string.Join("-", args)}";
 

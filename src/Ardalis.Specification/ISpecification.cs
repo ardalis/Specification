@@ -9,7 +9,7 @@ namespace Ardalis.Specification
         bool CacheEnabled { get; }
         string CacheKey { get; }
 
-        Expression<Func<T, bool>> Criteria { get; }
+        IEnumerable<Expression<Func<T, bool>>> Criterias { get; }
         IEnumerable<Expression<Func<T, object>>> Includes { get; }
         IEnumerable<string> IncludeStrings { get; }
 
