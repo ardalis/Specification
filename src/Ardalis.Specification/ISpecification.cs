@@ -4,6 +4,11 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+    public interface ISpecification<T, TResult> : ISpecification<T>
+    {
+        Expression<Func<T, TResult>> Selector { get; set; }
+    }
+
     public interface ISpecification<T>
     {
         bool CacheEnabled { get; }

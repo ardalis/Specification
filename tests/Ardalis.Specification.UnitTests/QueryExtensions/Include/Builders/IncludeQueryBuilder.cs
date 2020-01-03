@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Ardalis.Specification.UnitTests.QueryExtensions.Include.Builders
 {
-    class IncludeQueryBuilder
+    internal class IncludeQueryBuilder
     {
         public IncludeQuery<Person, List<Person>> WithCollectionAsPreviousProperty()
         {

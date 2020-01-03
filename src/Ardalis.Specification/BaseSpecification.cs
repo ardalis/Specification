@@ -2,6 +2,7 @@
 using Ardalis.Specification.QueryExtensions.Include;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Ardalis.Specification
