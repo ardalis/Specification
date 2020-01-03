@@ -55,8 +55,8 @@ steps:
 
 # Test with Coverage
 
-#- script: docker-compose up --abort-on-container-exit
-#  displayName: Run Docker Compose Up  
+- script: docker-compose up --abort-on-container-exit
+  displayName: Run Docker Compose Up  
 
 # Bug Workaround: https://github.com/microsoft/azure-pipelines-tasks/issues/8762
 #- script: sudo mkdir -p $(Build.SourcesDirectory)/TestResults/coverage/summary$(Build.BuildId)
@@ -95,16 +95,7 @@ steps:
 #    reportDirectory: '$(Build.SourcesDirectory)/TestResults/coverage'
 
 - task: CopyFiles@2
-  displayName: 'Copy *.nupkg Files'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: '**\*.nupkg'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
-    flattenFolders: true
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-- task: CopyFiles@2
-  displayName: 'Copy *.nupkg Files (from artifact directory)'
+  displayName: 'Copy *.nupkg Files (from artifact directory to Package folder)'
   inputs:
     SourceFolder: '$(Build.ArtifactStagingDirectory)'
     Contents: '**\*.nupkg'
