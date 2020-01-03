@@ -17,11 +17,15 @@ namespace Ardalis.Specification
 
     public abstract class BaseSpecification<T> : ISpecification<T>
     {
+        protected BaseSpecification()
+        {
+        }
         protected BaseSpecification(Expression<Func<T, bool>> criteria)
         {
-            Criteria = criteria;
+            AddCriteria(criteria);
         }
-        public Expression<Func<T, bool>> Criteria { get; }
+
+        public IEnumerable<Expression<Func<T, bool>>> Criterias { get; } = new List<Expression<Func<T, bool>>>();
         public IEnumerable<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
         public Expression<Func<T, object>> OrderBy { get; private set; }
@@ -35,6 +39,10 @@ namespace Ardalis.Specification
         public string CacheKey { get; protected set; }
         public bool CacheEnabled { get; private set; }
 
+        protected virtual void AddCriteria(Expression<Func<T, bool>> criteria)
+        {
+            ((List<Expression<Func<T, bool>>>)Criterias).Add(criteria);
+        }
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
@@ -76,7 +84,10 @@ namespace Ardalis.Specification
         protected void EnableCache(string specificationName, params object[] args)
         {
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-            Guard.Against.Null(Criteria, nameof(Criteria));
+
+            // Just to be able to throw exception if the list is empty. "Guard.Against.EmptyList" might be nice extension for GuardClauses.
+            var criteria = Criterias.FirstOrDefault();
+            Guard.Against.Null(criteria, nameof(criteria));
 
             CacheKey = $"{specificationName}-{string.Join("-", args)}";
 

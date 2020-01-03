@@ -9,9 +9,10 @@ namespace Ardalis.Specification
             var query = inputQuery;
 
             // modify the IQueryable using the specification's criteria expression
-            if (specification.Criteria != null)
+            if (specification.Criterias.Count() > 0)
             {
-                query = query.Where(specification.Criteria);
+                query = specification.Criterias.Aggregate(query,
+                                    (current, criteria) => current.Where(criteria));
             }
 
             // Apply ordering if expressions are set
