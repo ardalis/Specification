@@ -7,8 +7,6 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
-    // Keeping both classes here for clarity. Will fix it afterward
-
     public abstract class BaseSpecification<T, TResult> : BaseSpecification<T>, ISpecification<T, TResult>
     {
         protected BaseSpecification(Expression<Func<T, bool>> criteria) : base(criteria) { }
@@ -44,6 +42,7 @@ namespace Ardalis.Specification
         {
             ((List<Expression<Func<T, bool>>>)Criterias).Add(criteria);
         }
+
         protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             ((List<Expression<Func<T, object>>>)Includes).Add(includeExpression);
@@ -91,10 +90,7 @@ namespace Ardalis.Specification
         protected void EnableCache(string specificationName, params object[] args)
         {
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-
-            // Just to be able to throw exception if the list is empty. "Guard.Against.EmptyList" might be nice extension for GuardClauses.
-            var criteria = Criterias.FirstOrDefault();
-            Guard.Against.Null(criteria, nameof(criteria));
+            Guard.Against.NullOrEmpty(Criterias, nameof(Criterias));
 
             CacheKey = $"{specificationName}-{string.Join("-", args)}";
 
