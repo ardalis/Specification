@@ -1,8 +1,6 @@
 ﻿using Ardalis.Specification.IntegrationTests.SampleClient;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
