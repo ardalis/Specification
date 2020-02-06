@@ -1,30 +1,15 @@
 using Ardalis.Specification.IntegrationTests.SampleClient;
 using Ardalis.Specification.IntegrationTests.SampleSpecs;
-using Dapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-
 
 namespace Ardalis.Specification.IntegrationTests
 {
     public class DatabaseCommunicationTests : DatabaseCommunicationTestBase
     {
-        [Fact]
-        public async Task CanConnectAndRunQuery()
-        {
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                await conn.OpenAsync();
-                const string query = "SELECT 1 AS Data";
-                var result = (await conn.QueryAsync<int>(query)).FirstOrDefault();
-                result.Should().Be(1);
-            }
-        }
-
         [Fact]
         public async Task GetBlogUsingEF()
         {
@@ -114,13 +99,13 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
-        public async Task GroupByShouldWorkProperlyl()
+        public async Task GroupByShouldWorkProperly()
         {
             var spec = new PostsGroupedByIdSpec();
             var result = (await _postRepository.ListAsync(spec)).ToList();
 
-            result.First().Id.Should().Be(301);
-            result.Skip(1).Take(1).First().Id.Should().Be(303);
+            result.First().Id.Should().Be(234);
+            result.Skip(2).Take(1).First().Id.Should().Be(302);
         }
     }
 }
