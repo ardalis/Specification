@@ -29,21 +29,61 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
         {
             base.OnModelCreating(modelBuilder);
 
-            var author = new Author { Name = "Steve Smith", Email = "steve@ardalis.com", Id=123 };
+            Author author = SeedAuthor(modelBuilder);
+            Blog testBlog = SeedBlogs(modelBuilder);
+
+            SeedPosts(modelBuilder, author, testBlog);
+        }
+
+        private static Author SeedAuthor(ModelBuilder modelBuilder)
+        {
+            var author = new Author
+            {
+                Id = 123,
+                Name = "Steve Smith", 
+                Email = "steve@ardalis.com"
+            };
+
             modelBuilder.Entity<Author>().HasData(author);
 
+            return author;
+        }
+        private static Blog SeedBlogs(ModelBuilder modelBuilder)
+        {
             var blogBuilder = new BlogBuilder();
-            var testBlog = blogBuilder.WithTestValues().Build();
+
+            Blog testBlog = blogBuilder.WithTestValues().Build();
             modelBuilder.Entity<Blog>().HasData(testBlog);
 
-            var postList = new List<Post>();
-            postList.Add(new Post { Id=234, AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" });
-            for (int i = 0; i < 100; i++)
-            {
-                postList.Add(new Post { AuthorId = author.Id, BlogId = testBlog.Id, Title = $"Extra post {i}", Id = 300 + i });
-            }
-            modelBuilder.Entity<Post>().HasData(postList);
+            return testBlog;
+        }
 
+        private static void SeedPosts(ModelBuilder modelBuilder, Author author, Blog testBlog)
+        {
+            var postList = new List<Post>
+            {
+                new Post
+                {
+                    Id = 234,
+                    Title = "First post!",
+                    AuthorId = author.Id,
+                    BlogId = testBlog.Id,
+                    Content = "Lorem ipsum"
+                }
+            };
+
+            for (var i = 0; i < 100; i++)
+            {
+                postList.Add(new Post
+                {
+                    Id = 300 + i,
+                    Title = $"Extra post {i}",
+                    AuthorId = author.Id,
+                    BlogId = testBlog.Id
+                });
+            }
+
+            modelBuilder.Entity<Post>().HasData(postList);
         }
     }
 }

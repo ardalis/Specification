@@ -100,7 +100,7 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
-        public async Task GroupByShouldNotWorkProperlyInEf3()
+        public void GroupByShouldNotWorkProperlyInEf3()
         {
             var spec = new PostsGroupedByIdSpec();
 

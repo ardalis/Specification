@@ -13,7 +13,7 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
     /// <typeparam name="T"></typeparam>
     public class EfRepository<T> where T : class, IEntity<int>
     {
-        protected readonly SampleDbContext _dbContext;
+        private readonly SampleDbContext _dbContext;
 
         public EfRepository(SampleDbContext dbContext)
         {
