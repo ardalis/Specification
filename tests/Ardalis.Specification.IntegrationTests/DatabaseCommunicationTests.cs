@@ -1,3 +1,4 @@
+using System;
 using Ardalis.Specification.IntegrationTests.SampleClient;
 using Ardalis.Specification.IntegrationTests.SampleSpecs;
 using FluentAssertions;
@@ -99,13 +100,17 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
-        public async Task GroupByShouldWorkProperly()
+        public async Task GroupByShouldNotWorkProperlyInEf3()
         {
             var spec = new PostsGroupedByIdSpec();
-            var result = (await PostRepository.ListAsync(spec)).ToList();
 
-            result.First().Id.Should().Be(234);
-            result.Skip(2).Take(1).First().Id.Should().Be(302);
+            Func<Task> groupPostsByIdAction = 
+                async () => (await PostRepository.ListAsync(spec)).ToList();
+
+            groupPostsByIdAction
+                .Should()
+                .Throw<InvalidOperationException>("EF Core +3.0 no longer supports Client-Side evaluation of queries.")
+                .WithMessage("*This may indicate either a bug or a limitation in EF Core.*");
         }
     }
 }
