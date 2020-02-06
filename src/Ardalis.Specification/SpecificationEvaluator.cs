@@ -9,7 +9,7 @@ namespace Ardalis.Specification
             var query = inputQuery;
 
             // modify the IQueryable using the specification's criteria expression
-            if (specification.Criterias.Count() > 0)
+            if (specification.Criterias.Any())
             {
                 query = specification.Criterias.Aggregate(query,
                                     (current, criteria) => current.Where(criteria));
