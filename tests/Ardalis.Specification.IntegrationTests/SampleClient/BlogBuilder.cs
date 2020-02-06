@@ -6,7 +6,7 @@
         public const string VALID_BLOG_NAME = "Test Blog 1";
         public const string VALID_BLOG_URL = "ardalis.com";
 
-        private Blog _blog = new Blog();
+        private readonly Blog _blog = new Blog();
 
         public BlogBuilder Id(int id)
         {

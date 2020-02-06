@@ -5,17 +5,16 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     public class PostsByBlogOrderedSpec : BaseSpecification<Post>
     {
         public PostsByBlogOrderedSpec(int blogId, bool isAscending = true)
-            : base(p => p.BlogId == blogId)
+            : base(post => post.BlogId == blogId)
         {
             if(isAscending)
             {
-                ApplyOrderBy(p => p.Id);
+                ApplyOrderBy(post => post.Id);
             }
             else
             {
-                ApplyOrderByDescending(p => p.Id);
+                ApplyOrderByDescending(post => post.Id);
             }
         }
     }
-
 }

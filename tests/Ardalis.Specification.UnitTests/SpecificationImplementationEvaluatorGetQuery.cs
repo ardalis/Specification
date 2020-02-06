@@ -6,7 +6,7 @@ namespace Ardalis.Specification.UnitTests
 {
     public class SpecificationImplementationEvaluatorGetQuery
     {
-        private int _testId = 123;
+        private const int TestId = 123;
 
         private class TestItem : IEntity<int>
         {
@@ -22,24 +22,24 @@ namespace Ardalis.Specification.UnitTests
         [Fact]
         public void ReturnsEntityWithId()
         {
-            var spec = new ItemWithIdSpecification(_testId);
+            var spec = new ItemWithIdSpecification(TestId);
 
             var result = SpecificationEvaluator<TestItem,int>.GetQuery(
                 GetTestListOfItems()
                     .AsQueryable(), 
                 spec).Single();
 
-            Assert.Equal(_testId, result.Id);
+            Assert.Equal(TestId, result.Id);
         }
 
-        private List<TestItem> GetTestListOfItems()
+        private IEnumerable<TestItem> GetTestListOfItems()
         {
             return new List<TestItem>
             {
                 new TestItem{ Id = 1},
                 new TestItem{ Id = 2},
                 new TestItem{ Id = 3},
-                new TestItem{ Id = _testId}
+                new TestItem{ Id = TestId}
             };
         }
     }

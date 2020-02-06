@@ -6,9 +6,9 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     // It's the only place where this generic parameter is defined, everywhere else will be implicitly inferred.
     public class BlogNamesSpecification : BaseSpecification<Blog, string>
     {
-        public BlogNamesSpecification() : base(b => true)
+        public BlogNamesSpecification() : base(blog => true)
         {
-            Selector = b => b.Name;
+            Selector = blog => blog.Name;
         }
     }
 }

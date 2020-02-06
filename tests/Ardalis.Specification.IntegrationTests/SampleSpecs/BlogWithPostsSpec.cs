@@ -4,9 +4,9 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
     public class BlogWithPostsSpec : BaseSpecification<Blog>
     {
-        public BlogWithPostsSpec(int id) : base(b => b.Id == id)
+        public BlogWithPostsSpec(int id) : base(blog => blog.Id == id)
         {
-            AddInclude(b => b.Posts);
+            AddInclude(blog => blog.Posts);
             EnableCache(nameof(BlogWithPostsSpec), id);
         }
     }

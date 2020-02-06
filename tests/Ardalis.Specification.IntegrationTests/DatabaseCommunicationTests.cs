@@ -13,7 +13,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogUsingEF()
         {
-            var result = await _dbContext.Blogs.FirstOrDefaultAsync();
+            var result = await DbContext.Blogs.FirstOrDefaultAsync();
 
             Assert.Equal(BlogBuilder.VALID_BLOG_ID, result.Id);
         }
@@ -21,7 +21,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogUsingEFRepository()
         {
-            var result = await _blogRepository.GetByIdAsync(BlogBuilder.VALID_BLOG_ID);
+            var result = await BlogRepository.GetByIdAsync(BlogBuilder.VALID_BLOG_ID);
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
@@ -31,7 +31,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogUsingEFRepositoryAndSpecShouldIncludePosts()
         {
-            var result = (await _blogRepository.ListAsync(new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+            var result = (await BlogRepository.ListAsync(new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
@@ -41,7 +41,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogUsingEFRepositoryAndSpecWithStringIncludeShouldIncludePosts()
         {
-            var result = (await _blogRepository.ListAsync(new BlogWithPostsUsingStringSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+            var result = (await BlogRepository.ListAsync(new BlogWithPostsUsingStringSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
@@ -51,7 +51,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogWithPostsAndAuthorsWithChainableIncludeSpecShouldIncludePostsAndAuthors()
         {
-            var result = (await _blogRepository.ListAsync(new BlogWithPostsAndAuthorSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
+            var result = (await BlogRepository.ListAsync(new BlogWithPostsAndAuthorSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
 
             result.Should().NotBeNull();
             result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
@@ -64,7 +64,7 @@ namespace Ardalis.Specification.IntegrationTests
         {
             int pageSize = 10;
             int pageIndex = 1; // page 2
-            var result = (await _postRepository.ListAsync(new PostsByBlogPaginatedSpec(pageIndex * pageSize, pageSize, BlogBuilder.VALID_BLOG_ID))).ToList();
+            var result = (await PostRepository.ListAsync(new PostsByBlogPaginatedSpec(pageIndex * pageSize, pageSize, BlogBuilder.VALID_BLOG_ID))).ToList();
 
             result.Count.Should().Be(pageSize);
             result.First().Id.Should().Be(309);
@@ -74,7 +74,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetPostsWithOrderedSpec()
         {
-            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID))).ToList();
+            var result = (await PostRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID))).ToList();
 
             result.First().Id.Should().Be(234);
             result.Last().Id.Should().Be(399);
@@ -83,7 +83,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetPostsWithOrderedSpecDescending()
         {
-            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID, false))).ToList();
+            var result = (await PostRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID, false))).ToList();
 
             result.First().Id.Should().Be(399);
             result.Last().Id.Should().Be(234);
@@ -102,7 +102,7 @@ namespace Ardalis.Specification.IntegrationTests
         public async Task GroupByShouldWorkProperly()
         {
             var spec = new PostsGroupedByIdSpec();
-            var result = (await _postRepository.ListAsync(spec)).ToList();
+            var result = (await PostRepository.ListAsync(spec)).ToList();
 
             result.First().Id.Should().Be(234);
             result.Skip(2).Take(1).First().Id.Should().Be(302);

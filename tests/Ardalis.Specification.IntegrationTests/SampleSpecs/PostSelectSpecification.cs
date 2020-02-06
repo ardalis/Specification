@@ -8,7 +8,8 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     // Since it's generic solution, we should be cautious in its usage.
     public class PostSelectSpecification : BaseSpecification<Post, object>
     {
-        public PostSelectSpecification(Expression<Func<Post, object>> selector) : base(b => true)
+        public PostSelectSpecification(Expression<Func<Post, object>> selector) 
+            : base(post => true)
         {
             Selector = selector;
         }

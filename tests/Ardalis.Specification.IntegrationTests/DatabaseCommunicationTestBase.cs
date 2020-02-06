@@ -5,20 +5,20 @@ namespace Ardalis.Specification.IntegrationTests
 {
     public class DatabaseCommunicationTestBase
     {
-        protected readonly SampleDbContext _dbContext;
-        protected readonly EfRepository<Blog> _blogRepository;
-        protected readonly EfRepository<Post> _postRepository;
+        protected readonly SampleDbContext DbContext;
+        protected readonly EfRepository<Blog> BlogRepository;
+        protected readonly EfRepository<Post> PostRepository;
 
         protected DatabaseCommunicationTestBase()
         {
             var optionsBuilder = new DbContextOptionsBuilder<SampleDbContext>();
             optionsBuilder.UseInMemoryDatabase("SampleDatabase");
-            _dbContext = new SampleDbContext(optionsBuilder.Options);
+            DbContext = new SampleDbContext(optionsBuilder.Options);
 
-            _dbContext.Database.EnsureCreated();
+            DbContext.Database.EnsureCreated();
 
-            _blogRepository = new EfRepository<Blog>(_dbContext);
-            _postRepository = new EfRepository<Post>(_dbContext);
+            BlogRepository = new EfRepository<Blog>(DbContext);
+            PostRepository = new EfRepository<Post>(DbContext);
         }
 
     }

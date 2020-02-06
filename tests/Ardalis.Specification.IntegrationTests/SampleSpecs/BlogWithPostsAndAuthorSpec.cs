@@ -5,12 +5,11 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
     public class BlogWithPostsAndAuthorSpec : BaseSpecification<Blog>
     {
-        public BlogWithPostsAndAuthorSpec(int id) : base(b => b.Id == id)
+        public BlogWithPostsAndAuthorSpec(int id) : base(blog => blog.Id == id)
         {
-            AddIncludes(x =>
-             x.Include(b => b.Posts)
-                .ThenInclude(p => p.Author)
-            );
+            AddIncludes(agg =>
+                agg.Include(blog => blog.Posts)
+                    .ThenInclude(post => post.Author));
         }
     }
 }
