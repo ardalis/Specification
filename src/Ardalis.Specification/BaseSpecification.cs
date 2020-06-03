@@ -2,7 +2,6 @@
 using Ardalis.Specification.QueryExtensions.Include;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Ardalis.Specification
@@ -27,6 +26,8 @@ namespace Ardalis.Specification
         public IEnumerable<Expression<Func<T, bool>>> Criterias { get; } = new List<Expression<Func<T, bool>>>();
         public IEnumerable<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
+
+        public Expression<Func<T, object>> ThenBy { get; private set; }
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
         public Expression<Func<T, object>> GroupBy { get; private set; }
@@ -69,6 +70,18 @@ namespace Ardalis.Specification
         protected virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
+        }
+
+        protected virtual void ApplyOrderByWithThenBy(Expression<Func<T, object>> orderByExpression, Expression<Func<T, object>> thenByExpression)
+        {
+            OrderBy = orderByExpression;
+            ThenBy = thenByExpression;
+        }
+
+        protected virtual void ApplyOrderByDescendingWithThenBy(Expression<Func<T, object>> orderByDescendingExpression, Expression<Func<T, object>> thenByExpression)
+        {
+            OrderBy = orderByDescendingExpression;
+            ThenBy = thenByExpression;
         }
 
         protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
