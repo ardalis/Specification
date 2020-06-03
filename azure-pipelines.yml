@@ -108,5 +108,5 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/Package'
-    artifactName:: Package
+    artifactName: Package
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
