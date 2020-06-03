@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Ardalis.Specification.IntegrationTests
 {
+    [Collection("Sequential")]
     public class DatabaseCommunicationTests : DatabaseCommunicationTestBase
     {
         [Fact]
@@ -90,6 +91,24 @@ namespace Ardalis.Specification.IntegrationTests
         public async Task GetPostsWithOrderedSpec()
         {
             var result = (await _postRepository.ListAsync(new PostsByBlogOrderedSpec(BlogBuilder.VALID_BLOG_ID))).ToList();
+            
+            result.First().Id.Should().Be(234);
+            result.Last().Id.Should().Be(399);
+        }
+
+        [Fact]
+        public async Task GetPostsOrderedByThenBySpec()
+        {
+            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedByThenBySpec(BlogBuilder.VALID_BLOG_ID))).ToList();
+
+            result.First().Id.Should().Be(300);
+            result.Last().Id.Should().Be(234);
+        }
+
+        [Fact]
+        public async Task GetPostsOrderedByThenBySpecDescending()
+        {
+            var result = (await _postRepository.ListAsync(new PostsByBlogOrderedByThenBySpec(BlogBuilder.VALID_BLOG_ID, false))).ToList();
 
             result.First().Id.Should().Be(234);
             result.Last().Id.Should().Be(399);

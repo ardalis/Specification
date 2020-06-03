@@ -7,8 +7,8 @@ pr:
 - master
 
 pool:
-  vmImage: 'windows-2019'
-#  vmImage: 'ubuntu-16.04'
+  # vmImage: 'windows-2019'
+  vmImage: 'ubuntu-16.04'
 
 variables:
   buildConfiguration: 'Release'

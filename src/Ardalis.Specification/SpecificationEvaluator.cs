@@ -16,7 +16,15 @@ namespace Ardalis.Specification
             }
 
             // Apply ordering if expressions are set
-            if (specification.OrderBy != null)
+            if (specification.OrderBy != null && specification.ThenBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy).ThenBy(specification.ThenBy);
+            }
+            else if (specification.OrderByDescending != null && specification.ThenBy != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending).ThenBy(specification.ThenBy);
+            }
+            else if (specification.OrderBy != null)
             {
                 query = query.OrderBy(specification.OrderBy);
             }
