@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Ardalis.Specification.IntegrationTests
 {
+    [Collection("Sequential")]
     public class DatabaseCommunicationTests : DatabaseCommunicationTestBase
     {
         [Fact]

@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Ardalis.Specification.IntegrationTests
 {
+    [Collection("Sequential")]
     public class SelectorTests : DatabaseCommunicationTestBase
     {
         [Fact]
