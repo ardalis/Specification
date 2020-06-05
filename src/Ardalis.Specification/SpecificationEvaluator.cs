@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ardalis.Specification
 {
-    public class SpecificationEvaluator<T, TId> where T : class, IEntity<TId>
+    public class SpecificationEvaluator<T> where T : class
     {
-        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+        public static async Task<IQueryable<T>> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
             var query = inputQuery;
 
@@ -33,10 +35,11 @@ namespace Ardalis.Specification
                 query = query.OrderByDescending(specification.OrderByDescending);
             }
 
-            if (specification.GroupBy != null)
-            {
-                query = query.GroupBy(specification.GroupBy).SelectMany(x => x);
-            }
+            //TODO: Breaking changes in EF Core 3.0 have made this difficult. Need to re-think how this is done.
+            //if (specification.GroupBy != null)
+            //{
+               
+            //}
 
             // Apply paging if enabled
             if (specification.IsPagingEnabled)

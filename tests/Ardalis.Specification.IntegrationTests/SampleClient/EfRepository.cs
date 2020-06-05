@@ -72,12 +72,12 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            return EfSpecificationEvaluator<T, int>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return EfSpecificationEvaluator<T>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec).Result;
         }
 
         private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
         {
-            return EfSpecificationEvaluator<T, int, TResult>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return EfSpecificationEvaluator<T, TResult>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec).Result;
         }
     }
 }

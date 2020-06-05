@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Ardalis.Specification.UnitTests
@@ -20,16 +21,18 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
-        public void ReturnsEntityWithId()
+        public async Task ReturnsEntityWithId()
         {
             var spec = new ItemWithIdSpecification(_testId);
 
-            var result = SpecificationEvaluator<TestItem,int>.GetQuery(
+            var result = await SpecificationEvaluator<TestItem>.GetQuery(
                 GetTestListOfItems()
                     .AsQueryable(), 
-                spec).Single();
+                spec);
 
-            Assert.Equal(_testId, result.Id);
+            var result1 = result.Single();
+
+            Assert.Equal(_testId, result1.Id);
         }
 
         private List<TestItem> GetTestListOfItems()
