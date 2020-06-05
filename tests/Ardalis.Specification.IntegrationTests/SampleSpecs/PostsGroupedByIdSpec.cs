@@ -6,7 +6,8 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     {
         public PostsGroupedByIdSpec() : base(p => true)
         {
-            ApplyGroupBy(p => p.Id % 2 == 0);
+            // Removed in version 3.0
+            //ApplyGroupBy(p => p.Id % 2 == 0);
         }
     }
 

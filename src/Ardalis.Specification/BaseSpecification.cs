@@ -30,7 +30,7 @@ namespace Ardalis.Specification
         public Expression<Func<T, object>> ThenBy { get; private set; }
         public Expression<Func<T, object>> OrderBy { get; private set; }
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
-        public Expression<Func<T, object>> GroupBy { get; private set; }
+        //public Expression<Func<T, object>> GroupBy { get; private set; }
 
         public int Take { get; private set; }
         public int Skip { get; private set; }
@@ -87,12 +87,6 @@ namespace Ardalis.Specification
         protected virtual void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
-        }
-
-        //Not used anywhere at the moment, but someone requested an example of setting this up.
-        protected virtual void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
-        {
-            GroupBy = groupByExpression;
         }
 
         /// <summary>

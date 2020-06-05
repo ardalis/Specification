@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using System.Collections.Generic;
 
 namespace Ardalis.Specification.IntegrationTests.SampleClient
 {
     public class SampleDbContext : DbContext
     {
-        public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
-              new ConsoleLoggerProvider((_, __) => true, true)
-                });
+        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => 
+        {
+            builder.AddFilter("Ardalis.Specification", LogLevel.Debug);
+            builder.AddConsole();
+        });
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Blog> Blogs { get; set; }
