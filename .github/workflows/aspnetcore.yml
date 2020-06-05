@@ -15,5 +15,7 @@ jobs:
         dotnet-version: 3.1.300
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: chmod
+      run: chmod 555 ./RunTests.sh
     - name: Run integration tests with Docker
       run: ./RunTests.sh
