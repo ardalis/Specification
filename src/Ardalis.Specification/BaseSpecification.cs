@@ -89,12 +89,6 @@ namespace Ardalis.Specification
             OrderByDescending = orderByDescendingExpression;
         }
 
-        //Not used anywhere at the moment, but someone requested an example of setting this up.
-        protected virtual void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
-        {
-            GroupBy = groupByExpression;
-        }
-
         /// <summary>
         /// Must be called after specifying criteria
         /// </summary>

@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
     <Version>3.0.0</Version>
-    <PackageReleaseNotes>Removed TId from SpecificationEvaluator</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed TId from SpecificationEvaluator and removed GroupBy which is no longer supported by EF Core 3.0</PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIconUrl>https://user-images.githubusercontent.com/782127/33497760-facf6550-d69c-11e7-94e4-b3856da259a9.png</PackageIconUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
