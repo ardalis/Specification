@@ -28,7 +28,7 @@ Now to use this method, the calling code simply instantiates the appropriate spe
 
 ## Reference
 
-Some free video streams in which this package has been developed and discussed.
+Some free video streams in which this package has been developed and discussed on [YouTube.com/ardalis](http://youtube.com/ardalis?sub_confirmation=1).
 
 - [Open Source .NET Development with Specification and Other Projects](https://www.youtube.com/watch?v=zP_279p2D9w) 14 Jan 2020
 - [Updating Specification and GuardClauses Nuget Packages / GitHub Samples](https://www.youtube.com/watch?v=kCeRJj2H1RQ) 20 Nov 2019
