@@ -8,7 +8,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
 {
     public class IncludeQueryTests
     {
-        private IncludeQueryBuilder _includeQueryBuilder = new IncludeQueryBuilder();
+        private readonly IncludeQueryBuilder _includeQueryBuilder = new IncludeQueryBuilder();
 
         [Fact]
         public void Include_SimpleType_ReturnsIncludeQueryWithCorrectPath()
@@ -47,7 +47,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
         {
             var includeQuery = _includeQueryBuilder.WithObjectAsPreviousProperty();
 
-            var newIncludeQuery = includeQuery.Include(b => b.Author.Friends);
+            var newIncludeQuery = includeQuery.Include(b => b.Author!.Friends);
             var expectedPath = $"{nameof(Book.Author)}.{nameof(Person.Friends)}";
 
             Assert.Contains(newIncludeQuery.Paths, path => path == expectedPath);
@@ -59,7 +59,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
             var includeQuery = _includeQueryBuilder.WithObjectAsPreviousProperty();
             var numberOfPathsBeforeInclude = includeQuery.Paths.Count;
 
-            var newIncludeQuery = includeQuery.Include(b => b.Author.Friends);
+            var newIncludeQuery = includeQuery.Include(b => b.Author!.Friends);
             var numberOfPathsAferInclude = newIncludeQuery.Paths.Count;
 
             var expectedNumerOfPaths = numberOfPathsBeforeInclude + 1;
@@ -73,7 +73,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
             var includeQuery = _includeQueryBuilder.WithObjectAsPreviousProperty();
             var pathsBeforeInclude = includeQuery.Paths;
 
-            var newIncludeQuery = includeQuery.Include(b => b.Author.Friends);
+            var newIncludeQuery = includeQuery.Include(b => b.Author!.Friends);
             var pathsAfterInclude = newIncludeQuery.Paths;
 
             Assert.Subset(pathsAfterInclude, pathsBeforeInclude);

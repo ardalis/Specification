@@ -12,12 +12,13 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
             builder.AddConsole();
         });
 
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Author>? Authors { get; set; }
+        public DbSet<Blog>? Blogs { get; set; }
+        public DbSet<Post>? Posts { get; set; }
 
         public SampleDbContext(DbContextOptions options) : base(options)
         {
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,8 +38,10 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
             var testBlog = blogBuilder.WithTestValues().Build();
             modelBuilder.Entity<Blog>().HasData(testBlog);
 
-            var postList = new List<Post>();
-            postList.Add(new Post { Id=234, AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" });
+            var postList = new List<Post>
+            {
+                new Post { Id = 234, AuthorId = author.Id, BlogId = testBlog.Id, Title = "First post!", Content = "Lorem ipsum" }
+            };
             for (int i = 0; i < 100; i++)
             {
                 postList.Add(new Post { AuthorId = author.Id, BlogId = testBlog.Id, Title = $"Extra post {i}", Id = 300 + i });

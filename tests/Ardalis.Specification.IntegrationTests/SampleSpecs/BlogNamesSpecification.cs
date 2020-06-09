@@ -8,7 +8,7 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
     {
         public BlogNamesSpecification() : base(b => true)
         {
-            Selector = b => b.Name;
+            Selector = b => b.Name!;
         }
     }
 }
