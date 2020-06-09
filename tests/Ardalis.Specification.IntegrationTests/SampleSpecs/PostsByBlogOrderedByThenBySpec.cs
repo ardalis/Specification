@@ -9,11 +9,11 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
         {
             if(isAscending)
             {
-                ApplyOrderByWithThenBy(p => p.AuthorId, p => p.Title);
+                ApplyOrderByWithThenBy(p => p.AuthorId, p => p.Title!);
             }
             else
             {
-                ApplyOrderByDescendingWithThenBy(p => p.Id, p => p.Title);
+                ApplyOrderByDescendingWithThenBy(p => p.Id, p => p.Title!);
             }
         }
     }

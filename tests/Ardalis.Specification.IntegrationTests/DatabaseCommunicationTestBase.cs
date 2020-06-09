@@ -7,7 +7,7 @@ namespace Ardalis.Specification.IntegrationTests
     public class DatabaseCommunicationTestBase
     {
         // Run EF Migrations\DBUp script to prepare database before running your tests.
-        public const string ConnectionString = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+        public const string ConnectionString = "Data Source=darsh;Initial Catalog=ArdalisTest;Integrated Security=True";
         public SampleDbContext _dbContext;
         public EfRepository<Blog> _blogRepository;
         public EfRepository<Post> _postRepository;

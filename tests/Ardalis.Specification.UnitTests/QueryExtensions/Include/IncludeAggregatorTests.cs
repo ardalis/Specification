@@ -23,7 +23,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
             var includeAggregator = new IncludeAggregator<Person>();
 
             // This include does not make much sense, but it should at least not modify the paths.
-            var includeQuery = includeAggregator.Include(p => p.FavouriteBook.GetNumberOfSales());
+            var includeQuery = includeAggregator.Include(p => p.FavouriteBook!.GetNumberOfSales());
 
             // The resulting paths should not include number of sales.
             Assert.DoesNotContain(includeQuery.Paths, path => path == nameof(Book.GetNumberOfSales));
@@ -33,7 +33,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
         public void Include_Object_ReturnsIncludeQueryWithCorrectPath()
         {
             var includeAggregator = new IncludeAggregator<Person>();
-            var includeQuery = includeAggregator.Include(p => p.FavouriteBook.Author);
+            var includeQuery = includeAggregator.Include(p => p.FavouriteBook!.Author);
 
             Assert.Contains(includeQuery.Paths, path => path == $"{nameof(Person.FavouriteBook)}.{nameof(Book.Author)}");
         }
@@ -42,7 +42,7 @@ namespace Ardalis.Specification.UnitTests.QueryExtensions.Include
         public void Include_Collection_ReturnsIncludeQueryWithCorrectPath()
         {
             var includeAggregator = new IncludeAggregator<Book>();
-            var includeQuery = includeAggregator.Include(o => o.Author.Friends);
+            var includeQuery = includeAggregator.Include(o => o.Author!.Friends);
 
             Assert.Contains(includeQuery.Paths, path => path == $"{nameof(Book.Author)}.{nameof(Person.Friends)}");
         }
