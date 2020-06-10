@@ -21,11 +21,11 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
-        public async Task ReturnsEntityWithId()
+        public void ReturnsEntityWithId()
         {
             var spec = new ItemWithIdSpecification(_testId);
 
-            var result = await SpecificationEvaluator<TestItem>.GetQuery(
+            var result = SpecificationEvaluator<TestItem>.GetQuery(
                 GetTestListOfItems()
                     .AsQueryable(), 
                 spec);

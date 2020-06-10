@@ -2,11 +2,11 @@
 
 namespace Ardalis.Specification.UnitTests.QueryExtensions.Include.Entities
 {
-    class Book
+    internal class Book
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public DateTime PublishingDate { get; set; }
-        public Person Author { get; set; }
+        public Person? Author { get; set; }
 
         public int GetNumberOfSales()
         {
