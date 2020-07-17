@@ -115,7 +115,7 @@ namespace Ardalis.Specification
             /// </summary>
             /// <param name="specificationName"></param>
             /// <param name="args">Any arguments used in defining the specification</param>
-            protected void EnableCache(string specificationName, params object[] args)
+            public ISpecificationBuilder<TSource> EnableCache(string specificationName, params object[] args)
             {
                 Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
                 Guard.Against.NullOrEmpty(parent.WhereExpressions, nameof(parent.WhereExpressions));
@@ -123,6 +123,7 @@ namespace Ardalis.Specification
                 parent.CacheKey = $"{specificationName}-{string.Join("-", args)}";
 
                 parent.CacheEnabled = true;
+                return this;
             }
         }
 

@@ -2,18 +2,19 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class PostsByBlogOrderedSpec : BaseSpecification<Post>
+    public class PostsByBlogOrderedSpec : Specification<Post>
     {
         public PostsByBlogOrderedSpec(int blogId, bool isAscending = true)
-            : base(p => p.BlogId == blogId)
         {
+            Query.Where(p => p.BlogId == blogId);
+
             if(isAscending)
             {
-                ApplyOrderBy(p => p.Id);
+                Query.OrderBy(p => p.Id);
             }
             else
             {
-                ApplyOrderByDescending(p => p.Id);
+                Query.OrderByDescending(p => p.Id);
             }
         }
     }

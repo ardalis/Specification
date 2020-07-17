@@ -18,5 +18,6 @@ namespace Ardalis.Specification
         IOrderedSpecificationBuilder<TSource> OrderByDescending(Expression<Func<TSource, object>> orderExpression);
         ISpecificationBuilder<TSource> Include(string includeString);
         IIncludableSpecificationBuilder<TSource, TProperty> Include<TProperty>(Expression<Func<TSource, TProperty>> includeExpression);
+        ISpecificationBuilder<TSource> EnableCache(string specificationName, params object[] args);
     }
 }

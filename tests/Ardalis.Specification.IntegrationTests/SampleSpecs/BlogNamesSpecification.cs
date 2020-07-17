@@ -2,13 +2,11 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    // We are selecting/returning b.Name (string property), so we define the TResult generic parameter as string.
-    // It's the only place where this generic parameter is defined, everywhere else will be implicitly inferred.
-    public class BlogNamesSpecification : BaseSpecification<Blog, string>
+    public class BlogNamesSpecification : Specification<Blog, string>
     {
-        public BlogNamesSpecification() : base(b => true)
+        public BlogNamesSpecification()
         {
-            Selector = b => b.Name!;
+            Query.Select(b => b.Name);
         }
     }
 }

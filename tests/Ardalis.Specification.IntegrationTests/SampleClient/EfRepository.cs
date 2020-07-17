@@ -14,10 +14,18 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
     public class EfRepository<T> where T : class, IEntity<int>
     {
         protected readonly SampleDbContext _dbContext;
+        private readonly ISpecificationEvaluator<T> specificationEvaluator;
 
         public EfRepository(SampleDbContext dbContext)
         {
             _dbContext = dbContext;
+            this.specificationEvaluator = new SpecificationEvaluator<T>();
+        }
+
+        public EfRepository(SampleDbContext dbContext, ISpecificationEvaluator<T> specificationEvaluator)
+        {
+            _dbContext = dbContext;
+            this.specificationEvaluator = specificationEvaluator;
         }
 
         public virtual async Task<T> GetByIdAsync(int id)
@@ -70,14 +78,13 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
             await _dbContext.SaveChangesAsync();
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
-            return EfSpecificationEvaluator<T>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
         }
-
-        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
+        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            return EfSpecificationEvaluator<T, TResult>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
+            return specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
         }
     }
 }
