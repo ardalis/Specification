@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -53,6 +54,9 @@ namespace Ardalis.Specification
         public int Skip { get; private set; }
         public bool IsPagingEnabled { get; private set; } = false;
 
+        public string? CacheKey { get; protected set; }
+        public bool CacheEnabled { get; private set; }
+
 
         protected class SpecificationBuilder<TSource> : ISpecificationBuilder<TSource>
         {
@@ -105,6 +109,21 @@ namespace Ardalis.Specification
                 parent.IsPagingEnabled = true;
                 return this;
             }
+
+            /// <summary>
+            /// Must be called after specifying criteria
+            /// </summary>
+            /// <param name="specificationName"></param>
+            /// <param name="args">Any arguments used in defining the specification</param>
+            protected void EnableCache(string specificationName, params object[] args)
+            {
+                Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
+                Guard.Against.NullOrEmpty(parent.WhereExpressions, nameof(parent.WhereExpressions));
+
+                parent.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+
+                parent.CacheEnabled = true;
+            }
         }
 
         protected class OrderedSpecificationBuilder<TSourceOrdered> : IOrderedSpecificationBuilder<TSourceOrdered>
@@ -116,13 +135,13 @@ namespace Ardalis.Specification
                 this.parent = parent;
             }
 
-            public virtual IOrderedSpecificationBuilder<TSourceOrdered> ThenBy(Expression<Func<TSourceOrdered, object>> orderExpression)
+            public IOrderedSpecificationBuilder<TSourceOrdered> ThenBy(Expression<Func<TSourceOrdered, object>> orderExpression)
             {
                 ((List<(Expression<Func<TSourceOrdered, object>> OrderExpression, OrderTypeEnum OrderType)>)parent.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderBy));
                 return this;
             }
 
-            public virtual IOrderedSpecificationBuilder<TSourceOrdered> ThenByDescending(Expression<Func<TSourceOrdered, object>> orderExpression)
+            public IOrderedSpecificationBuilder<TSourceOrdered> ThenByDescending(Expression<Func<TSourceOrdered, object>> orderExpression)
             {
                 ((List<(Expression<Func<TSourceOrdered, object>> OrderExpression, OrderTypeEnum OrderType)>)parent.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderByDescending));
                 return this;

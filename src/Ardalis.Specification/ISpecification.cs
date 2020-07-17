@@ -19,5 +19,8 @@ namespace Ardalis.Specification
         int Take { get; }
         int Skip { get; }
         bool IsPagingEnabled { get; }
+
+        bool CacheEnabled { get; }
+        string? CacheKey { get; }
     }
 }
