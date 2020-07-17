@@ -5,6 +5,35 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
+    public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
+    {
+        protected new virtual ISpecificationBuilder<T, TResult> Query { get; }
+
+        protected Specification() : base()
+        {
+            this.Query = new SpecificationBuilder<T, TResult>(this);
+            base.Query = this.Query;
+        }
+
+        public Expression<Func<T, TResult>> Selector { get; private set; }
+
+        protected class SpecificationBuilder<TSource, TSourceResult> : SpecificationBuilder<TSource>, ISpecificationBuilder<TSource, TSourceResult>
+        {
+            private readonly Specification<TSource, TSourceResult> parent;
+
+            public SpecificationBuilder(Specification<TSource, TSourceResult> parent) : base(parent)
+            {
+                this.parent = parent;
+            }
+
+            public ISpecificationBuilder<TSource> Select(Expression<Func<TSource, TSourceResult>> selector)
+            {
+                parent.Selector = selector;
+                return this;
+            }
+        }
+    }
+
     public abstract class Specification<T> : ISpecification<T>
     {
         protected virtual ISpecificationBuilder<T> Query { get; set; }

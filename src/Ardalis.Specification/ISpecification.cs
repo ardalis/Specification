@@ -4,6 +4,11 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+    public interface ISpecification<T, TResult> : ISpecification<T>
+    {
+        Expression<Func<T, TResult>> Selector { get; }
+    }
+
     public interface ISpecification<T>
     {
         IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; }

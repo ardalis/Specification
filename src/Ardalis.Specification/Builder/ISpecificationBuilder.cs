@@ -5,6 +5,11 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
+    public interface ISpecificationBuilder<TSource, TSourceResult> : ISpecificationBuilder<TSource>
+    {
+        ISpecificationBuilder<TSource> Select(Expression<Func<TSource, TSourceResult>> selector);
+    }
+
     public interface ISpecificationBuilder<TSource>
     {
         ISpecificationBuilder<TSource> Where(Expression<Func<TSource, bool>> criteria);
