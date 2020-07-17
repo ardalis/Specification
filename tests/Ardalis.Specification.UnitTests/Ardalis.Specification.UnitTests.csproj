@@ -24,4 +24,9 @@
     <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Specs\" />
+  </ItemGroup>
+
 </Project>

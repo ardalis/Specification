@@ -1,22 +1,25 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Xunit;
 
 namespace Ardalis.Specification.UnitTests
 {
-    public class SpecificationImplementationEvaluatorGetQuery
+    public class SpecificationEvaluatorGetQuery
     {
         private int _testId = 123;
 
-        private class TestItem : IEntity<int>
+        private class TestItem
         {
             public int Id { get; set; }
         }
-        private class ItemWithIdSpecification : BaseSpecification<TestItem>
+
+        private class ItemWithIdSpecification : Specification<TestItem>
         {
-            public ItemWithIdSpecification(int id) : base(i => i.Id == id)
+            public ItemWithIdSpecification(int id)
             {
+                Query.Where(x => x.Id == id);
             }
         }
 
@@ -25,14 +28,10 @@ namespace Ardalis.Specification.UnitTests
         {
             var spec = new ItemWithIdSpecification(_testId);
 
-            var result = SpecificationEvaluator<TestItem>.GetQuery(
-                GetTestListOfItems()
-                    .AsQueryable(), 
-                spec);
+            var evaluator = new SpecificationEvaluator<TestItem>();
+            var result = evaluator.GetQuery(GetTestListOfItems().AsQueryable(), spec).FirstOrDefault();
 
-            var result1 = result.Single();
-
-            Assert.Equal(_testId, result1.Id);
+            Assert.Equal(_testId, result?.Id);
         }
 
         private List<TestItem> GetTestListOfItems()
@@ -41,8 +40,8 @@ namespace Ardalis.Specification.UnitTests
             {
                 new TestItem{ Id = 1},
                 new TestItem{ Id = 2},
-                new TestItem{ Id = 3},
-                new TestItem{ Id = _testId}
+                new TestItem{ Id = _testId},
+                new TestItem{ Id = 3}
             };
         }
     }
