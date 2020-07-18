@@ -11,8 +11,15 @@ services:
         - ./TestResults:/var/temp
     depends_on:
       - database
+      - databaseEF
 
   database:
+    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+    environment:
+        SA_PASSWORD: "P@ssW0rd!"
+        ACCEPT_EULA: "Y"
+
+  databaseEF:
     image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
     environment:
         SA_PASSWORD: "P@ssW0rd!"

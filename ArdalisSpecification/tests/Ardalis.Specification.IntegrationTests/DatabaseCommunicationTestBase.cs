@@ -8,10 +8,10 @@ namespace Ardalis.Specification.IntegrationTests
     {
         // Run EF Migrations\DBUp script to prepare database before running your tests.
         // Docker
-        //public const string ConnectionString = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+        public const string ConnectionString = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
 
         // (localdb)
-        public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationTestsDB;";
+        //public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationTestsDB;";
 
         public SampleDbContext _dbContext;
         public EfRepository<Blog> _blogRepository;
