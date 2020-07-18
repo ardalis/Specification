@@ -2,14 +2,37 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Ardalis.Specification.EF</PackageId>
+    <Title>Ardalis.Specification.EF</Title>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Steve Smith (@ardalis); Scott DePouw</Authors>
+    <Company>Ardalis.com</Company>
+    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
+    <Description>EF plugin package to Ardalis.Specification containing EF evaluator and abstract repository.</Description>
+    <Summary>EF plugin package to Ardalis.Specification containing EF evaluator and abstract repository.</Summary>
+    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
+    <PackageTags>spec;specification;repository;ddd</PackageTags>
+    <Version>4.0.0</Version>
+    <PackageReleaseNotes>New API for building the specifications.</PackageReleaseNotes>
+    <AssemblyName>Ardalis.Specification.EF</AssemblyName>
+    <PackageIcon>icon.png</PackageIcon>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
 </Project>
