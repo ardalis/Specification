@@ -6,7 +6,7 @@ namespace Ardalis.Specification
 {
     public interface ISpecification<T, TResult> : ISpecification<T>
     {
-        Expression<Func<T, TResult>> Selector { get; }
+        Expression<Func<T, TResult>>? Selector { get; }
     }
 
     public interface ISpecification<T>

@@ -30,7 +30,7 @@ namespace Ardalis.Specification
             // Need to check for null if <Nullable> is enabled.
             if (specification.OrderExpressions != null)
             {
-                IOrderedQueryable<T> orderedQuery = null;
+                IOrderedQueryable<T>? orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
                     if (orderExpression.OrderType == OrderTypeEnum.OrderBy)

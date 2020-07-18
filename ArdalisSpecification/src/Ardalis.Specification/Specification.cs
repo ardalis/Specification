@@ -16,7 +16,7 @@ namespace Ardalis.Specification
             base.Query = this.Query;
         }
 
-        public Expression<Func<T, TResult>> Selector { get; private set; }
+        public Expression<Func<T, TResult>>? Selector { get; private set; }
 
         protected class SpecificationBuilder<TSource, TSourceResult> : SpecificationBuilder<TSource>, ISpecificationBuilder<TSource, TSourceResult>
         {

@@ -2,7 +2,7 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class BlogNamesSpecification : Specification<Blog, string>
+    public class BlogNamesSpecification : Specification<Blog, string?>
     {
         public BlogNamesSpecification()
         {

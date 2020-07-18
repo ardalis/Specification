@@ -8,16 +8,16 @@ namespace Ardalis.Specification
     {
         private readonly List<string> navigationPropertyNames = new List<string>();
 
-        public IncludeAggregator(string navigationPropertyName)
+        public IncludeAggregator(string? navigationPropertyName)
         {
             AddNavigationPropertyName(navigationPropertyName);
         }
 
-        public void AddNavigationPropertyName(string navigationPropertyName)
+        public void AddNavigationPropertyName(string? navigationPropertyName)
         {
             if (!string.IsNullOrEmpty(navigationPropertyName))
             {
-                navigationPropertyNames.Add(navigationPropertyName);
+                navigationPropertyNames.Add(navigationPropertyName!);
             }
         }
 

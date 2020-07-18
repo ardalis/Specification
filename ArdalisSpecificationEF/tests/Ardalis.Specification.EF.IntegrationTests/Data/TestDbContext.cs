@@ -8,11 +8,11 @@ namespace Ardalis.Specification.EF.IntegrationTests.Data
 {
     public class TestDbContext : DbContext
     {
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Country>? Countries { get; set; }
+        public DbSet<Company>? Companies { get; set; }
+        public DbSet<Store>? Stores { get; set; }
+        public DbSet<Address>? Addresses { get; set; }
+        public DbSet<Product>? Products { get; set; }
 
         public TestDbContext(DbContextOptions options) : base(options)
         {
@@ -28,7 +28,7 @@ namespace Ardalis.Specification.EF.IntegrationTests.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Store>().HasOne(x => x.Address).WithOne(x => x.Store).HasForeignKey<Address>(x => x.StoreId);
+            modelBuilder.Entity<Store>().HasOne(x => x.Address).WithOne(x => x!.Store!).HasForeignKey<Address>(x => x.StoreId);
 
             modelBuilder.Entity<Country>().HasData(CountrySeed.Get());
             modelBuilder.Entity<Company>().HasData(CompanySeed.Get());
