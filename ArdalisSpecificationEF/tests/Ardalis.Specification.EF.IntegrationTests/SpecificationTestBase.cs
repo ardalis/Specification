@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ardali.Specification.EF.IntegrationTests
+namespace Ardalis.Specification.EF.IntegrationTests
 {
     public class SpecificationTestBase
     {
