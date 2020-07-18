@@ -6,24 +6,17 @@ namespace Ardalis.Specification.IntegrationTests.SampleClient
 {
     public class SampleDbContext : DbContext
     {
-        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => 
-        {
-            builder.AddFilter("Ardalis.Specification", LogLevel.Debug);
-            builder.AddConsole();
-        });
-
         public DbSet<Author>? Authors { get; set; }
         public DbSet<Blog>? Blogs { get; set; }
         public DbSet<Post>? Posts { get; set; }
 
         public SampleDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(loggerFactory);
+            optionsBuilder.UseLoggerFactory(LoggerFactoryProvider.LoggerFactoryInstance);
             base.OnConfiguring(optionsBuilder);
         }
 

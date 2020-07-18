@@ -107,12 +107,12 @@ namespace Ardalis.Specification.IntegrationTests
         }
 
         [Fact]
-        public async Task GetPostsOrderedByThenBySpecDescending()
+        public async Task GetPostsOrderedByDescendingThenBySpec()
         {
             var result = (await _postRepository.ListAsync(new PostsByBlogOrderedByThenBySpec(BlogBuilder.VALID_BLOG_ID, false))).ToList();
 
-            result.First().Id.Should().Be(234);
-            result.Last().Id.Should().Be(399);
+            result.First().Id.Should().Be(399);
+            result.Last().Id.Should().Be(234);
         }
 
         [Fact]
