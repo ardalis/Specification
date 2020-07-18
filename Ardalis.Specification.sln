@@ -28,6 +28,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzurePipeline", "AzurePipel
 		GetCoverage.sh = GetCoverage.sh
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specification.EF", "Specification.EF", "{D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87A52C09-DD38-4679-910D-299E3BB4291C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CF6E2E3F-8D4C-47E1-ADCF-A235D32F0A3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EF", "Specification.EF\src\Ardalis.Specification.EF\Ardalis.Specification.EF.csproj", "{5EB4ADA4-5258-4964-BD7D-11D4F926E344}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardali.Specification.EF.IntegrationTests", "Specification.EF\tests\Ardali.Specification.EF.IntegrationTests\Ardali.Specification.EF.IntegrationTests.csproj", "{5AFD1454-E625-451D-A615-CEB7BB09AA65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +56,14 @@ Global
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +72,10 @@ Global
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981} = {C35FE7A2-2F7B-4094-AA9F-255B75ED919E}
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8} = {61D9F5ED-0A02-4EEF-A573-31267BB67F0B}
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7} = {C35FE7A2-2F7B-4094-AA9F-255B75ED919E}
+		{87A52C09-DD38-4679-910D-299E3BB4291C} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
+		{CF6E2E3F-8D4C-47E1-ADCF-A235D32F0A3D} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
+		{5EB4ADA4-5258-4964-BD7D-11D4F926E344} = {87A52C09-DD38-4679-910D-299E3BB4291C}
+		{5AFD1454-E625-451D-A615-CEB7BB09AA65} = {CF6E2E3F-8D4C-47E1-ADCF-A235D32F0A3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}
