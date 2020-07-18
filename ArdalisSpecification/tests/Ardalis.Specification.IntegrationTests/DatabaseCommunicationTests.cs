@@ -44,38 +44,6 @@ namespace Ardalis.Specification.IntegrationTests
             result.Posts.Count.Should().Be(0);
         }
 
-        // Include tests will be done in Ardalis.Specification.EF package
-        //[Fact]
-        //public async Task GetBlogUsingEFRepositoryAndSpecShouldIncludePosts()
-        //{
-        //    var result = (await _blogRepository.ListAsync(new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
-
-        //    result.Should().NotBeNull();
-        //    result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
-        //    result.Posts.Count.Should().BeGreaterThan(100);
-        //}
-
-        //[Fact]
-        //public async Task GetBlogUsingEFRepositoryAndSpecWithStringIncludeShouldIncludePosts()
-        //{
-        //    var result = (await _blogRepository.ListAsync(new BlogWithPostsUsingStringSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
-
-        //    result.Should().NotBeNull();
-        //    result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
-        //    result.Posts.Count.Should().BeGreaterThan(100);
-        //}
-
-        //[Fact]
-        //public async Task GetBlogWithPostsAndAuthorsWithChainableIncludeSpecShouldIncludePostsAndAuthors()
-        //{
-        //    var result = (await _blogRepository.ListAsync(new BlogWithPostsAndAuthorSpec(BlogBuilder.VALID_BLOG_ID))).SingleOrDefault();
-
-        //    result.Should().NotBeNull();
-        //    result.Name.Should().Be(BlogBuilder.VALID_BLOG_NAME);
-        //    result.Posts.Count.Should().BeGreaterThan(100);
-        //    result.Posts.Select(p => p.Author).ToList().Count.Should().BeGreaterThan(0);
-        //}
-
         [Fact]
         public async Task GetSecondPageOfPostsUsingPostsByBlogPaginatedSpec()
         {
@@ -124,15 +92,14 @@ namespace Ardalis.Specification.IntegrationTests
             result.Last().Id.Should().Be(234);
         }
 
-        // This test will be done in Ardalis.Specification.EF package
-        //// TODO: This could move to the Unit Tests project if specs were in separate project
-        //[Fact]
-        //public void EnableCacheShouldSetCacheKeyProperly()
-        //{
-        //    var spec = new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID);
+       // TODO: This could move to the Unit Tests project if specs were in separate project
+       [Fact]
+        public void EnableCacheShouldSetCacheKeyProperly()
+        {
+            var spec = new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID);
 
-        //    spec.CacheKey.Should().Be($"BlogWithPostsSpec-{BlogBuilder.VALID_BLOG_ID}");
-        //}
+            spec.CacheKey.Should().Be($"BlogWithPostsSpec-{BlogBuilder.VALID_BLOG_ID}");
+        }
 
         //[Fact]
         //public async Task GroupByShouldWorkProperly()
