@@ -2,12 +2,12 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class PostsByBlogPaginatedSpec : BaseSpecification<Post>
+    public class PostsByBlogPaginatedSpec : Specification<Post>
     {
         public PostsByBlogPaginatedSpec(int skip, int take, int blogId)
-            : base(p => p.BlogId == blogId)
         {
-            ApplyPaging(skip, take);
+            Query.Where(p => p.BlogId == blogId)
+                .Paginate(skip, take);
         }
     }
 

@@ -32,10 +32,6 @@
       <Version>3.1.4</Version>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="QueryExtensions\Include\" />
-  </ItemGroup>
   
   <ItemGroup>
     <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />

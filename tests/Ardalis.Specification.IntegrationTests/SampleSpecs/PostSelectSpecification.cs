@@ -6,13 +6,11 @@ using System.Text;
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    // Just an example where selector expression is passed as an argument.
-    // Since it's generic solution, we should be cautious in its usage.
-    public class PostSelectSpecification : BaseSpecification<Post, object>
+    public class PostSelectSpecification : Specification<Post, object>
     {
-        public PostSelectSpecification(Expression<Func<Post, object>> selector) : base(b => true)
+        public PostSelectSpecification(Expression<Func<Post, object>> selector)
         {
-            Selector = selector;
+            Query.Select(selector);
         }
     }
 }

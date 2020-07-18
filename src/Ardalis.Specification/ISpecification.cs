@@ -6,25 +6,21 @@ namespace Ardalis.Specification
 {
     public interface ISpecification<T, TResult> : ISpecification<T>
     {
-        Expression<Func<T, TResult>>? Selector { get; set; }
+        Expression<Func<T, TResult>> Selector { get; }
     }
 
     public interface ISpecification<T>
     {
-        bool CacheEnabled { get; }
-        string? CacheKey { get; }
-
-        IEnumerable<Expression<Func<T, bool>>> Criterias { get; }
-        IEnumerable<Expression<Func<T, object>>> Includes { get; }
+        IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; }
         IEnumerable<string> IncludeStrings { get; }
-
-        Expression<Func<T, object>>? OrderBy { get; }
-        Expression<Func<T, object>>? ThenBy { get; }
-        Expression<Func<T, object>>? OrderByDescending { get; }
-        //Expression<Func<T, object>> GroupBy { get; }
+        IEnumerable<IIncludeAggregator> IncludeAggregators { get; }
+        IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
 
         int Take { get; }
         int Skip { get; }
         bool IsPagingEnabled { get; }
+
+        bool CacheEnabled { get; }
+        string? CacheKey { get; }
     }
 }

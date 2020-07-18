@@ -2,12 +2,13 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class BlogWithPostsSpec : BaseSpecification<Blog>
+    public class BlogWithPostsSpec : Specification<Blog>
     {
-        public BlogWithPostsSpec(int id) : base(b => b.Id == id)
+        public BlogWithPostsSpec(int id)
         {
-            AddInclude(b => b.Posts);
-            EnableCache(nameof(BlogWithPostsSpec), id);
+            Query.Where(b => b.Id == id)
+                .EnableCache(nameof(BlogWithPostsSpec), id)
+                .Include(b => b.Posts);
         }
     }
 }

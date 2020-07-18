@@ -2,9 +2,9 @@
 
 namespace Ardalis.Specification.IntegrationTests.SampleSpecs
 {
-    public class PostsGroupedByIdSpec : BaseSpecification<Post>
+    public class PostsGroupedByIdSpec : Specification<Post>
     {
-        public PostsGroupedByIdSpec() : base(p => true)
+        public PostsGroupedByIdSpec()
         {
             // Removed in version 3.0
             //ApplyGroupBy(p => p.Id % 2 == 0);
