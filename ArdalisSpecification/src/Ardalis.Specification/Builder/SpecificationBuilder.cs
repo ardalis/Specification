@@ -6,71 +6,71 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public class SpecificationBuilder<TSource, TSourceResult> : SpecificationBuilder<TSource>, ISpecificationBuilder<TSource, TSourceResult>
+    public class SpecificationBuilder<T, TResult> : SpecificationBuilder<T>, ISpecificationBuilder<T, TResult>
     {
-        private readonly Specification<TSource, TSourceResult> parent;
+        private readonly Specification<T, TResult> specification;
 
-        public SpecificationBuilder(Specification<TSource, TSourceResult> parent) : base(parent)
+        public SpecificationBuilder(Specification<T, TResult> specification) : base(specification)
         {
-            this.parent = parent;
+            this.specification = specification;
         }
 
-        public ISpecificationBuilder<TSource> Select(Expression<Func<TSource, TSourceResult>> selector)
+        public ISpecificationBuilder<T> Select(Expression<Func<T, TResult>> selector)
         {
-            parent.Selector = selector;
+            specification.Selector = selector;
             return this;
         }
     }
 
-    public class SpecificationBuilder<TSource> : ISpecificationBuilder<TSource>
+    public class SpecificationBuilder<T> : ISpecificationBuilder<T>
     {
-        private readonly Specification<TSource> parent;
-        private readonly IOrderedSpecificationBuilder<TSource> orderedSpecificationBuilder;
+        private readonly Specification<T> specification;
+        private readonly IOrderedSpecificationBuilder<T> orderedSpecificationBuilder;
 
-        public SpecificationBuilder(Specification<TSource> parent)
+        public SpecificationBuilder(Specification<T> specification)
         {
-            this.parent = parent;
-            this.orderedSpecificationBuilder = new OrderedSpecificationBuilder<TSource>(parent);
+            this.specification = specification;
+            this.orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specification);
         }
 
-        public ISpecificationBuilder<TSource> Where(Expression<Func<TSource, bool>> criteria)
+        public ISpecificationBuilder<T> Where(Expression<Func<T, bool>> criteria)
         {
-            ((List<Expression<Func<TSource, bool>>>)parent.WhereExpressions).Add(criteria);
+            ((List<Expression<Func<T, bool>>>)specification.WhereExpressions).Add(criteria);
             return this;
         }
 
-        public IIncludableSpecificationBuilder<TSource, TProperty> Include<TProperty>(Expression<Func<TSource, TProperty>> includeExpression)
+        public IIncludableSpecificationBuilder<T, TProperty> Include<TProperty>(Expression<Func<T, TProperty>> includeExpression)
         {
             var aggregator = new IncludeAggregator((includeExpression.Body as MemberExpression)?.Member?.Name);
-            var includeBuilder = new IncludableSpecificationBuilder<TSource, TProperty>(aggregator);
+            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(aggregator);
 
-            ((List<IIncludeAggregator>)parent.IncludeAggregators).Add(aggregator);
+            ((List<IIncludeAggregator>)specification.IncludeAggregators).Add(aggregator);
             return includeBuilder;
         }
 
-        public ISpecificationBuilder<TSource> Include(string includeString)
+        public ISpecificationBuilder<T> Include(string includeString)
         {
-            ((List<string>)parent.IncludeStrings).Add(includeString);
+            ((List<string>)specification.IncludeStrings).Add(includeString);
             return this;
         }
 
-        public IOrderedSpecificationBuilder<TSource> OrderBy(Expression<Func<TSource, object>> orderExpression)
+        public IOrderedSpecificationBuilder<T> OrderBy(Expression<Func<T, object>> orderExpression)
         {
-            ((List<(Expression<Func<TSource, object>> OrderExpression, OrderTypeEnum OrderType)>)parent.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderBy));
+            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specification.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderBy));
             return orderedSpecificationBuilder;
         }
 
-        public IOrderedSpecificationBuilder<TSource> OrderByDescending(Expression<Func<TSource, object>> orderExpression)
+        public IOrderedSpecificationBuilder<T> OrderByDescending(Expression<Func<T, object>> orderExpression)
         {
-            ((List<(Expression<Func<TSource, object>> OrderExpression, OrderTypeEnum OrderType)>)parent.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderByDescending));
+            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specification.OrderExpressions).Add((orderExpression, OrderTypeEnum.OrderByDescending));
             return orderedSpecificationBuilder;
         }
 
-        public ISpecificationBuilder<TSource> Paginate(int skip, int take)
+        public ISpecificationBuilder<T> Paginate(int skip, int take)
         {
-            parent.Skip = skip;
-            parent.Take = take;
-            parent.IsPagingEnabled = true;
+            specification.Skip = skip;
+            specification.Take = take;
+            specification.IsPagingEnabled = true;
             return this;
         }
 
@@ -79,14 +79,14 @@ namespace Ardalis.Specification
         /// </summary>
         /// <param name="specificationName"></param>
         /// <param name="args">Any arguments used in defining the specification</param>
-        public ISpecificationBuilder<TSource> EnableCache(string specificationName, params object[] args)
+        public ISpecificationBuilder<T> EnableCache(string specificationName, params object[] args)
         {
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-            Guard.Against.NullOrEmpty(parent.WhereExpressions, nameof(parent.WhereExpressions));
+            Guard.Against.NullOrEmpty(specification.WhereExpressions, nameof(specification.WhereExpressions));
 
-            parent.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+            specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
 
-            parent.CacheEnabled = true;
+            specification.CacheEnabled = true;
             return this;
         }
     }

@@ -5,19 +5,19 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public interface ISpecificationBuilder<TSource, TSourceResult> : ISpecificationBuilder<TSource>
+    public interface ISpecificationBuilder<T, TResult> : ISpecificationBuilder<T>
     {
-        ISpecificationBuilder<TSource> Select(Expression<Func<TSource, TSourceResult>> selector);
+        ISpecificationBuilder<T> Select(Expression<Func<T, TResult>> selector);
     }
 
-    public interface ISpecificationBuilder<TSource>
+    public interface ISpecificationBuilder<T>
     {
-        ISpecificationBuilder<TSource> Where(Expression<Func<TSource, bool>> criteria);
-        ISpecificationBuilder<TSource> Paginate(int skip, int take);
-        IOrderedSpecificationBuilder<TSource> OrderBy(Expression<Func<TSource, object>> orderExpression);
-        IOrderedSpecificationBuilder<TSource> OrderByDescending(Expression<Func<TSource, object>> orderExpression);
-        ISpecificationBuilder<TSource> Include(string includeString);
-        IIncludableSpecificationBuilder<TSource, TProperty> Include<TProperty>(Expression<Func<TSource, TProperty>> includeExpression);
-        ISpecificationBuilder<TSource> EnableCache(string specificationName, params object[] args);
+        ISpecificationBuilder<T> Where(Expression<Func<T, bool>> criteria);
+        ISpecificationBuilder<T> Paginate(int skip, int take);
+        IOrderedSpecificationBuilder<T> OrderBy(Expression<Func<T, object>> orderExpression);
+        IOrderedSpecificationBuilder<T> OrderByDescending(Expression<Func<T, object>> orderExpression);
+        ISpecificationBuilder<T> Include(string includeString);
+        IIncludableSpecificationBuilder<T, TProperty> Include<TProperty>(Expression<Func<T, TProperty>> includeExpression);
+        ISpecificationBuilder<T> EnableCache(string specificationName, params object[] args);
     }
 }
