@@ -1,9 +1,6 @@
-﻿using Ardalis.Specification.EF.IntegrationTests.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Specs
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Specs
 {
     public class StoreWithProductsSpec : Specification<Store>
     {

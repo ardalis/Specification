@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Data.Seeds
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data.Seeds
 {
     public class CountrySeed
     {

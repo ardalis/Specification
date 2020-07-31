@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification.EF
+namespace Ardalis.Specification.EntityFrameworkCore
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

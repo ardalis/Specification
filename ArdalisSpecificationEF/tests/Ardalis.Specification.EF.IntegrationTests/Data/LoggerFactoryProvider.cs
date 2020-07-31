@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Data
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data
 {
     public class LoggerFactoryProvider
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace Ardalis.Specification.EF
+namespace Ardalis.Specification.EntityFrameworkCore
 {
     public class SpecificationEvaluator<T> : SpecificationEvaluatorBase<T> where T : class
     {

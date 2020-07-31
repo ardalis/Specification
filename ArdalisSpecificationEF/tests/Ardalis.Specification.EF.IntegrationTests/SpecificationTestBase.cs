@@ -1,10 +1,7 @@
-﻿using Ardalis.Specification.EF.IntegrationTests.Data;
+﻿using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ardalis.Specification.EF.IntegrationTests
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
     public class SpecificationTestBase
     {

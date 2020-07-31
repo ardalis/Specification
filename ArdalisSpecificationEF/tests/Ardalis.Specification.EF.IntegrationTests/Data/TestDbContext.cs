@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ardalis.Specification.EF.IntegrationTests.Data.Seeds;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data.Seeds;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Data
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data
 {
     public class TestDbContext : DbContext
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Data
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data
 {
     public class Store
     {
