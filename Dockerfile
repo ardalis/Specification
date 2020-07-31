@@ -9,6 +9,6 @@ RUN /bin/bash -c 'ls -la /wait; chmod +x /wait; ls -la /wait'
 # install the report generator tool
 RUN dotnet tool install dotnet-reportgenerator-globaltool --version 4.2.15 --tool-path /tools
 
-CMD /wait && dotnet test --logger trx --results-directory /var/temp /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura && mv /tests/Ardalis.Specification.UnitTests/coverage.cobertura.xml /var/temp/coverage.unit.cobertura.xml && mv /tests/Ardalis.Specification.IntegrationTests/coverage.cobertura.xml /var/temp/coverage.integration.cobertura.xml && tools/reportgenerator -reports:/var/temp/coverage.*.cobertura.xml -targetdir:/var/temp/coverage -reporttypes:HtmlInline_AzurePipelines\;HTMLChart\;Cobertura
+CMD /wait && dotnet test --logger trx --results-directory /var/temp /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura && mv /ArdalisSpecification/tests/Ardalis.Specification.UnitTests/coverage.cobertura.xml /var/temp/coverage.unit.cobertura.xml && mv /ArdalisSpecification/tests/Ardalis.Specification.IntegrationTests/coverage.cobertura.xml /var/temp/coverage.integration.cobertura.xml && mv /ArdalisSpecificationEF/tests/Ardalis.Specification.EF.IntegrationTests/coverage.cobertura.xml /var/temp/coverage.ef.integration.cobertura.xml && tools/reportgenerator -reports:/var/temp/coverage.*.cobertura.xml -targetdir:/var/temp/coverage -reporttypes:HtmlInline_AzurePipelines\;HTMLChart\;Cobertura
 
 

@@ -26,6 +26,10 @@ private async Task<IQueryable<T>> ApplySpecification(ISpecification<T> spec)
 
 Now to use this method, the calling code simply instantiates the appropriate specification implementation. Specifications should be defined in an easily-discovered location in the application, so developers can easily reuse them. The use of this pattern helps to eliminate many commonly duplicated lambda expressions in applications, reducing bugs associated with this duplication.
 
+## Running the tests
+
+This project needs a database to test, since a lot of the tests validate that a specification is translated from LINQ to SQL by EF Core. To run the tests, we're using docker containers, including a docker-hosted SQL Server instance. You run the tests by simply running `RunTests.bat` or `RunTests.sh`.
+
 ## Reference
 
 Some free video streams in which this package has been developed and discussed on [YouTube.com/ardalis](http://youtube.com/ardalis?sub_confirmation=1).
