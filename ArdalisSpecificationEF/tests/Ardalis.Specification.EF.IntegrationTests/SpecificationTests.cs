@@ -1,14 +1,11 @@
-﻿using Ardalis.Specification.EF.IntegrationTests.Data.Seeds;
-using Ardalis.Specification.EF.IntegrationTests.Specs;
+﻿using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data.Seeds;
+using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Specs;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Ardalis.Specification.EF.IntegrationTests
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
     public class SpecificationTests : SpecificationTestBase
     {

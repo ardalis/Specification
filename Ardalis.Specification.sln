@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.IntegrationTests", "ArdalisSpecification\tests\Ardalis.Specification.IntegrationTests\Ardalis.Specification.IntegrationTests.csproj", "{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EF", "ArdalisSpecificationEF\src\Ardalis.Specification.EF\Ardalis.Specification.EF.csproj", "{5EB4ADA4-5258-4964-BD7D-11D4F926E344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EntityFrameworkCore", "ArdalisSpecificationEF\src\Ardalis.Specification.EF\Ardalis.Specification.EntityFrameworkCore.csproj", "{5EB4ADA4-5258-4964-BD7D-11D4F926E344}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EF.IntegrationTests", "ArdalisSpecificationEF\tests\Ardalis.Specification.EF.IntegrationTests\Ardalis.Specification.EF.IntegrationTests.csproj", "{5AFD1454-E625-451D-A615-CEB7BB09AA65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EntityFrameworkCore.IntegrationTests", "ArdalisSpecificationEF\tests\Ardalis.Specification.EF.IntegrationTests\Ardalis.Specification.EntityFrameworkCore.IntegrationTests.csproj", "{5AFD1454-E625-451D-A615-CEB7BB09AA65}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArdalisSpecification", "ArdalisSpecification", "{EA343A2D-E8F2-4526-B478-912DF621AC4D}"
 EndProject

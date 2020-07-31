@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ardalis.Specification.EF.IntegrationTests.Data
+﻿namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data
 {
     public class Repository<T> : RepositoryBase<T> where T : class
     {

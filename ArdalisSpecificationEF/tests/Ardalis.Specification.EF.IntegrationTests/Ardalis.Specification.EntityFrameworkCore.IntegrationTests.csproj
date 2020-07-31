@@ -26,12 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ardalis.Specification.EF\Ardalis.Specification.EF.csproj" />
+    <Folder Include="Data\Seeds\" />
+    <Folder Include="Specs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Seeds\" />
-    <Folder Include="Specs\" />
+    <ProjectReference Include="..\..\src\Ardalis.Specification.EF\Ardalis.Specification.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

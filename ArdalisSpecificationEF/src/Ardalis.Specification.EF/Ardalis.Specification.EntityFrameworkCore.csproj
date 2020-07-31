@@ -24,12 +24,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" Version="4.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
   <ItemGroup>

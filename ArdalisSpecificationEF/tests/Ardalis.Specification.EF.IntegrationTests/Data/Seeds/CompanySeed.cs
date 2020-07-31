@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ardalis.Specification.EF.IntegrationTests.Data.Seeds
+namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Data.Seeds
 {
     public class CompanySeed
     {
