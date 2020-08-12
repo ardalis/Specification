@@ -30,6 +30,12 @@ namespace Ardalis.Specification
             // Need to check for null if <Nullable> is enabled.
             if (specification.OrderExpressions != null)
             {
+                if (specification.OrderExpressions.Where(x=>x.OrderType == OrderTypeEnum.OrderBy || 
+                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                {
+                    throw new Exception("The specification contains more than one Order chain!");
+                }
+
                 IOrderedQueryable<T>? orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {

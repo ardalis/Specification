@@ -4,6 +4,7 @@ using Dapper;
 using FluentAssertions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -92,8 +93,16 @@ namespace Ardalis.Specification.IntegrationTests
             result.Last().Id.Should().Be(234);
         }
 
-       // TODO: This could move to the Unit Tests project if specs were in separate project
-       [Fact]
+        [Fact]
+        public async Task GetBlogOrderedTwoChainsSpec()
+        {
+            var ex = await Assert.ThrowsAsync<Exception>(async () => await _blogRepository.ListAsync(new BlogsOrderedTwoChainsSpec()));
+
+            Assert.Equal("The specification contains more than one Order chain!", ex.Message);
+        }
+
+        // TODO: This could move to the Unit Tests project if specs were in separate project
+        [Fact]
         public void EnableCacheShouldSetCacheKeyProperly()
         {
             var spec = new BlogWithPostsSpec(BlogBuilder.VALID_BLOG_ID);
