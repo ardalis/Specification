@@ -96,9 +96,7 @@ namespace Ardalis.Specification.IntegrationTests
         [Fact]
         public async Task GetBlogOrderedTwoChainsSpec()
         {
-            var ex = await Assert.ThrowsAsync<Exception>(async () => await _blogRepository.ListAsync(new BlogsOrderedTwoChainsSpec()));
-
-            Assert.Equal("The specification contains more than one Order chain!", ex.Message);
+            await Assert.ThrowsAsync<DuplicateOrderChainException>(async () => await _blogRepository.ListAsync(new BlogsOrderedTwoChainsSpec()));
         }
 
         // TODO: This could move to the Unit Tests project if specs were in separate project

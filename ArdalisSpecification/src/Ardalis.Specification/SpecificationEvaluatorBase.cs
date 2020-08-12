@@ -33,7 +33,7 @@ namespace Ardalis.Specification
                 if (specification.OrderExpressions.Where(x=>x.OrderType == OrderTypeEnum.OrderBy || 
                                                             x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
                 {
-                    throw new Exception("The specification contains more than one Order chain!");
+                    throw new DuplicateOrderChainException();
                 }
 
                 IOrderedQueryable<T>? orderedQuery = null;
