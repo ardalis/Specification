@@ -14,6 +14,7 @@ namespace Ardalis.Specification
         Task<T?> GetByIdAsync(int id);
         Task<T?> GetByIdAsync<TId>(TId id);
         Task<T?> GetBySpecAsync(ISpecification<T> specification);
+        Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification);
         Task<List<T>> ListAsync();
         Task<List<T>> ListAsync(ISpecification<T> specification);
         Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification);

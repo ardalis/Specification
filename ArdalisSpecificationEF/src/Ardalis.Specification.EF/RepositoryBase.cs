@@ -73,6 +73,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return (await ListAsync(specification)).FirstOrDefault();
         }
 
+        public async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification)
+        {
+            if (specification is null) throw new ArgumentNullException("Specification is required");
+            if (specification.Selector is null) throw new Exception("Specification must have Selector defined.");
+
+            return (await ListAsync(specification)).FirstOrDefault();
+        }
+
         public async Task<List<T>> ListAsync()
         {
             return await dbContext.Set<T>().ToListAsync();
