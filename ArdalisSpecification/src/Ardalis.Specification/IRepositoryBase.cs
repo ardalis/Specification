@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ardalis.Specification
@@ -13,9 +11,9 @@ namespace Ardalis.Specification
         Task DeleteRangeAsync(IEnumerable<T> entities);
         Task SaveChangesAsync();
 
-        Task<T> GetByIdAsync(int id);
-        Task<T> GetByIdAsync<TId>(TId id);
-        Task<T> GetBySpecAsync(ISpecification<T> specification);
+        Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync<TId>(TId id);
+        Task<T?> GetBySpecAsync(ISpecification<T> specification);
         Task<List<T>> ListAsync();
         Task<List<T>> ListAsync(ISpecification<T> specification);
         Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification);

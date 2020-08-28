@@ -58,17 +58,17 @@ namespace Ardalis.Specification.EntityFrameworkCore
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> GetByIdAsync<TId>(TId id)
+        public async Task<T?> GetByIdAsync<TId>(TId id)
         {
             return await dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> GetBySpecAsync(ISpecification<T> specification)
+        public async Task<T?> GetBySpecAsync(ISpecification<T> specification)
         {
             return (await ListAsync(specification)).FirstOrDefault();
         }
