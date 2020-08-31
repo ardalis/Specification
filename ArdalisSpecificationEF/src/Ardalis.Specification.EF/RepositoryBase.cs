@@ -75,9 +75,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
         public async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is null) throw new ArgumentNullException("Specification is required");
-            if (specification.Selector is null) throw new SelectorNotFoundException();
-
             return (await ListAsync(specification)).FirstOrDefault();
         }
 
@@ -93,9 +90,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
         public async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is null) throw new ArgumentNullException("Specification is required");
-            if (specification.Selector is null) throw new SelectorNotFoundException();
-
             return await ApplySpecification(specification).ToListAsync();
         }
 
@@ -105,12 +99,15 @@ namespace Ardalis.Specification.EntityFrameworkCore
         }
 
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        protected IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
         }
-        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
+        protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
+            if (specification is null) throw new ArgumentNullException("Specification is required");
+            if (specification.Selector is null) throw new SelectorNotFoundException();
+
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
         }
     }
