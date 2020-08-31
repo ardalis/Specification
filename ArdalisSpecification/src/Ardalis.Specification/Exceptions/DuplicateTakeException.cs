@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ardalis.Specification.Exceptions
+namespace Ardalis.Specification
 {
     public class DuplicateTakeException : Exception
     {

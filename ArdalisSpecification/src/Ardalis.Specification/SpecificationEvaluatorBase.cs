@@ -63,10 +63,15 @@ namespace Ardalis.Specification
                 }
             }
 
-            if (specification.IsPagingEnabled)
+            // If skip is 0, avoid adding to the IQueryable. It will generate more optimized SQL that way.
+            if (specification.Skip != null && specification.Skip != 0)
             {
-                query = query.Skip(specification.Skip)
-                             .Take(specification.Take);
+                query = query.Skip(specification.Skip.Value);
+            }
+
+            if (specification.Take != null)
+            {
+                query = query.Take(specification.Take.Value);
             }
 
 

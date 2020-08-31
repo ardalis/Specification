@@ -16,8 +16,10 @@ namespace Ardalis.Specification
         IEnumerable<IIncludeAggregator> IncludeAggregators { get; }
         IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
 
-        int Take { get; }
-        int Skip { get; }
+        int? Take { get; }
+        int? Skip { get; }
+
+        [Obsolete]
         bool IsPagingEnabled { get; }
 
         bool CacheEnabled { get; }

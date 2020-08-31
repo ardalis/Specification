@@ -36,10 +36,11 @@ namespace Ardalis.Specification
 
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
 
-        public int Take { get; internal set; }
+        public int? Take { get; internal set; } = null;
 
-        public int Skip { get; internal set; }
+        public int? Skip { get; internal set; } = null;
 
+        [Obsolete]
         public bool IsPagingEnabled { get; internal set; } = false;
 
         public string? CacheKey { get; internal set; }
