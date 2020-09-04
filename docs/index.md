@@ -1,10 +1,17 @@
-## Welcome to GitHub Pages - Ardalis.Specification
+## Installing Ardalis.Specification
 
-[View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/specification)
+[View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/Specification)
 
-You can use the [editor on GitHub](https://github.com/ardalis/Specification/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+Install Ardalis.Specification from NuGet. The latest version is available here:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[https://www.nuget.org/packages/Ardalis.Specification/](https://www.nuget.org/packages/Ardalis.Specification/)
+
+Alternately, add it to a project using this CLI command:
+
+```powershell
+dotnet add package Ardalis.Specification
+```
+
 
 ### Markdown
 
