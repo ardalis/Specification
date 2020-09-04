@@ -1,3 +1,7 @@
+## Overview
+
+The Specification pattern encapsulates query logic in its own class, which helps classes follow Single Responsibility Principle and promotes reuse of common queries. Specifications can be independently unit tested and when combined with Repository help keep the Repository from growing with many additional custom query methods. Specification is commonly used on projects that leverage Domain-Driven Design.
+
 ## Installing Ardalis.Specification
 
 [View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/Specification)
