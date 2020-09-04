@@ -1,4 +1,6 @@
-## Welcome to GitHub Pages
+## Welcome to GitHub Pages - Ardalis.Specification
+
+[View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/specification)
 
 You can use the [editor on GitHub](https://github.com/ardalis/Specification/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
 
