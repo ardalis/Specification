@@ -60,6 +60,19 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
+
+        public static ISpecificationBuilder<T> Search<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, string>> selector,
+            string searchTerm,
+            int searchGroup = 1)
+        {
+            ((List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>)specificationBuilder.Specification.SearchCriterias)
+                .Add((selector, searchTerm, searchGroup));
+
+            return specificationBuilder;
+        }
+
         public static ISpecificationBuilder<T> Take<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             int take)

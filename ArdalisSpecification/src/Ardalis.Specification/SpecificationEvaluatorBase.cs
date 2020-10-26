@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
+    // This class is not used as base by the evaluator in plugin package anymore, since we have to ensure proper order of evaluation.
+    // For an example Search should be evaluated before pagination.
+    // This base class remains just for legacy reasons and for unit tests.
+
     public abstract class SpecificationEvaluatorBase<T> : ISpecificationEvaluator<T> where T : class
     {
         public virtual IQueryable<TResult> GetQuery<TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)

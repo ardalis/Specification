@@ -7,7 +7,8 @@ namespace Ardalis.Specification.IntegrationTests.SampleSpecs
         public PostsByBlogPaginatedSpec(int skip, int take, int blogId)
         {
             Query.Where(p => p.BlogId == blogId)
-                .Paginate(skip, take);
+                .Skip(skip)
+                .Take(take);
         }
     }
 
