@@ -5,9 +5,7 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public interface IOrderedSpecificationBuilder<T>
+    public interface IOrderedSpecificationBuilder<T> : ISpecificationBuilder<T>
     {
-        IOrderedSpecificationBuilder<T> ThenBy(Expression<Func<T, object>> orderExpression);
-        IOrderedSpecificationBuilder<T> ThenByDescending(Expression<Func<T, object>> orderExpression);
     }
 }

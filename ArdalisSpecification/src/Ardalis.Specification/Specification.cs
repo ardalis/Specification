@@ -40,7 +40,6 @@ namespace Ardalis.Specification
 
         public int? Skip { get; internal set; } = null;
 
-        [Obsolete]
         public bool IsPagingEnabled { get; internal set; } = false;
 
         public string? CacheKey { get; internal set; }

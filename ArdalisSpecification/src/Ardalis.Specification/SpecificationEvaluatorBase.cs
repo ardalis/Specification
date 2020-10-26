@@ -21,10 +21,9 @@ namespace Ardalis.Specification
         {
             var query = inputQuery;
 
-            if (specification.WhereExpressions.Count() > 0)
+            foreach (var criteria in specification.WhereExpressions)
             {
-                query = specification.WhereExpressions.Aggregate(query,
-                                    (current, criteria) => current.Where(criteria));
+                query = query.Where(criteria);
             }
 
             // Need to check for null if <Nullable> is enabled.
