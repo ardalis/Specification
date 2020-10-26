@@ -12,13 +12,12 @@ namespace Ardalis.Specification
     public interface ISpecification<T>
     {
         IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; }
-        IEnumerable<string> IncludeStrings { get; }
-        IEnumerable<IIncludeAggregator> IncludeAggregators { get; }
         IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
+        IEnumerable<IIncludeAggregator> IncludeAggregators { get; }
+        IEnumerable<string> IncludeStrings { get; }
 
         int? Take { get; }
         int? Skip { get; }
-
         [Obsolete]
         bool IsPagingEnabled { get; }
 
