@@ -15,6 +15,7 @@ namespace Ardalis.Specification
         IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
         IEnumerable<IIncludeAggregator> IncludeAggregators { get; }
         IEnumerable<string> IncludeStrings { get; }
+        IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; }
 
         int? Take { get; }
         int? Skip { get; }
