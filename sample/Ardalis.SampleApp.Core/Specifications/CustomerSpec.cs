@@ -28,7 +28,7 @@ namespace Ardalis.SampleApp.Core.Specifications
                 Query.Where(x => x.Email == filter.Email);
 
             if (!string.IsNullOrEmpty(filter.Address))
-                Query.Search(x => x.Address, filter.Address);
+                Query.Search(x => x.Address, "%" + filter.Address + "%");
         }
     }
 }
