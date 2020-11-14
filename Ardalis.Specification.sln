@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.EntityFramework", "ArdalisSpecificationEF\src\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj", "{37EC09C7-702D-4539-B98D-F67B15E1E6CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37EC09C7-702D-4539-B98D-F67B15E1E6CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37EC09C7-702D-4539-B98D-F67B15E1E6CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37EC09C7-702D-4539-B98D-F67B15E1E6CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37EC09C7-702D-4539-B98D-F67B15E1E6CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
+		{37EC09C7-702D-4539-B98D-F67B15E1E6CE} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}
