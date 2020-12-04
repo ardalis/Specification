@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.SampleApp.Core", "sample\Ardalis.SampleApp.Core\Ardalis.SampleApp.Core.csproj", "{CAAAD1EF-5375-4B71-92CB-237692D60262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.SampleApp.Core", "sample\Ardalis.SampleApp.Core\Ardalis.SampleApp.Core.csproj", "{CAAAD1EF-5375-4B71-92CB-237692D60262}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.SampleApp.Web", "sample\Ardalis.SampleApp.Web\Ardalis.SampleApp.Web.csproj", "{EB3F4056-691C-4D22-903B-A2467D93D552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.SampleApp.Web", "sample\Ardalis.SampleApp.Web\Ardalis.SampleApp.Web.csproj", "{EB3F4056-691C-4D22-903B-A2467D93D552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.SampleApp.Infrastructure", "sample\Ardalis.SampleApp.Infrastructure\Ardalis.SampleApp.Infrastructure.csproj", "{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.SampleApp.Infrastructure", "sample\Ardalis.SampleApp.Infrastructure\Ardalis.SampleApp.Infrastructure.csproj", "{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification", "ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj", "{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}"
 EndProject
@@ -51,6 +51,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB3F4056-691C-4D22-903B-A2467D93D552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3F4056-691C-4D22-903B-A2467D93D552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3F4056-691C-4D22-903B-A2467D93D552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3F4056-691C-4D22-903B-A2467D93D552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,31 +83,19 @@ Global
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB3F4056-691C-4D22-903B-A2467D93D552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB3F4056-691C-4D22-903B-A2467D93D552}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB3F4056-691C-4D22-903B-A2467D93D552}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB3F4056-691C-4D22-903B-A2467D93D552}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAAAD1EF-5375-4B71-92CB-237692D60262}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{CAAAD1EF-5375-4B71-92CB-237692D60262} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
+		{EB3F4056-691C-4D22-903B-A2467D93D552} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
+		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
-		{EB3F4056-691C-4D22-903B-A2467D93D552} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
-		{CAAAD1EF-5375-4B71-92CB-237692D60262} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
-		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}

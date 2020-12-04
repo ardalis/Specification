@@ -1,9 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SampleApp.Core.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ardalis.SampleApp.Core.Entitites.CustomerAggregate
 {

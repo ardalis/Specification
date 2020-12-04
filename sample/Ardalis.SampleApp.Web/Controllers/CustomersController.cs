@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Ardalis.SampleApp.Web.Interfaces;
 using Ardalis.SampleApp.Web.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Web.Controllers
