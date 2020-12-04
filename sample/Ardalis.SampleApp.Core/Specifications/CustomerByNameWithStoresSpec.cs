@@ -11,7 +11,8 @@ namespace Ardalis.SampleApp.Core.Specifications
         public CustomerByNameWithStoresSpec(string name)
         {
             Query.Where(x => x.Name == name)
-                .Include(x => x.Stores);
+                .Include(x => x.Stores)
+                .EnableCache(nameof(CustomerByNameWithStoresSpec), name);
         }
     }
 }

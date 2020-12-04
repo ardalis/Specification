@@ -34,11 +34,13 @@ namespace Ardalis.SampleApp.Web
 
             services.AddAutoMapper(typeof(AutomapperMaps));
 
-            services.AddScoped(typeof(IRepository<>), typeof(MyRepository<>));
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(CachedRepository<>));
+            services.AddScoped(typeof(MyRepository<>));
             services.AddScoped<ICustomerUiService, CustomerUiService>();
 
-            services.AddControllers();
+//            services.AddControllers();
+            services.AddMvc();
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,7 @@ namespace Ardalis.SampleApp.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

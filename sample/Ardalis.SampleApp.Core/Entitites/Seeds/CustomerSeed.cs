@@ -1,7 +1,5 @@
 ﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Ardalis.SampleApp.Core.Entitites.Seeds
 {
@@ -11,7 +9,7 @@ namespace Ardalis.SampleApp.Core.Entitites.Seeds
         {
             List<Customer> output = new List<Customer>();
 
-            for (int i = 1; i <= 100; i++)
+            for (int i = 1; i <= 100000; i++)
             {
                 var customer = new Customer($"Customer{i}", $"Email{i}@local", $"Customer{i} address");
                 customer.AddStore(new Store($"Store{i}-1", $"Store{i}-1 address"));
