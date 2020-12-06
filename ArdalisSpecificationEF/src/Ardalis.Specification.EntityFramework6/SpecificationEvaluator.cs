@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 
-namespace Ardalis.Specification.EntityFramework
+namespace Ardalis.Specification.EntityFramework6
 {
     public class SpecificationEvaluator<T> : SpecificationEvaluatorBase<T> where T : class
     {

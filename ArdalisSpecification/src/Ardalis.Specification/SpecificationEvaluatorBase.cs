@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
+    // This class is not used as base by the evaluator in plugin package anymore, since we have to ensure proper order of evaluation.
+    // For an example Search should be evaluated before pagination.
+    // This base class remains just for legacy reasons and for unit tests.
+
     public abstract class SpecificationEvaluatorBase<T> : ISpecificationEvaluator<T> where T : class
     {
         public virtual IQueryable<TResult> GetQuery<TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)
@@ -21,15 +25,20 @@ namespace Ardalis.Specification
         {
             var query = inputQuery;
 
-            if (specification.WhereExpressions.Count() > 0)
+            foreach (var criteria in specification.WhereExpressions)
             {
-                query = specification.WhereExpressions.Aggregate(query,
-                                    (current, criteria) => current.Where(criteria));
+                query = query.Where(criteria);
             }
 
             // Need to check for null if <Nullable> is enabled.
             if (specification.OrderExpressions != null)
             {
+                if (specification.OrderExpressions.Where(x=>x.OrderType == OrderTypeEnum.OrderBy || 
+                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                {
+                    throw new DuplicateOrderChainException();
+                }
+
                 IOrderedQueryable<T>? orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
@@ -57,10 +66,15 @@ namespace Ardalis.Specification
                 }
             }
 
-            if (specification.IsPagingEnabled)
+            // If skip is 0, avoid adding to the IQueryable. It will generate more optimized SQL that way.
+            if (specification.Skip != null && specification.Skip != 0)
             {
-                query = query.Skip(specification.Skip)
-                             .Take(specification.Take);
+                query = query.Skip(specification.Skip.Value);
+            }
+
+            if (specification.Take != null)
+            {
+                query = query.Take(specification.Take.Value);
             }
 
 

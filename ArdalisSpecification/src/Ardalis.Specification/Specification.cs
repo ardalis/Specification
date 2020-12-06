@@ -36,9 +36,13 @@ namespace Ardalis.Specification
 
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
 
-        public int Take { get; internal set; }
+        public IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; } =
+            new List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>();
 
-        public int Skip { get; internal set; }
+
+        public int? Take { get; internal set; } = null;
+
+        public int? Skip { get; internal set; } = null;
 
         public bool IsPagingEnabled { get; internal set; } = false;
 

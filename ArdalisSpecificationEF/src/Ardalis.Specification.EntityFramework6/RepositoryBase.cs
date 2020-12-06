@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification.EntityFramework
+namespace Ardalis.Specification.EntityFramework6
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -74,6 +73,11 @@ namespace Ardalis.Specification.EntityFramework
             return (await ListAsync(specification)).FirstOrDefault();
         }
 
+        public async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification)
+        {
+            return (await ListAsync(specification)).FirstOrDefault();
+        }
+
         public async Task<List<T>> ListAsync()
         {
             return await dbContext.Set<T>().ToListAsync();
@@ -86,9 +90,6 @@ namespace Ardalis.Specification.EntityFramework
 
         public async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is null) throw new ArgumentNullException("Specification is required");
-            if (specification.Selector is null) throw new Exception("Specification must have Selector defined.");
-
             return await ApplySpecification(specification).ToListAsync();
         }
 
@@ -97,13 +98,15 @@ namespace Ardalis.Specification.EntityFramework
             return await ApplySpecification(specification).CountAsync();
         }
 
-
-        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        protected IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
         }
-        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
+        protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
+            if (specification is null) throw new ArgumentNullException("Specification is required");
+            if (specification.Selector is null) throw new SelectorNotFoundException();
+
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
         }
     }
