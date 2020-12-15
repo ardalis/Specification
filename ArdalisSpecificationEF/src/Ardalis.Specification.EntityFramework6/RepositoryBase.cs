@@ -11,13 +11,13 @@ namespace Ardalis.Specification.EntityFramework6
         private readonly DbContext dbContext;
         private readonly ISpecificationEvaluator<T> specificationEvaluator;
 
-        public RepositoryBase(DbContext dbContext)
+        protected RepositoryBase(DbContext dbContext)
         {
             this.dbContext = dbContext;
             this.specificationEvaluator = new SpecificationEvaluator<T>();
         }
 
-        public RepositoryBase(DbContext dbContext, ISpecificationEvaluator<T> specificationEvaluator)
+        protected RepositoryBase(DbContext dbContext, ISpecificationEvaluator<T> specificationEvaluator)
         {
             this.dbContext = dbContext;
             this.specificationEvaluator = specificationEvaluator;
@@ -88,9 +88,13 @@ namespace Ardalis.Specification.EntityFramework6
             return await ApplySpecification(specification).ToListAsync();
         }
 
-        public async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
+        public Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            return await ApplySpecification(specification).ToListAsync();
+
+            if (specification is null) throw new ArgumentNullException(nameof(specification), "Specification is required");
+            if (specification.Selector is null) throw new ArgumentNullException(nameof(specification), "Specification must have Selector defined.");
+
+            return ApplySpecification(specification).ToListAsync();
         }
 
         public async Task<int> CountAsync(ISpecification<T> specification)
