@@ -85,6 +85,11 @@ namespace Ardalis.Specification.EntityFrameworkCore
                 query = query.Take(specification.Take.Value);
             }
 
+            if (specification.AsNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
             return query;
         }
     }
