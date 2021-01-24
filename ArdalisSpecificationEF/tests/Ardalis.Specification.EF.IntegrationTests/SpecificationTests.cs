@@ -72,5 +72,21 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result.Stores.Count.Should().BeGreaterThan(49);
             result.Stores.Select(x => x.Products).Count().Should().BeGreaterThan(1);
         }
+
+        [Fact]
+        public async Task GetCompanyUsingRepositoryAnd_CompanyAsUntrackedSpec_ShouldNotBeTracked()
+        {
+            var result = (await companyRepository.ListAsync(new CompanySpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
+            dbContext.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            
+            result.Should().NotBeNull();
+            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
+
+            result = (await companyRepository.ListAsync(new CompanyAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
+
+            result.Should().NotBeNull();
+            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
+            dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
+        }
     }
 }
