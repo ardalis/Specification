@@ -27,5 +27,7 @@ namespace Ardalis.Specification
 
         bool CacheEnabled { get; }
         string? CacheKey { get; }
+
+        bool AsNoTracking { get; }
     }
 }
