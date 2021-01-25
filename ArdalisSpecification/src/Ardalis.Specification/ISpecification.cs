@@ -7,6 +7,7 @@ namespace Ardalis.Specification
     public interface ISpecification<T, TResult> : ISpecification<T>
     {
         Expression<Func<T, TResult>>? Selector { get; }
+        new Func<List<TResult>, List<TResult>>? InMemory { get; }
     }
 
     public interface ISpecification<T>
@@ -21,6 +22,8 @@ namespace Ardalis.Specification
         int? Skip { get; }
         [Obsolete]
         bool IsPagingEnabled { get; }
+
+        Func<List<T>, List<T>>? InMemory { get; }
 
         bool CacheEnabled { get; }
         string? CacheKey { get; }

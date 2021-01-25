@@ -16,6 +16,8 @@ namespace Ardalis.Specification
         }
 
         public Expression<Func<T, TResult>>? Selector { get; internal set; }
+
+        public new Func<List<TResult>, List<TResult>>? InMemory { get; internal set; } = null;
     }
 
     public abstract class Specification<T> : ISpecification<T>
@@ -45,6 +47,9 @@ namespace Ardalis.Specification
         public int? Skip { get; internal set; } = null;
 
         public bool IsPagingEnabled { get; internal set; } = false;
+
+
+        public Func<List<T>, List<T>>? InMemory { get; internal set; } = null;
 
         public string? CacheKey { get; internal set; }
 

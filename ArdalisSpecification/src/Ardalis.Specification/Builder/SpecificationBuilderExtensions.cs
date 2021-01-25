@@ -107,6 +107,33 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
+        public static ISpecificationBuilder<T> InMemory<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Func<List<T>, List<T>> predicate)
+        {
+            specificationBuilder.Specification.InMemory = predicate;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T, TResult> Select<T, TResult>(
+            this ISpecificationBuilder<T, TResult> specificationBuilder,
+            Expression<Func<T, TResult>> selector)
+        {
+            specificationBuilder.Specification.Selector = selector;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T, TResult> InMemory<T, TResult>(
+            this ISpecificationBuilder<T, TResult> specificationBuilder,
+            Func<List<TResult>, List<TResult>> predicate)
+        {
+            specificationBuilder.Specification.InMemory = predicate;
+
+            return specificationBuilder;
+        }
+
         /// <summary>
         /// Must be called after specifying criteria
         /// </summary>
@@ -122,15 +149,6 @@ namespace Ardalis.Specification
             specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
 
             specificationBuilder.Specification.CacheEnabled = true;
-
-            return specificationBuilder;
-        }
-
-        public static ISpecificationBuilder<T, TResult> Select<T, TResult>(
-            this ISpecificationBuilder<T, TResult> specificationBuilder,
-            Expression<Func<T, TResult>> selector)
-        {
-            specificationBuilder.Specification.Selector = selector;
 
             return specificationBuilder;
         }
