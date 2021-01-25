@@ -147,5 +147,13 @@ namespace Ardalis.Specification.UnitTests
             stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FIRST_ID);
             stores.Last().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_LAST_ID);
         }
+
+        [Fact]
+        public void ThrowsDuplicateOrderChainException_GivenSpecWithMultipleOrderChains()
+        {
+            var spec = new StoresOrderedTwoChainsSpec();
+
+            Assert.Throws<DuplicateOrderChainException>(() => evaluator.GetQuery(StoreSeed.AsQueryable(), spec).ToList());
+        }
     }
 }
