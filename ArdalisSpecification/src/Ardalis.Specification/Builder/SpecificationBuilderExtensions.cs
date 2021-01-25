@@ -19,9 +19,9 @@ namespace Ardalis.Specification
 
         public static IOrderedSpecificationBuilder<T> OrderBy<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, object>> orderExpression)
+            Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
+            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
                 .Add((orderExpression, OrderTypeEnum.OrderBy));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
@@ -31,9 +31,9 @@ namespace Ardalis.Specification
 
         public static IOrderedSpecificationBuilder<T> OrderByDescending<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, object>> orderExpression)
+            Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
+            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
                 .Add((orderExpression, OrderTypeEnum.OrderByDescending));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
