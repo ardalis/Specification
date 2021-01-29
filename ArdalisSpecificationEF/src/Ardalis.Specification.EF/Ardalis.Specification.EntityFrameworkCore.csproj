@@ -5,15 +5,15 @@
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Steve Smith (@ardalis); Scott DePouw</Authors>
+    <Authors>Steve Smith (@ardalis); Scott DePouw; Fati Iseni</Authors>
     <Company>Ardalis.com</Company>
     <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
     <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
-    <Version>4.1.0</Version>
-    <PackageReleaseNotes>The dependency updated to project reference.</PackageReleaseNotes>
+    <Version>4.2.0</Version>
+    <PackageReleaseNotes>Added search capability.</PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
