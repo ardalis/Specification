@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
     <Version>4.2.0</Version>
-    <PackageReleaseNotes>Added search capability.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added search capability. SearchExtension added.</PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
