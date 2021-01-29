@@ -5,15 +5,15 @@
     <PackageId>Ardalis.Specification</PackageId>
     <Title>Ardalis.Specification</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Steve Smith (@ardalis); Scott DePouw</Authors>
+    <Authors>Steve Smith (@ardalis); Scott DePouw; Fati Iseni</Authors>
     <Company>Ardalis.com</Company>
     <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
     <Description>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Description>
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>4.1.0</Version>
-    <PackageReleaseNotes>Adding Skip and Take; marking Paginate as obsolete.</PackageReleaseNotes>
+    <Version>4.2.0</Version>
+    <PackageReleaseNotes>Refactoring and chaining improvements; added Search functionality; added InMemory post processing functionality.</PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
