@@ -9,6 +9,7 @@ using Ardalis.Specification.EntityFrameworkCore;
 
 namespace Ardalis.SampleApp.Infrastructure.Data
 {
+    /// <inheritdoc/>
     public class MyRepository<T> : RepositoryBase<T>, IRepository<T> where T : class, IAggregateRoot
     {
         private readonly SampleDbContext dbContext;
