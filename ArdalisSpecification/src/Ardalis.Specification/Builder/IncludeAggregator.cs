@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
+    /// <inheritdoc/>
     public class IncludeAggregator : IIncludeAggregator
     {
         private readonly List<string> navigationPropertyNames = new List<string>();
@@ -13,6 +14,7 @@ namespace Ardalis.Specification
             AddNavigationPropertyName(navigationPropertyName);
         }
 
+        /// <inheritdoc/>
         public void AddNavigationPropertyName(string? navigationPropertyName)
         {
             if (!string.IsNullOrEmpty(navigationPropertyName))
@@ -21,6 +23,7 @@ namespace Ardalis.Specification
             }
         }
 
+        /// <inheritdoc/>
         public string IncludeString
         {
             get
