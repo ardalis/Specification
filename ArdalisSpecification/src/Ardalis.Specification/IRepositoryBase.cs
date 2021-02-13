@@ -9,7 +9,7 @@ namespace Ardalis.Specification
     /// An <see cref="ISpecification{T}"/> (or derived) is used to encapsulate the LINQ queries against the database.
     /// </para>
     /// </summary>
-    /// <typeparam name="T"> The type of entity being operated on by this repository.</typeparam>
+    /// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
     public interface IRepositoryBase<T> where T : class
     {
         /// <summary>
