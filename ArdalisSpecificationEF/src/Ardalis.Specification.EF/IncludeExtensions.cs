@@ -13,8 +13,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
         {
             _ = info ?? throw new ArgumentNullException(nameof(info));
 
-            var expression = Expression.Lambda(info.ExpressionBody, info.Parameters);
-
             var queryExpr = Expression.Call(
                 typeof(EntityFrameworkQueryableExtensions),
                 "Include",
@@ -23,7 +21,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
                     info.PropertyType
                 },
                 source.Expression,
-                expression
+                info.LambdaExpression
                 );
 
             return source.Provider.CreateQuery<T>(queryExpr);
@@ -32,8 +30,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
         {
             _ = info ?? throw new ArgumentNullException(nameof(info));
             _ = info.PreviousPropertyType ?? throw new ArgumentNullException(nameof(info.PreviousPropertyType));
-
-            var expression = Expression.Lambda(info.ExpressionBody, info.Parameters);
 
             var queryExpr = Expression.Call(
                 typeof(EntityFrameworkQueryableExtensions),
@@ -44,7 +40,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
                     info.PropertyType
                 },
                 source.Expression,
-                expression
+                info.LambdaExpression
                 );
 
             return source.Provider.CreateQuery<T>(queryExpr);

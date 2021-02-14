@@ -12,7 +12,7 @@ namespace Ardalis.Specification
             Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
             where TEntity : class
         {
-            var info = new IncludeExpressionInfo(thenIncludeExpression.Body, thenIncludeExpression.Parameters, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
 
             ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
 
@@ -26,7 +26,7 @@ namespace Ardalis.Specification
             Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
             where TEntity : class
         {
-            var info = new IncludeExpressionInfo(thenIncludeExpression.Body, thenIncludeExpression.Parameters, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
 
             ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
 

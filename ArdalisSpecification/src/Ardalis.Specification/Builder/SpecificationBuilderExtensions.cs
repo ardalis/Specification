@@ -45,7 +45,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, TProperty>> includeExpression)
         {
-            var info = new IncludeExpressionInfo(includeExpression.Body, includeExpression.Parameters, typeof(T), typeof(TProperty));
+            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
 
             ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
 

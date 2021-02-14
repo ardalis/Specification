@@ -17,33 +17,27 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
-        public void ThrowsArgumentNullException_GivenNullForExpressionBody()
+        public void ThrowsArgumentNullException_GivenNullForLambdaExpressionBody()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(null!, expr.Parameters, typeof(Company), typeof(Country)));
-        }
-
-        [Fact]
-        public void ThrowsArgumentNullException_GivenNullForParameters()
-        {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr.Body, null!, typeof(Company), typeof(Country)));
+            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country)));
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForEntityType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr.Body, expr.Parameters, null!, typeof(Country)));
+            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, null!, typeof(Country)));
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForPropertyType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr.Body!, expr.Parameters, typeof(Company), null!));
+            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), null!));
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForPreviousPropertyType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr.Body!, expr.Parameters, typeof(Company), typeof(Country), null!));
+            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), typeof(Country), null!));
         }
     }
 }

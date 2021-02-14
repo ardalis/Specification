@@ -8,23 +8,20 @@ namespace Ardalis.Specification
 {
     public class IncludeExpressionInfo
     {
-        public Expression ExpressionBody { get; }
-        public ReadOnlyCollection<ParameterExpression> Parameters { get; }
+        public LambdaExpression LambdaExpression { get; }
         public Type EntityType { get; }
         public Type PropertyType { get; }
         public Type? PreviousPropertyType { get; }
         public IncludeTypeEnum Type { get; }
 
-        private IncludeExpressionInfo(Expression expressionBody,
-                                      ReadOnlyCollection<ParameterExpression> parameters,
+        private IncludeExpressionInfo(LambdaExpression expression,
                                       Type entityType,
                                       Type propertyType,
                                       Type? previousPropertyType,
                                       IncludeTypeEnum includeType)
 
         {
-            _ = expressionBody ?? throw new ArgumentNullException(nameof(expressionBody));
-            _ = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            _ = expression ?? throw new ArgumentNullException(nameof(expression));
             _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
             _ = propertyType ?? throw new ArgumentNullException(nameof(propertyType));
 
@@ -33,28 +30,25 @@ namespace Ardalis.Specification
                 _ = previousPropertyType ?? throw new ArgumentNullException(nameof(previousPropertyType));
             }
 
-            this.ExpressionBody = expressionBody;
-            this.Parameters = parameters;
+            this.LambdaExpression = expression;
             this.EntityType = entityType;
             this.PropertyType = propertyType;
             this.PreviousPropertyType = previousPropertyType;
             this.Type = includeType;
         }
 
-        public IncludeExpressionInfo(Expression expressionBody,
-                                     ReadOnlyCollection<ParameterExpression> parameters,
+        public IncludeExpressionInfo(LambdaExpression expression,
                                      Type entityType,
                                      Type propertyType)
-            : this(expressionBody, parameters, entityType, propertyType, null, IncludeTypeEnum.Include)
+            : this(expression, entityType, propertyType, null, IncludeTypeEnum.Include)
         {
         }
 
-        public IncludeExpressionInfo(Expression expressionBody,
-                                     ReadOnlyCollection<ParameterExpression> parameters,
+        public IncludeExpressionInfo(LambdaExpression expression,
                                      Type entityType,
                                      Type propertyType,
                                      Type previousPropertyType)
-            : this(expressionBody, parameters, entityType, propertyType, previousPropertyType, IncludeTypeEnum.ThenInclude)
+            : this(expression, entityType, propertyType, previousPropertyType, IncludeTypeEnum.ThenInclude)
         {
         }
     }
