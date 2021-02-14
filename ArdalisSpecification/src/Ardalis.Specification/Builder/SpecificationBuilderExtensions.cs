@@ -45,10 +45,12 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, TProperty>> includeExpression)
         {
-            var aggregator = new IncludeAggregator((includeExpression.Body as MemberExpression)?.Member?.Name);
-            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, aggregator);
+            var info = new IncludeExpressionInfo(includeExpression.Body, includeExpression.Parameters, typeof(T), typeof(TProperty));
 
-            ((List<IIncludeAggregator>)specificationBuilder.Specification.IncludeAggregators).Add(aggregator);
+            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+
+            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification);
+
             return includeBuilder;
         }
 
