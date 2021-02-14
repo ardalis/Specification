@@ -16,92 +16,16 @@ namespace Ardalis.Specification.UnitTests
         {
             var spec = new StoreEmptySpec();
 
-            spec.IncludeAggregators.Should().BeEmpty();
+            spec.IncludeExpressions.Should().BeEmpty();
         }
 
         [Fact]
-        public void AddsAggregatorToList_GivenExpression()
-        {
-            var spec = new StoreIncludeNameSpec();
-
-            spec.IncludeAggregators.Should().ContainSingle();
-        }
-
-        [Fact]
-        public void AddsNavigationName_GivenSimpleType()
-        {
-            var spec = new StoreIncludeNameSpec();
-
-            string expected = nameof(Store.Name);
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void AddsNavigationName_GivenReferenceType()
+        public void AddsIncludeExpressionInfoToListWithTypeInclude_GivenIncludeExpression()
         {
             var spec = new StoreIncludeAddressSpec();
 
-            string expected = nameof(Store.Address);
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void AddsNavigationName_GivenCollectionType()
-        {
-            var spec = new StoreIncludeProductsSpec();
-
-            string expected = nameof(Store.Products);
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void DoesNotAddNavigationName_GivenExpressionWithDotAppendedNavigations()
-        {
-            var spec = new StoreIncludeCompanyCountryDotSeparatedSpec();
-
-            string expected = nameof(Company.Country);
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void DoesNotAddNavigationName_GivenExpressionWithMethod()
-        {
-            var spec = new StoreIncludeMethodSpec();
-
-            string expected = string.Empty;
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void DoesNotAddNavigationName_GivenExpressionWithMethodOfNavigation()
-        {
-            var spec = new StoreIncludeMethodOfNavigationSpec();
-
-            string expected = string.Empty;
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void DoesNotAddNavigationName_GivenFaultyIncludeExpressions()
-        {
-            var spec = new StoreWithFaultyIncludeSpec();
-
-            string expected = string.Empty;
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
+            spec.IncludeExpressions.Should().ContainSingle();
+            spec.IncludeExpressions.Single().Type.Should().Be(IncludeTypeEnum.Include);
         }
     }
 }

@@ -12,47 +12,16 @@ namespace Ardalis.Specification.UnitTests
     public class IncludableBuilderExtensions_ThenInclude
     {
         [Fact]
-        public void AppendsNavigationName_GivenSimpleType()
-        {
-            var spec = new StoreIncludeCompanyThenNameSpec();
-
-            string expected = $"{nameof(Store.Company)}.{nameof(Company.Name)}";
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void AppendsNavigationName_GivenReferenceType()
+        public void AppendIncludeExpressionInfoToListWithTypeThenInclude_GivenThenIncludeExpression()
         {
             var spec = new StoreIncludeCompanyThenCountrySpec();
 
-            string expected = $"{nameof(Store.Company)}.{nameof(Company.Country)}";
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
+            var includeExpressions = spec.IncludeExpressions.ToList();
 
-            actual.Should().Be(expected);
-        }
+            // The list must have two items, since ThenInclude can be applied once the first level is applied.
+            includeExpressions.Should().HaveCount(2);
 
-        [Fact]
-        public void AppendsNavigationName_GivenCollectionType()
-        {
-            var spec = new StoreIncludeCompanyThenStoresSpec();
-
-            string expected = $"{nameof(Store.Company)}.{nameof(Company.Stores)}";
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public void AppendsNavigationName_GivenTypeOfCollection()
-        {
-            var spec = new StoreIncludeProductsThenStoreSpec();
-
-            string expected = $"{nameof(Store.Products)}.{nameof(Product.Store)}";
-            string actual = spec.IncludeAggregators.FirstOrDefault().IncludeString;
-
-            actual.Should().Be(expected);
+            includeExpressions[1].Type.Should().Be(IncludeTypeEnum.ThenInclude);
         }
     }
 }
