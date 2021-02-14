@@ -40,8 +40,8 @@ namespace Ardalis.Specification
         /// </summary>
         IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
         /// <summary>
-        /// The collection of <see cref="IIncludeAggregator"/>s describing each include expression.
-        /// Information is utilized to build Include/ThenInclude functions in the query.
+        /// The collection of <see cref="IncludeExpressionInfo"/>s describing each include expression.
+        /// This information is utilized to build Include/ThenInclude functions in the query.
         /// </summary>
         IEnumerable<IncludeExpressionInfo> IncludeExpressions { get; }
         /// <summary>
