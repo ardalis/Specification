@@ -3,8 +3,10 @@ using System.Linq;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
+    /// <inheritdoc/>
     public class SpecificationEvaluator<T> : ISpecificationEvaluator<T> where T : class
     {
+        /// <inheritdoc/>
         public virtual IQueryable<TResult> GetQuery<TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)
         {
             var query = GetQuery(inputQuery, (ISpecification<T>)specification);
@@ -15,6 +17,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return selectQuery;
         }
 
+        /// <inheritdoc/>
         public virtual IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
             var query = inputQuery;
