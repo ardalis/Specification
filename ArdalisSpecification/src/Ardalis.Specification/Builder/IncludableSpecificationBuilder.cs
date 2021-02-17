@@ -8,12 +8,9 @@ namespace Ardalis.Specification
     {
         public Specification<T> Specification { get; }
 
-        public IIncludeAggregator Aggregator { get; }
-
-        public IncludableSpecificationBuilder(Specification<T> specification, IIncludeAggregator aggregator)
+        public IncludableSpecificationBuilder(Specification<T> specification)
         {
             Specification = specification;
-            Aggregator = aggregator;
         }
     }
 }

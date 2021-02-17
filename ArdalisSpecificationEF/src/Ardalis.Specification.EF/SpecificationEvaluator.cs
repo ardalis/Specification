@@ -22,20 +22,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
         {
             var query = inputQuery;
 
-            foreach (var includeString in specification.IncludeStrings)
-            {
-                query = query.Include(includeString);
-            }
-
-            foreach (var includeAggregator in specification.IncludeAggregators)
-            {
-                var includeString = includeAggregator.IncludeString;
-                if (!string.IsNullOrEmpty(includeString))
-                {
-                    query = query.Include(includeString);
-                }
-            }
-
             foreach (var criteria in specification.WhereExpressions)
             {
                 query = query.Where(criteria);
@@ -45,6 +31,23 @@ namespace Ardalis.Specification.EntityFrameworkCore
             {
                 var criterias = searchCriteria.Select(x => (x.Selector, x.SearchTerm));
                 query = query.Search(criterias);
+            }
+
+            foreach (var includeString in specification.IncludeStrings)
+            {
+                query = query.Include(includeString);
+            }
+
+            foreach (var includeInfo in specification.IncludeExpressions)
+            {
+                if (includeInfo.Type == IncludeTypeEnum.Include)
+                {
+                    query = query.Include(includeInfo);
+                }
+                else if (includeInfo.Type == IncludeTypeEnum.ThenInclude)
+                {
+                    query = query.ThenInclude(includeInfo);
+                }
             }
 
             // Need to check for null if <Nullable> is enabled.

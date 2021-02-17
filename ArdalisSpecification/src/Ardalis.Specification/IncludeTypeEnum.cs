@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public interface IIncludableSpecificationBuilder<T, out TProperty> : ISpecificationBuilder<T>
+    public enum IncludeTypeEnum
     {
+        Include = 1,
+        ThenInclude = 2
     }
 }

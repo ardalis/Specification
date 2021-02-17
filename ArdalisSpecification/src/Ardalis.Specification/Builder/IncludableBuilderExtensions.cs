@@ -12,10 +12,13 @@ namespace Ardalis.Specification
             Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
             where TEntity : class
         {
-            var propertyName = (thenIncludeExpression.Body as MemberExpression)?.Member?.Name;
-            previousBuilder.Aggregator.AddNavigationPropertyName(propertyName);
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
 
-            return new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, previousBuilder.Aggregator);
+            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+
+            var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification);
+
+            return includeBuilder;
         }
 
         public static IIncludableSpecificationBuilder<TEntity, TProperty> ThenInclude<TEntity, TPreviousProperty, TProperty>(
@@ -23,10 +26,13 @@ namespace Ardalis.Specification
             Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
             where TEntity : class
         {
-            var propertyName = (thenIncludeExpression.Body as MemberExpression)?.Member?.Name;
-            previousBuilder.Aggregator.AddNavigationPropertyName(propertyName);
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
 
-            return new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, previousBuilder.Aggregator);
+            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+
+            var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification);
+
+            return includeBuilder;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Ardalis.Specification
             new List<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)>();
 
         /// <inheritdoc/>
-        public IEnumerable<IIncludeAggregator> IncludeAggregators { get; } = new List<IIncludeAggregator>();
+        public IEnumerable<IncludeExpressionInfo> IncludeExpressions { get; } = new List<IncludeExpressionInfo>();
 
         /// <inheritdoc/>
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
