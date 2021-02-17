@@ -9,6 +9,18 @@ namespace Ardalis.Specification.EntityFrameworkCore
 {
     public static class SearchExtension
     {
+        /// <summary>
+        /// Filters <paramref name="source"/> by applying an 'SQL LIKE' operation to it.
+        /// </summary>
+        /// <typeparam name="T">The type being queried against.</typeparam>
+        /// <param name="source">The sequence of <typeparamref name="T"/></param>
+        /// <param name="criterias">
+        /// <list type="bullet">
+        ///     <item>Selector, the property to apply the SQL LIKE against.</item>
+        ///     <item>SearchTerm, the value to use for the SQL LIKE.</item>
+        /// </list>
+        /// </param>
+        /// <returns></returns>
         public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<(Expression<Func<T, string>> selector, string searchTerm)> criterias)
         {
             Expression? expr = null;
