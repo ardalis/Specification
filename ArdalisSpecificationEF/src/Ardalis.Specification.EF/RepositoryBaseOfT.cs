@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Ardalis.Specification.EntityFrameworkCore
 {
     /// <inheritdoc/>
-    public abstract class RepositoryBase : IRepositoryBase
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private readonly DbContext dbContext;
         private readonly ISpecificationEvaluator specificationEvaluator;
@@ -25,7 +25,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         }
 
         /// <inheritdoc/>
-        public virtual async Task<T> AddAsync<T>(T entity) where T : class
+        public virtual async Task<T> AddAsync(T entity)
         {
             dbContext.Set<T>().Add(entity);
 
@@ -34,21 +34,21 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return entity;
         }
         /// <inheritdoc/>
-        public virtual async Task UpdateAsync<T>(T entity) where T : class
+        public virtual async Task UpdateAsync(T entity)
         {
             dbContext.Entry(entity).State = EntityState.Modified;
 
             await SaveChangesAsync();
         }
         /// <inheritdoc/>
-        public virtual async Task DeleteAsync<T>(T entity) where T : class
+        public virtual async Task DeleteAsync(T entity)
         {
             dbContext.Set<T>().Remove(entity);
 
             await SaveChangesAsync();
         }
         /// <inheritdoc/>
-        public virtual async Task DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class
+        public virtual async Task DeleteRangeAsync(IEnumerable<T> entities)
         {
             dbContext.Set<T>().RemoveRange(entities);
 
@@ -61,40 +61,40 @@ namespace Ardalis.Specification.EntityFrameworkCore
         }
 
         /// <inheritdoc/>
-        public virtual async Task<T?> GetByIdAsync<T>(int id) where T : class
+        public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await dbContext.Set<T>().FindAsync(id);
         }
         /// <inheritdoc/>
-        public virtual async Task<T?> GetByIdAsync<T, TId>(TId id) where T : class
+        public virtual async Task<T?> GetByIdAsync<TId>(TId id)
         {
             return await dbContext.Set<T>().FindAsync(id);
         }
         /// <inheritdoc/>
-        public virtual async Task<T?> GetBySpecAsync<T>(ISpecification<T> specification) where T : class
+        public virtual async Task<T?> GetBySpecAsync(ISpecification<T> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
         /// <inheritdoc/>
-        public virtual async Task<TResult> GetBySpecAsync<T, TResult>(ISpecification<T, TResult> specification) where T : class
+        public virtual async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public virtual async Task<List<T>> ListAsync<T>() where T : class
+        public virtual async Task<List<T>> ListAsync()
         {
             return await dbContext.Set<T>().ToListAsync();
         }
         /// <inheritdoc/>
-        public virtual async Task<List<T>> ListAsync<T>(ISpecification<T> specification) where T : class
+        public virtual async Task<List<T>> ListAsync(ISpecification<T> specification)
         {
             var queryResult = await ApplySpecification(specification).ToListAsync();
 
             return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
         }
         /// <inheritdoc/>
-        public virtual async Task<List<TResult>> ListAsync<T, TResult>(ISpecification<T, TResult> specification) where T : class
+        public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
             var queryResult = await ApplySpecification(specification).ToListAsync();
 
@@ -102,7 +102,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         }
 
         /// <inheritdoc/>
-        public virtual async Task<int> CountAsync<T>(ISpecification<T> specification) where T : class
+        public virtual async Task<int> CountAsync(ISpecification<T> specification)
         {
             return await ApplySpecification(specification, true).CountAsync();
         }
@@ -113,7 +113,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// </summary>
         /// <param name="specification">The encapsulated query logic.</param>
         /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
-        protected virtual IQueryable<T> ApplySpecification<T>(ISpecification<T> specification, bool evaluateCriteriaOnly = false) where T : class
+        protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
         {
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
         }
@@ -127,7 +127,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
         /// <param name="specification">The encapsulated query logic.</param>
         /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
-        protected virtual IQueryable<TResult> ApplySpecification<T, TResult>(ISpecification<T, TResult> specification) where T : class
+        protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
             if (specification is null) throw new ArgumentNullException("Specification is required");
             if (specification.Selector is null) throw new SelectorNotFoundException();

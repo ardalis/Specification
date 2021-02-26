@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
 {
     /// <inheritdoc/>
-    public class Repository : RepositoryBase
+    public class Repository<T> : RepositoryBase<T> where T : class
     {
         protected readonly TestDbContext dbContext;
 
