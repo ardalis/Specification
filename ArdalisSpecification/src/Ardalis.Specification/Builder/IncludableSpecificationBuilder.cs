@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty>
+    public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty> where T : class
     {
         public Specification<T> Specification { get; }
 
