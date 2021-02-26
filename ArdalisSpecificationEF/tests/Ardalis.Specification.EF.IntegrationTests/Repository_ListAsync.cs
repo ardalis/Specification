@@ -182,12 +182,12 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             dbContext.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
             result.Should().NotBeNull();
-            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
+            result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
 
             result = (await companyRepository.ListAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
 
             result.Should().NotBeNull();
-            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
+            result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
             dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
         }
     }
