@@ -8,8 +8,7 @@ namespace Ardalis.Specification
     /// <summary>
     /// Evaluates the logic encapsulated by an <see cref="ISpecification{T}"/>.
     /// </summary>
-    /// <typeparam name="T">The type of the <see cref="ISpecification{T}"/> being evaluated.</typeparam>
-    public interface ISpecificationEvaluator<T> where T : class
+    public interface ISpecificationEvaluator
     {
         /// <summary>
         /// Applies the logic encapsulated by <paramref name="specification"/> to given <paramref name="inputQuery"/>,
@@ -19,13 +18,13 @@ namespace Ardalis.Specification
         /// <param name="inputQuery">The sequence of <typeparamref name="T"/></param>
         /// <param name="specification">The encapsulated query logic.</param>
         /// <returns>A filtered sequence of <typeparamref name="TResult"/></returns>
-        IQueryable<TResult> GetQuery<TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification);
+        IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification) where T : class;
         /// <summary>
         /// Applies the logic encapsulated by <paramref name="specification"/> to given <paramref name="inputQuery"/>.
         /// </summary>
         /// <param name="inputQuery">The sequence of <typeparamref name="T"/></param>
         /// <param name="specification">The encapsulated query logic.</param>
         /// <returns>A filtered sequence of <typeparamref name="T"/></returns>
-        IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification);
+        IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery, ISpecification<T> specification, bool evaluateCriteriaOnly = false) where T : class;
     }
 }

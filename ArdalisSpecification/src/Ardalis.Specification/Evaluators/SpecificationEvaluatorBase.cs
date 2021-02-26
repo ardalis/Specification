@@ -10,10 +10,10 @@ namespace Ardalis.Specification
     // This base class remains just for legacy reasons and for unit tests.
 
     /// <inheritdoc/>
-    public abstract class SpecificationEvaluatorBase<T> : ISpecificationEvaluator<T> where T : class
+    public abstract class SpecificationEvaluatorBase : ISpecificationEvaluator
     {
         /// <inheritdoc/>
-        public virtual IQueryable<TResult> GetQuery<TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)
+        public virtual IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification) where T : class
         {
             var query = GetQuery(inputQuery, (ISpecification<T>)specification);
 
@@ -24,7 +24,7 @@ namespace Ardalis.Specification
         }
 
         /// <inheritdoc/>
-        public virtual IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+        public virtual IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery, ISpecification<T> specification, bool evaluateCriteriaOnly = false) where T : class
         {
             var query = inputQuery;
 

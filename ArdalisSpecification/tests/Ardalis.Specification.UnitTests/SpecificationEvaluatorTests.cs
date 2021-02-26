@@ -14,11 +14,11 @@ namespace Ardalis.Specification.UnitTests
 {
     public class SpecificationEvaluatorTests
     {
-        private readonly SpecificationEvaluator<Store> evaluator;
+        private readonly SpecificationEvaluator evaluator;
 
         public SpecificationEvaluatorTests()
         {
-            this.evaluator = new SpecificationEvaluator<Store>();
+            this.evaluator = new SpecificationEvaluator();
         }
 
         [Fact]
