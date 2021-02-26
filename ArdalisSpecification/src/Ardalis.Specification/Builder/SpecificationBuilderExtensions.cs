@@ -109,11 +109,11 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        public static ISpecificationBuilder<T> InMemory<T>(
+        public static ISpecificationBuilder<T> PostProcessingAction<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Func<List<T>, List<T>> predicate)
+            Func<IEnumerable<T>, IEnumerable<T>> predicate)
         {
-            specificationBuilder.Specification.InMemory = predicate;
+            specificationBuilder.Specification.PostProcessingAction = predicate;
 
             return specificationBuilder;
         }
@@ -127,11 +127,11 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        public static ISpecificationBuilder<T, TResult> InMemory<T, TResult>(
+        public static ISpecificationBuilder<T, TResult> PostProcessingAction<T, TResult>(
             this ISpecificationBuilder<T, TResult> specificationBuilder,
-            Func<List<TResult>, List<TResult>> predicate)
+            Func<IEnumerable<TResult>, IEnumerable<TResult>> predicate)
         {
-            specificationBuilder.Specification.InMemory = predicate;
+            specificationBuilder.Specification.PostProcessingAction = predicate;
 
             return specificationBuilder;
         }

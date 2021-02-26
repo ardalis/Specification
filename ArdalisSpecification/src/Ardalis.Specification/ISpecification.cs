@@ -19,7 +19,7 @@ namespace Ardalis.Specification
         /// <summary>
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T, TResult}"/>.
         /// </summary>
-        new Func<List<TResult>, List<TResult>>? InMemory { get; }
+        new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; }
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ namespace Ardalis.Specification
         /// <summary>
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T}"/>.
         /// </summary>
-        Func<List<T>, List<T>>? InMemory { get; }
+        Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; }
 
         /// <summary>
         /// Return whether or not the results should be cached.

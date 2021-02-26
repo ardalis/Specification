@@ -20,7 +20,7 @@ namespace Ardalis.Specification
         public Expression<Func<T, TResult>>? Selector { get; internal set; }
 
         /// <inheritdoc/>
-        public new Func<List<TResult>, List<TResult>>? InMemory { get; internal set; } = null;
+        public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;
     }
 
     public abstract class Specification<T> : ISpecification<T>
@@ -60,7 +60,7 @@ namespace Ardalis.Specification
 
 
         /// <inheritdoc/>
-        public Func<List<T>, List<T>>? InMemory { get; internal set; } = null;
+        public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; } = null;
 
         /// <inheritdoc/>
         public string? CacheKey { get; internal set; }

@@ -92,14 +92,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
         {
             var queryResult = await ApplySpecification(specification).ToListAsync();
 
-            return specification.InMemory == null ? queryResult : specification.InMemory(queryResult);
+            return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
         }
         /// <inheritdoc/>
         public async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
             var queryResult = await ApplySpecification(specification).ToListAsync();
 
-            return specification.InMemory == null ? queryResult : specification.InMemory(queryResult);
+            return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
         }
 
         /// <inheritdoc/>
