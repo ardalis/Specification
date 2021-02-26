@@ -23,6 +23,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
                 IncludeEvaluator.Instance,
                 OrderEvaluator.Instance,
                 PaginationEvaluator.Instance,
+                AsSplitQueryEvaluator.Instance,
                 AsNoTrackingEvaluator.Instance
             });
         }

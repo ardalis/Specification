@@ -91,6 +91,7 @@ namespace Ardalis.Specification
         /// by the change tracker.
         /// </summary>
         bool AsNoTracking { get; }
+        bool AsSplitQuery { get; }
 
         IEnumerable<T> Evaluate(IEnumerable<T> entities);
     }
