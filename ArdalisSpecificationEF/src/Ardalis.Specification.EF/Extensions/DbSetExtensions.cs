@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification.EntityFrameworkCore.Extensions
+namespace Ardalis.Specification.EntityFrameworkCore
 {
     public static class DbSetExtensions
     {
