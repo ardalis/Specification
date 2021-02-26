@@ -48,14 +48,6 @@ namespace Ardalis.Specification
         /// <summary>
         /// Finds an entity with the given primary key value.
         /// </summary>
-        /// <param name="id">The value of the primary key for the entity to be found.</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation.
-        /// </returns>
-        Task<T?> GetByIdAsync(int id);
-        /// <summary>
-        /// Finds an entity with the given primary key value.
-        /// </summary>
         /// <typeparam name="TId">The type of primary key.</typeparam>
         /// <param name="id">The value of the primary key for the entity to be found.</param>
         /// <returns>

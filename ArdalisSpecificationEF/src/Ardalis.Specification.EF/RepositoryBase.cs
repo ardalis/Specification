@@ -61,11 +61,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
         }
 
         /// <inheritdoc/>
-        public virtual async Task<T?> GetByIdAsync<T>(int id) where T : class
-        {
-            return await dbContext.Set<T>().FindAsync(id);
-        }
-        /// <inheritdoc/>
         public virtual async Task<T?> GetByIdAsync<T, TId>(TId id) where T : class
         {
             return await dbContext.Set<T>().FindAsync(id);
