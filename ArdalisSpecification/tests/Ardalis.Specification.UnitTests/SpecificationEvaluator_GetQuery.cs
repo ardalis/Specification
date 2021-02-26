@@ -29,8 +29,7 @@ namespace Ardalis.Specification.UnitTests
         {
             var spec = new ItemWithIdSpecification(_testId);
 
-            var evaluator = new SpecificationEvaluator();
-            var result = evaluator.GetQuery(GetTestListOfItems().AsQueryable(), spec).FirstOrDefault();
+            var result = spec.Evaluate(GetTestListOfItems()).FirstOrDefault();
 
             Assert.Equal(_testId, result?.Id);
         }

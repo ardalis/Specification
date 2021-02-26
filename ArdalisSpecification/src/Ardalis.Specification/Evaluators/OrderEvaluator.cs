@@ -14,8 +14,14 @@ namespace Ardalis.Specification
 
         public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
         {
-            if (specification.OrderExpressions != null && specification.OrderExpressions.Count() > 0)
+            if (specification.OrderExpressions != null)
             {
+                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
+                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                {
+                    throw new DuplicateOrderChainException();
+                }
+
                 IOrderedQueryable<T>? orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
@@ -35,11 +41,11 @@ namespace Ardalis.Specification
                     {
                         orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector);
                     }
+                }
 
-                    if (orderedQuery != null)
-                    {
-                        query = orderedQuery;
-                    }
+                if (orderedQuery != null)
+                {
+                    query = orderedQuery;
                 }
             }
 
@@ -48,8 +54,14 @@ namespace Ardalis.Specification
 
         public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
         {
-            if (specification.OrderExpressions != null && specification.OrderExpressions.Count() > 0)
+            if (specification.OrderExpressions != null)
             {
+                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
+                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                {
+                    throw new DuplicateOrderChainException();
+                }
+
                 IOrderedEnumerable<T>? orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
@@ -69,11 +81,11 @@ namespace Ardalis.Specification
                     {
                         orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector.Compile());
                     }
+                }
 
-                    if (orderedQuery != null)
-                    {
-                        query = orderedQuery;
-                    }
+                if (orderedQuery != null)
+                {
+                    query = orderedQuery;
                 }
             }
 
