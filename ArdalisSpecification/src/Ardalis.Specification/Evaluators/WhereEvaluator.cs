@@ -5,42 +5,28 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public class OrderEvaluator : IEvaluator
+    public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
     {
-        private OrderEvaluator() { }
-        public static OrderEvaluator Instance { get; } = new OrderEvaluator();
+        private WhereEvaluator() { }
+        public static WhereEvaluator Instance { get; } = new WhereEvaluator();
 
-        public bool IsCriteriaEvaluator { get; } = false;
+        public bool IsCriteriaEvaluator { get; } = true;
 
         public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
         {
-            if (specification.OrderExpressions != null && specification.OrderExpressions.Count() > 0)
+            foreach (var criteria in specification.WhereExpressions)
             {
-                IOrderedQueryable<T>? orderedQuery = null;
-                foreach (var orderExpression in specification.OrderExpressions)
-                {
-                    if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
-                    {
-                        orderedQuery = query.OrderBy(orderExpression.KeySelector);
-                    }
-                    else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
-                    {
-                        orderedQuery = query.OrderByDescending(orderExpression.KeySelector);
-                    }
-                    else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
-                    {
-                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelector);
-                    }
-                    else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
-                    {
-                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector);
-                    }
+                query = query.Where(criteria);
+            }
 
-                    if (orderedQuery != null)
-                    {
-                        query = orderedQuery;
-                    }
-                }
+            return query;
+        }
+
+        public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
+        {
+            foreach (var criteria in specification.WhereExpressions)
+            {
+                query = query.Where(criteria.Compile());
             }
 
             return query;
