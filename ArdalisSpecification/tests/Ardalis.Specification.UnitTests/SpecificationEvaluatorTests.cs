@@ -131,6 +131,17 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void ReturnsOrderedStores_GivenStoresOrderedDescendingByNameSpec()
+        {
+            var spec = new StoresOrderedDescendingByNameSpec();
+
+            var stores = spec.Evaluate(StoreSeed.Get());
+
+            stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FIRST_ID);
+            stores.Last().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_LAST_ID);
+        }
+
+        [Fact]
         public void ThrowsDuplicateOrderChainException_GivenSpecWithMultipleOrderChains()
         {
             var spec = new StoresOrderedTwoChainsSpec();
