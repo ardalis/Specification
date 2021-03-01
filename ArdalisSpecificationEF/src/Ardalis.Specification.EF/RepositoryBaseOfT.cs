@@ -66,7 +66,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return await dbContext.Set<T>().FindAsync(id);
         }
         /// <inheritdoc/>
-        public virtual async Task<T?> GetBySpecAsync(ISpecification<T> specification)
+        public virtual async Task<T?> GetBySpecAsync<Spec>(Spec specification) where Spec : ISpecification<T>, ISingleResultSpecification
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
