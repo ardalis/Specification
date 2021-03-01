@@ -1,5 +1,6 @@
 ﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
 using Ardalis.SampleApp.Core.Interfaces;
+using Ardalis.Specification;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
@@ -66,7 +67,7 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
-        public Task<T> GetBySpecAsync(Specification.ISpecification<T> specification)
+        public Task<T> GetBySpecAsync<Spec>(Spec specification) where Spec : ISingleResultSpecification, ISpecification<T>
         {
             if(specification.CacheEnabled)
             {
