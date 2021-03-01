@@ -1,4 +1,4 @@
-name: ASP.NET Core CI
+name: Build and Test .NET 5 CI
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.300
+        dotnet-version: 5.0.103
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: chmod
