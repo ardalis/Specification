@@ -1,5 +1,4 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
-using Ardalis.SampleApp.Core.Interfaces;
+﻿using Ardalis.SampleApp.Core.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;

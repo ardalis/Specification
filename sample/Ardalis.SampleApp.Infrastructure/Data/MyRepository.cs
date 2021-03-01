@@ -1,9 +1,4 @@
 ﻿using Ardalis.SampleApp.Infrastructure.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ardalis.SampleApp.Core.Interfaces;
 using Ardalis.Specification.EntityFrameworkCore;
 
