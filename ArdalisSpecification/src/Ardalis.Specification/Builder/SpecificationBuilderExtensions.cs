@@ -43,7 +43,7 @@ namespace Ardalis.Specification
 
         public static IIncludableSpecificationBuilder<T, TProperty> Include<T, TProperty>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, TProperty>> includeExpression)
+            Expression<Func<T, TProperty>> includeExpression) where T : class
         {
             var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
 
@@ -56,7 +56,7 @@ namespace Ardalis.Specification
 
         public static ISpecificationBuilder<T> Include<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string includeString)
+            string includeString) where T : class
         {
             ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
             return specificationBuilder;
@@ -67,7 +67,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, string>> selector,
             string searchTerm,
-            int searchGroup = 1)
+            int searchGroup = 1) where T : class
         {
             ((List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>)specificationBuilder.Specification.SearchCriterias)
                 .Add((selector, searchTerm, searchGroup));
@@ -109,11 +109,11 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        public static ISpecificationBuilder<T> InMemory<T>(
+        public static ISpecificationBuilder<T> PostProcessingAction<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Func<List<T>, List<T>> predicate)
+            Func<IEnumerable<T>, IEnumerable<T>> predicate)
         {
-            specificationBuilder.Specification.InMemory = predicate;
+            specificationBuilder.Specification.PostProcessingAction = predicate;
 
             return specificationBuilder;
         }
@@ -127,11 +127,11 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        public static ISpecificationBuilder<T, TResult> InMemory<T, TResult>(
+        public static ISpecificationBuilder<T, TResult> PostProcessingAction<T, TResult>(
             this ISpecificationBuilder<T, TResult> specificationBuilder,
-            Func<List<TResult>, List<TResult>> predicate)
+            Func<IEnumerable<TResult>, IEnumerable<TResult>> predicate)
         {
-            specificationBuilder.Specification.InMemory = predicate;
+            specificationBuilder.Specification.PostProcessingAction = predicate;
 
             return specificationBuilder;
         }
@@ -143,10 +143,9 @@ namespace Ardalis.Specification
         /// <param name="args">Any arguments used in defining the specification</param>
         public static ISpecificationBuilder<T> EnableCache<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string specificationName, params object[] args)
+            string specificationName, params object[] args) where T : class
         {
             Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-            Guard.Against.NullOrEmpty(specificationBuilder.Specification.WhereExpressions, nameof(specificationBuilder.Specification.WhereExpressions));
 
             specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
 
@@ -156,9 +155,18 @@ namespace Ardalis.Specification
         }
 
         public static ISpecificationBuilder<T> AsNoTracking<T>(
-            this ISpecificationBuilder<T> specificationBuilder)
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
         {
             specificationBuilder.Specification.AsNoTracking = true;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T> AsSplitQuery<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.AsSplitQuery = true;
+
             return specificationBuilder;
         }
     }

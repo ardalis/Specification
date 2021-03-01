@@ -8,18 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_GetById : IntegrationTestBase
+    public class RepositoryOfT_GetById : IntegrationTestBase
     {
-        public Repository_GetById(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_GetById(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStore_GivenId()
         {
-            var result = await nonGenericRepository.GetByIdAsync<Store, int>(1);
+            var result = await storeRepository.GetByIdAsync(StoreSeed.VALID_STORE_ID);
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -28,7 +27,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStore_GivenGenericId()
         {
-            var result = await nonGenericRepository.GetByIdAsync<Store, int>(StoreSeed.VALID_STORE_ID);
+            var result = await storeRepository.GetByIdAsync<int>(StoreSeed.VALID_STORE_ID);
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);

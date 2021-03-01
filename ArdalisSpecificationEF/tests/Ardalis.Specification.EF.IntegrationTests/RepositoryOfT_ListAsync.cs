@@ -12,14 +12,14 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_ListAsync : IntegrationTestBase
+    public class RepositoryOfT_ListAsync : IntegrationTestBase
     {
-        public Repository_ListAsync(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_ListAsync(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStoreWithProducts_GivenStoreIncludeProductsSpec()
         {
-            var result = await nonGenericRepository.ListAsync(new StoreIncludeProductsSpec());
+            var result = await storeRepository.ListAsync(new StoreIncludeProductsSpec());
 
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
@@ -29,7 +29,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreWithAddress_GivenStoreIncludeAddressSpec()
         {
-            var result = await nonGenericRepository.ListAsync(new StoreIncludeAddressSpec());
+            var result = await storeRepository.ListAsync(new StoreIncludeAddressSpec());
 
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
@@ -39,7 +39,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreWithAddressAndProduct_GivenStoreIncludeProductsThenStoreSpec()
         {
-            var result = await nonGenericRepository.ListAsync(new StoreIncludeProductsThenStoreSpec());
+            var result = await storeRepository.ListAsync(new StoreIncludeProductsThenStoreSpec());
 
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
@@ -53,7 +53,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             var ids = Enumerable.Range(15, 16);
             var spec = new StoresByIdListSpec(ids);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.Count.Should().Be(16);
             stores.OrderBy(x => x.Id).First().Id.Should().Be(15);
@@ -68,7 +68,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             var spec = new StoreNamesPaginatedSpec(skip, take);
 
-            var storeNames = await nonGenericRepository.ListAsync(spec);
+            var storeNames = await storeRepository.ListAsync(spec);
 
             storeNames.Count.Should().Be(take);
             storeNames.First().Should().Be("Store 11");
@@ -83,7 +83,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             var spec = new StoresPaginatedSpec(skip, take);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.Count.Should().Be(take);
             stores.OrderBy(x => x.Id).First().Id.Should().Be(11);
@@ -95,7 +95,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         {
             var spec = new StoresByCompanyOrderedDescByNameSpec(2);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FOR_COMPANY2_FIRST_ID);
             stores.Last().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FOR_COMPANY2_LAST_ID);
@@ -106,7 +106,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         {
             var spec = new StoresByCompanyOrderedDescByNameThenByIdSpec(2);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.First().Id.Should().Be(99);
             stores.Last().Id.Should().Be(98);
@@ -120,7 +120,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             var spec = new StoresByCompanyPaginatedOrderedDescByNameSpec(2, skip, take);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.Count.Should().Be(take);
             stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FOR_COMPANY2_PAGE2_FIRST_ID);
@@ -135,7 +135,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             var spec = new StoresByCompanyPaginatedSpec(2, skip, take);
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.Count.Should().Be(take);
             stores.OrderBy(x => x.Id).First().Id.Should().Be(61);
@@ -147,7 +147,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         {
             var spec = new StoresOrderedSpecByName();
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_FIRST_ID);
             stores.Last().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_LAST_ID);
@@ -158,7 +158,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         {
             var spec = new StoresOrderedDescendingByNameSpec();
 
-            var stores = await nonGenericRepository.ListAsync(spec);
+            var stores = await storeRepository.ListAsync(spec);
 
             stores.First().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_FIRST_ID);
             stores.Last().Id.Should().Be(StoreSeed.ORDERED_BY_NAME_DESC_LAST_ID);
@@ -167,7 +167,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreContainingCity1_GivenStoreIncludeProductsSpec()
         {
-            var result = await nonGenericRepository.ListAsync(new StoreSearchByNameOrCitySpec(StoreSeed.VALID_Search_City_Key));
+            var result = await storeRepository.ListAsync(new StoreSearchByNameOrCitySpec(StoreSeed.VALID_Search_City_Key));
 
             result.Should().NotBeNull();
             result.Should().ContainSingle();
@@ -178,13 +178,13 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsUntrackedCompanies_GivenCompanyByIdAsUntrackedSpec()
         {
-            var result = (await nonGenericRepository.ListAsync(new CompanyByIdSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
+            var result = (await companyRepository.ListAsync(new CompanyByIdSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
             dbContext.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
             result.Should().NotBeNull();
             result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
 
-            result = (await nonGenericRepository.ListAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
+            result = (await companyRepository.ListAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
 
             result.Should().NotBeNull();
             result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);

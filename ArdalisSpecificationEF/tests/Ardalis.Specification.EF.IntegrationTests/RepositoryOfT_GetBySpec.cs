@@ -11,14 +11,14 @@ using Ardalis.Specification.UnitTests.Fixture.Specs;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_GetBySpec : IntegrationTestBase
+    public class RepositoryOfT_GetBySpec : IntegrationTestBase
     {
-        public Repository_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -28,7 +28,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreWithAddress_GivenStoreByIdIncludeAddressSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -38,7 +38,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreWithAddressAndProduct_GivenStoreByIdIncludeAddressAndProductsSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -49,7 +49,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsUsingStringSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -59,7 +59,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsCompanyWithStoresAndAddress_GivenCompanyByIdIncludeStoresThenIncludeAddressSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
+            var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -70,7 +70,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         [Fact]
         public async Task ReturnsCompanyWithStoresAndProducts_GivenCompanyByIdIncludeStoresThenIncludeProductsSpec()
         {
-            var result = await nonGenericRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
+            var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
 
             result.Should().NotBeNull();
             result!.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);

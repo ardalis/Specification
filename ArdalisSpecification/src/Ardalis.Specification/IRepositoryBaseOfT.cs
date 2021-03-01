@@ -10,7 +10,7 @@ namespace Ardalis.Specification
     /// </para>
     /// </summary>
     /// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
-    public interface IRepositoryBase
+    public interface IRepositoryBase<T> where T : class
     {
         /// <summary>
         /// Adds an entity in the database.
@@ -20,25 +20,25 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="T" />.
         /// </returns>
-        Task<T> AddAsync<T>(T entity) where T : class;
+        Task<T> AddAsync(T entity);
         /// <summary>
         /// Updates an entity in the database
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateAsync<T>(T entity) where T : class;
+        Task UpdateAsync(T entity);
         /// <summary>
         /// Removes an entity in the database
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteAsync<T>(T entity) where T : class;
+        Task DeleteAsync(T entity);
         /// <summary>
         /// Removes the given entities in the database
         /// </summary>
         /// <param name="entities">The entities to remove.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class;
+        Task DeleteRangeAsync(IEnumerable<T> entities);
         /// <summary>
         /// Persists changes to the database.
         /// </summary>
@@ -54,7 +54,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
         /// </returns>
-        Task<T?> GetByIdAsync<T, TId>(TId id) where T : class;
+        Task<T?> GetByIdAsync<TId>(TId id);
         /// <summary>
         /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
         /// </returns>
-        Task<T?> GetBySpecAsync<T>(ISpecification<T> specification) where T : class;
+        Task<T?> GetBySpecAsync(ISpecification<T> specification);
         /// <summary>
         /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
         /// </summary>
@@ -73,7 +73,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="TResult" />.
         /// </returns>
-        Task<TResult> GetBySpecAsync<T, TResult>(ISpecification<T, TResult> specification) where T : class;
+        Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification);
 
         /// <summary>
         /// Finds all entities of <typeparamref name="T" /> from the database.
@@ -82,7 +82,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains a <see cref="List{T}" /> that contains elements from the input sequence.
         /// </returns>
-        Task<List<T>> ListAsync<T>() where T : class;
+        Task<List<T>> ListAsync();
         /// <summary>
         /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
         /// <paramref name="specification"/>, from the database.
@@ -92,7 +92,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains a <see cref="List{T}" /> that contains elements from the input sequence.
         /// </returns>
-        Task<List<T>> ListAsync<T>(ISpecification<T> specification) where T : class;
+        Task<List<T>> ListAsync(ISpecification<T> specification);
         /// <summary>
         /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
         /// <paramref name="specification"/>, from the database.
@@ -106,7 +106,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains a <see cref="List{TResult}" /> that contains elements from the input sequence.
         /// </returns>
-        Task<List<TResult>> ListAsync<T, TResult>(ISpecification<T, TResult> specification) where T : class;
+        Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification);
 
         /// <summary>
         /// Returns a number that represents how many entities satisfy the encapsulated query logic
@@ -117,6 +117,6 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation. The task result contains the
         /// number of elements in the input sequence.
         /// </returns>
-        Task<int> CountAsync<T>(ISpecification<T> specification) where T : class;
+        Task<int> CountAsync(ISpecification<T> specification);
     }
 }

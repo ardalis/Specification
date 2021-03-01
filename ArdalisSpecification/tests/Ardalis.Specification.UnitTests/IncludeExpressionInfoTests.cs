@@ -17,7 +17,7 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
-        public void ThrowsArgumentNullException_GivenNullForLambdaExpressionBody()
+        public void ThrowsArgumentNullException_GivenNullForLambdaExpression()
         {
             Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country)));
         }
