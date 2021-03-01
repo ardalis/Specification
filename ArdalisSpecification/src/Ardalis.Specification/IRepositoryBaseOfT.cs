@@ -63,7 +63,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
         /// </returns>
-        Task<T?> GetBySpecAsync(ISpecification<T> specification);
+        Task<T?> GetBySpecAsync<Spec>(Spec specification) where Spec : ISingleResultSpecification, ISpecification<T>;
         /// <summary>
         /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
         /// </summary>

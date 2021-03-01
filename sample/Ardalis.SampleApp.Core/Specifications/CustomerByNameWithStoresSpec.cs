@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ardalis.SampleApp.Core.Specifications
 {
-    public class CustomerByNameWithStoresSpec : Specification<Customer>
+    public class CustomerByNameWithStoresSpec : Specification<Customer>, ISingleResultSpecification
     {
         public CustomerByNameWithStoresSpec(string name)
         {

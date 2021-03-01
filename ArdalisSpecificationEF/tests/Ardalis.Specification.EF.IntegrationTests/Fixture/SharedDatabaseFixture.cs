@@ -16,7 +16,6 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
         //public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEFTestsDB;ConnectRetryCount=0";
 
 
-
         private static readonly object _lock = new object();
         private static bool _databaseInitialized;
 
