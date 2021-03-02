@@ -174,21 +174,5 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result[0].Id.Should().Be(StoreSeed.VALID_Search_City_ID);
             result[0].City.Should().Contain(StoreSeed.VALID_Search_City_Key);
         }
-
-        [Fact]
-        public async Task ReturnsUntrackedCompanies_GivenCompanyByIdAsUntrackedSpec()
-        {
-            var result = (await nonGenericRepository.ListAsync(new CompanyByIdSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
-            dbContext.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-
-            result.Should().NotBeNull();
-            result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
-
-            result = (await nonGenericRepository.ListAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
-
-            result.Should().NotBeNull();
-            result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
-            dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
-        }
     }
 }
