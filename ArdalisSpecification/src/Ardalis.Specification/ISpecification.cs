@@ -87,7 +87,7 @@ namespace Ardalis.Specification
 
         /// <summary>
         /// Returns whether or not the change tracker will track any of the entities
-        /// that are returned. When false, if the entity instances are modified, this will not be detected
+        /// that are returned. When true, if the entity instances are modified, this will not be detected
         /// by the change tracker.
         /// </summary>
         bool AsNoTracking { get; }
