@@ -34,7 +34,7 @@ namespace Ardalis.SampleApp.Web
 
             services.AddAutoMapper(typeof(AutomapperMaps));
 
-            services.AddScoped(typeof(IRepository<>), typeof(CachedRepository<>));
+            services.AddScoped(typeof(IReadRepository<>), typeof(CachedRepository<>));
             services.AddScoped(typeof(MyRepository<>));
             services.AddScoped<ICustomerUiService, CustomerUiService>();
 

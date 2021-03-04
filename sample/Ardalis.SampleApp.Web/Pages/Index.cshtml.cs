@@ -11,10 +11,10 @@ namespace Ardalis.SampleApp.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IRepository<Customer> _customerRepository;
+        private readonly IReadRepository<Customer> _customerRepository;
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(IRepository<Customer> customerRepository,
+        public IndexModel(IReadRepository<Customer> customerRepository,
             ILogger<IndexModel> logger)
         {
             _customerRepository = customerRepository;
