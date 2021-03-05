@@ -10,8 +10,6 @@ The [Specification pattern](https://deviq.com/design-patterns/specification-patt
 
 ## Installing Ardalis.Specification
 
-[View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/Specification)
-
 Install Ardalis.Specification from NuGet. The latest version is available here:
 
 [https://www.nuget.org/packages/Ardalis.Specification/](https://www.nuget.org/packages/Ardalis.Specification/)
