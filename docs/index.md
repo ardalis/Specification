@@ -34,7 +34,7 @@ dotnet add package Ardalis.Specification
 
 ## Getting Started
 
-Read the [Getting Started section](/getting-started/). You can also [review the sample application that is available in the GitHub repository](https://github.com/ardalis/Specification/tree/master/sample).
+Read the [Getting Started section](getting-started/). You can also [review the sample application that is available in the GitHub repository](https://github.com/ardalis/Specification/tree/master/sample).
 
 ## Docs theme notes
 
