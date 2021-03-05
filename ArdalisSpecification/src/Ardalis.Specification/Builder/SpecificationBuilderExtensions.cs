@@ -169,5 +169,13 @@ namespace Ardalis.Specification
 
             return specificationBuilder;
         }
+
+        public static ISpecificationBuilder<T> AsNoTrackingWithIdentityResolution<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
+
+            return specificationBuilder;
+        }
     }
 }

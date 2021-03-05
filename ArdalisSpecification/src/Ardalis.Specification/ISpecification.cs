@@ -92,6 +92,7 @@ namespace Ardalis.Specification
         /// </summary>
         bool AsNoTracking { get; }
         bool AsSplitQuery { get; }
+        bool AsNoTrackingWithIdentityResolution { get; }
 
         IEnumerable<T> Evaluate(IEnumerable<T> entities);
     }

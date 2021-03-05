@@ -94,5 +94,6 @@ namespace Ardalis.Specification
         /// <inheritdoc/>
         public bool AsNoTracking { get; internal set; } = false;
         public bool AsSplitQuery { get; internal set; } = false;
+        public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
     }
 }
