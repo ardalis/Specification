@@ -11,13 +11,11 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
         protected TestDbContext dbContext;
         protected Repository<Company> companyRepository;
         protected Repository<Store> storeRepository;
-        protected Repository nonGenericRepository;
 
         public IntegrationTestBase(SharedDatabaseFixture fixture)
         {
             dbContext = fixture.CreateContext();
 
-            nonGenericRepository = new Repository(dbContext);
             companyRepository = new Repository<Company>(dbContext);
             storeRepository = new Repository<Store>(dbContext);
         }
