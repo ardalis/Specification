@@ -12,6 +12,7 @@ Base class with tests for adding specifications to a DDD model. Currently used i
 [Read the Docs on GitHub Pages](https://ardalis.github.io/Specification/)
 
 🎥 [Watch What's New in v5 of Ardalis.Specification](https://www.youtube.com/watch?v=gT72mWdD4Qo&ab_channel=Ardalis)
+
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
 
 ## Give a Star! :star:
