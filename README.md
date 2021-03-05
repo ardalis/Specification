@@ -1,17 +1,17 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Ardalis.Specification.svg)](https://www.nuget.org/packages/Ardalis.Specification)[![NuGet](https://img.shields.io/nuget/dt/Ardalis.Specification.svg)](https://www.nuget.org/packages/Ardalis.Specification)
 [![Actions Status](https://github.com/ardalis/specification/workflows/ASP.NET%20Core%20CI/badge.svg)](https://github.com/ardalis/specification/actions)
+[![Generic badge](https://img.shields.io/badge/Documentation-Ardalis.Specification%20v5-Green.svg)](https://ardalis.github.io/Specification/)
 
 NuGet: [Ardalis.Specification](https://www.nuget.org/packages/Ardalis.Specification)
-
-**Release 5 is coming soon. Check out the -beta package(s) from NuGet to try them.**
 
 # Specification
 
 Base class with tests for adding specifications to a DDD model. Currently used in Microsoft reference application [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb), which is the best place to see it in action. Check out Steve "ardalis" Smith's associated (free!) eBook, [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), as well.
 
-[Read the Docs on GitHub Pages](https://ardalis.github.io/Specification/) *Draft*
+[Read the Docs on GitHub Pages](https://ardalis.github.io/Specification/)
 
+🎥 [Watch What's New in v5 of Ardalis.Specification](https://www.youtube.com/watch?v=gT72mWdD4Qo&ab_channel=Ardalis)
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
 
 ## Give a Star! :star:
