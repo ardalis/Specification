@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/ardalis/specification/workflows/ASP.NET%20Core%20CI/badge.svg)](https://github.com/ardalis/specification/actions)
 [![Generic badge](https://img.shields.io/badge/Documentation-Ardalis.Specification%20v5-Green.svg)](https://ardalis.github.io/Specification/)
 
-NuGet: [Ardalis.Specification](https://www.nuget.org/packages/Ardalis.Specification)
+[![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
 # Specification
 
