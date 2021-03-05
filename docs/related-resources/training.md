@@ -5,6 +5,8 @@ parent: Related Resources
 nav_order: 1
 ---
 
+# Specification (and DDD) Training
+
 Below are some resources related to training with the Specification design pattern and Domain-Driven Design.
 
 - Pluralsight: DDD Fundamentals (2021) (coming soon)
