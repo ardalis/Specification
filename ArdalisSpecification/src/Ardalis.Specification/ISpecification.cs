@@ -19,7 +19,9 @@ namespace Ardalis.Specification
         /// <summary>
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T, TResult}"/>.
         /// </summary>
-        new Func<List<TResult>, List<TResult>>? InMemory { get; }
+        new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; }
+
+        new IEnumerable<TResult> Evaluate(IEnumerable<T> entities);
     }
 
     /// <summary>
@@ -72,7 +74,7 @@ namespace Ardalis.Specification
         /// <summary>
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T}"/>.
         /// </summary>
-        Func<List<T>, List<T>>? InMemory { get; }
+        Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; }
 
         /// <summary>
         /// Return whether or not the results should be cached.
@@ -85,9 +87,13 @@ namespace Ardalis.Specification
 
         /// <summary>
         /// Returns whether or not the change tracker will track any of the entities
-        /// that are returned. When false, if the entity instances are modified, this will not be detected
+        /// that are returned. When true, if the entity instances are modified, this will not be detected
         /// by the change tracker.
         /// </summary>
         bool AsNoTracking { get; }
+        bool AsSplitQuery { get; }
+        bool AsNoTrackingWithIdentityResolution { get; }
+
+        IEnumerable<T> Evaluate(IEnumerable<T> entities);
     }
 }

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreWithInMemorySpec : Specification<Store>
+    public class StoreWithPostProcessingActionSpec : Specification<Store>
     {
-        public StoreWithInMemorySpec()
+        public StoreWithPostProcessingActionSpec()
         {
-            Query.InMemory(x => x);
+            Query.PostProcessingAction(x => x);
         }
     }
 }

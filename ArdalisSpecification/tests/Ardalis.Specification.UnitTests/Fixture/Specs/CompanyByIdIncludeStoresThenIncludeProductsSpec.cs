@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class CompanyByIdIncludeStoresThenIncludeProductsSpec : Specification<Company>
+    public class CompanyByIdIncludeStoresThenIncludeProductsSpec : Specification<Company>, ISingleResultSpecification
     {
         public CompanyByIdIncludeStoresThenIncludeProductsSpec(int id)
         {

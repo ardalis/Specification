@@ -11,9 +11,9 @@ using Ardalis.Specification.UnitTests.Fixture.Specs;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_GetBySpec : IntegrationTestBase
+    public class RepositoryOfT_GetBySpec : IntegrationTestBase
     {
-        public Repository_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
@@ -76,6 +76,18 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result!.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
             result.Stores.Count.Should().BeGreaterThan(49);
             result.Stores.Select(x => x.Products).Count().Should().BeGreaterThan(1);
+        }
+
+        [Fact]
+        public async Task ReturnsUntrackedCompany_GivenCompanyByIdAsUntrackedSpec()
+        {
+            dbContext.ChangeTracker.Clear();
+
+            var result = await companyRepository.GetBySpecAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID));
+
+            result.Should().NotBeNull();
+            result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
+            dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
         }
     }
 }

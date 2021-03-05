@@ -1,5 +1,5 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
-using Ardalis.SampleApp.Core.Interfaces;
+﻿using Ardalis.SampleApp.Core.Interfaces;
+using Ardalis.Specification;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Ardalis.SampleApp.Infrastructure.Data
 {
     /// <inheritdoc/>
-    public class CachedRepository<T> : IRepository<T> where T : class, IAggregateRoot
+    public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregateRoot
     {
         private readonly IMemoryCache _cache;
         private readonly ILogger<CachedRepository<T>> _logger;
@@ -29,28 +29,10 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
-        public Task<T> AddAsync(T entity)
-        {
-            return _sourceRepository.AddAsync(entity);
-        }
-
-        /// <inheritdoc/>
         public Task<int> CountAsync(Specification.ISpecification<T> specification)
         {
             // TODO: Add Caching
             return _sourceRepository.CountAsync(specification);
-        }
-
-        /// <inheritdoc/>
-        public Task DeleteAsync(T entity)
-        {
-            return _sourceRepository.DeleteAsync(entity);
-        }
-
-        /// <inheritdoc/>
-        public Task DeleteRangeAsync(IEnumerable<T> entities)
-        {
-            return _sourceRepository.DeleteRangeAsync(entities);
         }
 
         /// <inheritdoc/>
@@ -66,7 +48,7 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
-        public Task<T> GetBySpecAsync(Specification.ISpecification<T> specification)
+        public Task<T> GetBySpecAsync<Spec>(Spec specification) where Spec : ISingleResultSpecification, ISpecification<T>
         {
             if(specification.CacheEnabled)
             {
@@ -120,18 +102,6 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         public Task<List<TResult>> ListAsync<TResult>(Specification.ISpecification<T, TResult> specification)
         {
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public Task SaveChangesAsync()
-        {
-            return _sourceRepository.SaveChangesAsync();
-        }
-
-        /// <inheritdoc/>
-        public Task UpdateAsync(T entity)
-        {
-            return _sourceRepository.UpdateAsync(entity);
         }
     }
 }

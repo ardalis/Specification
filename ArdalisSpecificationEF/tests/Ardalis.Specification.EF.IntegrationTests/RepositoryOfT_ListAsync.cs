@@ -12,9 +12,9 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_ListAsync : IntegrationTestBase
+    public class RepositoryOfT_ListAsync : IntegrationTestBase
     {
-        public Repository_ListAsync(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_ListAsync(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStoreWithProducts_GivenStoreIncludeProductsSpec()
@@ -173,22 +173,6 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result.Should().ContainSingle();
             result[0].Id.Should().Be(StoreSeed.VALID_Search_City_ID);
             result[0].City.Should().Contain(StoreSeed.VALID_Search_City_Key);
-        }
-
-        [Fact]
-        public async Task ReturnsUntrackedCompanies_GivenCompanyByIdAsUntrackedSpec()
-        {
-            var result = (await companyRepository.ListAsync(new CompanyByIdSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
-            dbContext.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-
-            result.Should().NotBeNull();
-            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
-
-            result = (await companyRepository.ListAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID))).SingleOrDefault();
-
-            result.Should().NotBeNull();
-            result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
-            dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
         }
     }
 }

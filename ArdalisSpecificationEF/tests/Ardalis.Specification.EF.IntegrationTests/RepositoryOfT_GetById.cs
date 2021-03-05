@@ -11,9 +11,9 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class Repository_GetById : IntegrationTestBase
+    public class RepositoryOfT_GetById : IntegrationTestBase
     {
-        public Repository_GetById(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_GetById(SharedDatabaseFixture fixture) : base(fixture) { }
 
         [Fact]
         public async Task ReturnsStore_GivenId()

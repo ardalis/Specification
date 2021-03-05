@@ -18,19 +18,19 @@ namespace Ardalis.SampleApp.Web.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<CustomerDto> Get(int Id)
+        public Task<CustomerDto> Get(int Id)
         {
-            return await customerUiService.GetCustomer(Id);
+            return customerUiService.GetCustomer(Id);
         }
 
         [HttpGet("{name}")]
-        public async Task<CustomerDto> Get(string name)
+        public Task<CustomerDto> Get(string name)
         {
-            return await customerUiService.GetCustomer(name);
+            return customerUiService.GetCustomer(name);
         }
 
         [HttpGet]
-        public async Task<List<CustomerDto>> Get([FromQuery] CustomerFilterDto filter)
+        public Task<List<CustomerDto>> Get([FromQuery] CustomerFilterDto filter)
         {
             filter = filter ?? new CustomerFilterDto();
 
@@ -39,7 +39,7 @@ namespace Ardalis.SampleApp.Web.Controllers
             filter.LoadChildren = true;
             filter.IsPagingEnabled = true;
 
-            return await customerUiService.GetCustomers(filter);
+            return customerUiService.GetCustomers(filter);
         }
     }
 }
