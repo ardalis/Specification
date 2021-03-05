@@ -6,7 +6,7 @@ has_children: true
 parent: Features
 ---
 
-Base Features
+# Base Features
 
 ## Contents
 

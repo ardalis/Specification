@@ -5,9 +5,9 @@ nav_order: 7
 has_children: true
 ---
 
-How to extend the package's base functionality.
+# Projects using Ardalis.Specification
 
-## Contents
+## Contents (to do)
 
 - eShopOnWeb Reference App
 - Pluralsight DDD Course sample
