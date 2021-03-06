@@ -19,9 +19,9 @@ namespace Ardalis.Specification
 
         public static IOrderedSpecificationBuilder<T> OrderBy<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, object>> orderExpression)
+            Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
+            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
                 .Add((orderExpression, OrderTypeEnum.OrderBy));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
@@ -31,9 +31,9 @@ namespace Ardalis.Specification
 
         public static IOrderedSpecificationBuilder<T> OrderByDescending<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, object>> orderExpression)
+            Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
+            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
                 .Add((orderExpression, OrderTypeEnum.OrderByDescending));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
@@ -43,18 +43,20 @@ namespace Ardalis.Specification
 
         public static IIncludableSpecificationBuilder<T, TProperty> Include<T, TProperty>(
             this ISpecificationBuilder<T> specificationBuilder,
-            Expression<Func<T, TProperty>> includeExpression)
+            Expression<Func<T, TProperty>> includeExpression) where T : class
         {
-            var aggregator = new IncludeAggregator((includeExpression.Body as MemberExpression)?.Member?.Name);
-            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, aggregator);
+            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
 
-            ((List<IIncludeAggregator>)specificationBuilder.Specification.IncludeAggregators).Add(aggregator);
+            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+
+            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification);
+
             return includeBuilder;
         }
 
         public static ISpecificationBuilder<T> Include<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string includeString)
+            string includeString) where T : class
         {
             ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
             return specificationBuilder;
@@ -65,7 +67,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, string>> selector,
             string searchTerm,
-            int searchGroup = 1)
+            int searchGroup = 1) where T : class
         {
             ((List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>)specificationBuilder.Specification.SearchCriterias)
                 .Add((selector, searchTerm, searchGroup));
@@ -107,21 +109,11 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        /// <summary>
-        /// Must be called after specifying criteria
-        /// </summary>
-        /// <param name="specificationName"></param>
-        /// <param name="args">Any arguments used in defining the specification</param>
-        public static ISpecificationBuilder<T> EnableCache<T>(
+        public static ISpecificationBuilder<T> PostProcessingAction<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string specificationName, params object[] args)
+            Func<IEnumerable<T>, IEnumerable<T>> predicate)
         {
-            Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
-            Guard.Against.NullOrEmpty(specificationBuilder.Specification.WhereExpressions, nameof(specificationBuilder.Specification.WhereExpressions));
-
-            specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
-
-            specificationBuilder.Specification.CacheEnabled = true;
+            specificationBuilder.Specification.PostProcessingAction = predicate;
 
             return specificationBuilder;
         }
@@ -131,6 +123,57 @@ namespace Ardalis.Specification
             Expression<Func<T, TResult>> selector)
         {
             specificationBuilder.Specification.Selector = selector;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T, TResult> PostProcessingAction<T, TResult>(
+            this ISpecificationBuilder<T, TResult> specificationBuilder,
+            Func<IEnumerable<TResult>, IEnumerable<TResult>> predicate)
+        {
+            specificationBuilder.Specification.PostProcessingAction = predicate;
+
+            return specificationBuilder;
+        }
+
+        /// <summary>
+        /// Must be called after specifying criteria
+        /// </summary>
+        /// <param name="specificationName"></param>
+        /// <param name="args">Any arguments used in defining the specification</param>
+        public static ISpecificationBuilder<T> EnableCache<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            string specificationName, params object[] args) where T : class
+        {
+            Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
+
+            specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+
+            specificationBuilder.Specification.CacheEnabled = true;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T> AsNoTracking<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.AsNoTracking = true;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T> AsSplitQuery<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.AsSplitQuery = true;
+
+            return specificationBuilder;
+        }
+
+        public static ISpecificationBuilder<T> AsNoTrackingWithIdentityResolution<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
 
             return specificationBuilder;
         }

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification", "Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.UnitTests", "ArdalisSpecification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj", "{85D42214-D223-4F13-9A19-9CFA0D3C1981}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.IntegrationTests", "ArdalisSpecification\tests\Ardalis.Specification.IntegrationTests\Ardalis.Specification.IntegrationTests.csproj", "{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EntityFrameworkCore", "ArdalisSpecificationEF\src\Ardalis.Specification.EF\Ardalis.Specification.EntityFrameworkCore.csproj", "{5EB4ADA4-5258-4964-BD7D-11D4F926E344}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EntityFrameworkCore.IntegrationTests", "ArdalisSpecificationEF\tests\Ardalis.Specification.EF.IntegrationTests\Ardalis.Specification.EntityFrameworkCore.IntegrationTests.csproj", "{5AFD1454-E625-451D-A615-CEB7BB09AA65}"
@@ -73,10 +71,6 @@ Global
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,7 +93,6 @@ Global
 		{C2EC4331-4C8A-4121-A68C-4C96A7D40A98} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
 		{5FF21FE4-19B9-4BD2-958D-EAFEDE72D7F8} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{85D42214-D223-4F13-9A19-9CFA0D3C1981} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
-		{8543FCF7-ED83-4D74-B47C-CA70F3E1DDE7} = {EA343A2D-E8F2-4526-B478-912DF621AC4D}
 		{5EB4ADA4-5258-4964-BD7D-11D4F926E344} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
 		{5AFD1454-E625-451D-A615-CEB7BB09AA65} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}
 		{37EC09C7-702D-4539-B98D-F67B15E1E6CE} = {D62C3C92-3643-4E25-B7A4-11CCE15DDBC8}

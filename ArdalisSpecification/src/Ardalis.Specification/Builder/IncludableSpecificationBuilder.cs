@@ -4,16 +4,13 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty>
+    public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty> where T : class
     {
         public Specification<T> Specification { get; }
 
-        public IIncludeAggregator Aggregator { get; }
-
-        public IncludableSpecificationBuilder(Specification<T> specification, IIncludeAggregator aggregator)
+        public IncludableSpecificationBuilder(Specification<T> specification)
         {
             Specification = specification;
-            Aggregator = aggregator;
         }
     }
 }

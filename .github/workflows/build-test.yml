@@ -1,0 +1,24 @@
+name: Build and Test .NET 5 CI
+
+on:
+  push:
+    paths-ignore:
+    - 'docs/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.103
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: chmod
+      run: chmod 555 ./RunTests.sh
+    - name: Run integration tests with Docker
+      run: ./RunTests.sh

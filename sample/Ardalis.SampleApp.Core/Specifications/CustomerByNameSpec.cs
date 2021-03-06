@@ -3,7 +3,7 @@ using Ardalis.Specification;
 
 namespace Ardalis.SampleApp.Core.Specifications
 {
-    public class CustomerByNameSpec : Specification<Customer>
+    public class CustomerByNameSpec : Specification<Customer>, ISingleResultSpecification
     {
         public CustomerByNameSpec(string name)
         {

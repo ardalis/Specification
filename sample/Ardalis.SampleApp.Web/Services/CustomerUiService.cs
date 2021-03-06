@@ -16,10 +16,10 @@ namespace Ardalis.SampleApp.Web.Services
     public class CustomerUiService : ICustomerUiService
     {
         private readonly IMapper mapper;
-        private readonly IRepository<Customer> customerRepository;
+        private readonly IReadRepository<Customer> customerRepository;
 
         public CustomerUiService(IMapper mapper,
-                                 IRepository<Customer> customerRepository)
+                                 IReadRepository<Customer> customerRepository)
         {
             this.mapper = mapper;
             this.customerRepository = customerRepository;

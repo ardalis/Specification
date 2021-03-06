@@ -1,10 +1,26 @@
-## Overview
+---
+layout: default
+title: Overview
+nav_order: 1
+has_children: false
+---
+# Overview
 
-The Specification pattern encapsulates query logic in its own class, which helps classes follow Single Responsibility Principle and promotes reuse of common queries. Specifications can be independently unit tested and when combined with Repository help keep the Repository from growing with many additional custom query methods. Specification is commonly used on projects that leverage Domain-Driven Design.
+The [Specification pattern](https://deviq.com/design-patterns/specification-pattern) encapsulates query logic in its own class, which helps classes follow the [Single Responsibility Principle](https://deviq.com/principles/single-responsibility-principle) (SRP) and promotes reuse of common queries. Specifications can be independently unit tested and when combined with [Repository](https://deviq.com/design-patterns/repository-pattern) help keep the Repository from growing with too many additional custom query methods. Specification is commonly used on projects that leverage [Domain-Driven Design](https://deviq.com/domain-driven-design/ddd-overview).
+
+Since version 5, this package also supports applying specifications directly to EF Core `DbContext` instances.
+
+## Benefits
+
+The main benefits offered by the specification pattern in general and this package in particular are:
+
+- Keep data access query logic in one place
+- Keep data access query logic in the domain layer
+- Reuse common queries throughout your application
+- Provide good names to common queries to facilitate reuse and elevate language used to describe the app's behavior
+- Eliminate common pain points of Repository pattern (hiding ORM data shaping features, requiring many custom query methods)
 
 ## Installing Ardalis.Specification
-
-[View the repo](https://github.com/ardalis/Specification) | [View the docs](https://ardalis.github.io/Specification)
 
 Install Ardalis.Specification from NuGet. The latest version is available here:
 
@@ -16,35 +32,10 @@ Alternately, add it to a project using this CLI command:
 dotnet add package Ardalis.Specification
 ```
 
+## Getting Started
 
-### Markdown
+Read the [Getting Started section](getting-started/). You can also [review the sample application that is available in the GitHub repository](https://github.com/ardalis/Specification/tree/master/sample).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Docs theme notes
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ardalis/Specification/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+This docs site is using the [Just the Docs theme](https://pmarsceill.github.io/just-the-docs/docs/navigation-structure/). Details on how to configure its metadata and navigation can be found [here](https://pmarsceill.github.io/just-the-docs/docs/navigation-structure/).
