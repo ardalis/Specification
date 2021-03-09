@@ -36,3 +36,15 @@ public class ItemByIdSpec : Specification<Item>
     }
 }
 ```
+
+Finally: the Specification above should also implement the marker interface `ISingleResultSpecification`, which makes clear that this Specification will return only one result. Any "ById" Specification, and any other Specification intended to return only one result, should implement this interface to make clear that it returns a single result.
+
+```csharp
+public class ItemByIdSpec : Specification<Item>, ISingleResultSpecification
+{
+    public ItemByIdSpec(int Id)
+    {
+        Query.Where(x => x.Id == Id);
+    }
+}
+```
