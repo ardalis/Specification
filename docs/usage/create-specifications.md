@@ -48,3 +48,7 @@ public class ItemByIdSpec : Specification<Item>, ISingleResultSpecification
     }
 }
 ```
+
+## Advanced Specification
+
+From here, additional operators can be used to further refine the Specification. These operators follow LINQ syntax and are described in more detail in the [Features](../features/index.md) section.
