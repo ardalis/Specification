@@ -13,4 +13,4 @@ grand_parent: Features
 Query.Where(x => x.Id == Id);
 ```
 
-This `Query` will select an object `x` if `x.Id` is equal to `Id`. Note that while this particular query likely selects a single object (since Id's should generally be unique), the `Where` operator will select *all* objects matching the specified criteria.
+This query will select an object `x` if `x.Id` is equal to `Id`. Note that while this particular query likely selects a single object (since Id's should generally be unique), the `Where` operator will select *all* objects matching the specified criteria.
