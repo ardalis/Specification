@@ -7,6 +7,10 @@ parent: Base Features
 grand_parent: Features
 ---
 
+# Where
+
+The `Where` feature defined in the Specification behaves the same as `Where` in Linq, and it accepts `Expression<Func<TSource, bool>>` expression as a parameter.
+
 `Where` is used to select objects meeting a certain criteria, as defined by a lambda expression. For example:
 
 ```csharp
