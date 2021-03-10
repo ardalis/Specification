@@ -5,6 +5,8 @@ parent: Usage
 nav_order: 1
 ---
 
+# How to Create Specifications
+
 ## Basic Specification
 
 A Specification class should inherit from `Specification<T>`, where `T` is the type being retrieved in the query:
