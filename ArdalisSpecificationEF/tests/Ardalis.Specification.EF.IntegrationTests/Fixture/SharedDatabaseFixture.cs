@@ -10,10 +10,10 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
     public class SharedDatabaseFixture : IDisposable
     {
         // Docker
-        public const string ConnectionString = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+        public const string ConnectionStringDocker = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
 
         // (localdb)
-        //public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEFTestsDB;ConnectRetryCount=0";
+        public const string ConnectionStringLocalDb = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEFTestsDB;ConnectRetryCount=0";
 
 
         private static readonly object _lock = new object();
@@ -21,11 +21,31 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
 
         public SharedDatabaseFixture()
         {
-            Connection = new SqlConnection(ConnectionString);
+            Connection = IsLocalDbAvailable()
+                        ? new SqlConnection(ConnectionStringLocalDb)
+                        : new SqlConnection(ConnectionStringDocker);
 
             Seed();
 
             Connection.Open();
+        }
+
+        private bool IsLocalDbAvailable()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionStringLocalDb))
+                {
+                    connection.Open();
+                    connection.Close();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public DbConnection Connection { get; }
