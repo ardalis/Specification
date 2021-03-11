@@ -12,9 +12,8 @@ parent: Features
 
 - Common/abstract features
   - Where
-  - Order
-  - Take
+  - OrderBy
   - Skip
+  - Take
   - Paging
-  - Cache support
-
+  - Caching
