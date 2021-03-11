@@ -5,6 +5,8 @@ parent: Usage
 nav_order: 1
 ---
 
+# How to Create Specifications
+
 ## Basic Specification
 
 A Specification class should inherit from `Specification<T>`, where `T` is the type being retrieved in the query:
@@ -48,3 +50,7 @@ public class ItemByIdSpec : Specification<Item>, ISingleResultSpecification
     }
 }
 ```
+
+## Advanced Specification
+
+From here, additional operators can be used to further refine the Specification. These operators follow LINQ syntax and are described in more detail in the [Features](../features/index.md) section.
