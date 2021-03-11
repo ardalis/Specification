@@ -17,4 +17,4 @@ The `Where` feature defined in the Specification behaves the same as `Where` in 
 Query.Where(x => x.Id == Id);
 ```
 
-This query will select an object `x` if `x.Id` is equal to `Id`. Note that while this particular query likely selects a single object (since Id's should generally be unique), the `Where` operator will select *all* objects matching the specified criteria.
+This query will select an object `x` if `x.Id` is equal to `Id`. Note that while this particular query likely selects a single object (since Ids should generally be unique), the `Where` operator will select *all* objects matching the specified criteria.
