@@ -2,7 +2,7 @@
 layout: default
 title: OrderBy
 nav_order: 2
-has_children: true
+has_children: false
 parent: Base Features
 grand_parent: Features
 ---
