@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ardalis.Specification
@@ -21,29 +22,29 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="T" />.
         /// </returns>
-        Task<T> AddAsync(T entity);
+        Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
         /// <summary>
         /// Updates an entity in the database
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task UpdateAsync(T entity);
+        Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
         /// <summary>
         /// Removes an entity in the database
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteAsync(T entity);
+        Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
         /// <summary>
         /// Removes the given entities in the database
         /// </summary>
         /// <param name="entities">The entities to remove.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task DeleteRangeAsync(IEnumerable<T> entities);
+        Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
         /// <summary>
         /// Persists changes to the database.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

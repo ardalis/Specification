@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Infrastructure.Data
@@ -29,26 +30,26 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
-        public Task<int> CountAsync(Specification.ISpecification<T> specification)
+        public Task<int> CountAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
         {
             // TODO: Add Caching
-            return _sourceRepository.CountAsync(specification);
+            return _sourceRepository.CountAsync(specification, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<T> GetByIdAsync(int id)
+        public Task<T> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return _sourceRepository.GetByIdAsync(id);
+            return _sourceRepository.GetByIdAsync(id, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<T> GetByIdAsync<TId>(TId id)
+        public Task<T> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default)
         {
-            return _sourceRepository.GetByIdAsync(id);
+            return _sourceRepository.GetByIdAsync(id, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<T> GetBySpecAsync<Spec>(Spec specification) where Spec : ISingleResultSpecification, ISpecification<T>
+        public Task<T> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISingleResultSpecification, ISpecification<T>
         {
             if(specification.CacheEnabled)
             {
@@ -58,31 +59,31 @@ namespace Ardalis.SampleApp.Infrastructure.Data
                 {
                     entry.SetOptions(_cacheOptions);
                     _logger.LogWarning("Fetching source data for " + key);
-                    return _sourceRepository.GetBySpecAsync(specification);
+                    return _sourceRepository.GetBySpecAsync(specification, cancellationToken);
                 });
             }
-            return _sourceRepository.GetBySpecAsync(specification);
+            return _sourceRepository.GetBySpecAsync(specification, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<TResult> GetBySpecAsync<TResult>(Specification.ISpecification<T, TResult> specification)
+        public Task<TResult> GetBySpecAsync<TResult>(Specification.ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Task<List<T>> ListAsync()
+        public Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
         {
             string key = $"{nameof(T)}-ListAsync";
             return _cache.GetOrCreate(key, entry =>
             {
                 entry.SetOptions(_cacheOptions);
-                return _sourceRepository.ListAsync();
+                return _sourceRepository.ListAsync(cancellationToken);
             });
         }
 
         /// <inheritdoc/>
-        public Task<List<T>> ListAsync(Specification.ISpecification<T> specification)
+        public Task<List<T>> ListAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
         {
             if (specification.CacheEnabled)
             {
@@ -92,14 +93,14 @@ namespace Ardalis.SampleApp.Infrastructure.Data
                 {
                     entry.SetOptions(_cacheOptions);
                     _logger.LogWarning("Fetching source data for " + key);
-                    return _sourceRepository.ListAsync(specification);
+                    return _sourceRepository.ListAsync(specification, cancellationToken);
                 });
             }
-            return _sourceRepository.ListAsync(specification);
+            return _sourceRepository.ListAsync(specification, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<List<TResult>> ListAsync<TResult>(Specification.ISpecification<T, TResult> specification)
+        public Task<List<TResult>> ListAsync<TResult>(Specification.ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
