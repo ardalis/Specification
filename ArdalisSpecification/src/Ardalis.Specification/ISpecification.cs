@@ -20,7 +20,10 @@ namespace Ardalis.Specification
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T, TResult}"/>.
         /// </summary>
         new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; }
-
+        /// <summary>
+        /// Returns a IEnumerable of entities that fulfilled to the specification
+        /// </summary>
+        /// <param name="entities"></param>
         new IEnumerable<TResult> Evaluate(IEnumerable<T> entities);
     }
 
@@ -94,6 +97,18 @@ namespace Ardalis.Specification
         bool AsSplitQuery { get; }
         bool AsNoTrackingWithIdentityResolution { get; }
 
+        /// <summary>
+        /// Returns a IEnumerable of entities that fulfilled to the specification
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
         IEnumerable<T> Evaluate(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Returns whether or not the entity fulfills to the specification 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool Evaluate(T entity);
     }
 }

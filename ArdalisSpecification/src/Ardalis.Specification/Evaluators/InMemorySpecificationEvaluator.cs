@@ -56,5 +56,10 @@ namespace Ardalis.Specification
                 ? source
                 : specification.PostProcessingAction(source);
         }
+
+        public bool Evaluate<T>(T source, ISpecification<T> specification)
+        {
+            return Evaluate(new[] { source }, specification).Any();
+        }
     }
 }

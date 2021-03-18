@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -50,15 +49,22 @@ namespace Ardalis.Specification
             this.Query = new SpecificationBuilder<T>(this);
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
         {
             return Evaluator.Evaluate(entities, this);
         }
 
         /// <inheritdoc/>
+        public virtual bool Evaluate(T entity)
+        {
+            return Evaluator.Evaluate(entity, this);
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; } = new List<Expression<Func<T, bool>>>();
 
-        public IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; } = 
+        public IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; } =
             new List<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)>();
 
         /// <inheritdoc/>
