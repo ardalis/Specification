@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Evaluators\AsNoTrackingEvaluator.cs" />
     <Compile Include="Evaluators\IncludeEvaluator.cs" />
+    <Compile Include="Evaluators\OrderEvaluator.cs" />
     <Compile Include="Evaluators\SearchEvaluator.cs" />
     <Compile Include="Evaluators\SpecificationEvaluator.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
