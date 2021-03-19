@@ -56,10 +56,7 @@
     <Compile Include="Evaluators\IncludeEvaluator.cs" />
     <Compile Include="Evaluators\SearchEvaluator.cs" />
     <Compile Include="Evaluators\SpecificationEvaluator.cs" />
-    <Compile Include="Extensions\DbAsyncEnumerator.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
-    <Compile Include="Extensions\IIncludableQueryable.cs" />
-    <Compile Include="Extensions\IncludableQueryable.cs" />
     <Compile Include="Extensions\IncludeExtensions.cs" />
     <Compile Include="Extensions\ParameterReplacerVisitor.cs" />
     <Compile Include="Extensions\SearchExtension.cs" />
