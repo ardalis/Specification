@@ -8,13 +8,14 @@ parent: Features
 
 # Base Features
 
+The features described in the docs below all work as they do in Linq. For explanations beyond those provided below, you may find the Methods section of the [Linq docs](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-5.0) helpful.
+
 ## Contents
 
 - Common/abstract features
   - Where
-  - Order
-  - Take
+  - OrderBy
   - Skip
+  - Take
   - Paging
-  - Cache support
-
+  - Caching

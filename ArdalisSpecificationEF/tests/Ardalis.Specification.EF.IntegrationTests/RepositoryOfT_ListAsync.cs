@@ -48,6 +48,18 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
+        public async Task ReturnsCompanyWithStoreWithIdOne_GivenCompanyIncludeFilteredStoresSpec()
+        {
+            var result = await companyRepository.ListAsync(new CompanyIncludeFilteredStoresSpec(1));
+
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+            result[0].Stores.Should().NotBeEmpty();
+            result[0].Stores.Should().HaveCount(1);
+            result[0].Stores.First().Id.Should().Be(1);
+        }
+
+        [Fact]
         public async Task ReturnsStoreWithIdFrom15To30_GivenStoresByIdListSpec()
         {
             var ids = Enumerable.Range(15, 16);

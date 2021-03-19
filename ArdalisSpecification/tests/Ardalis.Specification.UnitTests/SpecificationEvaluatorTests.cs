@@ -21,7 +21,7 @@ namespace Ardalis.Specification.UnitTests
 
             var store = spec.Evaluate(StoreSeed.Get()).FirstOrDefault();
 
-            store.Id.Should().Be(10);
+            store?.Id.Should().Be(10);
         }
 
         [Fact]
