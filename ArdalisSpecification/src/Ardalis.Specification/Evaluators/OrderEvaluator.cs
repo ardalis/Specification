@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
@@ -27,19 +26,19 @@ namespace Ardalis.Specification
                 {
                     if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
                     {
-                        orderedQuery = query.OrderBy(orderExpression.KeySelector);
+                        orderedQuery = Queryable.OrderBy((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
                     {
-                        orderedQuery = query.OrderByDescending(orderExpression.KeySelector);
+                        orderedQuery = Queryable.OrderByDescending((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
                     {
-                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelector);
+                        orderedQuery = Queryable.ThenBy((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
                     {
-                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector);
+                        orderedQuery = Queryable.ThenByDescending((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                 }
 
@@ -90,6 +89,26 @@ namespace Ardalis.Specification
             }
 
             return query;
+        }
+
+        //private Expression<Func<T, int>> RemoveConvert<T>(Expression<Func<T, object>> source)
+        //{
+        //    var body = source.Body;
+        //    while (body.NodeType == ExpressionType.Convert)
+        //        body = ((UnaryExpression)body).Operand;
+
+        //    //var conversion = Expression.Convert(body, typeof(object));
+
+        //    return Expression.Lambda<Func<T, int>>(body, source.Parameters);
+        //}
+
+        private LambdaExpression RemoveConvert(LambdaExpression source)
+        {
+            var body = source.Body;
+            while (body.NodeType == ExpressionType.Convert)
+                body = ((UnaryExpression)body).Operand;
+
+            return Expression.Lambda(body, source.Parameters);
         }
     }
 }

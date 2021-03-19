@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ardalis.Specification.EntityFramework6</RootNamespace>
     <AssemblyName>Ardalis.Specification.EntityFramework6</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -52,13 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParameterReplacerVisitor.cs" />
-    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="Evaluators\AsNoTrackingEvaluator.cs" />
+    <Compile Include="Evaluators\IncludeEvaluator.cs" />
+    <Compile Include="Evaluators\SearchEvaluator.cs" />
+    <Compile Include="Evaluators\SpecificationEvaluator.cs" />
+    <Compile Include="Extensions\DbAsyncEnumerator.cs" />
+    <Compile Include="Extensions\DbSetExtensions.cs" />
+    <Compile Include="Extensions\IIncludableQueryable.cs" />
+    <Compile Include="Extensions\IncludableQueryable.cs" />
+    <Compile Include="Extensions\IncludeExtensions.cs" />
+    <Compile Include="Extensions\ParameterReplacerVisitor.cs" />
+    <Compile Include="Extensions\SearchExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecificationEvaluator.cs" />
+    <Compile Include="RepositoryBaseOfT.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

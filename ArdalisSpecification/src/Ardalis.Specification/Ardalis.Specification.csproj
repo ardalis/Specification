@@ -26,6 +26,7 @@
   
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   
