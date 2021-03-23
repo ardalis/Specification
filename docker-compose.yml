@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      WAIT_HOSTS: database:1433
+      WAIT_HOSTS: databaseEFCore:1433
     volumes:
         - ./TestResults:/var/temp
     depends_on:
-      - database
+      - databaseEFCore
 
-  database:
+  databaseEFCore:
     image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
     environment:
         SA_PASSWORD: "P@ssW0rd!"

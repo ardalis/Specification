@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
+using MartinCostello.SqlLocalDb;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
 {
     public class SharedDatabaseFixture : IDisposable
     {
         // Docker
-        public const string ConnectionStringDocker = "Data Source=database;Initial Catalog=SampleDatabase;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+        public const string ConnectionStringDocker = "Data Source=databaseEFCore;Initial Catalog=SpecificationEFCoreTestsDB;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
 
         // (localdb)
         public const string ConnectionStringLocalDb = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEFTestsDB;ConnectRetryCount=0";
@@ -21,7 +22,14 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
 
         public SharedDatabaseFixture()
         {
-            Connection = IsLocalDbAvailable()
+            var isLocalDBInstalled = false;
+
+            using (var localDB = new SqlLocalDbApi())
+            {
+                isLocalDBInstalled = localDB.IsLocalDBInstalled();
+            }
+
+            Connection = isLocalDBInstalled
                         ? new SqlConnection(ConnectionStringLocalDb)
                         : new SqlConnection(ConnectionStringDocker);
 
@@ -30,7 +38,9 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
             Connection.Open();
         }
 
-        private bool IsLocalDbAvailable()
+        // This would work only if the DB already exists, otherwise obviously won't be able to open a connection.
+        // Therefore, in the ctor we're using a Nuget package for this check, it's more robust.
+        private bool IsLocalDbAvailable1()
         {
             try
             {
