@@ -1,7 +1,4 @@
 ﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
@@ -9,8 +6,10 @@ namespace Ardalis.Specification.UnitTests.Fixture.Specs
     {
         public StoreNamesPaginatedSpec(int skip, int take)
         {
-            Query.Skip(skip)
-                 .Take(take);
+            Query.OrderBy(x => x.Id)
+                .Skip(skip)
+                .Take(take);
+
             Query.Select(x => x.Name);
         }
     }

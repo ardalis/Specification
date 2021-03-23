@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification.EntityFramework6
 {
     public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
     {
@@ -20,24 +21,24 @@ namespace Ardalis.Specification
                     throw new DuplicateOrderChainException();
                 }
 
-                IOrderedQueryable<T>? orderedQuery = null;
+                IOrderedQueryable<T> orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
                     if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
                     {
-                        orderedQuery = query.OrderBy(orderExpression.KeySelector);
+                        orderedQuery = Queryable.OrderBy((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
                     {
-                        orderedQuery = query.OrderByDescending(orderExpression.KeySelector);
+                        orderedQuery = Queryable.OrderByDescending((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
                     {
-                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelector);
+                        orderedQuery = Queryable.ThenBy((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
                     {
-                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector);
+                        orderedQuery = Queryable.ThenByDescending((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                 }
 
@@ -60,24 +61,24 @@ namespace Ardalis.Specification
                     throw new DuplicateOrderChainException();
                 }
 
-                IOrderedEnumerable<T>? orderedQuery = null;
+                IOrderedEnumerable<T> orderedQuery = null;
                 foreach (var orderExpression in specification.OrderExpressions)
                 {
                     if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
                     {
-                        orderedQuery = query.OrderBy(orderExpression.KeySelector.Compile());
+                        orderedQuery = Queryable.OrderBy((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
                     {
-                        orderedQuery = query.OrderByDescending(orderExpression.KeySelector.Compile());
+                        orderedQuery = Queryable.OrderByDescending((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
                     {
-                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelector.Compile());
+                        orderedQuery = Queryable.ThenBy((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
                     {
-                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector.Compile());
+                        orderedQuery = Queryable.ThenByDescending((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
                     }
                 }
 
@@ -88,6 +89,15 @@ namespace Ardalis.Specification
             }
 
             return query;
+        }
+
+        private LambdaExpression RemoveConvert(LambdaExpression source)
+        {
+            var body = source.Body;
+            while (body.NodeType == ExpressionType.Convert)
+                body = ((UnaryExpression)body).Operand;
+
+            return Expression.Lambda(body, source.Parameters);
         }
     }
 }
