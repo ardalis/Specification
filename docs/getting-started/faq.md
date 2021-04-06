@@ -90,4 +90,6 @@ Query.Select(x => x.Name);
 
 In this case, each element x is being "transformed" into its `Name` property.
 
+Also make sure that the base class of your Specification using `Select` is a `Specification<T, TReturn>`.
+
 See the [doc page](../features/select.md) on `Select` for a more detailed explanation.

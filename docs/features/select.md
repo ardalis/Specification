@@ -16,3 +16,15 @@ The `Select` feature defined in Specification behaves the same as `Select` in Li
 ```csharp
 Query.Select(x => x.Name);
 ```
+
+Since this query is now returning a different type, the type of `Name`, rather than of `x`, the base class of the Specification will need to reflect this. Instead of being a `Specification<T>`, the Specification will need to be a `Specification<T, TReturn>`:
+
+```csharp
+public class StoreNamesSpec : Specification<Store, string?>
+{
+    public StoreNamesSpec()
+    {
+        Query.Select(x => x.Name);
+    }
+}
+```
