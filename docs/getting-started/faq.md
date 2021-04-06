@@ -79,3 +79,15 @@ public Customer(string name, string email, string address, DateTime birthdate)
     this.Address = address;
 }
 ```
+
+## How can I use the `Select` operator in Specification?
+
+Use the following syntax to transform elements in a sequence based on a lambda expression:
+
+```csharp
+Query.Select(x => x.Name);
+```
+
+In this case, each element x is being "transformed" into its `Name` property.
+
+See the [doc page](../features/select.md) on `Select` for a more detailed explanation.
