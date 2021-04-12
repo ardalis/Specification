@@ -25,4 +25,4 @@ public class CustomerByNameWithStoresSpec : Specification<Customer>, ISingleResu
 
 The `.EnableCache` method takes in two parameters: the name of the specification and the parameters of the specification.
 
-Implementing caching will also require infrastructure such as a CachedRepository, an example of which is given in [the sample](https://github.com/ardalis/Specification/blob/2605202df4d8e40fe388732db6d8f7a3754fcc2b/sample/Ardalis.SampleApp.Infrastructure/Data/CachedCustomerRepository.cs#L13) on GitHub.
+Implementing caching will also require infrastructure such as a CachedRepository, an example of which is given in [the sample](https://github.com/ardalis/Specification/blob/2605202df4d8e40fe388732db6d8f7a3754fcc2b/sample/Ardalis.SampleApp.Infrastructure/Data/CachedCustomerRepository.cs#L13) on GitHub. The `EnableCache` method is used to inform the cache implementation that caching should be used, and to configure the `CacheKey` based on the arguments supplied.
