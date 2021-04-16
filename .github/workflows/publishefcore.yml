@@ -2,7 +2,7 @@ name: publish Ardalis.Specification.EntityFrameworkCore to nuget
 on:
   push:
     branches:
-      - master # Your default release branch
+      - main # Your default release branch
     paths:
       - 'ArdalisSpecificationEF/src/Ardalis.Specification.EF/**'
 jobs:
