@@ -12,9 +12,10 @@
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
-    <Version>5.0.3</Version>
+    <Version>5.1.0</Version>
     <PackageReleaseNotes>
-      Major refactoring. Updated to .NET 5. DbSet extensions. Post-processor support. AsSplitQuery support. AsNoTrackingWithIdentityResolution support. Generic constraints. New Evaluate method. New single result interface. New IReadRepositoryOfT interface.</PackageReleaseNotes>
+      Added cancellation token support to repository types.
+    </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
