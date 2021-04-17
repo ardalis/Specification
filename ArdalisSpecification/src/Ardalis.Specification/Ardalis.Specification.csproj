@@ -12,9 +12,10 @@
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>5.0.3</Version>
+    <Version>5.1.0</Version>
     <PackageReleaseNotes>
-      Major refactoring. Updated to .NET 5. DbSet extensions. Post-processor support. AsSplitQuery support. AsNoTrackingWithIdentityResolution support. Generic constraints. New Evaluate method. New single result interface. New IReadRepositoryOfT interface.</PackageReleaseNotes>
+    Added cancellation token support to repository types.
+    </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
