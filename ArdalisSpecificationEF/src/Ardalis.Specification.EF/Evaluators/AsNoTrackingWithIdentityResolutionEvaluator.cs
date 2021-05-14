@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
+#if NETSTANDARD2_1
     public class AsNoTrackingWithIdentityResolutionEvaluator : IEvaluator
     {
         private AsNoTrackingWithIdentityResolutionEvaluator() { }
@@ -23,4 +24,5 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return query;
         }
     }
+#endif
 }
