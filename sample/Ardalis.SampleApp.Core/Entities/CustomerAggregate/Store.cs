@@ -1,9 +1,6 @@
 ﻿using Ardalis.GuardClauses;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ardalis.SampleApp.Core.Entitites.CustomerAggregate
+namespace Ardalis.SampleApp.Core.Entities.CustomerAggregate
 {
     public class Store
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ardalis.SampleApp.Core.Specifications;
 using Ardalis.SampleApp.Core.Interfaces;
-using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.GuardClauses;
 using Ardalis.SampleApp.Core.Specifications.Filters;
 
