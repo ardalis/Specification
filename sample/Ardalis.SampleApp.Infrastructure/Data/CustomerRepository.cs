@@ -1,4 +1,4 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+﻿using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.SampleApp.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Ardalis.SampleApp.Infrastructure.DataAccess;

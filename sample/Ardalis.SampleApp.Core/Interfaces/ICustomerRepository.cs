@@ -1,4 +1,4 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+﻿using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+﻿using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.Specification;
 
 namespace Ardalis.SampleApp.Core.Specifications

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.SampleApp.Core.Interfaces;
 using Ardalis.SampleApp.Core.Specifications;
 using Microsoft.AspNetCore.Mvc.RazorPages;
