@@ -3,11 +3,32 @@
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageId>Ardalis.Specification.EntityFramework6</PackageId>
+    <Title>Ardalis.Specification.EntityFramework6</Title>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Steve Smith (@ardalis); Scott DePouw; Fati Iseni (@fiseni)</Authors>
+    <Company>Ardalis.com</Company>
+    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
+    <Description>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Description>
+    <Summary>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Summary>
+    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
+    <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
+    <Version>5.1.0</Version>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+    <AssemblyName>Ardalis.Specification.EntityFramework6</AssemblyName>
+    <PackageIcon>icon.png</PackageIcon>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
