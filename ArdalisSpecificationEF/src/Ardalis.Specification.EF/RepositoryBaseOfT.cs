@@ -103,6 +103,12 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return await ApplySpecification(specification, true).CountAsync(cancellationToken);
         }
 
+        /// <inheritdoc/>
+        public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
+        {
+            return await dbContext.Set<T>().CountAsync(cancellationToken);
+        }
+
         /// <summary>
         /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
         /// <paramref name="specification"/>.

@@ -90,5 +90,15 @@ namespace Ardalis.Specification
         /// number of elements in the input sequence.
         /// </returns>
         Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns the total number of records.
+        /// of the <paramref name="specification"/>.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the
+        /// number of elements in the input sequence.
+        /// </returns>
+        Task<int> CountAsync(CancellationToken cancellationToken = default);
     }
 }
