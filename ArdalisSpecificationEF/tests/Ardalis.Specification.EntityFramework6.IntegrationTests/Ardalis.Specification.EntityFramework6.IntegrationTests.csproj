@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -6,22 +7,24 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
+  
   <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.IdentityModel" />
   </ItemGroup>
+
   <ItemGroup>
+    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
     <ProjectReference Include="..\..\..\ArdalisSpecification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj" />
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFramework6\Ardalis.Specification.EntityFramework6.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.0.0" />
-    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
-  </ItemGroup>
+
 </Project>
