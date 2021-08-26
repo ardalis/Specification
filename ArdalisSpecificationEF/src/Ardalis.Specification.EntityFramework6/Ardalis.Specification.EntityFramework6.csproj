@@ -12,7 +12,7 @@
     <Description>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Description>
     <Summary>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
-    <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
+    <PackageTags>spec;specification;repository;ddd;ef;ef6;entity framework</PackageTags>
     <Version>5.1.0</Version>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
@@ -24,7 +24,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
