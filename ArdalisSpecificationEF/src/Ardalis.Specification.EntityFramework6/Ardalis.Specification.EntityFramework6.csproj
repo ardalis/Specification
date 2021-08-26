@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -16,5 +15,4 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
   </ItemGroup>
-  <Import Project="..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

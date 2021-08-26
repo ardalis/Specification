@@ -1,6 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
-  <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -19,15 +17,11 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
     <ProjectReference Include="..\..\..\ArdalisSpecification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj" />
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFramework6\Ardalis.Specification.EntityFramework6.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
     <PackageReference Include="Castle.Core" Version="4.4.0" />
     <PackageReference Include="Effort" Version="2.2.13" />
     <PackageReference Include="Effort.EF6" Version="2.2.13" />
@@ -57,7 +51,4 @@
     <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
   </ItemGroup>
-  <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <Import Project="..\..\..\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\..\..\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
 </Project>
