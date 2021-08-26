@@ -93,7 +93,6 @@ namespace Ardalis.Specification
 
         /// <summary>
         /// Returns the total number of records.
-        /// of the <paramref name="specification"/>.
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains the
