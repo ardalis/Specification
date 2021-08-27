@@ -1,4 +1,4 @@
-﻿using Ardalis.SampleApp.Core.Entitites.Seeds;
+﻿using Ardalis.SampleApp.Core.Entities.Seeds;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

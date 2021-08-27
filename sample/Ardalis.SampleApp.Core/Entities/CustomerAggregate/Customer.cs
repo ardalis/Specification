@@ -1,9 +1,9 @@
-﻿using Ardalis.GuardClauses;
-using Ardalis.SampleApp.Core.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Ardalis.GuardClauses;
+using Ardalis.SampleApp.Core.Interfaces;
 
-namespace Ardalis.SampleApp.Core.Entitites.CustomerAggregate
+namespace Ardalis.SampleApp.Core.Entities.CustomerAggregate
 {
     public class Customer : IAggregateRoot
     {

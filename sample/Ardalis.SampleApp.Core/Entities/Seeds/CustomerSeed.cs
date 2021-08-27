@@ -1,7 +1,7 @@
-﻿using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 
-namespace Ardalis.SampleApp.Core.Entitites.Seeds
+namespace Ardalis.SampleApp.Core.Entities.Seeds
 {
     public static class CustomerSeed
     {

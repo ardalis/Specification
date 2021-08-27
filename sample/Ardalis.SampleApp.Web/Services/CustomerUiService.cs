@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Ardalis.SampleApp.Web.Interfaces;
 using Ardalis.SampleApp.Web.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.SampleApp.Core.Specifications;
 using Ardalis.SampleApp.Core.Interfaces;
-using Ardalis.SampleApp.Core.Entitites.CustomerAggregate;
+using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.GuardClauses;
 using Ardalis.SampleApp.Core.Specifications.Filters;
 
@@ -26,7 +24,7 @@ namespace Ardalis.SampleApp.Web.Services
         }
 
 
-        // Here I'm just writing various usages, not necessarilly you'll need all of them.
+        // Here I'm just writing various usages, not necessarily you'll need all of them.
 
         public async Task<CustomerDto> GetCustomer(int customerId)
         {
