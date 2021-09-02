@@ -1,0 +1,23 @@
+name: Build and Test Ardalis.Specification.EntityFramework6
+
+on:
+  push:
+    paths-ignore:
+    - 'docs/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.400
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build with dotnet
+      run: dotnet build ArdalisSpecificationEF/tests/Ardalis.Specification.EntityFramework6.IntegrationTests/Ardalis.Specification.EntityFramework6.IntegrationTests.csproj --configuration Release
+    - name: Test with dotnet
+      run: dotnet test ArdalisSpecificationEF/tests/Ardalis.Specification.EntityFramework6.IntegrationTests/Ardalis.Specification.EntityFramework6.IntegrationTests.csproj --configuration Release
