@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ArdalisSpecification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj" />
-    <ProjectReference Include="..\..\src\Ardalis.Specification.EF\Ardalis.Specification.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\Specification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj" />
+    <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>
