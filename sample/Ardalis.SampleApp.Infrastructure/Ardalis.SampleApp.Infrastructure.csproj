@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SpecificationEFCore\src\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\Specification.EntityFrameworkCore\src\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Ardalis.SampleApp.Core\Ardalis.SampleApp.Core.csproj" />
   </ItemGroup>
 
