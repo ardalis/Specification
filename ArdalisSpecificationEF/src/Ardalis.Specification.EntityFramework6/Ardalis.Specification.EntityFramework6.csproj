@@ -16,6 +16,7 @@
     <PackageTags>spec;specification;repository;ddd;ef;ef6;entity framework</PackageTags>
     <Version>5.1.0</Version>
     <PackageReleaseNotes>
+      Initial release.
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFramework6</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
