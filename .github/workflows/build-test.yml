@@ -18,10 +18,10 @@ jobs:
         dotnet-version: 5.0.103
     - name: Build with dotnet
       run: |
-        dotnet build ArdalisSpecification/src/Ardalis.Specification/Ardalis.Specification.csproj --configuration Release
-        dotnet build ArdalisSpecification/tests/Ardalis.Specification.UnitTests/Ardalis.Specification.UnitTests.csproj --configuration Release
-        dotnet build ArdalisSpecificationEF/src/Ardalis.Specification.EF/Ardalis.Specification.EntityFrameworkCore.csproj --configuration Release
-        dotnet build ArdalisSpecificationEF/tests/Ardalis.Specification.EF.IntegrationTests/Ardalis.Specification.EntityFrameworkCore.IntegrationTests.csproj --configuration Release
+        dotnet build Specification/src/Ardalis.Specification/Ardalis.Specification.csproj --configuration Release
+        dotnet build Specification/tests/Ardalis.Specification.UnitTests/Ardalis.Specification.UnitTests.csproj --configuration Release
+        dotnet build Specification.EntityFrameworkCore/src/Ardalis.Specification.EntityFrameworkCore/Ardalis.Specification.EntityFrameworkCore.csproj --configuration Release
+        dotnet build Specification.EntityFrameworkCore/tests/Ardalis.Specification.EntityFrameworkCore.IntegrationTests/Ardalis.Specification.EntityFrameworkCore.IntegrationTests.csproj --configuration Release
     - name: chmod
       run: chmod 555 ./RunTests.sh
     - name: Run integration tests with Docker
