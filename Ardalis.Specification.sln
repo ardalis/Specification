@@ -26,12 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{A74A4C
 		RunTests.sh = RunTests.sh
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzurePipeline", "AzurePipeline", "{900638AF-E2F6-4FC9-9A97-E305C23F74FB}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml.obsolete = azure-pipelines.yml.obsolete
-		GetCoverage.sh = GetCoverage.sh
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{C443291A-7311-455F-9AC6-995EB29DD6D2}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
