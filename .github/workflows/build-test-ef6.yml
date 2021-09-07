@@ -11,10 +11,10 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup dotnet
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.400
+        dotnet-version: 5.0.x
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Build with dotnet

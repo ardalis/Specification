@@ -4,7 +4,7 @@ on:
     branches:
       - main # Your default release branch
     paths:
-      - 'Specification.EntityFrameworkCore/src/Ardalis.Specification.EntityFrameworkCore/**'
+      - 'Specification.EntityFrameworkCore/src/**'
 jobs:
   publish:
     name: list on nuget
@@ -17,7 +17,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.300
+          dotnet-version: 5.0.x
       
       # Publish
       - name: publish on version change

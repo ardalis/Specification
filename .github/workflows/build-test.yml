@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
+    - uses: actions/checkout@v2
+    - name: Setup dotnet
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.103
+        dotnet-version: 5.0.x
     - name: Build with dotnet
       run: |
         dotnet build Specification/src/Ardalis.Specification/Ardalis.Specification.csproj --configuration Release

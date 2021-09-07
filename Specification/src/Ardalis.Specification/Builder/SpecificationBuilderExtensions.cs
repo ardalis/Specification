@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -145,7 +144,10 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             string specificationName, params object[] args) where T : class
         {
-            Guard.Against.NullOrEmpty(specificationName, nameof(specificationName));
+            if (string.IsNullOrEmpty(specificationName))
+            {
+                throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
+            }
 
             specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
 

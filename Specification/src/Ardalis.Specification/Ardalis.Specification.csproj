@@ -12,9 +12,9 @@
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>5.1.0</Version>
+    <Version>5.2.0</Version>
     <PackageReleaseNotes>
-    Added cancellation token support to repository types.
+      Added ISingleResultSpecification generic interface.
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
@@ -26,7 +26,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="3.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   
