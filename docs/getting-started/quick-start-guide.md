@@ -27,7 +27,7 @@ nav_order: 2
 
 3. Create a first specification
     ```csharp
-    public class CustomerByLastnameSpec : Specification<Herstellerkontakt>
+    public class CustomerByLastnameSpec : Specification<Customer>
     {
         public CustomerByLastnameSpec(string lastname)
         {
