@@ -7,11 +7,12 @@ nav_order: 2
 
 
 # How to create your own specification builder
+
 How to create your own specification builder 
 
 ## Example: Configure caching behaviour through specification builder extension method
 
-In order to achieve this:
+In order to achieve this (note the `.WithTimeToLive` method):
 
 ````csharp
 public class CustomerByNameWithStores : Specification<Customer>
@@ -47,10 +48,10 @@ This extension method can only be called when chained after `SpecificationBuilde
 // TODO: Repository example
 ```
 
-Finally, we need to take of some plumbing to implement both `` and ``. The class below uses `ConditionalWeakTable` to do the trick. An other solution is to create a base class that inherits from `Specification<T>`.
+Finally, we need to take of some plumbing to implement both `` and ``. The class below uses `ConditionalWeakTable` to do the trick. Another solution is to create a base class that inherits from `Specification<T>`.
 
 ````csharp
-public static class SpecificationExtentions
+public static class SpecificationExtensions
 {
     private static readonly ConditionalWeakTable<object, CacheOptions> SpecificationCacheOptions = new();
 
