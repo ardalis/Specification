@@ -3,6 +3,14 @@
 [![Actions Status](https://github.com/ardalis/specification/workflows/ASP.NET%20Core%20CI/badge.svg)](https://github.com/ardalis/specification/actions)
 [![Generic badge](https://img.shields.io/badge/Documentation-Ardalis.Specification%20v5-Green.svg)](https://ardalis.github.io/Specification/)
 
+<a href="https://twitter.com/intent/follow?screen_name=ardalis">
+    <img src="https://img.shields.io/twitter/follow/ardalis.svg?label=Follow%20@ardalis" alt="Follow @ardalis" />
+</a> &nbsp; <a href="https://twitter.com/intent/follow?screen_name=fiseni">
+    <img src="https://img.shields.io/twitter/follow/fiseni.svg?label=Follow%20@fiseni" alt="Follow @fiseni" />
+</a> &nbsp; <a href="https://twitter.com/intent/follow?screen_name=nimblepros">
+    <img src="https://img.shields.io/twitter/follow/nimblepros.svg?label=Follow%20@nimblepros" alt="Follow @nimblepros" />
+</a>
+
 [![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
 # Specification
