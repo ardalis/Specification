@@ -140,7 +140,7 @@ namespace Ardalis.Specification
         /// </summary>
         /// <param name="specificationName"></param>
         /// <param name="args">Any arguments used in defining the specification</param>
-        public static ISpecificationBuilder<T> EnableCache<T>(
+        public static ICacheSpecificationBuilder<T> EnableCache<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             string specificationName, params object[] args) where T : class
         {
@@ -153,7 +153,9 @@ namespace Ardalis.Specification
 
             specificationBuilder.Specification.CacheEnabled = true;
 
-            return specificationBuilder;
+            var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification);
+
+            return cacheBuilder;
         }
 
         public static ISpecificationBuilder<T> AsNoTracking<T>(
