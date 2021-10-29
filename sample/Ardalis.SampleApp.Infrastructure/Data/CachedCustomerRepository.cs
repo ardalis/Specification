@@ -37,6 +37,13 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
+        public Task<int> CountAsync(CancellationToken cancellationToken = default)
+        {
+            // TODO: Add Caching
+            return _sourceRepository.CountAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
         public Task<T> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return _sourceRepository.GetByIdAsync(id, cancellationToken);

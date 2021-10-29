@@ -9,7 +9,7 @@ has_children: true
 
 ## Contents (to do)
 
-- eShopOnWeb Reference App
-- Pluralsight DDD Course sample
-- CleanArchitecture Solution Template
-- (add your own project here via pull request)
+- [eShopOnWeb Reference App](https://github.com/dotnet-architecture/eShopOnWeb)
+- [Pluralsight DDD Fundamentals Course sample](https://github.com/ardalis/pluralsight-ddd-fundamentals)
+- [CleanArchitecture Solution Template](https://github.com/ardalis/CleanArchitecture)
+- (add your own project here via [pull request](https://github.com/ardalis/Specification/pulls))

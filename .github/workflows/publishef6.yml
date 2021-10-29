@@ -1,14 +1,14 @@
-name: publish Ardalis.Specification to nuget
+name: publish Ardalis.Specification.EntityFramework6 to nuget
 on:
   push:
     branches:
       - main # Your default release branch
     paths:
-      - 'Specification/src/**'
+      - 'Specification.EntityFramework6/src/**'
 jobs:
   publish:
     name: list on nuget
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -19,11 +19,14 @@ jobs:
         with:
           dotnet-version: 5.0.x
       
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
+
       # Publish
       - name: publish on version change
         uses: rohith/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: Specification/src/Ardalis.Specification/Ardalis.Specification.csproj # Relative to repository root
+          PROJECT_FILE_PATH: Specification.EntityFramework6/src/Ardalis.Specification.EntityFramework6/Ardalis.Specification.EntityFramework6.csproj # Relative to repository root
           # VERSION_FILE_PATH: Directory.Build.props # Filepath with version info, relative to repository root. Defaults to project file
           VERSION_REGEX: <Version>(.*)<\/Version> # Regex pattern to extract version info in a capturing group
           TAG_COMMIT: true # Flag to enable / disable git tagging

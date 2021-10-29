@@ -11,6 +11,7 @@ nav_order: 2
 1. Install Nuget-Package(s)
     a. Always required: [Ardalis.Specification](https://www.nuget.org/packages/Ardalis.Specification/)
     b. If you want to use it with EF Core also install the package [Ardalis.Specification.EntityFrameworkCore](https://www.nuget.org/packages/Ardalis.Specification.EntityFrameworkCore/)
+    
 2. Derive Repository from `RepositoryBase<T>`
     ```csharp
     public class YourRepository<T> : RepositoryBase<T> where T : class 
@@ -26,7 +27,7 @@ nav_order: 2
 
 3. Create a first specification
     ```csharp
-    public class CustomerByLastnameSpec : Specification<Herstellerkontakt>
+    public class CustomerByLastnameSpec : Specification<Customer>
     {
         public CustomerByLastnameSpec(string lastname)
         {
@@ -35,7 +36,12 @@ nav_order: 2
     }
     ```
     
-4. Bind it all together:
+4. Register your Repository as a dependency in Startup.cs
+    ```csharp
+    services.AddScoped(typeof(YourRepository<>));
+    ```
+    
+5. Bind it all together:
     ```csharp
     public class CustomerService {
         private readonly customerRepository;

@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <PackageId>Ardalis.Specification</PackageId>
+    <Title>Ardalis.Specification</Title>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Steve Smith (@ardalis); Scott DePouw; Fati Iseni (@fiseni)</Authors>
+    <Company>Ardalis.com</Company>
+    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
+    <Description>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Description>
+    <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
+    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
+    <PackageTags>spec;specification;repository;ddd</PackageTags>
+    <Version>5.2.0</Version>
+    <PackageReleaseNotes>
+      Added ISingleResultSpecification generic interface.
+    </PackageReleaseNotes>
+    <AssemblyName>Ardalis.Specification</AssemblyName>
+    <PackageIcon>icon.png</PackageIcon>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+</Project>

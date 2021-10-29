@@ -5,16 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="3.1.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ArdalisSpecification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ValueObjects\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
 </Project>
