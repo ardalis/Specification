@@ -41,7 +41,7 @@ namespace Ardalis.Specification
         }
 
         /// <summary>
-        /// Specify the the query result will be ordered by <paramref name="orderExpression"/> in a descending order
+        /// Specify the query result will be ordered by <paramref name="orderExpression"/> in a descending order
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="specificationBuilder"></param>
