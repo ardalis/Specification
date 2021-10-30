@@ -121,7 +121,7 @@ namespace Ardalis.Specification
 
         /// <summary>
         /// Applies the query defined within the specification to the given objects.
-        /// This is specially helpful during unit testing you specification classes
+        /// This is specially helpful when unit testing specification classes
         /// </summary>
         /// <param name="entities">the list of entities on which the specification will be applied</param>
         /// <returns></returns>
