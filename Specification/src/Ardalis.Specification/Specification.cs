@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -49,6 +48,7 @@ namespace Ardalis.Specification
             this.Query = new SpecificationBuilder<T>(this);
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
         {
             return Evaluator.Evaluate(entities, this);
@@ -70,7 +70,6 @@ namespace Ardalis.Specification
         public IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; } =
             new List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>();
 
-
         /// <inheritdoc/>
         public int? Take { get; internal set; } = null;
 
@@ -79,7 +78,6 @@ namespace Ardalis.Specification
 
         /// <inheritdoc/>
         public bool IsPagingEnabled { get; internal set; } = false;
-
 
         /// <inheritdoc/>
         public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; } = null;
@@ -92,7 +90,11 @@ namespace Ardalis.Specification
 
         /// <inheritdoc/>
         public bool AsNoTracking { get; internal set; } = false;
+
+        /// <inheritdoc/>
         public bool AsSplitQuery { get; internal set; } = false;
+
+        /// <inheritdoc/>
         public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
     }
 }
