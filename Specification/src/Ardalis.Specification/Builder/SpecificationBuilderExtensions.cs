@@ -60,7 +60,8 @@ namespace Ardalis.Specification
 
         /// <summary>
         /// Specify an include expression.
-        /// This information is utilized to build Include function in the query.
+        /// This information is utilized to build Include function in the query, which ORM tools like Entity Framework use
+        /// to include related entities (via navigation properties) in the query result.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TProperty"></typeparam>
