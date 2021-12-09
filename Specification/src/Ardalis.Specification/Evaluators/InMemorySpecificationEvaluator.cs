@@ -18,6 +18,7 @@ namespace Ardalis.Specification
             this.evaluators.AddRange(new IInMemoryEvaluator[]
             {
                 WhereEvaluator.Instance,
+                SearchEvaluator.Instance,
                 OrderEvaluator.Instance,
                 PaginationEvaluator.Instance
             });
@@ -42,11 +43,6 @@ namespace Ardalis.Specification
 
         public virtual IEnumerable<T> Evaluate<T>(IEnumerable<T> source, ISpecification<T> specification)
         {
-            if (specification.SearchCriterias.Count() > 0)
-            {
-                throw new NotSupportedException("The specification contains Search expressions and can't be evaluated with in-memory evaluator.");
-            }
-
             foreach (var evaluator in evaluators)
             {
                 source = evaluator.Evaluate(source, specification);

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Ardalis.Specification.UnitTests
 {
-    public class SpecificationEvaluatorTests
+    public class InMemorySpecificationEvaluatorTests
     {
         [Fact]
         public void ReturnsStoreWithId10_GivenStoreByIdSpec()
