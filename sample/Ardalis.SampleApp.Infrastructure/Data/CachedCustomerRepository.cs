@@ -30,6 +30,20 @@ namespace Ardalis.SampleApp.Infrastructure.Data
         }
 
         /// <inheritdoc/>
+        public Task<bool> AnyAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
+        {
+            // TODO: Add Caching
+            return _sourceRepository.AnyAsync(specification, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public Task<bool> AnyAsync(CancellationToken cancellationToken = default)
+        {
+            // TODO: Add Caching
+            return _sourceRepository.AnyAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
         public Task<int> CountAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
         {
             // TODO: Add Caching
