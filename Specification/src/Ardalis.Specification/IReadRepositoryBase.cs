@@ -99,5 +99,25 @@ namespace Ardalis.Specification
         /// number of elements in the input sequence.
         /// </returns>
         Task<int> CountAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns a boolean that represents whether any entity satisfy the encapsulated query logic
+        /// of the <paramref name="specification"/> or not.
+        /// </summary>
+        /// <param name="specification">The encapsulated query logic.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains true if the 
+        /// source sequence contains any elements; otherwise, false.
+        /// </returns>
+        Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns a boolean whether any entity exists or not.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains true if the 
+        /// source sequence contains any elements; otherwise, false.
+        /// </returns>
+        Task<bool> AnyAsync(CancellationToken cancellationToken = default);
     }
 }
