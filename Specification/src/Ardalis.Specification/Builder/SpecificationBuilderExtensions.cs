@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -17,7 +16,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, bool>> criteria)
         {
-            ((List<Expression<Func<T, bool>>>)specificationBuilder.Specification.WhereExpressions).Add(criteria);
+            ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
 
             return specificationBuilder;
         }
@@ -32,8 +31,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
-                .Add((orderExpression, OrderTypeEnum.OrderBy));
+            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
 
@@ -50,8 +48,7 @@ namespace Ardalis.Specification
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)specificationBuilder.Specification.OrderExpressions)
-                .Add((orderExpression, OrderTypeEnum.OrderByDescending));
+            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
 
             var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
 
@@ -102,15 +99,13 @@ namespace Ardalis.Specification
         /// <param name="selector">the property to apply the SQL LIKE against</param>
         /// <param name="searchTerm">the value to use for the SQL LIKE</param>
         /// <param name="searchGroup">the index used to group sets of Selectors and SearchTerms together</param>
-        /// <returns></returns>
         public static ISpecificationBuilder<T> Search<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, string>> selector,
             string searchTerm,
             int searchGroup = 1) where T : class
         {
-            ((List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>)specificationBuilder.Specification.SearchCriterias)
-                .Add((selector, searchTerm, searchGroup));
+            ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
 
             return specificationBuilder;
         }

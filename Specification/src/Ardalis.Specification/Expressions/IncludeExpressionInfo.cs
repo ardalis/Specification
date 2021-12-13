@@ -1,17 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification
 {
+    /// <summary>
+    /// Encapsulates data needed to build Include/ThenInclude query.
+    /// </summary>
     public class IncludeExpressionInfo
     {
+        /// <summary>
+        /// If <see cref="Type" /> is <see cref="IncludeTypeEnum.Include" />, represents a related entity that should be included.<para />
+        /// If <see cref="Type" /> is <see cref="IncludeTypeEnum.ThenInclude" />, represents a related entity that should be included as part of the previously included entity.
+        /// </summary>
         public LambdaExpression LambdaExpression { get; }
+
+        /// <summary>
+        /// The type of the source entity.
+        /// </summary>
         public Type EntityType { get; }
+
+        /// <summary>
+        /// The type of the included entity.
+        /// </summary>
         public Type PropertyType { get; }
+
+        /// <summary>
+        /// The type of the previously included entity.
+        /// </summary>
         public Type? PreviousPropertyType { get; }
+
+        /// <summary>
+        /// The include type.
+        /// </summary>
         public IncludeTypeEnum Type { get; }
 
         private IncludeExpressionInfo(LambdaExpression expression,
@@ -37,6 +57,13 @@ namespace Ardalis.Specification
             this.Type = includeType;
         }
 
+        /// <summary>
+        /// Creates instance of <see cref="IncludeExpressionInfo" /> which describes 'Include' query part.<para />
+        /// Source (entityType) -> Include (propertyType).
+        /// </summary>
+        /// <param name="expression">The expression represents a related entity that should be included.</param>
+        /// <param name="entityType">The type of the source entity.</param>
+        /// <param name="propertyType">The type of the included entity.</param>
         public IncludeExpressionInfo(LambdaExpression expression,
                                      Type entityType,
                                      Type propertyType)
@@ -44,6 +71,14 @@ namespace Ardalis.Specification
         {
         }
 
+        /// <summary>
+        /// Creates instance of <see cref="IncludeExpressionInfo" /> which describes 'ThenInclude' query part.<para />
+        /// Source (entityType) -> Include (previousPropertyType) -> ThenInclude (propertyType).
+        /// </summary>
+        /// <param name="expression">The expression represents a related entity that should be included as part of the previously included entity.</param>
+        /// <param name="entityType">The type of the source entity.</param>
+        /// <param name="propertyType">The type of the included entity.</param>
+        /// <param name="previousPropertyType">The type of the previously included entity.</param>
         public IncludeExpressionInfo(LambdaExpression expression,
                                      Type entityType,
                                      Type propertyType,
