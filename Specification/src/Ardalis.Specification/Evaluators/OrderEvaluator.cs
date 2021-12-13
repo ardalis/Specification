@@ -14,8 +14,8 @@ namespace Ardalis.Specification
         {
             if (specification.OrderExpressions != null)
             {
-                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
-                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
+                        || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
                 {
                     throw new DuplicateOrderChainException();
                 }
@@ -54,8 +54,8 @@ namespace Ardalis.Specification
         {
             if (specification.OrderExpressions != null)
             {
-                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
-                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
+                        || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
                 {
                     throw new DuplicateOrderChainException();
                 }
@@ -65,19 +65,19 @@ namespace Ardalis.Specification
                 {
                     if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
                     {
-                        orderedQuery = query.OrderBy(orderExpression.KeySelector.Compile());
+                        orderedQuery = query.OrderBy(orderExpression.KeySelectorFunc);
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
                     {
-                        orderedQuery = query.OrderByDescending(orderExpression.KeySelector.Compile());
+                        orderedQuery = query.OrderByDescending(orderExpression.KeySelectorFunc);
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
                     {
-                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelector.Compile());
+                        orderedQuery = orderedQuery.ThenBy(orderExpression.KeySelectorFunc);
                     }
                     else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
                     {
-                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelector.Compile());
+                        orderedQuery = orderedQuery.ThenByDescending(orderExpression.KeySelectorFunc);
                     }
                 }
 

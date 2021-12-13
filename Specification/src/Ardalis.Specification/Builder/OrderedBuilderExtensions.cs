@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -11,8 +10,7 @@ namespace Ardalis.Specification
             this IOrderedSpecificationBuilder<T> orderedBuilder,
             Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)orderedBuilder.Specification.OrderExpressions)
-                .Add((orderExpression, OrderTypeEnum.ThenBy));
+            ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenBy));
 
             return orderedBuilder;
         }
@@ -21,8 +19,7 @@ namespace Ardalis.Specification
             this IOrderedSpecificationBuilder<T> orderedBuilder,
             Expression<Func<T, object?>> orderExpression)
         {
-            ((List<(Expression<Func<T, object?>> OrderExpression, OrderTypeEnum OrderType)>)orderedBuilder.Specification.OrderExpressions)
-                .Add((orderExpression, OrderTypeEnum.ThenByDescending));
+            ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenByDescending));
 
             return orderedBuilder;
         }

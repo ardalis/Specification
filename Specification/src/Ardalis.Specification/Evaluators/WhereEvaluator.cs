@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -14,9 +12,9 @@ namespace Ardalis.Specification
 
         public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
         {
-            foreach (var criteria in specification.WhereExpressions)
+            foreach (var info in specification.WhereExpressions)
             {
-                query = query.Where(criteria);
+                query = query.Where(info.Filter);
             }
 
             return query;
@@ -24,9 +22,9 @@ namespace Ardalis.Specification
 
         public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
         {
-            foreach (var criteria in specification.WhereExpressions)
+            foreach (var info in specification.WhereExpressions)
             {
-                query = query.Where(criteria.Compile());
+                query = query.Where(info.FilterFunc);
             }
 
             return query;

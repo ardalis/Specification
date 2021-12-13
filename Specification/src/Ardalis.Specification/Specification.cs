@@ -55,10 +55,9 @@ namespace Ardalis.Specification
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; } = new List<Expression<Func<T, bool>>>();
+        public IEnumerable<WhereExpressionInfo<T>> WhereExpressions { get; } = new List<WhereExpressionInfo<T>>();
 
-        public IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; } = 
-            new List<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)>();
+        public IEnumerable<OrderExpressionInfo<T>> OrderExpressions { get; } = new List<OrderExpressionInfo<T>>();
 
         /// <inheritdoc/>
         public IEnumerable<IncludeExpressionInfo> IncludeExpressions { get; } = new List<IncludeExpressionInfo>();
@@ -67,8 +66,7 @@ namespace Ardalis.Specification
         public IEnumerable<string> IncludeStrings { get; } = new List<string>();
 
         /// <inheritdoc/>
-        public IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; } =
-            new List<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)>();
+        public IEnumerable<SearchExpressionInfo<T>> SearchCriterias { get; } = new List<SearchExpressionInfo<T>>();
 
         /// <inheritdoc/>
         public int? Take { get; internal set; } = null;

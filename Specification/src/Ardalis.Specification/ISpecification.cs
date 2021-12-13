@@ -32,17 +32,15 @@ namespace Ardalis.Specification
     public interface ISpecification<T>
     {
         /// <summary>
-        /// The collection of predicates to filter on.
+        /// The collection of filters.
         /// </summary>
-        IEnumerable<Expression<Func<T, bool>>> WhereExpressions { get; }
+        IEnumerable<WhereExpressionInfo<T>> WhereExpressions { get; }
 
         /// <summary>
         /// The collections of functions used to determine the sorting (and subsequent sorting),
         /// to apply to the result of the query encapsulated by the <see cref="ISpecification{T}"/>.
-        /// <para>KeySelector, a function to extract a key from an element.</para>
-        /// <para>OrderType, whether to (subsequently) sort ascending or descending</para>
         /// </summary>
-        IEnumerable<(Expression<Func<T, object>> KeySelector, OrderTypeEnum OrderType)> OrderExpressions { get; }
+        IEnumerable<OrderExpressionInfo<T>> OrderExpressions { get; }
 
         /// <summary>
         /// The collection of <see cref="IncludeExpressionInfo"/>s describing each include expression.
@@ -56,14 +54,9 @@ namespace Ardalis.Specification
         IEnumerable<string> IncludeStrings { get; }
 
         /// <summary>
-        /// The collection of 'SQL LIKE' operations, constructed by;
-        /// <list type="bullet">
-        ///     <item>Selector, the property to apply the SQL LIKE against.</item>
-        ///     <item>SearchTerm, the value to use for the SQL LIKE.</item>
-        ///     <item>SearchGroup, the index used to group sets of Selectors and SearchTerms together.</item>
-        /// </list>
+        /// The collection of 'SQL LIKE' operations.
         /// </summary>
-        IEnumerable<(Expression<Func<T, string>> Selector, string SearchTerm, int SearchGroup)> SearchCriterias { get; }
+        IEnumerable<SearchExpressionInfo<T>> SearchCriterias { get; }
 
         /// <summary>
         /// The number of elements to return.

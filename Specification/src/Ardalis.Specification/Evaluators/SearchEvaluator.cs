@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -14,9 +12,7 @@ namespace Ardalis.Specification
         {
             foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
             {
-                var criterias = searchGroup.Select(x => (x.Selector, x.SearchTerm));
-
-                query = query.Where(x => criterias.Any(c => c.Selector.Compile()(x).Like(c.SearchTerm)));
+                query = query.Where(x => searchGroup.Any(c => c.SelectorFunc(x).Like(c.SearchTerm)));
             }
 
             return query;
