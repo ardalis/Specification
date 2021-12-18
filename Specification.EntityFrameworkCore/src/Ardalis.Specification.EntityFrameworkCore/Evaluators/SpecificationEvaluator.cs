@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
@@ -10,17 +7,25 @@ namespace Ardalis.Specification.EntityFrameworkCore
     public class SpecificationEvaluator : ISpecificationEvaluator
     {
         // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
+        /// <summary>
+        /// <see cref="SpecificationEvaluator" /> instance with default evaluators and without any additional features enabled.
+        /// </summary>
         public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
+
+        /// <summary>
+        /// <see cref="SpecificationEvaluator" /> instance with default evaluators and enabled caching.
+        /// </summary>
+        public static SpecificationEvaluator Cached { get; } = new SpecificationEvaluator(true);
 
         private readonly List<IEvaluator> evaluators = new List<IEvaluator>();
 
-        public SpecificationEvaluator()
+        public SpecificationEvaluator(bool cacheEnabled = false)
         {
             this.evaluators.AddRange(new IEvaluator[]
             {
                 WhereEvaluator.Instance,
                 SearchEvaluator.Instance,
-                IncludeEvaluator.Instance,
+                cacheEnabled ? IncludeEvaluator.Cached : IncludeEvaluator.Default,
                 OrderEvaluator.Instance,
                 PaginationEvaluator.Instance,
                 AsNoTrackingEvaluator.Instance,
@@ -30,6 +35,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 #endif
             });
         }
+
         public SpecificationEvaluator(IEnumerable<IEvaluator> evaluators)
         {
             this.evaluators.AddRange(evaluators);

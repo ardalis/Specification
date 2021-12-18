@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Ardalis.Specification
 {
@@ -26,7 +25,7 @@ namespace Ardalis.Specification
             Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
             where TEntity : class
         {
-            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(IEnumerable<TPreviousProperty>));
 
             ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
 
