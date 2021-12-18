@@ -1,23 +1,33 @@
-﻿using FluentAssertions;
-using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture;
-using Ardalis.Specification.UnitTests.Fixture.Specs;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
-using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture;
+using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
+using Ardalis.Specification.UnitTests.Fixture.Specs;
+using FluentAssertions;
 using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class RepositoryOfT_ListAsync : IntegrationTestBase
+    public class RepositoryOfT_ListAsync : RepositoryOfT_ListAsync_TestKit
     {
-        public RepositoryOfT_ListAsync(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_ListAsync(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Default)
+        {
+        }
+    }
+
+    public class RepositoryOfT_ListAsync_Cached : RepositoryOfT_ListAsync_TestKit
+    {
+        public RepositoryOfT_ListAsync_Cached(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Cached)
+        {
+        }
+    }
+
+    public abstract class RepositoryOfT_ListAsync_TestKit : IntegrationTestBase
+    {
+        protected RepositoryOfT_ListAsync_TestKit(SharedDatabaseFixture fixture, ISpecificationEvaluator specificationEvaluator) : base(fixture, specificationEvaluator) { }
 
         [Fact]
-        public async Task ReturnsStoreWithProducts_GivenStoreIncludeProductsSpec()
+        public virtual async Task ReturnsStoreWithProducts_GivenStoreIncludeProductsSpec()
         {
             var result = await storeRepository.ListAsync(new StoreIncludeProductsSpec());
 
@@ -27,7 +37,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithAddress_GivenStoreIncludeAddressSpec()
+        public virtual async Task ReturnsStoreWithAddress_GivenStoreIncludeAddressSpec()
         {
             var result = await storeRepository.ListAsync(new StoreIncludeAddressSpec());
 
@@ -37,7 +47,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithAddressAndProduct_GivenStoreIncludeProductsThenStoreSpec()
+        public virtual async Task ReturnsStoreWithAddressAndProduct_GivenStoreIncludeProductsThenStoreSpec()
         {
             var result = await storeRepository.ListAsync(new StoreIncludeProductsThenStoreSpec());
 
@@ -48,7 +58,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsCompanyWithStoreWithIdOne_GivenCompanyIncludeFilteredStoresSpec()
+        public virtual async Task ReturnsCompanyWithStoreWithIdOne_GivenCompanyIncludeFilteredStoresSpec()
         {
             var result = await companyRepository.ListAsync(new CompanyIncludeFilteredStoresSpec(1));
 
@@ -60,7 +70,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithIdFrom15To30_GivenStoresByIdListSpec()
+        public virtual async Task ReturnsStoreWithIdFrom15To30_GivenStoresByIdListSpec()
         {
             var ids = Enumerable.Range(15, 16);
             var spec = new StoresByIdListSpec(ids);
@@ -73,7 +83,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsSecondPageOfStoreNames_GivenStoreNamesPaginatedSpec()
+        public virtual async Task ReturnsSecondPageOfStoreNames_GivenStoreNamesPaginatedSpec()
         {
             int take = 10; // pagesize 10
             int skip = (2 - 1) * 10; // page 2
@@ -88,7 +98,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsSecondPageOfStores_GivenStoresPaginatedSpec()
+        public virtual async Task ReturnsSecondPageOfStores_GivenStoresPaginatedSpec()
         {
             int take = 10; // pagesize 10
             int skip = (2 - 1) * 10; // page 2
@@ -103,7 +113,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsOrderStoresByNameDescForCompanyWithId2_GivenStoresByCompanyOrderedDescByNameSpec()
+        public virtual async Task ReturnsOrderStoresByNameDescForCompanyWithId2_GivenStoresByCompanyOrderedDescByNameSpec()
         {
             var spec = new StoresByCompanyOrderedDescByNameSpec(2);
 
@@ -114,7 +124,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsOrderStoresByNameDescThenByIdForCompanyWithId2_GivenStoresByCompanyOrderedDescByNameThenByIdSpec()
+        public virtual async Task ReturnsOrderStoresByNameDescThenByIdForCompanyWithId2_GivenStoresByCompanyOrderedDescByNameThenByIdSpec()
         {
             var spec = new StoresByCompanyOrderedDescByNameThenByIdSpec(2);
 
@@ -125,7 +135,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsSecondPageOfStoresForCompanyWithId2_GivenStoresByCompanyPaginatedOrderedDescByNameSpec()
+        public virtual async Task ReturnsSecondPageOfStoresForCompanyWithId2_GivenStoresByCompanyPaginatedOrderedDescByNameSpec()
         {
             int take = 10; // pagesize 10
             int skip = (2 - 1) * 10; // page 2
@@ -140,7 +150,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsSecondPageOfStoresForCompanyWithId2_GivenStoresByCompanyPaginatedSpec()
+        public virtual async Task ReturnsSecondPageOfStoresForCompanyWithId2_GivenStoresByCompanyPaginatedSpec()
         {
             int take = 10; // pagesize 10
             int skip = (2 - 1) * 10; // page 2
@@ -155,7 +165,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsOrderedStores_GivenStoresOrderedSpecByName()
+        public virtual async Task ReturnsOrderedStores_GivenStoresOrderedSpecByName()
         {
             var spec = new StoresOrderedSpecByName();
 
@@ -166,7 +176,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsOrderedStores_GivenStoresOrderedDescendingByNameSpec()
+        public virtual async Task ReturnsOrderedStores_GivenStoresOrderedDescendingByNameSpec()
         {
             var spec = new StoresOrderedDescendingByNameSpec();
 
@@ -177,7 +187,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreContainingCity1_GivenStoreIncludeProductsSpec()
+        public virtual async Task ReturnsStoreContainingCity1_GivenStoreIncludeProductsSpec()
         {
             var result = await storeRepository.ListAsync(new StoreSearchByNameOrCitySpec(StoreSeed.VALID_Search_City_Key));
 
