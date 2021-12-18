@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
@@ -17,8 +13,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         {
             foreach (var searchCriteria in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
             {
-                var criterias = searchCriteria.Select(x => (x.Selector, x.SearchTerm));
-                query = query.Search(criterias);
+                query = query.Search(searchCriteria);
             }
 
             return query;

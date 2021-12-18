@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Data.Entity;
 
 namespace Ardalis.Specification.EntityFramework6
 {
@@ -20,15 +20,18 @@ namespace Ardalis.Specification.EntityFramework6
         /// </list>
         /// </param>
         /// <returns></returns>
-        public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<(Expression<Func<T, string>> selector, string searchTerm)> criterias)
+        public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> criterias)
         {
             Expression expr = null;
             var parameter = Expression.Parameter(typeof(T), "x");
 
-            foreach (var (selector, searchTerm) in criterias)
+            foreach (var criteria in criterias)
             {
-                if (selector == null || string.IsNullOrEmpty(searchTerm))
+                var (selector, searchTerm) = (criteria.Selector, criteria.SearchTerm);
+                if (string.IsNullOrEmpty(criteria.SearchTerm))
+                {
                     continue;
+                }
 
                 var like = typeof(DbFunctions).GetMethod(nameof(DbFunctions.Like), new Type[] { typeof(string), typeof(string) });
 
