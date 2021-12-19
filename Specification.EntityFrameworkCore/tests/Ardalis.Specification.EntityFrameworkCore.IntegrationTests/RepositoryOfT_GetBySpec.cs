@@ -100,5 +100,17 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
             dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
         }
+
+        [Fact]
+        public virtual async Task ReturnsStoreWithCompanyAndCountryAndStoresForCompany_GivenStoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec()
+        {
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
+
+            result.Should().NotBeNull();
+            result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
+            result.Company.Should().NotBeNull();
+            result.Company!.Country.Should().NotBeNull();
+            result.Company!.Stores.Should().HaveCountGreaterOrEqualTo(2);
+        }
     }
 }

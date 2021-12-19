@@ -24,7 +24,6 @@ namespace Ardalis.Specification.EntityFrameworkCore
                     && mi.GetParameters()[0].ParameterType.GetGenericTypeDefinition() == typeof(IIncludableQueryable<,>)
                     && mi.GetParameters()[1].ParameterType.GetGenericTypeDefinition() == typeof(Expression<>));
 
-
         private static readonly MethodInfo ThenIncludeAfterEnumerableMethodInfo
             = typeof(EntityFrameworkQueryableExtensions)
                 .GetTypeInfo().GetDeclaredMethods(nameof(EntityFrameworkQueryableExtensions.ThenInclude))
@@ -116,6 +115,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return (IQueryable<T>)thenInclude(query, includeInfo.LambdaExpression);
         }
 
+        // (source, selector) => EntityFrameworkQueryableExtensions.Include<TEntity, TProperty>((IQueryable<TEntity>)source, (Expression<Func<TEntity, TProperty>>)selector);
         private static Lazy<Func<IQueryable, LambdaExpression, IQueryable>> CreateIncludeDelegate((Type EntityType, Type PropertyType, Type? PreviousPropertyType) cacheKey)
             => new Lazy<Func<IQueryable, LambdaExpression, IQueryable>>(() =>
             {
@@ -133,6 +133,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
                 return lambda.Compile();
             });
 
+        // ((source, selector) =>
+        //     EntityFrameworkQueryableExtensions.ThenInclude<TEntity, TPreviousProperty, TProperty>(
+        //         (IIncludableQueryable<TEntity, TPreviousProperty>)source,
+        //         (Expression<Func<TPreviousProperty, TProperty>>)selector);
+        // (source, selector) =>
+        //     EntityFrameworkQueryableExtensions.ThenInclude<TEntity, TPreviousProperty, TProperty>(
+        //         (IIncludableQueryable<TEntity, IEnumerable<TPreviousProperty>>)queryable,
+        //         (Expression<Func<TPreviousProperty, TProperty>>)lambdaExpression);
         private static Lazy<Func<IQueryable, LambdaExpression, IQueryable>> CreateThenIncludeDelegate((Type EntityType, Type PropertyType, Type? PreviousPropertyType) cacheKey)
             => new Lazy<Func<IQueryable, LambdaExpression, IQueryable>>(() =>
             {
