@@ -139,8 +139,8 @@ namespace Ardalis.Specification.EntityFrameworkCore
         //         (Expression<Func<TPreviousProperty, TProperty>>)selector);
         // (source, selector) =>
         //     EntityFrameworkQueryableExtensions.ThenInclude<TEntity, TPreviousProperty, TProperty>(
-        //         (IIncludableQueryable<TEntity, IEnumerable<TPreviousProperty>>)queryable,
-        //         (Expression<Func<TPreviousProperty, TProperty>>)lambdaExpression);
+        //         (IIncludableQueryable<TEntity, IEnumerable<TPreviousProperty>>)source,
+        //         (Expression<Func<TPreviousProperty, TProperty>>)selector);
         private static Lazy<Func<IQueryable, LambdaExpression, IQueryable>> CreateThenIncludeDelegate((Type EntityType, Type PropertyType, Type? PreviousPropertyType) cacheKey)
             => new Lazy<Func<IQueryable, LambdaExpression, IQueryable>>(() =>
             {
