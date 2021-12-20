@@ -111,6 +111,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result.Company.Should().NotBeNull();
             result.Company!.Country.Should().NotBeNull();
             result.Company!.Stores.Should().HaveCountGreaterOrEqualTo(2);
+            result.Company?.Stores?.Should().Match(x => x.Any(z => z.Products.Count > 0));
         }
     }
 }
