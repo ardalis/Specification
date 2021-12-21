@@ -56,9 +56,9 @@ namespace Ardalis.Specification.EntityFrameworkCore
             await SaveChangesAsync(cancellationToken);
         }
         /// <inheritdoc/>
-        public virtual async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await dbContext.SaveChangesAsync(cancellationToken);
+            return await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
