@@ -113,6 +113,14 @@ namespace Ardalis.Specification
         bool AsNoTrackingWithIdentityResolution { get; }
 
         /// <summary>
+        /// Returns whether or not the query should ignore the defined global query filters 
+        /// </summary>
+        /// <remarks>
+        /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
+        /// </remarks>
+        bool IgnoreQueryFilters { get; }
+
+        /// <summary>
         /// Applies the query defined within the specification to the given objects.
         /// This is specially helpful when unit testing specification classes
         /// </summary>

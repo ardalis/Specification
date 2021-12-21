@@ -261,5 +261,21 @@ namespace Ardalis.Specification
 
             return specificationBuilder;
         }
+
+        /// <summary>
+        /// The query will ignore the defined global query filters
+        /// </summary>
+        /// <remarks>
+        /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        public static ISpecificationBuilder<T> IgnoreQueryFilters<T>(
+            this ISpecificationBuilder<T> specificationBuilder) where T : class
+        {
+            specificationBuilder.Specification.IgnoreQueryFilters = true;
+
+            return specificationBuilder;
+        }
     }
 }
