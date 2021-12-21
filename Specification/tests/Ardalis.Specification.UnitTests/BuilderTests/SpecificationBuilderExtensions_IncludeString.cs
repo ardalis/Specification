@@ -20,6 +20,14 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void AddsNothingToList_GivenIncludeStringWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.IncludeStrings.Should().BeEmpty();
+        }
+
+        [Fact]
         public void AddsIncludeStringToList_GivenString()
         {
             var spec = new StoreIncludeCompanyThenCountryAsStringSpec();

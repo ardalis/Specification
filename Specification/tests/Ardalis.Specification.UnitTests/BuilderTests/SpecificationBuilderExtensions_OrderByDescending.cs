@@ -20,6 +20,14 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void AddsNothingToList_GivenOrderExpressionWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.OrderExpressions.Should().BeEmpty();
+        }
+
+        [Fact]
         public void AddsOrderExpressionToListWithOrderByDescendingType_GivenOrderByDescendingExpression()
         {
             var spec = new StoresOrderedDescendingByNameSpec();

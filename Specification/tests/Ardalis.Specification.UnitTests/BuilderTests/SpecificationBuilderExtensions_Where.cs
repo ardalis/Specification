@@ -20,6 +20,14 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void AddsNothingToList_GivenWhereExpressionWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.WhereExpressions.Should().BeEmpty();
+        }
+
+        [Fact]
         public void AddsOneExpressionToList_GivenOneWhereExpression()
         {
             var spec = new StoreByIdSpec(1);

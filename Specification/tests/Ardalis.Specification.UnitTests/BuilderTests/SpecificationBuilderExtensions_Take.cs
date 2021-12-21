@@ -22,6 +22,15 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void DoesNothing_GivenTakeWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.Take.Should().BeNull();
+            spec.IsPagingEnabled.Should().BeFalse();
+        }
+
+        [Fact]
         public void ThrowsDuplicateTakeException_GivenTakeUsedMoreThanOnce()
         {
             Assert.Throws<DuplicateTakeException>(() => new StoreDuplicateTakeSpec());
