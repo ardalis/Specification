@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
@@ -20,27 +20,27 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// </list>
         /// </param>
         /// <returns></returns>
-        public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<(Expression<Func<T, string>> selector, string searchTerm)> criterias)
+        public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> criterias)
         {
             Expression? expr = null;
             var parameter = Expression.Parameter(typeof(T), "x");
 
             foreach (var criteria in criterias)
             {
-                if (criteria.selector == null || string.IsNullOrEmpty(criteria.searchTerm))
+                if (string.IsNullOrEmpty(criteria.SearchTerm))
                     continue;
 
                 var functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions)));
                 var like = typeof(DbFunctionsExtensions).GetMethod(nameof(DbFunctionsExtensions.Like), new Type[] { functions.Type, typeof(string), typeof(string) });
 
-                var propertySelector = ParameterReplacerVisitor.Replace(criteria.selector, criteria.selector.Parameters[0], parameter);
+                var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter);
 
                 var likeExpression = Expression.Call(
                                         null,
                                         like,
                                         functions,
                                         (propertySelector as LambdaExpression)?.Body,
-                                        Expression.Constant(criteria.searchTerm));
+                                        Expression.Constant(criteria.SearchTerm));
 
                 expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
             }

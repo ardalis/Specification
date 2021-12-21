@@ -1,23 +1,20 @@
 ﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture
 {
-    public class IntegrationTestBase : IClassFixture<SharedDatabaseFixture>
+    public abstract class IntegrationTestBase : IClassFixture<SharedDatabaseFixture>
     {
         protected TestDbContext dbContext;
         protected Repository<Company> companyRepository;
         protected Repository<Store> storeRepository;
 
-        public IntegrationTestBase(SharedDatabaseFixture fixture)
+        protected IntegrationTestBase(SharedDatabaseFixture fixture, ISpecificationEvaluator specificationEvaluator)
         {
             dbContext = fixture.CreateContext();
-
-            companyRepository = new Repository<Company>(dbContext);
-            storeRepository = new Repository<Store>(dbContext);
+            
+            companyRepository = new Repository<Company>(dbContext, specificationEvaluator);
+            storeRepository = new Repository<Store>(dbContext, specificationEvaluator);
         }
     }
 }

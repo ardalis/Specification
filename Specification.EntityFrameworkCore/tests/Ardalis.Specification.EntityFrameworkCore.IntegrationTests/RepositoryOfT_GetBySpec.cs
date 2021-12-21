@@ -1,22 +1,33 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture;
 using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 using Ardalis.Specification.UnitTests.Fixture.Specs;
+using FluentAssertions;
+using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 {
-    public class RepositoryOfT_GetBySpec : IntegrationTestBase
+    public class RepositoryOfT_GetBySpec : RepositoryOfT_GetBySpec_TestKit
     {
-        public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
+        public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Default)
+        {
+        }
+    }
+
+    public class RepositoryOfT_GetBySpec_Cached : RepositoryOfT_GetBySpec_TestKit
+    {
+        public RepositoryOfT_GetBySpec_Cached(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Cached)
+        {
+        }
+    }
+
+    public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
+    {
+        protected RepositoryOfT_GetBySpec_TestKit(SharedDatabaseFixture fixture, ISpecificationEvaluator specificationEvaluator ) : base(fixture, specificationEvaluator) { }
 
         [Fact]
-        public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
+        public virtual async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
         {
             var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
 
@@ -26,7 +37,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithAddress_GivenStoreByIdIncludeAddressSpec()
+        public virtual async Task ReturnsStoreWithAddress_GivenStoreByIdIncludeAddressSpec()
         {
             var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
 
@@ -36,7 +47,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithAddressAndProduct_GivenStoreByIdIncludeAddressAndProductsSpec()
+        public virtual async Task ReturnsStoreWithAddressAndProduct_GivenStoreByIdIncludeAddressAndProductsSpec()
         {
             var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
 
@@ -47,7 +58,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsUsingStringSpec()
+        public virtual async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsUsingStringSpec()
         {
             var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
 
@@ -57,7 +68,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsCompanyWithStoresAndAddress_GivenCompanyByIdIncludeStoresThenIncludeAddressSpec()
+        public virtual async Task ReturnsCompanyWithStoresAndAddress_GivenCompanyByIdIncludeStoresThenIncludeAddressSpec()
         {
             var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
 
@@ -68,7 +79,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsCompanyWithStoresAndProducts_GivenCompanyByIdIncludeStoresThenIncludeProductsSpec()
+        public virtual async Task ReturnsCompanyWithStoresAndProducts_GivenCompanyByIdIncludeStoresThenIncludeProductsSpec()
         {
             var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
 
@@ -79,7 +90,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public async Task ReturnsUntrackedCompany_GivenCompanyByIdAsUntrackedSpec()
+        public virtual async Task ReturnsUntrackedCompany_GivenCompanyByIdAsUntrackedSpec()
         {
             dbContext.ChangeTracker.Clear();
 
@@ -88,6 +99,19 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
             result.Should().NotBeNull();
             result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
             dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
+        }
+
+        [Fact]
+        public virtual async Task ReturnsStoreWithCompanyAndCountryAndStoresForCompany_GivenStoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec()
+        {
+            var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
+
+            result.Should().NotBeNull();
+            result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
+            result.Company.Should().NotBeNull();
+            result.Company!.Country.Should().NotBeNull();
+            result.Company!.Stores.Should().HaveCountGreaterOrEqualTo(2);
+            result.Company?.Stores?.Should().Match(x => x.Any(z => z.Products.Count > 0));
         }
     }
 }

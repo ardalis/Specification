@@ -15,8 +15,8 @@ namespace Ardalis.Specification.EntityFramework6
         {
             if (specification.OrderExpressions != null)
             {
-                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
-                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
+                        || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
                 {
                     throw new DuplicateOrderChainException();
                 }
@@ -55,8 +55,8 @@ namespace Ardalis.Specification.EntityFramework6
         {
             if (specification.OrderExpressions != null)
             {
-                if (specification.OrderExpressions.Where(x => x.OrderType == OrderTypeEnum.OrderBy ||
-                                                            x.OrderType == OrderTypeEnum.OrderByDescending).Count() > 1)
+                if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
+                        || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
                 {
                     throw new DuplicateOrderChainException();
                 }
