@@ -35,6 +35,7 @@ namespace Ardalis.Specification
     public abstract class Specification<T> : ISpecification<T>
     {
         protected IInMemorySpecificationEvaluator Evaluator { get; }
+        protected ISpecificationValidator Validator { get; }
         protected virtual ISpecificationBuilder<T> Query { get; }
 
         protected Specification()
@@ -43,8 +44,19 @@ namespace Ardalis.Specification
         }
 
         protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
+            : this(inMemorySpecificationEvaluator, SpecificationValidator.Default)
+        {
+        }
+
+        protected Specification(ISpecificationValidator specificationValidator)
+            : this(InMemorySpecificationEvaluator.Default, specificationValidator)
+        {
+        }
+
+        protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator, ISpecificationValidator specificationValidator)
         {
             this.Evaluator = inMemorySpecificationEvaluator;
+            this.Validator = specificationValidator;
             this.Query = new SpecificationBuilder<T>(this);
         }
 
@@ -52,6 +64,12 @@ namespace Ardalis.Specification
         public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
         {
             return Evaluator.Evaluate(entities, this);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool IsSatisfiedBy(T entity)
+        {
+            return Validator.IsValid(entity, this);
         }
 
         /// <inheritdoc/>
