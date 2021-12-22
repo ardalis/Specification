@@ -15,11 +15,7 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Where<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, bool>> criteria)
-        {
-            ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
-
-            return specificationBuilder;
-        }
+            => Where(specificationBuilder, criteria, true);
 
         /// <summary>
         /// Specify a predicate that will be applied to the query
@@ -50,13 +46,7 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> OrderBy<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
-
-            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
-
-            return orderedSpecificationBuilder;
-        }
+            => OrderBy(specificationBuilder, orderExpression, true);
 
         /// <summary>
         /// Specify the query result will be ordered by <paramref name="orderExpression"/> in an ascending order
@@ -89,13 +79,7 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> OrderByDescending<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
-
-            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
-
-            return orderedSpecificationBuilder;
-        }
+            => OrderByDescending(specificationBuilder, orderExpression, true);
 
         /// <summary>
         /// Specify the query result will be ordered by <paramref name="orderExpression"/> in a descending order
@@ -131,15 +115,7 @@ namespace Ardalis.Specification
         public static IIncludableSpecificationBuilder<T, TProperty> Include<T, TProperty>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, TProperty>> includeExpression) where T : class
-        {
-            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
-
-            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
-
-            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification);
-
-            return includeBuilder;
-        }
+            => Include(specificationBuilder, includeExpression, true);
 
         /// <summary>
         /// Specify an include expression.
@@ -177,10 +153,7 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Include<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             string includeString) where T : class
-        {
-            ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
-            return specificationBuilder;
-        }
+            => Include(specificationBuilder, includeString, true);
 
         /// <summary>
         /// Specify a collection of navigation properties, as strings, to include in the query.
@@ -215,11 +188,7 @@ namespace Ardalis.Specification
             Expression<Func<T, string>> selector,
             string searchTerm,
             int searchGroup = 1) where T : class
-        {
-            ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
-
-            return specificationBuilder;
-        }
+            => Search(specificationBuilder, selector, searchTerm, true, searchGroup);
 
         /// <summary>
         /// Specify a 'SQL LIKE' operations for search purposes
@@ -253,13 +222,7 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Take<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             int take)
-        {
-            if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
-
-            specificationBuilder.Specification.Take = take;
-            specificationBuilder.Specification.IsPagingEnabled = true;
-            return specificationBuilder;
-        }
+            => Take(specificationBuilder, take, true);
 
         /// <summary>
         /// Specify the number of elements to return.
@@ -292,13 +255,7 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Skip<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             int skip)
-        {
-            if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
-
-            specificationBuilder.Specification.Skip = skip;
-            specificationBuilder.Specification.IsPagingEnabled = true;
-            return specificationBuilder;
-        }
+            => Skip(specificationBuilder, skip, true);
 
         /// <summary>
         /// Specify the number of elements to skip before returning the remaining elements.
@@ -381,21 +338,9 @@ namespace Ardalis.Specification
         /// <param name="args">Any arguments used in defining the specification</param>
         public static ICacheSpecificationBuilder<T> EnableCache<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string specificationName, params object[] args) where T : class
-        {
-            if (string.IsNullOrEmpty(specificationName))
-            {
-                throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
-            }
-
-            specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
-
-            specificationBuilder.Specification.CacheEnabled = true;
-
-            var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification);
-
-            return cacheBuilder;
-        }
+            string specificationName,
+            params object[] args) where T : class
+            => EnableCache(specificationBuilder, specificationName, true, args);
 
         /// <summary>
         /// Must be called after specifying criteria
@@ -433,11 +378,7 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsNoTracking<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
-        {
-            specificationBuilder.Specification.AsNoTracking = true;
-
-            return specificationBuilder;
-        }
+            => AsNoTracking(specificationBuilder, true);
 
         /// <summary>
         /// If the entity instances are modified, this will not be detected
@@ -468,11 +409,7 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsSplitQuery<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
-        {
-            specificationBuilder.Specification.AsSplitQuery = true;
-
-            return specificationBuilder;
-        }
+            => AsSplitQuery(specificationBuilder, true);
 
         /// <summary>
         /// The generated sql query will be split into multiple SQL queries
@@ -508,11 +445,7 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsNoTrackingWithIdentityResolution<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
-        {
-            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
-
-            return specificationBuilder;
-        }
+            => AsNoTrackingWithIdentityResolution(specificationBuilder, true);
 
         /// <summary>
         /// The query will then keep track of returned instances 
@@ -547,11 +480,7 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> IgnoreQueryFilters<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
-        {
-            specificationBuilder.Specification.IgnoreQueryFilters = true;
-
-            return specificationBuilder;
-        }
+            => IgnoreQueryFilters(specificationBuilder, true);
 
         /// <summary>
         /// The query will ignore the defined global query filters

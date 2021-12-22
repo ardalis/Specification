@@ -10,14 +10,7 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> ThenBy<T>(
             this IOrderedSpecificationBuilder<T> orderedBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            if (!orderedBuilder.IsChainDiscarded)
-            {
-                ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenBy));
-            }
-
-            return orderedBuilder;
-        }
+            => ThenBy(orderedBuilder, orderExpression, true);
 
         public static IOrderedSpecificationBuilder<T> ThenBy<T>(
             this IOrderedSpecificationBuilder<T> orderedBuilder,
@@ -39,14 +32,7 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> ThenByDescending<T>(
             this IOrderedSpecificationBuilder<T> orderedBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            if (!orderedBuilder.IsChainDiscarded)
-            {
-                ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenByDescending));
-            }
-
-            return orderedBuilder;
-        }
+            => ThenByDescending(orderedBuilder, orderExpression, true);
 
         public static IOrderedSpecificationBuilder<T> ThenByDescending<T>(
             this IOrderedSpecificationBuilder<T> orderedBuilder,
