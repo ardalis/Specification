@@ -39,7 +39,7 @@ namespace Ardalis.Specification
         protected virtual ISpecificationBuilder<T> Query { get; }
 
         protected Specification()
-            : this(InMemorySpecificationEvaluator.Default)
+            : this(InMemorySpecificationEvaluator.Default, SpecificationValidator.Default)
         {
         }
 
