@@ -6,7 +6,7 @@ namespace Ardalis.Specification
 {
     public class DuplicateSkipException : Exception
     {
-        private const string message = "Duplicate use of the Skip(). Ensure you don't use both Paginate() and Skip() in the same specification!";
+        private const string message = "Duplicate use of the Skip(). Ensure you don't use Skip() in the same specification!";
 
         public DuplicateSkipException()
             : base(message)
