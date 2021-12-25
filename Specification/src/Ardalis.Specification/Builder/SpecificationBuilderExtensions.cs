@@ -141,18 +141,6 @@ namespace Ardalis.Specification
             return specificationBuilder;
         }
 
-        [Obsolete]
-        public static ISpecificationBuilder<T> Paginate<T>(
-            this ISpecificationBuilder<T> specificationBuilder,
-            int skip,
-            int take)
-        {
-            specificationBuilder.Skip(skip);
-            specificationBuilder.Take(take);
-
-            return specificationBuilder;
-        }
-
         /// <summary>
         /// Specify a transform function to apply to the <typeparamref name="T"/> element 
         /// to produce another <typeparamref name="TResult"/> element.
