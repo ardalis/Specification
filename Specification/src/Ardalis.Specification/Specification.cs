@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
-    /// <inheritdoc/>
+    /// <inheritdoc cref="ISpecification{T, TResult}"/>
     public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
     {
         protected new virtual ISpecificationBuilder<T, TResult> Query { get; }
@@ -32,6 +32,7 @@ namespace Ardalis.Specification
         public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;
     }
 
+    /// <inheritdoc cref="ISpecification{T}"/>
     public abstract class Specification<T> : ISpecification<T>
     {
         protected IInMemorySpecificationEvaluator Evaluator { get; }
