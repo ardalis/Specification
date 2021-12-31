@@ -8,7 +8,7 @@ namespace Ardalis.Specification.UnitTests
 {
     public class DuplicateSkipExceptionTests
     {
-        private const string defaultMessage = "Duplicate use of the Skip(). Ensure you don't use both Paginate() and Skip() in the same specification!";
+        private const string defaultMessage = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
 
         [Fact]
         public void ThrowWithDefaultConstructor()
