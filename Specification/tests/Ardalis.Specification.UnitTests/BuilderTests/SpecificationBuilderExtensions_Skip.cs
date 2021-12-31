@@ -19,7 +19,6 @@ namespace Ardalis.Specification.UnitTests
             var spec = new StoreNamesPaginatedSpec(skip, 10);
 
             spec.Skip.Should().Be(skip);
-            spec.IsPagingEnabled.Should().BeTrue();
         }
 
         [Fact]

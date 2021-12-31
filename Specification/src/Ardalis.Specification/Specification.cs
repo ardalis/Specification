@@ -75,9 +75,6 @@ namespace Ardalis.Specification
         public int? Skip { get; internal set; } = null;
 
         /// <inheritdoc/>
-        public bool IsPagingEnabled { get; internal set; } = false;
-
-        /// <inheritdoc/>
         public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; } = null;
 
         /// <inheritdoc/>
