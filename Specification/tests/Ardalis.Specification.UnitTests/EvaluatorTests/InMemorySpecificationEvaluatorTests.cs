@@ -146,7 +146,11 @@ namespace Ardalis.Specification.UnitTests
         {
             var spec = new StoresOrderedTwoChainsSpec();
 
-            Assert.Throws<DuplicateOrderChainException>(() => spec.Evaluate(StoreSeed.Get()));
+            Action sutAction = () => spec.Evaluate(StoreSeed.Get());
+
+            sutAction.Should()
+                .Throw<DuplicateOrderChainException>()
+                .WithMessage("The specification contains more than one Order chain!");
         }
     }
 }

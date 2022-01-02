@@ -120,7 +120,6 @@ namespace Ardalis.Specification
             if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
 
             specificationBuilder.Specification.Take = take;
-            specificationBuilder.Specification.IsPagingEnabled = true;
             return specificationBuilder;
         }
 
@@ -137,19 +136,6 @@ namespace Ardalis.Specification
             if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
 
             specificationBuilder.Specification.Skip = skip;
-            specificationBuilder.Specification.IsPagingEnabled = true;
-            return specificationBuilder;
-        }
-
-        [Obsolete]
-        public static ISpecificationBuilder<T> Paginate<T>(
-            this ISpecificationBuilder<T> specificationBuilder,
-            int skip,
-            int take)
-        {
-            specificationBuilder.Skip(skip);
-            specificationBuilder.Take(take);
-
             return specificationBuilder;
         }
 

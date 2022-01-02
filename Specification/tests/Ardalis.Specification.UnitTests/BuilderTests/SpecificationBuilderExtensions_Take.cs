@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
-using Ardalis.Specification.UnitTests.Fixture.Specs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+
 using Xunit;
+using FluentAssertions;
+
+using Ardalis.Specification.UnitTests.Fixture.Specs;
 
 namespace Ardalis.Specification.UnitTests
 {
@@ -18,13 +16,16 @@ namespace Ardalis.Specification.UnitTests
             var spec = new StoreNamesPaginatedSpec(0, take);
 
             spec.Take.Should().Be(take);
-            spec.IsPagingEnabled.Should().BeTrue();
         }
 
         [Fact]
         public void ThrowsDuplicateTakeException_GivenTakeUsedMoreThanOnce()
         {
-            Assert.Throws<DuplicateTakeException>(() => new StoreDuplicateTakeSpec());
+            Action sutAction = () => new StoreDuplicateTakeSpec();
+
+            sutAction.Should()
+                .Throw<DuplicateTakeException>()
+                .WithMessage("Duplicate use of Take(). Ensure you don't use Take() more than once in the same specification!");
         }
     }
 }

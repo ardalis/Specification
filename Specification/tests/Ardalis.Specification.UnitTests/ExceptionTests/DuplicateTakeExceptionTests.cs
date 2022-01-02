@@ -8,7 +8,7 @@ namespace Ardalis.Specification.UnitTests
 {
     public class DuplicateTakeExceptionTests
     {
-        private const string defaultMessage = "Duplicate use of Take(). Ensure you don't use both Paginate() and Take() in the same specification!";
+        private const string defaultMessage = "Duplicate use of Take(). Ensure you don't use Take() more than once in the same specification!";
 
         [Fact]
         public void ThrowWithDefaultConstructor()
