@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
-using Ardalis.Specification.UnitTests.Fixture.Specs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+
 using Xunit;
+using FluentAssertions;
+
+using Ardalis.Specification.UnitTests.Fixture.Specs;
 
 namespace Ardalis.Specification.UnitTests
 {
@@ -18,8 +16,8 @@ namespace Ardalis.Specification.UnitTests
 
             var spec = new StoreNamesPaginatedSpec(skip, 10);
 
-            spec.Skip.Should().Be(skip);
-            spec.IsPagingEnabled.Should().BeTrue();
+            spec.Skip.Should()
+                .Be(skip);
         }
 
         [Fact]
@@ -34,7 +32,11 @@ namespace Ardalis.Specification.UnitTests
         [Fact]
         public void ThrowsDuplicateSkipException_GivenSkipUsedMoreThanOnce()
         {
-            Assert.Throws<DuplicateSkipException>(() => new StoreDuplicateSkipSpec());
+            Action sutAction = () => new StoreDuplicateSkipSpec();
+
+            sutAction.Should()
+                .Throw<DuplicateSkipException>()
+                .WithMessage("Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!");
         }
     }
 }

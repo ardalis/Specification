@@ -68,9 +68,6 @@ namespace Ardalis.Specification
         /// </summary>
         int? Skip { get; }
 
-        [Obsolete]
-        bool IsPagingEnabled { get; }
-
         /// <summary>
         /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T}"/>.
         /// </summary>
