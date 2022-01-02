@@ -24,7 +24,6 @@ namespace Ardalis.Specification.UnitTests
             var spec = new CompanyByIdWithFalseConditions(1);
 
             spec.Take.Should().BeNull();
-            spec.IsPagingEnabled.Should().BeFalse();
         }
 
         [Fact]
