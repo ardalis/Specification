@@ -1,9 +1,10 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq.Expressions;
-using System.Text;
+
 using Xunit;
+using FluentAssertions;
+
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 
 namespace Ardalis.Specification.UnitTests
 {
@@ -19,25 +20,37 @@ namespace Ardalis.Specification.UnitTests
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForLambdaExpression()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country)));
+            Action sutAction = () => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country));
+
+            sutAction.Should()
+                .Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForEntityType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, null!, typeof(Country)));
+            Action sutAction = () => new IncludeExpressionInfo(expr, null!, typeof(Country));
+
+            sutAction.Should()
+                .Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForPropertyType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), null!));
+            Action sutAction = () => new IncludeExpressionInfo(expr, typeof(Company), null!);
+
+            sutAction.Should()
+                .Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void ThrowsArgumentNullException_GivenNullForPreviousPropertyType()
         {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), typeof(Country), null!));
+            Action sutAction = () => new IncludeExpressionInfo(expr, typeof(Company), typeof(Country), null!);
+
+            sutAction.Should()
+                .Throw<ArgumentNullException>();
         }
     }
 }
