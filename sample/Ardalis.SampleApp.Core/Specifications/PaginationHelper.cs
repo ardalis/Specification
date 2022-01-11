@@ -1,7 +1,4 @@
 ﻿using Ardalis.SampleApp.Core.Specifications.Filters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ardalis.SampleApp.Core.Specifications
 {
