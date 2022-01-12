@@ -98,7 +98,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             result.Should().NotBeNull();
             result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
-            dbContext.Entry(result).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
+            dbContext.Entry(result!).State.Should().Be(Microsoft.EntityFrameworkCore.EntityState.Detached);
         }
 
         [Fact]

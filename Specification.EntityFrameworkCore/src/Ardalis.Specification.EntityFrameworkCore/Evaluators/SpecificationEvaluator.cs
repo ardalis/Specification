@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ardalis.Specification.EntityFrameworkCore
@@ -45,6 +46,9 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// <inheritdoc/>
         public virtual IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> query, ISpecification<T, TResult> specification) where T : class
         {
+            if (specification is null) throw new ArgumentNullException("Specification is required");
+            if (specification.Selector is null) throw new SelectorNotFoundException();
+
             query = GetQuery(query, (ISpecification<T>)specification);
 
             return query.Select(specification.Selector);
@@ -53,6 +57,8 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// <inheritdoc/>
         public virtual IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification, bool evaluateCriteriaOnly = false) where T : class
         {
+            if (specification is null) throw new ArgumentNullException("Specification is required");
+
             var evaluators = evaluateCriteriaOnly ? this.evaluators.Where(x => x.IsCriteriaEvaluator) : this.evaluators;
 
             foreach (var evaluator in evaluators)
