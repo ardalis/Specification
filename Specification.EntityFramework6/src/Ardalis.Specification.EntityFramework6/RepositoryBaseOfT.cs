@@ -143,9 +143,6 @@ namespace Ardalis.Specification.EntityFramework6
         /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
         protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is null) throw new ArgumentNullException("Specification is required");
-            if (specification.Selector is null) throw new SelectorNotFoundException();
-
             return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
         }
     }
