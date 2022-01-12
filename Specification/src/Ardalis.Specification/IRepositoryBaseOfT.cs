@@ -45,6 +45,6 @@ namespace Ardalis.Specification
         /// Persists changes to the database.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
