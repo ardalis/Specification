@@ -31,7 +31,13 @@ Base class with tests for adding specifications to a DDD model. Currently used i
 
 ## Version 6 Release Notes
 
-List of changes/actions:
+### Breaking changes
+
+- Improve in-memory evaluation performance. #182. <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
+
+- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). Issue #189
+
+### Other updates
 
 - Add support for `AnyAsync` in the base repository. #180
 
@@ -43,13 +49,9 @@ List of changes/actions:
 
 - Add support for `condition` in the specification builder methods. #143 
 
-- Improve in-memory evaluation performance. #182. <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
-
 - Improve `Include` evaluation performance by implementing caching (opt-in feature). Issue #187 
 
 - Implement infrastructure for specification validators. Issue #111 
-
-- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). Issue #189
 
 ## Sample Usage
 
