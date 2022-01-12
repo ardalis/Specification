@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ardalis.SampleApp.Infrastructure.DataAccess.Configurations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 
 namespace Ardalis.SampleApp.Infrastructure.DataAccess
