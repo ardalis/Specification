@@ -33,11 +33,6 @@ Base class with tests for adding specifications to a DDD model. Currently used i
 
 List of changes/actions:
 
-- Publish the following packages:
-  * Ardalis.Specification v6 - This will remain as `.NET Standard 2.0`.
-  * Ardalis.Specification.EntityFrameworkCore v6 - Multi-targeting for `.NET Standard 2.1` with `EntityFramework Core 6`, and `.NET Standard 2.0` with `EntityFramework Core 3`.
-  * Ardalis.Specification.EntityFramework6 v6 - `.NET Framework 4.7.2` with `EntityFramework 6`.
-
 - Add support for `AnyAsync` in the base repository. #180
 
 - Add SQL Like implementation for the in-memory evaluator. #150
@@ -49,6 +44,12 @@ List of changes/actions:
 - Add support for `condition` in the specification builder methods. #143 
 
 - Improve in-memory evaluation performance. #182. <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
+
+- Improve `Include` evaluation performance by implementing caching (opt-in feature). Issue #187 
+
+- Implement infrastructure for specification validators. Issue #111 
+
+- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). Issue #189
 
 ## Sample Usage
 
