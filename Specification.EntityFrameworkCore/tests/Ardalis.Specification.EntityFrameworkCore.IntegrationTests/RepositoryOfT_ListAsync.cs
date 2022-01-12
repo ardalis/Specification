@@ -47,14 +47,14 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         }
 
         [Fact]
-        public virtual async Task ReturnsStoreWithAddressAndProduct_GivenStoreIncludeProductsThenStoreSpec()
+        public virtual async Task ReturnsStoreWithAddressAndProduct_GivenStoreIncludeAddressAndProductsSpec()
         {
-            var result = await storeRepository.ListAsync(new StoreIncludeProductsThenStoreSpec());
+            var result = await storeRepository.ListAsync(new StoreIncludeAddressAndProductsSpec());
 
             result.Should().NotBeNull();
             result.Should().NotBeEmpty();
+            result[0].Address.Should().NotBeNull();
             result[0].Products.Should().NotBeEmpty();
-            result[0].Products.First().Store.Should().NotBeNull();
         }
 
         [Fact]
