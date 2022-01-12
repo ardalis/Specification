@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
+    /// <summary>
+    /// This evaluator applies EF Core's IgnoreQueryFilters feature to a given query
+    /// See: https://docs.microsoft.com/en-us/ef/core/querying/filters
+    /// </summary>
     public class IgnoreQueryFiltersEvaluator : IEvaluator
     {
         private IgnoreQueryFiltersEvaluator() { }
