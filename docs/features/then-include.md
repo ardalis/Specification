@@ -1,7 +1,7 @@
 ---
 layout: default
 title: ThenInclude
-nav_order: 1
+nav_order: 4
 has_children: false
 parent: ORM-Specific Features
 grand_parent: Features

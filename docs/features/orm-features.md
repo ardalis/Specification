@@ -7,11 +7,3 @@ parent: Features
 ---
 
 # ORM-Specific Features
-
-## Contents
-
-- ORM specific features
-  - Include/ThenInclude
-  - Search
-  - AsNoTracking
-  - AsSplitquery
