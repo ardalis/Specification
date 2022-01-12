@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreIncludeProductsThenStoreSpec : Specification<Store>
+    public class StoreIncludeAddressAndProductsSpec : Specification<Store>
     {
-        public StoreIncludeProductsThenStoreSpec()
+        public StoreIncludeAddressAndProductsSpec()
         {
             Query.Include(x => x.Products)
-                 .ThenInclude(x=>x!.Store);
+                 .Include(x=>x!.Address);
         }
     }
 }
