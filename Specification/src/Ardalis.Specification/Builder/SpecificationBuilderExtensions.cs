@@ -15,8 +15,24 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Where<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, bool>> criteria)
+            => Where(specificationBuilder, criteria, true);
+
+        /// <summary>
+        /// Specify a predicate that will be applied to the query
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="criteria"></param>
+        /// <param name="condition">If false, the criteria won't be added.</param>
+        public static ISpecificationBuilder<T> Where<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, bool>> criteria,
+            bool condition)
         {
-            ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
+            if (condition)
+            {
+                ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
+            }
 
             return specificationBuilder;
         }
@@ -30,10 +46,26 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> OrderBy<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
+            => OrderBy(specificationBuilder, orderExpression, true);
 
-            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
+        /// <summary>
+        /// Specify the query result will be ordered by <paramref name="orderExpression"/> in an ascending order
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="orderExpression"></param>
+        /// <param name="condition">If false, the expression won't be added. The whole Order chain will be discarded.</param>
+        public static IOrderedSpecificationBuilder<T> OrderBy<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, object?>> orderExpression,
+            bool condition)
+        {
+            if (condition)
+            {
+                ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
+            }
+
+            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
             return orderedSpecificationBuilder;
         }
@@ -47,10 +79,26 @@ namespace Ardalis.Specification
         public static IOrderedSpecificationBuilder<T> OrderByDescending<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, object?>> orderExpression)
-        {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
+            => OrderByDescending(specificationBuilder, orderExpression, true);
 
-            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification);
+        /// <summary>
+        /// Specify the query result will be ordered by <paramref name="orderExpression"/> in a descending order
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="orderExpression"></param>
+        /// <param name="condition">If false, the expression won't be added. The whole Order chain will be discarded.</param>
+        public static IOrderedSpecificationBuilder<T> OrderByDescending<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, object?>> orderExpression,
+            bool condition)
+        {
+            if (condition)
+            {
+                ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
+            }
+
+            var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
             return orderedSpecificationBuilder;
         }
@@ -67,12 +115,31 @@ namespace Ardalis.Specification
         public static IIncludableSpecificationBuilder<T, TProperty> Include<T, TProperty>(
             this ISpecificationBuilder<T> specificationBuilder,
             Expression<Func<T, TProperty>> includeExpression) where T : class
+            => Include(specificationBuilder, includeExpression, true);
+
+        /// <summary>
+        /// Specify an include expression.
+        /// This information is utilized to build Include function in the query, which ORM tools like Entity Framework use
+        /// to include related entities (via navigation properties) in the query result.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="includeExpression"></param>
+        /// <param name="condition">If false, the expression won't be added. The whole Include chain will be discarded.</param>
+        public static IIncludableSpecificationBuilder<T, TProperty> Include<T, TProperty>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, TProperty>> includeExpression,
+            bool condition) where T : class
         {
-            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
+            if (condition)
+            {
+                var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
 
-            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+                ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+            }
 
-            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification);
+            var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, !condition);
 
             return includeBuilder;
         }
@@ -86,8 +153,25 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Include<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             string includeString) where T : class
+            => Include(specificationBuilder, includeString, true);
+
+        /// <summary>
+        /// Specify a collection of navigation properties, as strings, to include in the query.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="includeString"></param>
+        /// <param name="condition">If false, the include expression won't be added.</param>
+        public static ISpecificationBuilder<T> Include<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            string includeString,
+            bool condition) where T : class
         {
-            ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
+            if (condition)
+            {
+                ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
+            }
+
             return specificationBuilder;
         }
 
@@ -104,8 +188,28 @@ namespace Ardalis.Specification
             Expression<Func<T, string>> selector,
             string searchTerm,
             int searchGroup = 1) where T : class
+            => Search(specificationBuilder, selector, searchTerm, true, searchGroup);
+
+        /// <summary>
+        /// Specify a 'SQL LIKE' operations for search purposes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="selector">the property to apply the SQL LIKE against</param>
+        /// <param name="searchTerm">the value to use for the SQL LIKE</param>
+        /// <param name="condition">If false, the expression won't be added.</param>
+        /// <param name="searchGroup">the index used to group sets of Selectors and SearchTerms together</param>
+        public static ISpecificationBuilder<T> Search<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            Expression<Func<T, string>> selector,
+            string searchTerm,
+            bool condition,
+            int searchGroup = 1) where T : class
         {
-            ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
+            if (condition)
+            {
+                ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
+            }
 
             return specificationBuilder;
         }
@@ -113,13 +217,31 @@ namespace Ardalis.Specification
         /// <summary>
         /// Specify the number of elements to return.
         /// </summary>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="take">number of elements to take</param>
         public static ISpecificationBuilder<T> Take<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             int take)
-        {
-            if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
+            => Take(specificationBuilder, take, true);
 
-            specificationBuilder.Specification.Take = take;
+        /// <summary>
+        /// Specify the number of elements to return.
+        /// </summary>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="take">number of elements to take</param>
+        /// <param name="condition">If false, the value will be discarded.</param>
+        public static ISpecificationBuilder<T> Take<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            int take,
+            bool condition)
+        {
+            if (condition)
+            {
+                if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
+
+                specificationBuilder.Specification.Take = take;
+            }
+
             return specificationBuilder;
         }
 
@@ -132,10 +254,27 @@ namespace Ardalis.Specification
         public static ISpecificationBuilder<T> Skip<T>(
             this ISpecificationBuilder<T> specificationBuilder,
             int skip)
-        {
-            if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
+            => Skip(specificationBuilder, skip, true);
 
-            specificationBuilder.Specification.Skip = skip;
+        /// <summary>
+        /// Specify the number of elements to skip before returning the remaining elements.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="skip">number of elements to skip</param>
+        /// <param name="condition">If false, the value will be discarded.</param>
+        public static ISpecificationBuilder<T> Skip<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            int skip,
+            bool condition)
+        {
+            if (condition)
+            {
+                if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
+
+                specificationBuilder.Specification.Skip = skip;
+            }
+
             return specificationBuilder;
         }
 
@@ -185,18 +324,35 @@ namespace Ardalis.Specification
         /// <param name="args">Any arguments used in defining the specification</param>
         public static ICacheSpecificationBuilder<T> EnableCache<T>(
             this ISpecificationBuilder<T> specificationBuilder,
-            string specificationName, params object[] args) where T : class
+            string specificationName,
+            params object[] args) where T : class
+            => EnableCache(specificationBuilder, specificationName, true, args);
+
+        /// <summary>
+        /// Must be called after specifying criteria
+        /// </summary>
+        /// <param name="specificationName"></param>
+        /// <param name="args">Any arguments used in defining the specification</param>
+        /// <param name="condition">If false, the caching won't be enabled.</param>
+        public static ICacheSpecificationBuilder<T> EnableCache<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            string specificationName, 
+            bool condition,
+            params object[] args) where T : class
         {
-            if (string.IsNullOrEmpty(specificationName))
+            if (condition)
             {
-                throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
+                if (string.IsNullOrEmpty(specificationName))
+                {
+                    throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
+                }
+
+                specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+
+                specificationBuilder.Specification.CacheEnabled = true;
             }
 
-            specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
-
-            specificationBuilder.Specification.CacheEnabled = true;
-
-            var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification);
+            var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
             return cacheBuilder;
         }
@@ -205,10 +361,25 @@ namespace Ardalis.Specification
         /// If the entity instances are modified, this will not be detected
         /// by the change tracker.
         /// </summary>
+        /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsNoTracking<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
+            => AsNoTracking(specificationBuilder, true);
+
+        /// <summary>
+        /// If the entity instances are modified, this will not be detected
+        /// by the change tracker.
+        /// </summary>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="condition">If false, the setting will be discarded.</param>
+        public static ISpecificationBuilder<T> AsNoTracking<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            bool condition) where T : class
         {
-            specificationBuilder.Specification.AsNoTracking = true;
+            if (condition)
+            {
+                specificationBuilder.Specification.AsNoTracking = true;
+            }
 
             return specificationBuilder;
         }
@@ -224,8 +395,26 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsSplitQuery<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
+            => AsSplitQuery(specificationBuilder, true);
+
+        /// <summary>
+        /// The generated sql query will be split into multiple SQL queries
+        /// </summary>
+        /// <remarks>
+        /// This feature was introduced in EF Core 5.0. It only works when using Include
+        /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/single-split-queries
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="condition">If false, the setting will be discarded.</param>
+        public static ISpecificationBuilder<T> AsSplitQuery<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            bool condition) where T : class
         {
-            specificationBuilder.Specification.AsSplitQuery = true;
+            if (condition)
+            {
+                specificationBuilder.Specification.AsSplitQuery = true;
+            }
 
             return specificationBuilder;
         }
@@ -242,8 +431,27 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> AsNoTrackingWithIdentityResolution<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
+            => AsNoTrackingWithIdentityResolution(specificationBuilder, true);
+
+        /// <summary>
+        /// The query will then keep track of returned instances 
+        /// (without tracking them in the normal way) 
+        /// and ensure no duplicates are created in the query results
+        /// </summary>
+        /// <remarks>
+        /// for more info: https://docs.microsoft.com/en-us/ef/core/change-tracking/identity-resolution#identity-resolution-and-queries
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="condition">If false, the setting will be discarded.</param>
+        public static ISpecificationBuilder<T> AsNoTrackingWithIdentityResolution<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            bool condition) where T : class
         {
-            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
+            if (condition)
+            {
+                specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
+            }
 
             return specificationBuilder;
         }
@@ -258,8 +466,25 @@ namespace Ardalis.Specification
         /// <param name="specificationBuilder"></param>
         public static ISpecificationBuilder<T> IgnoreQueryFilters<T>(
             this ISpecificationBuilder<T> specificationBuilder) where T : class
+            => IgnoreQueryFilters(specificationBuilder, true);
+
+        /// <summary>
+        /// The query will ignore the defined global query filters
+        /// </summary>
+        /// <remarks>
+        /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="specificationBuilder"></param>
+        /// <param name="condition">If false, the setting will be discarded.</param>
+        public static ISpecificationBuilder<T> IgnoreQueryFilters<T>(
+            this ISpecificationBuilder<T> specificationBuilder,
+            bool condition) where T : class
         {
-            specificationBuilder.Specification.IgnoreQueryFilters = true;
+            if (condition)
+            {
+                specificationBuilder.Specification.IgnoreQueryFilters = true;
+            }
 
             return specificationBuilder;
         }

@@ -7,7 +7,7 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
     public class SpecificationBuilderExtensions_AsNoTrackingWithIdentityResolution
     {
         [Fact]
-        public void DoesNothing_GivenSpecWithoutAsNoTracking()
+        public void DoesNothing_GivenSpecWithoutAsNoTrackingWithIdentityResolution()
         {
             var spec = new StoreEmptySpec();
 
@@ -15,7 +15,15 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
         }
 
         [Fact]
-        public void FlagsAsNoTracking_GivenSpecWithAsNoTracking()
+        public void DoesNothing_GivenAsNoTrackingWithIdentityResolutionWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.AsNoTrackingWithIdentityResolution.Should().Be(false);
+        }
+
+        [Fact]
+        public void FlagsAsNoTracking_GivenSpecWithAsNoTrackingWithIdentityResolution()
         {
             var spec = new CompanyByIdAsUntrackedWithIdentityResolutionSpec(1);
 

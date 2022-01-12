@@ -15,6 +15,14 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
         }
 
         [Fact]
+        public void DoesNothing_GivenAsNoTrackingWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.AsNoTracking.Should().Be(false);
+        }
+
+        [Fact]
         public void FlagsAsNoTracking_GivenSpecWithAsNoTracking()
         {
             var spec = new CompanyByIdAsUntrackedSpec(1);

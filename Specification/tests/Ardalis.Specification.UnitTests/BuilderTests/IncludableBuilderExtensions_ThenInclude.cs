@@ -23,6 +23,24 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void AddsNothingToList_GivenDiscardedIncludeChain()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.IncludeExpressions.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void AddsNothingToList_GivenThenIncludeExpressionWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditionsForInnerChains(1);
+
+            spec.IncludeExpressions.Should().HaveCount(1);
+            spec.IncludeExpressions.First().Type.Should().Be(IncludeTypeEnum.Include);
+            spec.IncludeExpressions.Where(x => x.Type == IncludeTypeEnum.ThenInclude).Should().BeEmpty();
+        }
+
+        [Fact]
         public void ThenInclude_Append_IncludeExpressionInfo_With_EnumerablePreviousPropertyType()
         {
             var spec = new StoreIncludeCompanyThenStoresSpec();

@@ -20,6 +20,14 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void AddsNothingToList_GivenSearchExpressionWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.SearchCriterias.Should().BeEmpty();
+        }
+
+        [Fact]
         public void AddsOneCriteriaWithDefaultGroupToList_GivenOneSearchExpressionWithNoGroup()
         {
             var spec = new StoreSearchByNameSpec("test");

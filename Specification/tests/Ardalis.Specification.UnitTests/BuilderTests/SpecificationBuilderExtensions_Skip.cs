@@ -21,6 +21,14 @@ namespace Ardalis.Specification.UnitTests
         }
 
         [Fact]
+        public void DoesNothing_GivenSkipWithFalseCondition()
+        {
+            var spec = new CompanyByIdWithFalseConditions(1);
+
+            spec.Skip.Should().BeNull();
+        }
+
+        [Fact]
         public void ThrowsDuplicateSkipException_GivenSkipUsedMoreThanOnce()
         {
             Action sutAction = () => new StoreDuplicateSkipSpec();
