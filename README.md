@@ -13,18 +13,19 @@
 
 [![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
+## Give a Star! :star:
+If you like or are using this project please give it a star. Thanks!
 # Specification
 
 Base class with tests for adding specifications to a DDD model. Currently used in Microsoft reference application [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb), which is the best place to see it in action. Check out Steve "ardalis" Smith's associated (free!) eBook, [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), as well.
 
-[Read the Docs on GitHub Pages](https://ardalis.github.io/Specification/)
+## Documentation
+
+### [Read the Documentation](https://ardalis.github.io/Specification/)
 
 🎥 [Watch What's New in v5 of Ardalis.Specification](https://www.youtube.com/watch?v=gT72mWdD4Qo&ab_channel=Ardalis)
 
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
-
-## Give a Star! :star:
-If you like or are using this project please give it a star. Thanks!
 
 ## Sample Usage
 
