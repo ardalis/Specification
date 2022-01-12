@@ -33,25 +33,25 @@ Base class with tests for adding specifications to a DDD model. Also includes a 
 
 ### Breaking changes
 
-- Improve in-memory evaluation performance. #182. <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
+- Improve in-memory evaluation performance. [#182](https://github.com/ardalis/Specification/issues/182). <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
 
-- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). Issue #189
+- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). [Issue #189](https://github.com/ardalis/Specification/issues/189)
 
 ### Other updates
 
-- Add support for `AnyAsync` in the base repository. #180
+- Add support for `AnyAsync` in the base repository. [#180](https://github.com/ardalis/Specification/issues/180)
 
-- Add SQL Like implementation for the in-memory evaluator. #150
+- Add SQL Like implementation for the in-memory evaluator. [#150](https://github.com/ardalis/Specification/issues/150)
 
-- Add support for IgnoreQueryFilters.  #159 
+- Add support for IgnoreQueryFilters. [#159 ](https://github.com/ardalis/Specification/issues/159)
 
-- Return `Task<int>` from SaveChangesAsync. #174 
+- Return `Task<int>` from SaveChangesAsync. [#174 ](https://github.com/ardalis/Specification/issues/174)
 
-- Add support for `condition` in the specification builder methods. #143 
+- Add support for `condition` in the specification builder methods. [#143](https://github.com/ardalis/Specification/issues/143)
 
-- Improve `Include` evaluation performance by implementing caching (opt-in feature). Issue #187 
+- Improve `Include` evaluation performance by implementing caching (opt-in feature). [Issue #187](https://github.com/ardalis/Specification/issues/187)
 
-- Implement infrastructure for specification validators. Issue #111 
+- Implement infrastructure for specification validators. [Issue #111](https://github.com/ardalis/Specification/issues/111)
 
 ## Sample Usage
 
