@@ -8,4 +8,3 @@ has_children: true
 # Ardalis.Specification Features
 
 Detailed review of supported features.
-
