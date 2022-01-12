@@ -37,7 +37,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
         /// <inheritdoc/>
         public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
-            dbContext.Entry(entity).State = EntityState.Modified;
+            dbContext.Set<T>().Update(entity);
 
             await SaveChangesAsync(cancellationToken);
         }
