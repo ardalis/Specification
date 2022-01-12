@@ -124,5 +124,12 @@ namespace Ardalis.Specification
         /// <param name="entities">the list of entities to which the specification will be applied</param>
         /// <returns></returns>
         IEnumerable<T> Evaluate(IEnumerable<T> entities);
+
+        /// <summary>
+        /// It returns whether the given entity satisfies the conditions of the specification.
+        /// </summary>
+        /// <param name="entity">The entity to be validated</param>
+        /// <returns></returns>
+        bool IsSatisfiedBy(T entity);
     }
 }

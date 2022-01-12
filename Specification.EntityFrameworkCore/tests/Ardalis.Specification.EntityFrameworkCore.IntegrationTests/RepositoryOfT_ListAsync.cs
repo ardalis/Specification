@@ -193,7 +193,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
 
             result.Should().NotBeNull();
             result.Should().ContainSingle();
-            result[0].Id.Should().Be(StoreSeed.VALID_Search_City_ID);
+            result[0].Id.Should().Be(StoreSeed.VALID_Search_ID);
             result[0].City.Should().Contain(StoreSeed.VALID_Search_City_Key);
         }
     }
