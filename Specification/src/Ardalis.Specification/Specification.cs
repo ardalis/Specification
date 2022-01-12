@@ -92,5 +92,8 @@ namespace Ardalis.Specification
 
         /// <inheritdoc/>
         public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
+
+        /// <inheritdoc/>
+        public bool IgnoreQueryFilters { get; internal set; } = false;
     }
 }
