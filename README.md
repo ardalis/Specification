@@ -50,12 +50,6 @@ List of changes/actions:
 
 - Improve in-memory evaluation performance. #182. <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
 
-<strong>Update:</strong>
-- Improve `Include` evaluation performance by implementing caching (opt-in feature). Issue #187 
-- Implement infrastructure for specification validators. Issue #111 
-- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). Issue #189 
-
-
 ## Sample Usage
 
 The Specification pattern pulls query-specific logic out of other places in the application where it currently exists. For applications with minimal abstraction that use EF Core directly, the specification will eliminate `Where`, `Include`, `Select` and similar expressions from almost all places where they're being used. In applications that abstract database query logic behind a `Repository` abstraction, the specification will typically eliminate the need for many custom `Repository` implementation classes as well as custom query methods on `Repository` implementations. Instead of many different ways to filter and shape data using various methods, the same capability is achieved with few core methods.
