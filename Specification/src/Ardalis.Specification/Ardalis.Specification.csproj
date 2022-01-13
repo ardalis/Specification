@@ -23,7 +23,7 @@
       Add support for AnyAsync in the base repository. #180
       Add SQL Like implementation for the in-memory evaluator. #150
       Add support for IgnoreQueryFilters. #159
-      Return Task<int> from SaveChangesAsync. #174
+      Return Task&lt;int&gt; from SaveChangesAsync. #174
       Add support for condition in the specification builder methods. #143
       Improve Include evaluation performance by implementing caching (opt-in feature). Issue #187
       Implement infrastructure for specification validators. Issue #111
