@@ -92,13 +92,15 @@ public List<Hero> GetHeroes(IHeroRepository repository, bool isAlive, bool isAve
 
 Suppose the data store behind the IHeroRepository has the following state and client code calls the `GetHeroes` as below. The result should be a collection containing only the Spider Man hero.
 
-```table
-|  Name          |  SuperPower  | IsAlive | IsAvenger |
-| -------------- | ------------ | ------- | --------- |
-| Batman         | Intelligence | true    | false     |
-| Iron Man       | Intelligence | false   | true      |
-| Spider Man     | Spidey Sense | true    | true      |
-```
+<div markdown="1">
+
+| Name       | SuperPower   | IsAlive | IsAvenger |
+| :--------- | :----------- | :------ | :-------- |
+| Batman     | Intelligence | true    | false     |
+| Iron Man   | Intelligence | false   | true      |
+| Spider Man | Spidey Sense | true    | true      |
+
+</div>
 
 ```csharp
 var result = GetHeroes(repository: repository, isAlive: true, isAvenger: true);

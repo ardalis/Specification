@@ -54,18 +54,18 @@ public class HeroByNameAndSuperPowerContainsFilterSpec : Specification<Hero>
 
 public class HeroService
 {
-    private readonly YourRepository<Hero> heroRepository;
+    private readonly YourRepository<Hero> _heroRepository;
 
     public HeroService(YourRepository<Hero> heroRepository)
     {
-        this.heroRepository = heroRepository;
+        _heroRepository = heroRepository;
     }
 
     public async Task<List<Hero>> GetHeroesFilteredByNameAndSuperPower(string name, string superPower)
     {
         var spec = new HeroByNameAndSuperPowerContainsFilterSpec(name, superPower);
 
-        return await heroRepository.ListAsync(spec);
+        return await _heroRepository.ListAsync(spec);
     }
 }
 
@@ -82,40 +82,40 @@ public class CustomerByNameContainsFilterSpec : Specification<Customer>
 
 public class CustomerService
 {
-    private readonly YourRepository<Customer> customerRepository;
+    private readonly YourRepository<Customer> _customerRepository;
 
     public CustomerService(YourRepository<Customer> customerRepository)
     {
-        this.customerRepository = customerRepository;
+        _customerRepository = customerRepository;
     }
 
     public async Task<List<Customer>> GetCustomersFilteredByName(string name)
     {
         var spec = new CustomerByNameContainsFilterSpec(name);
 
-        return await customerRepository.ListAsync(spec);
+        return await _customerRepository.ListAsync(spec);
     }
 }
 ```
 
 ## Features of `RepositoryBase<T>`
 
-The section above introduced using `RepositoryBase<T>` to provide similar functionality across two entities and their services. This section aims to go into more detail about the methods made available by `RepositoryBase<T>` and provide some examples of their usages. Continuing with the HeroService example, it is possible to create heroes as follows using the `AddAsync` method. The `SaveChangesAsync` method exposes the underlying DbContext method of the same name to persist changes to the database.
+The section above introduced using `RepositoryBase<T>` to provide similar functionality across two entities and their services. This section aims to go into more detail about the methods made available by `RepositoryBase<T>` and provide some examples of their usages. Continuing with the HeroService example that contains a `private readonly YourRepository<Hero> _heroRepository` field, it is possible to create heroes as follows using the `AddAsync` method. The `SaveChangesAsync` method exposes the underlying DbContext method of the same name to persist changes to the database.
 
 ```csharp
 public async Task<Hero> Create(string name, string superPower, bool isAlive, bool isAvenger)
 {
     var hero = new Hero(name, superPower, isAlive, isAvenger);
 
-    await heroRepository.AddAsync(hero);
+    await _heroRepository.AddAsync(hero);
 
-    await heroRepository.SaveChangesAsync();
+    await _heroRepository.SaveChangesAsync();
 
     return hero;
 }
 ```
 
-Now that a Hero has been created, it's possible to retrieve that Hero using either the Hero's Id or by using a Specification. Note that since the `HeroByNameSpec` returns a single Hero entity, the Specification inherits the interface `ISingleResultSpecification` which `GetBySpecAsync` uses to constrain the return type to a single Entity.
+Now that a Hero has been created, it's possible to retrieve that Hero using either the Hero's Id or by using a Specification. Note that since the `HeroByNameSpec` returns a single Hero entity, the Specification inherits the interface `ISingleResultSpecification` which `GetBySpecAsync` uses to constrain the return type to a single Entity. In this case if more than one Hero was to exist for a given name, `GetBySpecAsync` performs a `FirstOrDefaultAsync` to return the first Hero of the result set.
 
 ```csharp
 public class HeroByNameSpec : Specification<Hero>, ISingleResultSpecification
@@ -131,14 +131,14 @@ public class HeroByNameSpec : Specification<Hero>, ISingleResultSpecification
 
 public async Task<Hero> GetById(int id)
 {
-    return await heroRepository.GetByIdAsync(id);
+    return await _heroRepository.GetByIdAsync(id);
 }
 
 public async Task<Hero> GetByName(string name)
 {
     var spec = new HeroByNameSpec(name);
 
-    return await heroRepository.GetBySpecAsync(spec);
+    return await _heroRepository.GetBySpecAsync(spec);
 }
 ```
 
@@ -147,13 +147,13 @@ Next, a Hero can be updated using `UpdateAsync`. `HeroService` defines a method 
 ```csharp
 public async Task<Hero> SetIsAlive(int id, bool isAlive)
 {
-    var hero = await repository.GetByIdAsync(id);
+    var hero = await _heroRepository.GetByIdAsync(id);
 
     hero.IsAlive = isAlive;
 
-    await heroRepository.UpdateAsync(hero);
+    await _heroRepository.UpdateAsync(hero);
 
-    await heroRepository.SaveChangesAsync();
+    await _heroRepository.SaveChangesAsync();
 
     return hero;
 }
@@ -164,16 +164,16 @@ Removing Heroes can be done either by Hero using `DeleteAsync` or by collection 
 ```csharp
 public async Task Delete(Hero hero)
 {
-    await heroRepository.DeleteAsync(hero);
+    await _heroRepository.DeleteAsync(hero);
 
-    await heroRepository.SaveChangesAsync();
+    await _heroRepository.SaveChangesAsync();
 }
 
 public async Task DeleteRange(Hero[] heroes)
 {
-    await heroRepository.DeleteRangeAsync(heroes);
+    await _heroRepository.DeleteRangeAsync(heroes);
 
-    await heroRepository.SaveChangesAsync();
+    await _heroRepository.SaveChangesAsync();
 }
 ```
 
@@ -183,23 +183,23 @@ The `RepositoryBase<T>` also provides two common Linq operations `CountAsync` an
 public async Task SeedData(Hero[] heroes)
 {
     // only seed if no Heroes exist
-    if (await heroRepository.AnyAsync())
+    if (await _heroRepository.AnyAsync())
     {
         return;
     }
 
     // alternatively
-    if (await heroRepository.CountAsync() > 0)
+    if (await _heroRepository.CountAsync() > 0)
     {
         return;
     }
 
     foreach (var hero in heroes)
     {
-        await heroRepository.AddAsync(hero);
+        await _heroRepository.AddAsync(hero);
     }
 
-    await heroRepository.SaveChangesAsync();
+    await _heroRepository.SaveChangesAsync();
 }
 ```
 
@@ -208,66 +208,66 @@ The full HeroService implementation is shown below.
 ```csharp
 public class HeroService
 {
-    private readonly YourRepository<Hero> heroRepository;
+    private readonly YourRepository<Hero> _heroRepository;
 
     public HeroService(YourRepository<Hero> heroRepository)
     {
-        this.heroRepository = heroRepository;
+        _heroRepository = heroRepository;
     }
 
     public async Task<Hero> Create(string name, string superPower, bool isAlive, bool isAvenger)
     {
         var hero = new Hero(name, superPower, isAlive, isAvenger);
 
-        await heroRepository.AddAsync(hero);
+        await _heroRepository.AddAsync(hero);
 
-        await heroRepository.SaveChangesAsync();
+        await _heroRepository.SaveChangesAsync();
 
         return hero;
     }
 
     public async Task Delete(Hero hero)
     {
-        await heroRepository.DeleteAsync(hero);
+        await _heroRepository.DeleteAsync(hero);
 
-        await heroRepository.SaveChangesAsync();
+        await _heroRepository.SaveChangesAsync();
     }
 
     public async Task DeleteRange(List<Hero> heroes)
     {
-        await heroRepository.DeleteRangeAsync(heroes);
+        await _heroRepository.DeleteRangeAsync(heroes);
 
-        await heroRepository.SaveChangesAsync();
+        await _heroRepository.SaveChangesAsync();
     }
 
     public async Task<Hero> GetById(int id)
     {
-        return await heroRepository.GetByIdAsync(id);
+        return await _heroRepository.GetByIdAsync(id);
     }
 
     public async Task<Hero> GetByName(string name)
     {
         var spec = new HeroByNameSpec(name);
 
-        return await heroRepository.GetBySpecAsync(spec);
+        return await _heroRepository.GetBySpecAsync(spec);
     }
 
     public async Task<List<Hero>> GetHeroesFilteredByNameAndSuperPower(string name, string superPower)
     {
         var spec = new HeroByNameAndSuperPowerFilterSpec(name, superPower);
 
-        return await heroRepository.ListAsync(spec);
+        return await _heroRepository.ListAsync(spec);
     }
 
     public async Task<Hero> SetIsAlive(int id, bool isAlive)
     {
-        var hero = await heroRepository.GetByIdAsync(id);
+        var hero = await _heroRepository.GetByIdAsync(id);
 
         hero.IsAlive = isAlive;
 
-        await heroRepository.UpdateAsync(hero);
+        await _heroRepository.UpdateAsync(hero);
 
-        await heroRepository.SaveChangesAsync();
+        await _heroRepository.SaveChangesAsync();
 
         return hero;
     }
@@ -275,23 +275,23 @@ public class HeroService
     public async Task SeedData(Hero[] heroes)
     {
         // only seed if no Heroes exist
-        if (!await heroRepository.AnyAsync())
+        if (!await _heroRepository.AnyAsync())
         {
             return;
         }
 
         // alternatively
-        if (await heroRepository.CountAsync() > 0)
+        if (await _heroRepository.CountAsync() > 0)
         {
             return;
         }
 
         foreach (var hero in heroes)
         {
-            await heroRepository.AddAsync(hero);
+            await _heroRepository.AddAsync(hero);
         }
 
-        await heroRepository.SaveChangesAsync();
+        await _heroRepository.SaveChangesAsync();
     }
 }
 ```
