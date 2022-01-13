@@ -36,31 +36,36 @@ services.AddScoped(typeof(YourRepository<>));
 In the example below, two different services inject the same `YourRepository<T>` class but with different type arguments to perform similar actions. This allows for the creation of different services that can apply Specifications to collections of Entities without having to develop and maintain Repositories for each type.
 
 ```csharp
-public class HeroByNameContainsFilterSpec : Specification<Hero>
+public class HeroByNameAndSuperPowerContainsFilterSpec : Specification<Hero>
 {
-    public HeroByNameContainsFilterSpec(string name)
+    public HeroByNameAndSuperPowerContainsFilterSpec(string name, string superPower)
     {
         if (!string.IsNullOrEmpty(name))
         {
             Query.Where(h => h.Name.Contains(name));
+        }
+
+        if (!string.IsNullOrEmpty(superPower))
+        {
+            Query.Where(h => h.SuperPower.Contains(superPower));
         }
     }
 }
 
 public class HeroService
 {
-    private readonly YourRepository<Hero> repository;
+    private readonly YourRepository<Hero> heroRepository;
 
-    public HeroService(YourRepository<Hero> repository)
+    public HeroService(YourRepository<Hero> heroRepository)
     {
-        this.repository = repository;
+        this.heroRepository = heroRepository;
     }
 
-    public async Task<List<Hero>> GetHeroesFilteredByName(string name)
+    public async Task<List<Hero>> GetHeroesFilteredByNameAndSuperPower(string name, string superPower)
     {
-        var spec = new HeroByNameContainsFilterSpec(name);
+        var spec = new HeroByNameAndSuperPowerContainsFilterSpec(name, superPower);
 
-        return await repository.ListAsync(spec);
+        return await heroRepository.ListAsync(spec);
     }
 }
 
@@ -77,18 +82,18 @@ public class CustomerByNameContainsFilterSpec : Specification<Customer>
 
 public class CustomerService
 {
-    private readonly YourRepository<Customer> repository;
+    private readonly YourRepository<Customer> customerRepository;
 
-    public CustomerService(YourRepository<Customer> repository)
+    public CustomerService(YourRepository<Customer> customerRepository)
     {
-        this.repository = repository;
+        this.customerRepository = customerRepository;
     }
 
     public async Task<List<Customer>> GetCustomersFilteredByName(string name)
     {
         var spec = new CustomerByNameContainsFilterSpec(name);
 
-        return await repository.ListAsync(spec);
+        return await customerRepository.ListAsync(spec);
     }
 }
 ```
@@ -102,9 +107,9 @@ public async Task<Hero> Create(string name, string superPower, bool isAlive, boo
 {
     var hero = new Hero(name, superPower, isAlive, isAvenger);
 
-    await repository.AddAsync(hero);
+    await heroRepository.AddAsync(hero);
 
-    await respository.SaveChangesAsync();
+    await heroRepository.SaveChangesAsync();
 
     return hero;
 }
@@ -126,14 +131,14 @@ public class HeroByNameSpec : Specification<Hero>, ISingleResultSpecification
 
 public async Task<Hero> GetById(int id)
 {
-    return await repository.GetByIdAsync(id);
+    return await heroRepository.GetByIdAsync(id);
 }
 
 public async Task<Hero> GetByName(string name)
 {
     var spec = new HeroByNameSpec(name);
 
-    return await repository.GetBySpecAsync(spec);
+    return await heroRepository.GetBySpecAsync(spec);
 }
 ```
 
@@ -146,9 +151,9 @@ public async Task<Hero> SetIsAlive(int id, bool isAlive)
 
     hero.IsAlive = isAlive;
 
-    await repository.UpdateAsync(hero);
+    await heroRepository.UpdateAsync(hero);
 
-    await respository.SaveChangesAsync();
+    await heroRepository.SaveChangesAsync();
 
     return hero;
 }
@@ -159,16 +164,16 @@ Removing Heroes can be done either by Hero using `DeleteAsync` or by collection 
 ```csharp
 public async Task Delete(Hero hero)
 {
-    await repository.DeleteAsync(hero);
+    await heroRepository.DeleteAsync(hero);
 
-    await respository.SaveChangesAsync();
+    await heroRepository.SaveChangesAsync();
 }
 
 public async Task DeleteRange(Hero[] heroes)
 {
-    await repository.DeleteRangeAsync(heroes);
+    await heroRepository.DeleteRangeAsync(heroes);
 
-    await respository.SaveChangesAsync();
+    await heroRepository.SaveChangesAsync();
 }
 ```
 
@@ -178,23 +183,23 @@ The `RepositoryBase<T>` also provides two common Linq operations `CountAsync` an
 public async Task SeedData(Hero[] heroes)
 {
     // only seed if no Heroes exist
-    if (await repository.AnyAsync())
+    if (await heroRepository.AnyAsync())
     {
         return;
     }
 
     // alternatively
-    if (await repository.CountAsync() > 0)
+    if (await heroRepository.CountAsync() > 0)
     {
         return;
     }
 
     foreach (var hero in heroes)
     {
-        await repository.AddAsync(hero);
+        await heroRepository.AddAsync(hero);
     }
 
-    await repository.SaveChangesAsync();
+    await heroRepository.SaveChangesAsync();
 }
 ```
 
@@ -203,66 +208,66 @@ The full HeroService implementation is shown below.
 ```csharp
 public class HeroService
 {
-    private readonly YourRepository<Hero> repository;
+    private readonly YourRepository<Hero> heroRepository;
 
-    public HeroService(YourRepository<Hero> repository)
+    public HeroService(YourRepository<Hero> heroRepository)
     {
-        this.repository = repository;
+        this.heroRepository = heroRepository;
     }
 
     public async Task<Hero> Create(string name, string superPower, bool isAlive, bool isAvenger)
     {
         var hero = new Hero(name, superPower, isAlive, isAvenger);
 
-        await repository.AddAsync(hero);
+        await heroRepository.AddAsync(hero);
 
-        await repository.SaveChangesAsync();
+        await heroRepository.SaveChangesAsync();
 
         return hero;
     }
 
     public async Task Delete(Hero hero)
     {
-        await repository.DeleteAsync(hero);
+        await heroRepository.DeleteAsync(hero);
 
-        await repository.SaveChangesAsync();
+        await heroRepository.SaveChangesAsync();
     }
 
     public async Task DeleteRange(List<Hero> heroes)
     {
-        await repository.DeleteRangeAsync(heroes);
+        await heroRepository.DeleteRangeAsync(heroes);
 
-        await repository.SaveChangesAsync();
+        await heroRepository.SaveChangesAsync();
     }
 
     public async Task<Hero> GetById(int id)
     {
-        return await repository.GetByIdAsync(id);
+        return await heroRepository.GetByIdAsync(id);
     }
 
     public async Task<Hero> GetByName(string name)
     {
         var spec = new HeroByNameSpec(name);
 
-        return await repository.GetBySpecAsync(spec);
+        return await heroRepository.GetBySpecAsync(spec);
     }
 
-    public async Task<List<Hero>> GetHeroesFilteredByName(string name)
+    public async Task<List<Hero>> GetHeroesFilteredByNameAndSuperPower(string name, string superPower)
     {
-        var spec = new HeroByNameContainsFilterSpec(name);
+        var spec = new HeroByNameAndSuperPowerFilterSpec(name, superPower);
 
-        return await repository.ListAsync(spec);
+        return await heroRepository.ListAsync(spec);
     }
 
     public async Task<Hero> SetIsAlive(int id, bool isAlive)
     {
-        var hero = await repository.GetByIdAsync(id);
+        var hero = await heroRepository.GetByIdAsync(id);
 
         hero.IsAlive = isAlive;
 
-        await repository.UpdateAsync(hero);
+        await heroRepository.UpdateAsync(hero);
 
-        await repository.SaveChangesAsync();
+        await heroRepository.SaveChangesAsync();
 
         return hero;
     }
@@ -270,23 +275,23 @@ public class HeroService
     public async Task SeedData(Hero[] heroes)
     {
         // only seed if no Heroes exist
-        if (await repository.AnyAsync())
+        if (!await heroRepository.AnyAsync())
         {
             return;
         }
 
         // alternatively
-        if (await repository.CountAsync() > 0)
+        if (await heroRepository.CountAsync() > 0)
         {
             return;
         }
 
         foreach (var hero in heroes)
         {
-            await repository.AddAsync(hero);
+            await heroRepository.AddAsync(hero);
         }
 
-        await repository.SaveChangesAsync();
+        await heroRepository.SaveChangesAsync();
     }
 }
 ```
@@ -327,11 +332,11 @@ public async Task Run()
 
     await heroService.SetIsAlive(ironMan.Id, false);
 
-    var shouldOnlyContainBatman = await heroService.GetHeroesFilteredByName("Bat");
+    var shouldOnlyContainBatman = await heroService.GetHeroesFilteredByNameAndSuperPower("Bat", "Intel");
 
     await heroService.Delete(captainAmerica);
 
-    var allRemainingHeroes = await heroService.GetHeroesFilteredByName("");
+    var allRemainingHeroes = await heroService.GetHeroesFilteredByNameAndSuperPower("", "");
 
     await heroService.DeleteRange(allRemainingHeroes);
 }
