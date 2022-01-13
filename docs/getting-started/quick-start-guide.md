@@ -29,7 +29,7 @@ nav_order: 2
    }
    ```
 
-3. Create a first specification. It is good practice to define Specications in the same layer as your domain entities.
+3. Create a first specification. It is good practice to define Specifications in the same layer as your domain entities.
 
    ```csharp
    public class CustomerByLastnameSpec : Specification<Customer>
