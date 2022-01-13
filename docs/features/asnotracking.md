@@ -23,7 +23,7 @@ The `AsNoTracking` feature applies this method to the resulting query executed b
 The following example shows how to add `AsNoTracking` to a specification:
 
 ```csharp
-public class CustomerByNameSpec : Specification<Customer>
+public class CustomerByNameReadOnlySpec : Specification<Customer>
 {
   public CustomerByNameSpec(string name)
   {
@@ -34,3 +34,5 @@ public class CustomerByNameSpec : Specification<Customer>
     }
 }
 ```
+
+**Note:** It's a good idea to note when specifications use `AsNoTracking` so that consumers of the specification will not attempt to modify and save entities returned by queries using the specification. The above specification adds `ReadOnly` to its name for this purpose.
