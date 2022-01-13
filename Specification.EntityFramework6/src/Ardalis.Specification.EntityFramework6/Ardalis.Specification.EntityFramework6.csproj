@@ -14,9 +14,9 @@
     <Summary>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef6;entity framework</PackageTags>
-    <Version>5.2.0</Version>
+    <Version>6.0.0</Version>
     <PackageReleaseNotes>
-      Initial release.
+     See README.md
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFramework6</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
