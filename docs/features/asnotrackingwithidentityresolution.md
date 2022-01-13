@@ -15,7 +15,7 @@ Compatible with:
 
 The `AsNoTrackingWithIdentityResolution` feature applies this method to the resulting query executed by[EF Core](https://docs.microsoft.com/en-us/ef/core/change-tracking/identity-resolution#identity-resolution-and-queries). It is not supported by EF 6.
 
-> no-tracking queries can be forced to perform identity resolution by using `AsNoTrackingWithIdentityResolution<TEntity>(IQueryable<TEntity>)`. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
+> No-tracking queries can be forced to perform identity resolution by using `AsNoTrackingWithIdentityResolution<TEntity>(IQueryable<TEntity>)`. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
 
 ## Example
 
@@ -24,7 +24,7 @@ The following example shows how to add `AsNoTrackingWithIdentityResolution` to a
 ```csharp
 public class CustomerByNameReadOnlySpec : Specification<Customer>
 {
-  public CustomerByNameSpec(string name)
+  public CustomerByNameReadOnlySpec(string name)
   {
     Query.Where(x => x.Name == name)
       .AsNoTrackingWithIdentityResolution()

@@ -25,7 +25,7 @@ The following example shows how to add `AsNoTracking` to a specification:
 ```csharp
 public class CustomerByNameReadOnlySpec : Specification<Customer>
 {
-  public CustomerByNameSpec(string name)
+  public CustomerByNameReadOnlySpec(string name)
   {
     Query.Where(x => x.Name == name)
       .AsNoTracking()

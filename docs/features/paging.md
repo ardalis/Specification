@@ -31,4 +31,4 @@ public class StoresByCompanyPaginatedSpec : Specification<Store>
 
 ## How paging should work
 
-To implement paging, you should Skip `i * n` entries, where `i` is the index of the page you're on (starting from zero), and `n` is the number of entries per page. Then you should Take `n` entries.
+To implement paging, you should `Skip` `i * n` entries, where `i` is the index of the page you're on (starting from zero), and `n` is the number of entries per page. Then you should `Take` `n` entries. When paging through a set of data, each request must include the appropriate `Skip` and `Take` values for the page being requested.
