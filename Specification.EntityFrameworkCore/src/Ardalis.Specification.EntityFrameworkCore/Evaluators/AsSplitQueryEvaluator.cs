@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ardalis.Specification.EntityFrameworkCore
 {
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
     public class AsSplitQueryEvaluator : IEvaluator
     {
         private AsSplitQueryEvaluator() { }
