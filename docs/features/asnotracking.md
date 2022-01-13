@@ -23,7 +23,7 @@ The `AsNoTracking` feature applies this method to the resulting query executed b
 The following example shows how to add `AsNoTracking` to a specification:
 
 ```csharp
-public class CustomerByNameSpec : Specification<Customer>, ISingleResultSpecification
+public class CustomerByNameSpec : Specification<Customer>
 {
   public CustomerByNameSpec(string name)
   {
@@ -33,5 +33,4 @@ public class CustomerByNameSpec : Specification<Customer>, ISingleResultSpecific
         .ThenByDescending(x => x.Address);
     }
 }
-
 ```
