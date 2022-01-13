@@ -15,7 +15,7 @@ Compatible with:
 
 The `IgnoreQueryFilters` feature is used to indicate to EF Core (it is not supported by EF 6) that it should ignore global query filters for this query. It simply passes along this call to the underlying [EF Core feature for disabling global filters](https://docs.microsoft.com/ef/core/querying/filters#disabling-filters).
 
-## Sample
+## Example
 
 The following specification implements the `IgnoreQueryFilters()` expression:
 
