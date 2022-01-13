@@ -12,9 +12,21 @@
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>5.2.0</Version>
+    <Version>6.0.0-beta</Version>
     <PackageReleaseNotes>
-      Added ISingleResultSpecification generic interface.
+      See README.md
+      Breaking changes
+      Improve in-memory evaluation performance. #182. Breaking Changes: The specification state for Where, Order, and Search expressions is stored in separate types.
+      Remove Paginate builder action. Breaking Change (It was marked as obsolete since version 4). Issue #189
+
+      Other updates
+      Add support for AnyAsync in the base repository. #180
+      Add SQL Like implementation for the in-memory evaluator. #150
+      Add support for IgnoreQueryFilters. #159
+      Return Task&lt;int&gt; from SaveChangesAsync. #174
+      Add support for condition in the specification builder methods. #143
+      Improve Include evaluation performance by implementing caching (opt-in feature). Issue #187
+      Implement infrastructure for specification validators. Issue #111
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
