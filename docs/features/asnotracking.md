@@ -9,4 +9,29 @@ grand_parent: Features
 
 # AsNoTracking
 
-TBD
+Compatible with:
+
+- [EF Core](https://www.nuget.org/packages/Ardalis.Specification.EntityFrameworkCore/)
+- [EF6](https://www.nuget.org/packages/Ardalis.Specification.EntityFramework6/)
+
+The `AsNoTracking` feature applies this method to the resulting query executed by [EF6](https://docs.microsoft.com/en-us/dotnet/api/system.data.entity.dbextensions.asnotracking) or [EF Core](https://docs.microsoft.com/en-us/ef/core/querying/tracking#no-tracking-queries).
+
+> No tracking queries are useful when the results are used in a read-only scenario. They're quicker to execute because there's no need to set up the change tracking information. If you don't need to update the entities retrieved from the database, then a no-tracking query should be used.
+
+## Example
+
+The following example shows how to add `AsNoTracking` to a specification:
+
+```csharp
+public class CustomerByNameSpec : Specification<Customer>, ISingleResultSpecification
+{
+  public CustomerByNameSpec(string name)
+  {
+    Query.Where(x => x.Name == name)
+      .AsNoTracking()
+      .OrderBy(x => x.Name)
+        .ThenByDescending(x => x.Address);
+    }
+}
+
+```
