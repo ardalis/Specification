@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -12,7 +13,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// </summary>
     /// <typeparam name="TKey">The key type.</typeparam>
     /// <typeparam name="TValue">The value type.</typeparam>
-    internal class CachedReadConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+    internal class CachedReadConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
     {
         /// <summary>
         /// The number of cache misses which are tolerated before the cache is regenerated.
@@ -181,8 +182,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return result;
         }
 
+#if NET6_0_OR_GREATER
+        /// <inheritdoc />
+        public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value) => this.GetReadDictionary().TryGetValue(key, out value);
+#else
         /// <inheritdoc />
         public bool TryGetValue(TKey key, out TValue value) => this.GetReadDictionary().TryGetValue(key, out value);
+
+#endif
 
         /// <inheritdoc />
         public TValue this[TKey key]

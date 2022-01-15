@@ -72,7 +72,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
             return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
         }
         /// <inheritdoc/>
-        public virtual async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+        public virtual async Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
         }

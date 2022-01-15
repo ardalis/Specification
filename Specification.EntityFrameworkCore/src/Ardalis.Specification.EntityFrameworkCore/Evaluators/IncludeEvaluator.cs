@@ -89,7 +89,11 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
             if (!this.cacheEnabled)
             {
-                return (IQueryable<T>)IncludeMethodInfo.MakeGenericMethod(includeInfo.EntityType, includeInfo.PropertyType).Invoke(null, new object[] { query, includeInfo.LambdaExpression, });
+                var result = IncludeMethodInfo.MakeGenericMethod(includeInfo.EntityType, includeInfo.PropertyType).Invoke(null, new object[] { query, includeInfo.LambdaExpression });
+
+                _ = result ?? throw new TargetException();
+
+                return (IQueryable<T>)result;
             }
 
             var include = DelegatesCache.GetOrAdd((includeInfo.EntityType, includeInfo.PropertyType, null), CreateIncludeDelegate).Value;
@@ -104,10 +108,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
             if (!this.cacheEnabled)
             {
-                return (IQueryable<T>)(IsGenericEnumerable(includeInfo.PreviousPropertyType, out var previousPropertyType)
+                var result = (IsGenericEnumerable(includeInfo.PreviousPropertyType, out var previousPropertyType)
                         ? ThenIncludeAfterEnumerableMethodInfo
                         : ThenIncludeAfterReferenceMethodInfo).MakeGenericMethod(includeInfo.EntityType, previousPropertyType, includeInfo.PropertyType)
                     .Invoke(null, new object[] { query, includeInfo.LambdaExpression, });
+
+                _ = result ?? throw new TargetException();
+
+                return (IQueryable<T>)result;
             }
 
             var thenInclude = DelegatesCache.GetOrAdd((includeInfo.EntityType, includeInfo.PropertyType, includeInfo.PreviousPropertyType), CreateThenIncludeDelegate).Value;
@@ -144,8 +152,10 @@ namespace Ardalis.Specification.EntityFrameworkCore
         private static Lazy<Func<IQueryable, LambdaExpression, IQueryable>> CreateThenIncludeDelegate((Type EntityType, Type PropertyType, Type? PreviousPropertyType) cacheKey)
             => new Lazy<Func<IQueryable, LambdaExpression, IQueryable>>(() =>
             {
+                _ = cacheKey.PreviousPropertyType ?? throw new ArgumentNullException(nameof(cacheKey.PreviousPropertyType));
+
                 MethodInfo thenIncludeInfo = ThenIncludeAfterReferenceMethodInfo;
-                if (IsGenericEnumerable(cacheKey.PreviousPropertyType!, out var previousPropertyType))
+                if (IsGenericEnumerable(cacheKey.PreviousPropertyType, out var previousPropertyType))
                 {
                     thenIncludeInfo = ThenIncludeAfterEnumerableMethodInfo;
                 }
