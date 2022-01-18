@@ -12,7 +12,7 @@
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>6.0.0-beta</Version>
+    <Version>6.0.0</Version>
     <PackageReleaseNotes>
       See README.md
       Breaking changes
@@ -27,6 +27,7 @@
       Add support for condition in the specification builder methods. #143
       Improve Include evaluation performance by implementing caching (opt-in feature). Issue #187
       Implement infrastructure for specification validators. Issue #111
+      Adding XML Comments #224
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
