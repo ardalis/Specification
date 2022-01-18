@@ -4,25 +4,25 @@ using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds
 {
-    public class AddressSeed
+  public class AddressSeed
+  {
+    public const string VALID_STREET_FOR_STOREID1 = "Street 1";
+
+    public static List<Address> Get()
     {
-        public const string VALID_STREET_FOR_STOREID1 = "Street 1";
+      var addresses = new List<Address>();
 
-        public static List<Address> Get()
+      for (int i = 1; i <= 100; i++)
+      {
+        addresses.Add(new Address()
         {
-            var addresses = new List<Address>();
+          Id = i,
+          Street = $"Street {i}",
+          StoreId = i
+        });
+      }
 
-            for (int i = 1; i <= 100; i++)
-            {
-                addresses.Add(new Address()
-                {
-                    Id = i,
-                    Street = $"Street {i}",
-                    StoreId = i
-                });
-            }
-
-            return addresses;
-        }
+      return addresses;
     }
+  }
 }

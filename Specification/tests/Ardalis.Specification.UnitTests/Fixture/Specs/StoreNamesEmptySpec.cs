@@ -2,11 +2,11 @@
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreNamesEmptySpec : Specification<Store, string>
+  public class StoreNamesEmptySpec : Specification<Store, string>
+  {
+    public StoreNamesEmptySpec()
     {
-        public StoreNamesEmptySpec()
-        {
 
-        }
     }
+  }
 }

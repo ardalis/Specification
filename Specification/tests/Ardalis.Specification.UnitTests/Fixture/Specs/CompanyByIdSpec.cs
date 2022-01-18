@@ -2,11 +2,11 @@
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class CompanyByIdSpec : Specification<Company>, ISingleResultSpecification
+  public class CompanyByIdSpec : Specification<Company>, ISingleResultSpecification
+  {
+    public CompanyByIdSpec(int id)
     {
-        public CompanyByIdSpec(int id)
-        {
-            Query.Where(company => company.Id == id);
-        }
+      Query.Where(company => company.Id == id);
     }
+  }
 }

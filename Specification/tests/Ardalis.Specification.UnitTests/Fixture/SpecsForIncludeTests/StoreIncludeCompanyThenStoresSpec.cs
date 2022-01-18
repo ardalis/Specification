@@ -2,13 +2,13 @@
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreIncludeCompanyThenStoresSpec : Specification<Store>
+  public class StoreIncludeCompanyThenStoresSpec : Specification<Store>
+  {
+    public StoreIncludeCompanyThenStoresSpec()
     {
-        public StoreIncludeCompanyThenStoresSpec()
-        {
-            Query.Include(x => x.Company)
-                .ThenInclude(x => x!.Stores)
-                .ThenInclude(x => x.Products);
-        }
+      Query.Include(x => x.Company)
+          .ThenInclude(x => x!.Stores)
+          .ThenInclude(x => x.Products);
     }
+  }
 }
