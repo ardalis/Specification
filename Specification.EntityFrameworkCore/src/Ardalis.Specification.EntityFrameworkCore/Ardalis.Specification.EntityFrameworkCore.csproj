@@ -23,6 +23,7 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
+    <DocumentationFile>bin\$(Configuration)\Ardalis.Specification.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
