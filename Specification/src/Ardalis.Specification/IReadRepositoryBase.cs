@@ -43,7 +43,7 @@ namespace Ardalis.Specification
         /// A task that represents the asynchronous operation.
         /// The task result contains the <typeparamref name="TResult" />.
         /// </returns>
-        Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+        Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Finds all entities of <typeparamref name="T" /> from the database.
