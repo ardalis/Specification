@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public interface IInMemoryEvaluator
-    {
-        IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification);
-    }
+  public interface IInMemoryEvaluator
+  {
+    IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification);
+  }
 }

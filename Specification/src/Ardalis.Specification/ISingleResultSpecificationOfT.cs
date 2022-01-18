@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public interface ISingleResultSpecification<T> : ISpecification<T>, ISingleResultSpecification
-    {
-    }
+  public interface ISingleResultSpecification<T> : ISpecification<T>, ISingleResultSpecification
+  {
+  }
 }

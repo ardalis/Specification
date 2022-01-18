@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public enum IncludeTypeEnum
-    {
-        Include = 1,
-        ThenInclude = 2
-    }
+  public enum IncludeTypeEnum
+  {
+    Include = 1,
+    ThenInclude = 2
+  }
 }
