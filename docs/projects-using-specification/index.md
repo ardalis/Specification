@@ -12,4 +12,5 @@ has_children: true
 - [eShopOnWeb Reference App](https://github.com/dotnet-architecture/eShopOnWeb)
 - [Pluralsight DDD Fundamentals Course sample](https://github.com/ardalis/pluralsight-ddd-fundamentals)
 - [CleanArchitecture Solution Template](https://github.com/ardalis/CleanArchitecture)
+- [fullstackhero Web API Boilerplate](https://github.com/fullstackhero/dotnet-webapi-boilerplate)
 - (add your own project here via [pull request](https://github.com/ardalis/Specification/pulls))
