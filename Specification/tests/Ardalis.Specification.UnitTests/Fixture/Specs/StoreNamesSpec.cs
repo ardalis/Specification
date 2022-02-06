@@ -1,15 +1,12 @@
 ﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreNamesSpec : Specification<Store, string?>
+  public class StoreNamesSpec : Specification<Store, string?>
+  {
+    public StoreNamesSpec()
     {
-        public StoreNamesSpec()
-        {
-            Query.Select(x => x.Name);
-        }
+      Query.Select(x => x.Name);
     }
+  }
 }

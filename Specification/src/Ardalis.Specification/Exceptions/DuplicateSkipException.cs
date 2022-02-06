@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Ardalis.Specification
 {
-    public class DuplicateSkipException : Exception
+  public class DuplicateSkipException : Exception
+  {
+    private const string message = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
+
+    public DuplicateSkipException()
+        : base(message)
     {
-        private const string message = "Duplicate use of the Skip(). Ensure you don't use both Paginate() and Skip() in the same specification!";
-
-        public DuplicateSkipException()
-            : base(message)
-        {
-        }
-
-        public DuplicateSkipException(Exception innerException)
-            : base(message, innerException)
-        {
-        }
     }
+
+    public DuplicateSkipException(Exception innerException)
+        : base(message, innerException)
+    {
+    }
+  }
 }

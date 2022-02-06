@@ -13,18 +13,45 @@
 
 [![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
+## Give a Star! :star:
+If you like or are using this project please give it a star. Thanks!
 # Specification
 
-Base class with tests for adding specifications to a DDD model. Currently used in Microsoft reference application [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb), which is the best place to see it in action. Check out Steve "ardalis" Smith's associated (free!) eBook, [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), as well.
+Base class with tests for adding specifications to a DDD model. Also includes a default generic Repository base class with support for EF6 and EF Core. Currently used in Microsoft reference application [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb), which is the best place to see it in action, as well as the [Clean Architecture solution template](https://github.com/ardalis/cleanarchitecture). Check out Steve "ardalis" Smith's associated (free!) eBook, [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), as well.
 
-[Read the Docs on GitHub Pages](https://ardalis.github.io/Specification/)
+## Documentation
+
+### [Read the Documentation](https://ardalis.github.io/Specification/)
+
+### Videos
 
 🎥 [Watch What's New in v5 of Ardalis.Specification](https://www.youtube.com/watch?v=gT72mWdD4Qo&ab_channel=Ardalis)
 
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
 
-## Give a Star! :star:
-If you like or are using this project please give it a star. Thanks!
+## Version 6 Release Notes
+
+### Breaking changes
+
+- Improve in-memory evaluation performance. [#182](https://github.com/ardalis/Specification/issues/182). <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
+
+- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). [Issue #189](https://github.com/ardalis/Specification/issues/189)
+
+### Other updates
+
+- Add support for `AnyAsync` in the base repository. [#180](https://github.com/ardalis/Specification/issues/180)
+
+- Add SQL Like implementation for the in-memory evaluator. [#150](https://github.com/ardalis/Specification/issues/150)
+
+- Add support for IgnoreQueryFilters. [#159 ](https://github.com/ardalis/Specification/issues/159)
+
+- Return `Task<int>` from SaveChangesAsync. [#174 ](https://github.com/ardalis/Specification/issues/174)
+
+- Add support for `condition` in the specification builder methods. [#143](https://github.com/ardalis/Specification/issues/143)
+
+- Improve `Include` evaluation performance by implementing caching (opt-in feature). [Issue #187](https://github.com/ardalis/Specification/issues/187)
+
+- Implement infrastructure for specification validators. [Issue #111](https://github.com/ardalis/Specification/issues/111)
 
 ## Sample Usage
 

@@ -15,17 +15,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="altcover" Version="8.2.821" />
+    <PackageReference Include="altcover" Version="8.2.833" />
     <PackageReference Include="coverlet.msbuild" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.0.1" />
-    <PackageReference Include="ReportGenerator" Version="4.8.12" />
-    <PackageReference Include="FluentAssertions" Version="6.1.0" />
+    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.1.0" />
+    <PackageReference Include="ReportGenerator" Version="5.0.2" />
+    <PackageReference Include="FluentAssertions" Version="6.3.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit.analyzers" Version="0.10.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">

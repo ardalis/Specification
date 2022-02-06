@@ -12,21 +12,22 @@
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
-    <Version>5.2.0</Version>
+    <Version>6.0.1</Version>
     <PackageReleaseNotes>
-      Added ISingleResultSpecification generic interface.
+      Fix XML Document Filename
     </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
+    <DocumentationFile>bin\$(Configuration)\Ardalis.Specification.xml</DocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
   
   <ItemGroup>

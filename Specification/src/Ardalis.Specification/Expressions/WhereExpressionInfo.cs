@@ -3,36 +3,36 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification
 {
+  /// <summary>
+  /// Encapsulates data needed to perform filtering.
+  /// </summary>
+  /// <typeparam name="T">Type of the entity to apply filter on.</typeparam>
+  public class WhereExpressionInfo<T>
+  {
+    private readonly Lazy<Func<T, bool>> filterFunc;
+
     /// <summary>
-    /// Encapsulates data needed to perform filtering.
+    /// Creates instance of <see cref="WhereExpressionInfo{T}" />.
     /// </summary>
-    /// <typeparam name="T">Type of the entity to apply filter on.</typeparam>
-    public class WhereExpressionInfo<T>
+    /// <param name="filter">Condition which should be satisfied by instances of <typeparamref name="T"/>.</param>
+    /// <exception cref="ArgumentNullException">If <paramref name="filter"/> is null.</exception>
+    public WhereExpressionInfo(Expression<Func<T, bool>> filter)
     {
-        private readonly Lazy<Func<T, bool>> filterFunc;
+      _ = filter ?? throw new ArgumentNullException(nameof(filter));
 
-        /// <summary>
-        /// Creates instance of <see cref="WhereExpressionInfo{T}" />.
-        /// </summary>
-        /// <param name="filter">Condition which should be satisfied by instances of <typeparamref name="T"/>.</param>
-        /// <exception cref="ArgumentNullException">If <paramref name="filter"/> is null.</exception>
-        public WhereExpressionInfo(Expression<Func<T, bool>> filter)
-        {
-            _ = filter ?? throw new ArgumentNullException(nameof(filter));
+      this.Filter = filter;
 
-            this.Filter = filter;
-
-            this.filterFunc = new Lazy<Func<T, bool>>(this.Filter.Compile);
-        }
-
-        /// <summary>
-        /// Condition which should be satisfied by instances of <typeparamref name="T"/>.
-        /// </summary>
-        public Expression<Func<T, bool>> Filter { get; }
-
-        /// <summary>
-        /// Compiled <see cref="Filter" />.
-        /// </summary>
-        public Func<T, bool> FilterFunc => this.filterFunc.Value;
+      this.filterFunc = new Lazy<Func<T, bool>>(this.Filter.Compile);
     }
+
+    /// <summary>
+    /// Condition which should be satisfied by instances of <typeparamref name="T"/>.
+    /// </summary>
+    public Expression<Func<T, bool>> Filter { get; }
+
+    /// <summary>
+    /// Compiled <see cref="Filter" />.
+    /// </summary>
+    public Func<T, bool> FilterFunc => this.filterFunc.Value;
+  }
 }

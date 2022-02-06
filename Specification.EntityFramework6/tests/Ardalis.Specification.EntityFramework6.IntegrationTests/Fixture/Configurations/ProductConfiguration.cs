@@ -1,14 +1,14 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 
 namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture.Configurations
 {
-    public class ProductConfiguration : EntityTypeConfiguration<Product>
+  public class ProductConfiguration : EntityTypeConfiguration<Product>
+  {
+    public ProductConfiguration()
     {
-        public ProductConfiguration()
-        {
-            ToTable("Product");
-            HasKey(c => c.Id);
-        }
+      ToTable("Product");
+      HasKey(c => c.Id);
     }
+  }
 }

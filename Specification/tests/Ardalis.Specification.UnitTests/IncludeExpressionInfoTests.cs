@@ -1,43 +1,54 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq.Expressions;
-using System.Text;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
+using FluentAssertions;
 using Xunit;
 
 namespace Ardalis.Specification.UnitTests
 {
-    public class IncludeExpressionInfoTests
+  public class IncludeExpressionInfoTests
+  {
+    private readonly Expression<Func<Company, Country>> expr;
+
+    public IncludeExpressionInfoTests()
     {
-        private readonly Expression<Func<Company, Country>> expr;
-
-        public IncludeExpressionInfoTests()
-        {
-            expr = x => x.Country!;
-        }
-
-        [Fact]
-        public void ThrowsArgumentNullException_GivenNullForLambdaExpression()
-        {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country)));
-        }
-
-        [Fact]
-        public void ThrowsArgumentNullException_GivenNullForEntityType()
-        {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, null!, typeof(Country)));
-        }
-
-        [Fact]
-        public void ThrowsArgumentNullException_GivenNullForPropertyType()
-        {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), null!));
-        }
-
-        [Fact]
-        public void ThrowsArgumentNullException_GivenNullForPreviousPropertyType()
-        {
-            Assert.Throws<ArgumentNullException>(() => new IncludeExpressionInfo(expr, typeof(Company), typeof(Country), null!));
-        }
+      expr = x => x.Country!;
     }
+
+    [Fact]
+    public void ThrowsArgumentNullException_GivenNullForLambdaExpression()
+    {
+      Action sutAction = () => new IncludeExpressionInfo(null!, typeof(Company), typeof(Country));
+
+      sutAction.Should()
+          .Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ThrowsArgumentNullException_GivenNullForEntityType()
+    {
+      Action sutAction = () => new IncludeExpressionInfo(expr, null!, typeof(Country));
+
+      sutAction.Should()
+          .Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ThrowsArgumentNullException_GivenNullForPropertyType()
+    {
+      Action sutAction = () => new IncludeExpressionInfo(expr, typeof(Company), null!);
+
+      sutAction.Should()
+          .Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ThrowsArgumentNullException_GivenNullForPreviousPropertyType()
+    {
+      Action sutAction = () => new IncludeExpressionInfo(expr, typeof(Company), typeof(Country), null!);
+
+      sutAction.Should()
+          .Throw<ArgumentNullException>();
+    }
+  }
 }

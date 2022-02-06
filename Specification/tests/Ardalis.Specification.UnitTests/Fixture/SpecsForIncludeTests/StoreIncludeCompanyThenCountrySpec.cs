@@ -1,16 +1,16 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 
 namespace Ardalis.Specification.UnitTests.Fixture.Specs
 {
-    public class StoreIncludeCompanyThenCountrySpec : Specification<Store>
+  public class StoreIncludeCompanyThenCountrySpec : Specification<Store>
+  {
+    public StoreIncludeCompanyThenCountrySpec()
     {
-        public StoreIncludeCompanyThenCountrySpec()
-        {
-            Query.Include(x => x.Company)
-                 .ThenInclude(x=>x!.Country);
-        }
+      Query.Include(x => x.Company)
+           .ThenInclude(x => x!.Country);
     }
+  }
 }
