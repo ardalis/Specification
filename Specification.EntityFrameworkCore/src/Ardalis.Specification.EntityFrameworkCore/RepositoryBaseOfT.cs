@@ -35,12 +35,23 @@ namespace Ardalis.Specification.EntityFrameworkCore
       return entity;
     }
     /// <inheritdoc/>
+    public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    {
+        dbContext.Set<T>().AddRange(entities);
+
+        await SaveChangesAsync(cancellationToken);
+
+        return entities;
+    }
+    
+    /// <inheritdoc/>
     public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
       dbContext.Set<T>().Update(entity);
 
       await SaveChangesAsync(cancellationToken);
     }
+    
     /// <inheritdoc/>
     public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
@@ -55,6 +66,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
       await SaveChangesAsync(cancellationToken);
     }
+    
     /// <inheritdoc/>
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
