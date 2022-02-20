@@ -74,7 +74,7 @@ namespace Ardalis.Specification
     }
 
     /// <inheritdoc/>
-    public IDictionary<string, object> Items { get; set; }
+    public IDictionary<string, object> Items { get; set; } = new Dictionary<string, object>();
 
     /// <inheritdoc/>
     public IEnumerable<WhereExpressionInfo<T>> WhereExpressions { get; } = new List<WhereExpressionInfo<T>>();
