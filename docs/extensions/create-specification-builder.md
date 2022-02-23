@@ -87,28 +87,19 @@ public class Repository<T>
 }
 ```
 
-Finally, we need to take care of some plumbing to implement the `.GetCacheTTL` and `.SetCacheTTL` methods that we've used in the example repository and builder extension. The class below uses `ConditionalWeakTable` to do the trick. Another solution is to create a base class that inherits from `Specification<T>`.
+Finally, we need to take care of some plumbing to implement the `.GetCacheTTL` and `.SetCacheTTL` methods that we've used in the example repository and builder extension.
 
 ````csharp
 public static class SpecificationExtensions
 {
-    private static readonly ConditionalWeakTable<object, CacheOptions> SpecificationCacheOptions = new();
-
-    public static void SetCacheTTL<T>(this ISpecification<T> spec, TimeSpan ttl)
+    public static void SetCacheTTL<T>(this ISpecification<T> spec, TimeSpan timeToLive)
     {
-        SpecificationCacheOptions.AddOrUpdate(spec, new CacheOptions() { TTL = ttl });
+        spec.Items["CacheTTL"] = timeToLive;
     }
-
     public static TimeSpan GetCacheTTL<T>(this ISpecification<T> spec)
     {
-        var opts = SpecificationCacheOptions.GetOrCreateValue(spec);
-        return opts?.TTL ?? TimeSpan.MaxValue;
-    }
-
-    // ConditionalWeakTable need reference types; TimeSpan is a struct
-    private class CacheOptions
-    {
-        public TimeSpan TTL { get; set; }
+        spec.Items.TryGetValue("CacheTTL", out var ttl);
+        return (ttl as TimeSpan?) ?? TimeSpan.MaxValue;
     }
 }
 ````
