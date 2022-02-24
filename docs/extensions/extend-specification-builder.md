@@ -6,7 +6,7 @@ nav_order: 2
 ---
 
 
-# How to create your own specification builder
+# How to add extensions to the specification builder
 
 The specification builder from `Ardalis.Specification` is extensible by design. In fact, the methods you can use out of the box are implemented as extension methods themselves (check out the [source code](https://github.com/ardalis/Specification/blob/main/Specification/src/Ardalis.Specification/Builder/SpecificationBuilderExtensions.cs)). Your project might have requirements that cannot be satisfied by the existing toolset of course, or you might want to simplify repetitive code in several specification constructors. Whatever your case, enhancing the default builder is easy by creating your own extension methods.
 
