@@ -12,6 +12,8 @@ namespace Ardalis.Specification
   /// <typeparam name="TResult">The type of the result.</typeparam>
   public interface ISpecification<T, TResult> : ISpecification<T>
   {
+    ISpecificationBuilder<T, TResult> Query { get; }
+
     /// <summary>
     /// The transform function to apply to the <typeparamref name="T"/> element.
     /// </summary>
@@ -31,6 +33,8 @@ namespace Ardalis.Specification
   /// <typeparam name="T">The type being queried against.</typeparam>
   public interface ISpecification<T>
   {
+    ISpecificationBuilder<T> Query { get; }
+
     /// <summary>
     /// The collection of filters.
     /// </summary>
