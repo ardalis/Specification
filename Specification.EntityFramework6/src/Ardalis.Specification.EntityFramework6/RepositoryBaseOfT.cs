@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +9,6 @@ namespace Ardalis.Specification.EntityFramework6
   public abstract class RepositoryBase<T> : ReadRepositoryBase<T> where T : class
   {
     private readonly DbContext dbContext;
-    private readonly ISpecificationEvaluator specificationEvaluator;
 
     public RepositoryBase(DbContext dbContext)
         : this(dbContext, SpecificationEvaluator.Default)
@@ -23,7 +20,6 @@ namespace Ardalis.Specification.EntityFramework6
       : base(dbContext, specificationEvaluator)
     {
       this.dbContext = dbContext;
-      this.specificationEvaluator = specificationEvaluator;
     }
 
     /// <inheritdoc/>
