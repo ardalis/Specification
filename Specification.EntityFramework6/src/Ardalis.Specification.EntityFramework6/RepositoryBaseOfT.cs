@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Ardalis.Specification.EntityFramework6
 {
   /// <inheritdoc/>
-  public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+  public abstract class RepositoryBase<T> : ReadRepositoryBase<T> where T : class
   {
     private readonly DbContext dbContext;
     private readonly ISpecificationEvaluator specificationEvaluator;
@@ -20,6 +20,7 @@ namespace Ardalis.Specification.EntityFramework6
 
     /// <inheritdoc/>
     public RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
+      : base(dbContext, specificationEvaluator)
     {
       this.dbContext = dbContext;
       this.specificationEvaluator = specificationEvaluator;
@@ -71,91 +72,6 @@ namespace Ardalis.Specification.EntityFramework6
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
       return await dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<T> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default)
-    {
-      return await dbContext.Set<T>().FindAsync(cancellationToken: cancellationToken, new object[] { id });
-    }
-    /// <inheritdoc/>
-    public virtual async Task<T> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISpecification<T>, ISingleResultSpecification
-    {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
-    }
-    /// <inheritdoc/>
-    public virtual async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
-    {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
-    {
-      return await dbContext.Set<T>().ToListAsync(cancellationToken);
-    }
-    /// <inheritdoc/>
-    public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
-    {
-      var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
-
-      return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
-    }
-    /// <inheritdoc/>
-    public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
-    {
-      var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
-
-      return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
-    {
-      return await ApplySpecification(specification, true).CountAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
-    {
-      return await dbContext.Set<T>().CountAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
-    {
-      return await ApplySpecification(specification, true).AnyAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
-    {
-      return await dbContext.Set<T>().AnyAsync(cancellationToken);
-    }
-
-    /// <summary>
-    /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
-    /// <paramref name="specification"/>.
-    /// </summary>
-    /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
-    protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
-    {
-      return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
-    }
-    /// <summary>
-    /// Filters all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
-    /// <paramref name="specification"/>, from the database.
-    /// <para>
-    /// Projects each entity into a new form, being <typeparamref name="TResult" />.
-    /// </para>
-    /// </summary>
-    /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
-    /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
-    protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
-    {
-      return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
     }
   }
 }
