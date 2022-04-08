@@ -42,7 +42,7 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
     }
 
     [Fact]
-    public virtual async Task ReturnsTrue_GivenStoreByIdSpecWithInvalidStore()
+    public virtual async Task ReturnsFalse_GivenStoreByIdSpecWithInvalidStore()
     {
       var result = await storeRepository.AnyAsync(new StoreByIdSpec(0));
 
