@@ -7,7 +7,7 @@ namespace Ardalis.Specification
   /// <inheritdoc cref="ISpecification{T, TResult}"/>
   public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
   {
-    protected new virtual ISpecificationBuilder<T, TResult> Query { get; }
+    public new virtual ISpecificationBuilder<T, TResult> Query { get; }
 
     protected Specification()
         : this(InMemorySpecificationEvaluator.Default)
@@ -37,7 +37,7 @@ namespace Ardalis.Specification
   {
     protected IInMemorySpecificationEvaluator Evaluator { get; }
     protected ISpecificationValidator Validator { get; }
-    protected virtual ISpecificationBuilder<T> Query { get; }
+    public virtual ISpecificationBuilder<T> Query { get; }
 
     protected Specification()
         : this(InMemorySpecificationEvaluator.Default, SpecificationValidator.Default)
