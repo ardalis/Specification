@@ -32,6 +32,11 @@ namespace Ardalis.Specification
   public interface ISpecification<T>
   {
     /// <summary>
+    /// Arbitrary state to be accessed from builders and evaluators.
+    /// </summary>
+    IDictionary<string, object> Items { get; set; }
+
+    /// <summary>
     /// The collection of filters.
     /// </summary>
     IEnumerable<WhereExpressionInfo<T>> WhereExpressions { get; }
