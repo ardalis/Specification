@@ -34,6 +34,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
       return entity;
     }
+
     /// <inheritdoc/>
     public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
@@ -59,6 +60,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
       await SaveChangesAsync(cancellationToken);
     }
+
     /// <inheritdoc/>
     public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
@@ -78,15 +80,43 @@ namespace Ardalis.Specification.EntityFrameworkCore
     {
       return await dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
     }
+
     /// <inheritdoc/>
+    [Obsolete]
     public virtual async Task<T?> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISpecification<T>, ISingleResultSpecification
     {
       return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
+
     /// <inheritdoc/>
+    [Obsolete]
     public virtual async Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
       return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+    {
+      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+      return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+    {
+      return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -94,6 +124,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     {
       return await dbContext.Set<T>().ToListAsync(cancellationToken);
     }
+
     /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
@@ -101,6 +132,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
       return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
     }
+
     /// <inheritdoc/>
     public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
@@ -143,6 +175,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     {
       return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
     }
+
     /// <summary>
     /// Filters all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
     /// <paramref name="specification"/>, from the database.

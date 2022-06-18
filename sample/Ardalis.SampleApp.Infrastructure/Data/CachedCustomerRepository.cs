@@ -93,6 +93,30 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
+  public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
   public Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
   {
     string key = $"{nameof(T)}-ListAsync";

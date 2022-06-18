@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,6 +33,7 @@ namespace Ardalis.Specification
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
+    [Obsolete]
     Task<T?> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISingleResultSpecification, ISpecification<T>;
 
     /// <summary>
@@ -43,7 +45,52 @@ namespace Ardalis.Specification
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />.
     /// </returns>
+    [Obsolete]
     Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
+    /// </returns>
+    Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
+    /// </returns>
+    Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
+    /// </returns>
+    Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
+    /// </returns>
+    Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds all entities of <typeparamref name="T" /> from the database.
