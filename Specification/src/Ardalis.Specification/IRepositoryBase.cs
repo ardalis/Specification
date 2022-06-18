@@ -43,6 +43,14 @@ namespace Ardalis.Specification
     Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Updates the given entities in the database
+    /// </summary>
+    /// <param name="entities">The entities to update.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Removes an entity in the database
     /// </summary>
     /// <param name="entity">The entity to delete.</param>

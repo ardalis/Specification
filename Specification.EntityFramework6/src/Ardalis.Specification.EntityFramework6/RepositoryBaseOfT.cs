@@ -52,7 +52,18 @@ namespace Ardalis.Specification.EntityFramework6
 
       await SaveChangesAsync(cancellationToken);
     }
-    
+
+    /// <inheritdoc/>
+    public virtual async Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    {
+      foreach (var entity in entities)
+      {
+        dbContext.Entry(entity).State = EntityState.Modified;
+      }
+
+      await SaveChangesAsync(cancellationToken);
+    }
+
     /// <inheritdoc/>
     public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
