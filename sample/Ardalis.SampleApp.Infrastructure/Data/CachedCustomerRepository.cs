@@ -70,7 +70,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<T> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISingleResultSpecification, ISpecification<T>
+  public Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     if (specification.CacheEnabled)
     {

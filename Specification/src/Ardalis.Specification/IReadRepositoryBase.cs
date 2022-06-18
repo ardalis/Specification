@@ -34,7 +34,7 @@ namespace Ardalis.Specification
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
     [Obsolete]
-    Task<T?> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISingleResultSpecification, ISpecification<T>;
+    Task<T?> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
