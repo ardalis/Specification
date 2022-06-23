@@ -70,7 +70,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<T> GetBySpecAsync<Spec>(Spec specification, CancellationToken cancellationToken = default) where Spec : ISingleResultSpecification, ISpecification<T>
+  public Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     if (specification.CacheEnabled)
     {
@@ -90,6 +90,30 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   public Task<TResult> GetBySpecAsync<TResult>(Specification.ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
   {
     throw new NotImplementedException();
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
+  }
+
+  /// <inheritdoc/>
+  public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  {
+    return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
   }
 
   /// <inheritdoc/>
