@@ -138,7 +138,7 @@ public async Task<Hero> GetByName(string name)
 {
     var spec = new HeroByNameSpec(name);
 
-    return await _heroRepository.GetBySpecAsync(spec);
+    return await _heroRepository.FirstOrDefaultAsync(spec);
 }
 ```
 
