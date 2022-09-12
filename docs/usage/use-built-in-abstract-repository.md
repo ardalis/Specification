@@ -138,7 +138,7 @@ public async Task<Hero> GetByName(string name)
 {
     var spec = new HeroByNameSpec(name);
 
-    return await _heroRepository.GetBySpecAsync(spec);
+    return await _heroRepository.FirstOrDefaultAsync(spec);
 }
 ```
 
@@ -249,7 +249,7 @@ public class HeroService
     {
         var spec = new HeroByNameSpec(name);
 
-        return await _heroRepository.GetBySpecAsync(spec);
+        return await _heroRepository.FirstOrDefaultAsync(spec);
     }
 
     public async Task<List<Hero>> GetHeroesFilteredByNameAndSuperPower(string name, string superPower)
