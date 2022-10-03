@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.UnitTests;
 
-public class UnitTest1
+public class EFRepositoryFactoryTests
 {
   [Fact]
   public void CorrectlyInstantiatesRepository()
