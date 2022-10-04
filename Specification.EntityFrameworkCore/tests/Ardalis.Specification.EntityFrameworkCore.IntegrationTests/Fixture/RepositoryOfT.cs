@@ -5,6 +5,10 @@
   {
     protected readonly TestDbContext dbContext;
 
+    public Repository(TestDbContext dbContext) : this(dbContext, SpecificationEvaluator.Default)
+    {
+    }
+
     public Repository(TestDbContext dbContext, ISpecificationEvaluator specificationEvaluator) : base(dbContext, specificationEvaluator)
     {
       this.dbContext = dbContext;
