@@ -38,4 +38,4 @@ Read the [Getting Started section](getting-started/). You can also [review the s
 
 ## Docs theme notes
 
-This docs site is using the [Just the Docs theme](https://pmarsceill.github.io/just-the-docs/docs/navigation-structure/). Details on how to configure its metadata and navigation can be found [here](https://pmarsceill.github.io/just-the-docs/docs/navigation-structure/).
+This docs site is using the [Just the Docs theme](https://just-the-docs.github.io/just-the-docs/). Details on how to configure its metadata and navigation can be found [here](https://just-the-docs.github.io/just-the-docs/docs/navigation-structure/).
