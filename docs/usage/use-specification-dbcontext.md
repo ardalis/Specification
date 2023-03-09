@@ -30,7 +30,7 @@ public class SampleDbContext : DbContext
 }
 ```
 
-A specification can be applied directly to this `DbSet` using the `WithSpecification` extension method defined in `Ardalis.Specification.EntityFrameworkCore` package. Assuming a Specification is defined similar to the `ItemByIdSpec` described in [How to Create Specifications](./creating-specifications.md), the following code demonstrates putting these pieces together.
+A specification can be applied directly to this `DbSet` using the `WithSpecification` extension method defined in `Ardalis.Specification.EntityFrameworkCore` package. Assuming a Specification is defined similar to the `ItemByIdSpec` described in [How to Create Specifications](./create-specifications.md), the following code demonstrates putting these pieces together.
 
 ```csharp
 // handling of IDisposable DbContext intentionally left out
