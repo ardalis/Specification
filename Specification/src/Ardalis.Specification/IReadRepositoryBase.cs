@@ -166,5 +166,18 @@ namespace Ardalis.Specification
     /// source sequence contains any elements; otherwise, false.
     /// </returns>
     Task<bool> AnyAsync(CancellationToken cancellationToken = default);
+
+
+#if !NETSTANDARD2_0
+    /// <summary>
+    /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    /// <paramref name="specification"/>, from the database.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <returns>
+    ///  Returns an IAsyncEnumerable<T> which can be enumerated asynchronously.
+    /// </returns>
+    IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification);
+#endif
   }
 }

@@ -173,6 +173,12 @@ namespace Ardalis.Specification.EntityFrameworkCore
       return await dbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
+    /// <inheritdoc/>
+    public virtual IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification)
+    {
+      return dbContext.Set<T>().AsAsyncEnumerable();
+    }
+
     /// <summary>
     /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
     /// <paramref name="specification"/>.
