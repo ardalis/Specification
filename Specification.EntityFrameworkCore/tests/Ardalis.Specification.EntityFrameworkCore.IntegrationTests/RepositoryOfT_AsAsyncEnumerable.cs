@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture;
 using Ardalis.Specification.UnitTests.Fixture.Specs;
@@ -32,6 +33,24 @@ namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests
         result.Should().NotBeNull();
         result.Products.Should().NotBeEmpty();
       } 
+    }
+    
+    [Fact]
+    public virtual async Task ReturnsStoreWithIdFrom15To30_GivenStoresByIdAsAsyncEnumerableSpec()
+    {
+      var ids = Enumerable.Range(15, 16);
+      var spec = new StoresByIdListSpec(ids);
+
+      int counter = 0;
+      var results =  storeRepository.AsAsyncEnumerable(spec);
+      await foreach (var result in results.WithCancellation(CancellationToken.None))
+      {
+        result.Should().NotBeNull();
+        result.Products.Should().NotBeEmpty();
+        ++counter;
+      }
+      
+      counter.Should().Be(16);
     }
   }
 }
