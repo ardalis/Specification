@@ -33,11 +33,14 @@ namespace Ardalis.Specification.EntityFramework6
     public virtual IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> query, ISpecification<T, TResult> specification) where T : class
     {
       if (specification is null) throw new ArgumentNullException("Specification is required");
-      if (specification.Selector is null) throw new SelectorNotFoundException();
+      if (specification.Selector is null && specification.SelectManyExpression is null) throw new SelectorNotFoundException();
+      if (specification.Selector != null && specification.SelectManyExpression != null) throw new ConcurrentSelectorsException();
 
       query = GetQuery(query, (ISpecification<T>)specification);
 
-      return query.Select(specification.Selector);
+      return specification.Selector != null
+        ? query.Select(specification.Selector)
+        : query.SelectMany(specification.SelectManyExpression);
     }
 
     /// <inheritdoc/>
