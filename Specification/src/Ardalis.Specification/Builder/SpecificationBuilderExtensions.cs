@@ -299,7 +299,7 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T, TResult> specificationBuilder,
         Expression<Func<T, IEnumerable<TResult>>> selector)
     {
-      specificationBuilder.Specification.SelectManyExpression = selector;
+      specificationBuilder.Specification.SelectorMany = selector;
 
       return specificationBuilder;
     }

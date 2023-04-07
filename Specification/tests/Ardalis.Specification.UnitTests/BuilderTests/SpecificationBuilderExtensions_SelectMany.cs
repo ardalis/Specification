@@ -11,15 +11,15 @@ namespace Ardalis.Specification.UnitTests
     {
       var spec = new StoreProductNamesEmptySpec();
 
-      spec.SelectManyExpression.Should().BeNull();
+      spec.SelectorMany.Should().BeNull();
     }
 
     [Fact]
-    public void SetsSelector_GivenSelectManyExpression()
+    public void SetsSelectorMany_GivenSelectManyExpression()
     {
       var spec = new StoreProductNamesSpec();
 
-      spec.SelectManyExpression.Should().NotBeNull();
+      spec.SelectorMany.Should().NotBeNull();
     }
   }
 }

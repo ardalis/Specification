@@ -29,7 +29,7 @@ namespace Ardalis.Specification
     public Expression<Func<T, TResult>>? Selector { get; internal set; }
 
     /// <inheritdoc/>
-    public Expression<Func<T, IEnumerable<TResult>>>? SelectManyExpression { get; internal set; }
+    public Expression<Func<T, IEnumerable<TResult>>>? SelectorMany { get; internal set; }
 
     /// <inheritdoc/>
     public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;

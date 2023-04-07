@@ -31,14 +31,14 @@ namespace Ardalis.Specification
 
     public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)
     {
-      if (specification.Selector is null && specification.SelectManyExpression is null) throw new SelectorNotFoundException();
-      if (specification.Selector != null && specification.SelectManyExpression != null) throw new ConcurrentSelectorsException();
+      if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
+      if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
 
       var baseQuery = Evaluate(source, (ISpecification<T>)specification);
 
       var resultQuery = specification.Selector != null
         ? baseQuery.Select(specification.Selector.Compile())
-        : baseQuery.SelectMany(specification.SelectManyExpression!.Compile());
+        : baseQuery.SelectMany(specification.SelectorMany!.Compile());
 
       return specification.PostProcessingAction == null
           ? resultQuery

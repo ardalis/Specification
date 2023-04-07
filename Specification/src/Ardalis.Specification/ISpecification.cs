@@ -22,7 +22,7 @@ namespace Ardalis.Specification
     /// <summary>
     /// The SelectMany transform function to apply to the <typeparamref name="T"/> element.
     /// </summary>
-    Expression<Func<T, IEnumerable<TResult>>>? SelectManyExpression { get; }
+    Expression<Func<T, IEnumerable<TResult>>>? SelectorMany { get; }
 
     /// <summary>
     /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T, TResult}"/>.
