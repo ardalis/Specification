@@ -170,5 +170,15 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests
       result[0].Id.Should().Be(StoreSeed.VALID_Search_ID);
       result[0].City.Should().Contain(StoreSeed.VALID_Search_City_Key);
     }
+
+    [Fact]
+    public virtual async Task ReturnsAllProducts_GivenStoreSelectManyProductsSpec()
+    {
+      var result = await storeRepository.ListAsync(new StoreProductNamesSpec());
+
+      result.Should().NotBeNull();
+      result.Should().HaveCount(ProductSeed.TOTAL_PRODUCT_COUNT);
+      result.OrderBy(x => x).First().Should().Be(ProductSeed.VALID_PRODUCT_NAME);
+    }
   }
 }
