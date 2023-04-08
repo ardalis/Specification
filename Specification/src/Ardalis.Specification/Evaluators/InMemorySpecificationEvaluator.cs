@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -30,11 +31,14 @@ namespace Ardalis.Specification
 
     public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)
     {
-      _ = specification.Selector ?? throw new SelectorNotFoundException();
+      if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
+      if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
 
       var baseQuery = Evaluate(source, (ISpecification<T>)specification);
 
-      var resultQuery = baseQuery.Select(specification.Selector.Compile());
+      var resultQuery = specification.Selector != null
+        ? baseQuery.Select(specification.Selector.Compile())
+        : baseQuery.SelectMany(specification.SelectorMany!.Compile());
 
       return specification.PostProcessingAction == null
           ? resultQuery

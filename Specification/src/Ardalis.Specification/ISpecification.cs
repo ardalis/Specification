@@ -15,9 +15,14 @@ namespace Ardalis.Specification
     ISpecificationBuilder<T, TResult> Query { get; }
 
     /// <summary>
-    /// The transform function to apply to the <typeparamref name="T"/> element.
+    /// The Select transform function to apply to the <typeparamref name="T"/> element.
     /// </summary>
     Expression<Func<T, TResult>>? Selector { get; }
+
+    /// <summary>
+    /// The SelectMany transform function to apply to the <typeparamref name="T"/> element.
+    /// </summary>
+    Expression<Func<T, IEnumerable<TResult>>>? SelectorMany { get; }
 
     /// <summary>
     /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T, TResult}"/>.

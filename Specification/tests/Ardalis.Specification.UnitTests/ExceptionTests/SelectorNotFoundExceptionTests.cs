@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentAssertions;
 using Xunit;
 
@@ -8,7 +6,7 @@ namespace Ardalis.Specification.UnitTests
 {
   public class SelectorNotFoundExceptionTests
   {
-    private const string defaultMessage = "The specification must have Selector defined.";
+    private const string defaultMessage = "The specification must have a selector transform defined. Ensure either Select() or SelectMany() is used in the specification!";
 
     [Fact]
     public void ThrowWithDefaultConstructor()

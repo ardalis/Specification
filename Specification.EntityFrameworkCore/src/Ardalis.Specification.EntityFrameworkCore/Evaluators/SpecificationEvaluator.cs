@@ -47,11 +47,14 @@ namespace Ardalis.Specification.EntityFrameworkCore
     public virtual IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> query, ISpecification<T, TResult> specification) where T : class
     {
       if (specification is null) throw new ArgumentNullException("Specification is required");
-      if (specification.Selector is null) throw new SelectorNotFoundException();
+      if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
+      if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
 
       query = GetQuery(query, (ISpecification<T>)specification);
 
-      return query.Select(specification.Selector);
+      return specification.Selector is not null
+        ? query.Select(specification.Selector)
+        : query.SelectMany(specification.SelectorMany!);
     }
 
     /// <inheritdoc/>
