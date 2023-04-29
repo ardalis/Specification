@@ -94,7 +94,10 @@ Also make sure that the base class of your Specification using `Select` is a `Sp
 
 See the [doc page](../features/select.md) on `Select` for a more detailed explanation.
 
-
 ## Which versions of EF and EF Core can I use?
 
-Ardalis.Specification sets the minimum required version only. (EF Core 6.0.6 and EF 6.4.4) But you are free to explicity install higher versions if you like.
+Ardalis.Specification by default sets the minimum required version.
+
+Which is: `EF Core 6.0.6` and `EF 6.4.4`.
+
+But you are free to explicitly set higher versions if you like.
