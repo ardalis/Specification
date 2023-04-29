@@ -39,3 +39,8 @@ Read the [Getting Started section](getting-started/). You can also [review the s
 ## Docs theme notes
 
 This docs site is using the [Just the Docs theme](https://just-the-docs.github.io/just-the-docs/). Details on how to configure its metadata and navigation can be found [here](https://just-the-docs.github.io/just-the-docs/docs/navigation-structure/).
+
+## Frequently Asked Questions (FAQ)
+
+Q. Which versions of EF and EF Core can I use? <br>
+A. Ardalis.Specification sets the minimum required version only. (EF Core 6.0.6 and EF 6.4.4) But you are free to explicity install higher versions if you like.
