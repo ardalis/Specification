@@ -93,3 +93,11 @@ In this case, each element x is being "transformed" into its `Name` property.
 Also make sure that the base class of your Specification using `Select` is a `Specification<T, TReturn>`.
 
 See the [doc page](../features/select.md) on `Select` for a more detailed explanation.
+
+## Which versions of EF and EF Core can I use?
+
+Ardalis.Specification by default sets the minimum required version.
+
+Which is: `EF Core 6.0.6` and `EF 6.4.4`.
+
+But you are free to explicitly set higher versions if you like.
