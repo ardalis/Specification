@@ -130,6 +130,13 @@ namespace Ardalis.Specification.EntityFrameworkCore
     }
 
     /// <inheritdoc/>
+    public IAsyncEnumerable<TEntity> AsAsyncEnumerable(ISpecification<TEntity> specification)
+    {
+      using var dbContext = this.dbContextFactory.CreateDbContext();
+      return ApplySpecification(specification, dbContext).AsAsyncEnumerable();
+    }
+
+    /// <inheritdoc/>
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
       await using var dbContext = this.dbContextFactory.CreateDbContext();

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -34,20 +34,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-	    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
-	    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
-    </ItemGroup>
-	
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.13" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
   </ItemGroup>
 
   <ItemGroup>

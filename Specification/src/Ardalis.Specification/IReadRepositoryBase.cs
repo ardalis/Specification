@@ -168,7 +168,7 @@ namespace Ardalis.Specification
     Task<bool> AnyAsync(CancellationToken cancellationToken = default);
 
 
-#if !NETSTANDARD2_0
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
     /// <paramref name="specification"/>, from the database.
