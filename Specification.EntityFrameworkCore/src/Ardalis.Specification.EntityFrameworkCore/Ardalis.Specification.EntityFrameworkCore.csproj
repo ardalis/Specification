@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
