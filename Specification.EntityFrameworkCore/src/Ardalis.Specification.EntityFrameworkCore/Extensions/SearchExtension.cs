@@ -42,12 +42,15 @@ namespace Ardalis.Specification.EntityFrameworkCore
         var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter) as LambdaExpression;
         _ = propertySelector ?? throw new InvalidExpressionException();
 
+        // Create a closure
+        var searchTermAsExpression = ((Expression<Func<string>>)(() => criteria.SearchTerm)).Body;
+
         var likeExpression = Expression.Call(
                                 null,
                                 LikeMethodInfo,
                                 Functions,
                                 propertySelector.Body,
-                                Expression.Constant(criteria.SearchTerm));
+                                searchTermAsExpression);
 
         expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
       }
