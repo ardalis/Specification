@@ -10,11 +10,11 @@ namespace Ardalis.Specification.EntityFramework6
     // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
     public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
 
-    private readonly List<IEvaluator> evaluators = new List<IEvaluator>();
+    protected List<IEvaluator> Evaluators { get; } = new List<IEvaluator>();
 
     public SpecificationEvaluator()
     {
-      this.evaluators.AddRange(new IEvaluator[]
+      this.Evaluators.AddRange(new IEvaluator[]
       {
                 WhereEvaluator.Instance,
                 SearchEvaluator.Instance,
@@ -26,7 +26,7 @@ namespace Ardalis.Specification.EntityFramework6
     }
     public SpecificationEvaluator(IEnumerable<IEvaluator> evaluators)
     {
-      this.evaluators.AddRange(evaluators);
+      this.Evaluators.AddRange(evaluators);
     }
 
     /// <inheritdoc/>
@@ -48,7 +48,7 @@ namespace Ardalis.Specification.EntityFramework6
     {
       if (specification is null) throw new ArgumentNullException("Specification is required");
 
-      var evaluators = evaluateCriteriaOnly ? this.evaluators.Where(x => x.IsCriteriaEvaluator) : this.evaluators;
+      var evaluators = evaluateCriteriaOnly ? this.Evaluators.Where(x => x.IsCriteriaEvaluator) : this.Evaluators;
 
       foreach (var evaluator in evaluators)
       {

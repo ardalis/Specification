@@ -12,11 +12,11 @@ namespace Ardalis.Specification
     // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
     public static InMemorySpecificationEvaluator Default { get; } = new InMemorySpecificationEvaluator();
 
-    private readonly List<IInMemoryEvaluator> evaluators = new List<IInMemoryEvaluator>();
+    protected List<IInMemoryEvaluator> Evaluators { get; } = new List<IInMemoryEvaluator>();
 
     public InMemorySpecificationEvaluator()
     {
-      this.evaluators.AddRange(new IInMemoryEvaluator[]
+      this.Evaluators.AddRange(new IInMemoryEvaluator[]
       {
                 WhereEvaluator.Instance,
                 SearchEvaluator.Instance,
@@ -26,7 +26,7 @@ namespace Ardalis.Specification
     }
     public InMemorySpecificationEvaluator(IEnumerable<IInMemoryEvaluator> evaluators)
     {
-      this.evaluators.AddRange(evaluators);
+      this.Evaluators.AddRange(evaluators);
     }
 
     public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)
@@ -47,7 +47,7 @@ namespace Ardalis.Specification
 
     public virtual IEnumerable<T> Evaluate<T>(IEnumerable<T> source, ISpecification<T> specification)
     {
-      foreach (var evaluator in evaluators)
+      foreach (var evaluator in Evaluators)
       {
         source = evaluator.Evaluate(source, specification);
       }
