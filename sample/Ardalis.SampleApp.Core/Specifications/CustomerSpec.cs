@@ -4,6 +4,9 @@ using Ardalis.Specification;
 
 namespace Ardalis.SampleApp.Core.Specifications
 {
+  /// <summary>
+  /// This specification expects 0 to many results
+  /// </summary>
   public class CustomerSpec : Specification<Customer>
   {
     public CustomerSpec(CustomerFilter filter)

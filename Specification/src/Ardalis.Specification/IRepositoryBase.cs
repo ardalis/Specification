@@ -18,6 +18,7 @@ namespace Ardalis.Specification
     /// Adds an entity in the database.
     /// </summary>
     /// <param name="entity">The entity to add.</param>
+    /// <param name="cancellationToken"></param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />.
