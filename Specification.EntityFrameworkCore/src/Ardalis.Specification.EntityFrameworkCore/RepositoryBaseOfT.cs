@@ -176,7 +176,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// <inheritdoc/>
     public virtual IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification)
     {
-      return ApplySpecification(specification, true).AsAsyncEnumerable();
+      return ApplySpecification(specification).AsAsyncEnumerable();
     }
 
     /// <summary>

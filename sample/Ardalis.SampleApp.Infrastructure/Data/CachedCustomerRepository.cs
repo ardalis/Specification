@@ -30,6 +30,12 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
+  public virtual IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification)
+  {
+    return _sourceRepository.AsAsyncEnumerable(specification);
+  }
+
+  /// <inheritdoc/>
   public Task<bool> AnyAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     // TODO: Add Caching
