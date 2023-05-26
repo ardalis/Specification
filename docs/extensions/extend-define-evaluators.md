@@ -40,6 +40,24 @@ public class MySpecificationEvaluator : SpecificationEvaluator
 }
 ```
 
+To use the evaluator, you would pass it into your repository implementation's constructor:
+
+```csharp
+public class Repository<T> : RepositoryBase<T>, IRepository<T> where T : class
+{
+  public Repository(AppDbContext dbContext) 
+    : base(dbContext, MySpecificationEvaluator.Instance)
+  {
+  }
+}
+```
+
+Of course you would also need to register the service in `Program.cs`:
+
+```csharp
+builder.Services.AddScoped<ISpecificationEvaluator, MySpecificationEvaluator>();
+```
+
 ## References
 
 - [Enabled by PR 328](https://github.com/ardalis/Specification/pull/328)
