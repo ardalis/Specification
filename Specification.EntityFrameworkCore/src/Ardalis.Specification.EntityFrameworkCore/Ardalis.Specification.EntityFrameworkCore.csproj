@@ -5,23 +5,26 @@
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Steve Smith (@ardalis); Scott DePouw; Fati Iseni (@fiseni)</Authors>
+    <Authors>Steve Smith (@ardalis); Fati Iseni (@fiseni); Scott DePouw</Authors>
     <Company>Ardalis.com</Company>
     <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
     <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
-    <Version>6.1.0</Version>
+    <Version>7.0.0</Version>
     <PackageReleaseNotes>
-        - Added `AddRangeAsync`. [PR 239](https://github.com/ardalis/Specification/pull/239)
-        - Added dictionary as arbitrary state for specifications. [PR 248](https://github.com/ardalis/Specification/pull/248)
-        - Added support for updating specifications. [PR 251](https://github.com/ardalis/Specification/pull/251)
-        - Updated base specifications as non-abstract classes. [PR 252](https://github.com/ardalis/Specification/pull/252)
-        - Update the infrastructure for single result specifications. [PR 272](https://github.com/ardalis/Specification/pull/272)
-        - Added `UpdateRangeAsync`. [PR 272](https://github.com/ardalis/Specification/pull/272)
-        - Add WithSpecification overload for specifications with Select. [PR 273](https://github.com/ardalis/Specification/pull/273)
-    </PackageReleaseNotes>
+    * Patch 2 by @davidhenley in https://github.com/ardalis/Specification/pull/283
+    * Fix `Just the Docs` link in docs home page by @snowfrogdev in https://github.com/ardalis/Specification/pull/293
+    * Update url path by @ta1H3n in https://github.com/ardalis/Specification/pull/303
+    * Implement SelectMany support by @amdavie in https://github.com/ardalis/Specification/pull/320
+    * Add two methods for consuming repositories in scenarios where repositories could be longer lived (e.g. Blazor component Injections) by @jasonsummers in https://github.com/ardalis/Specification/pull/289
+    * Added support for AsAsyncEnumerable by @nkz-soft in https://github.com/ardalis/Specification/pull/316
+    * Lamadelrae/doc faq ef versions by @Lamadelrae in https://github.com/ardalis/Specification/pull/324
+    * Updated projects, drop support for old TFMs. by @fiseni in https://github.com/ardalis/Specification/pull/326
+    * Update the search feature to generate parameterized query. by @fiseni in https://github.com/ardalis/Specification/pull/327
+    * Add support for extending default evaluator list by @fiseni in https://github.com/ardalis/Specification/pull/328
+    * Ardalis/cleanup by @ardalis in https://github.com/ardalis/Specification/pull/332    </PackageReleaseNotes>
     <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageIcon>icon.png</PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
