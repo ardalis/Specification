@@ -18,11 +18,11 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// </summary>
     public static SpecificationEvaluator Cached { get; } = new SpecificationEvaluator(true);
 
-    private readonly List<IEvaluator> evaluators = new List<IEvaluator>();
+    protected List<IEvaluator> Evaluators { get; } = new List<IEvaluator>();
 
     public SpecificationEvaluator(bool cacheEnabled = false)
     {
-      this.evaluators.AddRange(new IEvaluator[]
+      this.Evaluators.AddRange(new IEvaluator[]
       {
                 WhereEvaluator.Instance,
                 SearchEvaluator.Instance,
@@ -40,7 +40,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
     public SpecificationEvaluator(IEnumerable<IEvaluator> evaluators)
     {
-      this.evaluators.AddRange(evaluators);
+      this.Evaluators.AddRange(evaluators);
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     {
       if (specification is null) throw new ArgumentNullException("Specification is required");
 
-      var evaluators = evaluateCriteriaOnly ? this.evaluators.Where(x => x.IsCriteriaEvaluator) : this.evaluators;
+      var evaluators = evaluateCriteriaOnly ? this.Evaluators.Where(x => x.IsCriteriaEvaluator) : this.Evaluators;
 
       foreach (var evaluator in evaluators)
       {
