@@ -76,7 +76,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+  public Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     if (specification.CacheEnabled)
     {
@@ -86,22 +86,16 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
       {
         entry.SetOptions(_cacheOptions);
         _logger.LogWarning("Fetching source data for " + key);
-        return _sourceRepository.GetBySpecAsync(specification, cancellationToken);
+        return _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
       });
     }
-    return _sourceRepository.GetBySpecAsync(specification, cancellationToken);
+    return _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public Task<TResult> GetBySpecAsync<TResult>(Specification.ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  public Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
   {
     throw new NotImplementedException();
-  }
-
-  /// <inheritdoc/>
-  public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
-  {
-    return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
   }
 
   /// <inheritdoc/>
@@ -134,7 +128,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<List<T>> ListAsync(Specification.ISpecification<T> specification, CancellationToken cancellationToken = default)
+  public Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     if (specification.CacheEnabled)
     {
@@ -151,7 +145,13 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<List<TResult>> ListAsync<TResult>(Specification.ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  public Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <inheritdoc/>
+  public Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     throw new NotImplementedException();
   }

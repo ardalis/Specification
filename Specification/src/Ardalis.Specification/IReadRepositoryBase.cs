@@ -19,6 +19,7 @@ namespace Ardalis.Specification
     /// </summary>
     /// <typeparam name="TId">The type of primary key.</typeparam>
     /// <param name="id">The value of the primary key for the entity to be found.</param>
+    /// <param name="cancellationToken"></param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
