@@ -29,31 +29,30 @@ Base class with tests for adding specifications to a DDD model. Also includes a 
 
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
 
-## Version 6 Release Notes
+## Version 7 Releast Notes
 
-### Breaking changes
+Version 7 is now available on NuGet.org! We have had a lot of confusion about the need to have the version of Ardalis.Specification (and/or the EF6/EFCore packages) match the consuming project's version of .NET. We intend to version this package more frequently in the near future to make it clear that it need not match.
 
-- Improve in-memory evaluation performance. [#182](https://github.com/ardalis/Specification/issues/182). <strong>Breaking Changes:</strong> The specification state for `Where`, `Order`, and `Search` expressions is stored in separate types.
+### Breaking Changes
 
-- Remove `Paginate` builder action. <strong>Breaking Change</strong> (It was marked as obsolete since version 4). [Issue #189](https://github.com/ardalis/Specification/issues/189)
+* Updated projects, drop support for old TFMs. by @fiseni in https://github.com/ardalis/Specification/pull/326
 
 ### Other updates
 
-- Add support for `AnyAsync` in the base repository. [#180](https://github.com/ardalis/Specification/issues/180)
+* Patch 2 by @davidhenley in https://github.com/ardalis/Specification/pull/283
+* Fix `Just the Docs` link in docs home page by @snowfrogdev in https://github.com/ardalis/Specification/pull/293
+* Update url path by @ta1H3n in https://github.com/ardalis/Specification/pull/303
+* Implement SelectMany support by @amdavie in https://github.com/ardalis/Specification/pull/320
+* Add two methods for consuming repositories in scenarios where repositories could be longer lived (e.g. Blazor component Injections) by @jasonsummers in https://github.com/ardalis/Specification/pull/289
+* Added support for AsAsyncEnumerable by @nkz-soft in https://github.com/ardalis/Specification/pull/316
+* Lamadelrae/doc faq ef versions by @Lamadelrae in https://github.com/ardalis/Specification/pull/324
+* Update the search feature to generate parameterized query. by @fiseni in https://github.com/ardalis/Specification/pull/327
+* Add support for extending default evaluator list by @fiseni in https://github.com/ardalis/Specification/pull/328
+* Ardalis/cleanup by @ardalis in https://github.com/ardalis/Specification/pull/332
 
-- Add SQL Like implementation for the in-memory evaluator. [#150](https://github.com/ardalis/Specification/issues/150)
+## Version 6 Release Notes
 
-- Add support for IgnoreQueryFilters. [#159 ](https://github.com/ardalis/Specification/issues/159)
-
-- Return `Task<int>` from SaveChangesAsync. [#174 ](https://github.com/ardalis/Specification/issues/174)
-
-- Add support for `condition` in the specification builder methods. [#143](https://github.com/ardalis/Specification/issues/143)
-
-- Improve `Include` evaluation performance by implementing caching (opt-in feature). [Issue #187](https://github.com/ardalis/Specification/issues/187)
-
-- Implement infrastructure for specification validators. [Issue #111](https://github.com/ardalis/Specification/issues/111)
-
-- `GetBySpecAsync` and similar methods are marked obsolete; prefer `FirstOrDefault` or `SingleOrDefault` instead.
+See [Releases](https://github.com/ardalis/Specification/releases/tag/v6.1.0)
 
 ## Sample Usage
 
