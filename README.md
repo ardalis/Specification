@@ -29,7 +29,7 @@ Base class with tests for adding specifications to a DDD model. Also includes a 
 
 🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
 
-## Version 7 Releast Notes
+## Version 7 Release Notes
 
 Version 7 is now available on NuGet.org! We have had a lot of confusion about the need to have the version of Ardalis.Specification (and/or the EF6/EFCore packages) match the consuming project's version of .NET. We intend to version this package more frequently in the near future to make it clear that it need not match.
 
