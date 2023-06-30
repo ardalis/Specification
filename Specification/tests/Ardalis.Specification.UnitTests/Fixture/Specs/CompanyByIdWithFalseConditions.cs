@@ -20,6 +20,7 @@ namespace Ardalis.Specification.UnitTests.Fixture.Specs
           .Skip(10, false)
           .AsNoTracking(false)
           .AsNoTrackingWithIdentityResolution(false)
+          .AsTracking(false)
           .AsSplitQuery(false)
           .IgnoreQueryFilters(false)
           .Search(x => x.Name!, "asd", false)

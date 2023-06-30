@@ -396,6 +396,42 @@ namespace Ardalis.Specification
 
       return specificationBuilder;
     }
+    
+    /// <summary>
+    /// If the entity instances are modified, this will be detected
+    /// by the change tracker.
+    /// </summary>
+    /// <param name="specificationBuilder"></param>
+    /// <remarks>
+    /// This feature only available for EF Core 3.0 and newer.
+    /// For more info: https://learn.microsoft.com/zh-cn/ef/core/querying/tracking#tracking-queries
+    /// </remarks>
+    public static ISpecificationBuilder<T> AsTracking<T>(
+      this ISpecificationBuilder<T> specificationBuilder) where T : class
+      => AsTracking(specificationBuilder, true);
+
+    /// <summary>
+    /// If the entity instances are modified, this will be detected
+    /// by the change tracker.
+    /// </summary>
+    /// <param name="specificationBuilder"></param>
+    /// <param name="condition">If false, the setting will be discarded.</param>
+    /// <remarks>
+    /// This feature only available for EF Core 3.0 and newer.
+    /// For more info: https://learn.microsoft.com/zh-cn/ef/core/querying/tracking#tracking-queries
+    /// </remarks>
+    public static ISpecificationBuilder<T> AsTracking<T>(
+      this ISpecificationBuilder<T> specificationBuilder,
+      bool condition) where T : class
+    {
+      if (condition)
+      {
+        specificationBuilder.Specification.AsNoTracking = false;
+        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
+      }
+
+      return specificationBuilder;
+    }
 
     /// <summary>
     /// The generated sql query will be split into multiple SQL queries

@@ -11,7 +11,7 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
     {
       var spec = new StoreEmptySpec();
 
-      spec.AsNoTrackingWithIdentityResolution.Should().Be(false);
+      spec.AsNoTrackingWithIdentityResolution.Should().Be(null);
     }
 
     [Fact]
@@ -19,13 +19,21 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
     {
       var spec = new CompanyByIdWithFalseConditions(1);
 
-      spec.AsNoTrackingWithIdentityResolution.Should().Be(false);
+      spec.AsNoTrackingWithIdentityResolution.Should().Be(null);
     }
 
     [Fact]
     public void FlagsAsNoTracking_GivenSpecWithAsNoTrackingWithIdentityResolution()
     {
       var spec = new CompanyByIdAsUntrackedWithIdentityResolutionSpec(1);
+
+      spec.AsNoTrackingWithIdentityResolution.Should().Be(true);
+    }
+
+    [Fact]
+    void FlagsAsNoTracking_GivenSpecWithAsTrackingAndEndWithAsNoTrackingWithIdentityResolution()
+    {
+      var spec = new CompanyByIdWithAsTrackingAsUntrackedWithIdentityResolutionSpec(1);
 
       spec.AsNoTrackingWithIdentityResolution.Should().Be(true);
     }

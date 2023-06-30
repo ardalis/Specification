@@ -30,6 +30,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
                 OrderEvaluator.Instance,
                 PaginationEvaluator.Instance,
                 AsNoTrackingEvaluator.Instance,
+                AsTrackingEvaluator.Instance,
                 IgnoreQueryFiltersEvaluator.Instance,
 #if !NETSTANDARD2_0
                 AsSplitQueryEvaluator.Instance,

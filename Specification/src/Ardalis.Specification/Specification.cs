@@ -109,13 +109,13 @@ namespace Ardalis.Specification
     public bool CacheEnabled { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsNoTracking { get; internal set; } = false;
+    public bool? AsNoTracking { get; internal set; }
 
     /// <inheritdoc/>
     public bool AsSplitQuery { get; internal set; } = false;
 
     /// <inheritdoc/>
-    public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
+    public bool? AsNoTrackingWithIdentityResolution { get; internal set; }
 
     /// <inheritdoc/>
     public bool IgnoreQueryFilters { get; internal set; } = false;

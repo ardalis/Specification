@@ -12,7 +12,7 @@ namespace Ardalis.Specification.EntityFramework6
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-      if (specification.AsNoTracking)
+      if (specification.AsNoTracking == true)
       {
         query = query.AsNoTracking();
       }
