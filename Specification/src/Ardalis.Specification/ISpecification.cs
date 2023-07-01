@@ -102,7 +102,7 @@ namespace Ardalis.Specification
     /// that are returned. When true, if the entity instances are modified, this will not be detected
     /// by the change tracker.
     /// </summary>
-    bool? AsNoTracking { get; }
+    bool AsNoTracking { get; }
 
     /// <summary>
     /// Returns whether or not the generated sql query should be split into multiple SQL queries
@@ -121,7 +121,7 @@ namespace Ardalis.Specification
     /// <remarks>
     /// for more info: https://docs.microsoft.com/en-us/ef/core/change-tracking/identity-resolution#identity-resolution-and-queries
     /// </remarks>
-    bool? AsNoTrackingWithIdentityResolution { get; }
+    bool AsNoTrackingWithIdentityResolution { get; }
 
     /// <summary>
     /// Returns whether or not the query should ignore the defined global query filters 
@@ -130,6 +130,11 @@ namespace Ardalis.Specification
     /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
     /// </remarks>
     bool IgnoreQueryFilters { get; }
+    
+    /// <summary>
+    /// Returns true when tracking behavior is changed
+    /// </summary>
+    bool TrackingFlag { get; }
 
     /// <summary>
     /// Applies the query defined within the specification to the given objects.

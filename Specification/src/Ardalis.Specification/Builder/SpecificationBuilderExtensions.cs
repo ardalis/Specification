@@ -392,6 +392,7 @@ namespace Ardalis.Specification
       if (condition)
       {
         specificationBuilder.Specification.AsNoTracking = true;
+        specificationBuilder.Specification.TrackingFlag = true;
       }
 
       return specificationBuilder;
@@ -428,6 +429,7 @@ namespace Ardalis.Specification
       {
         specificationBuilder.Specification.AsNoTracking = false;
         specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
+        specificationBuilder.Specification.TrackingFlag = true;
       }
 
       return specificationBuilder;
@@ -500,6 +502,7 @@ namespace Ardalis.Specification
       if (condition)
       {
         specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
+        specificationBuilder.Specification.TrackingFlag = true;
       }
 
       return specificationBuilder;
