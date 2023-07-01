@@ -371,6 +371,33 @@ namespace Ardalis.Specification
     }
 
     /// <summary>
+    /// If the entity instances are modified, this will be detected
+    /// by the change tracker.
+    /// </summary>
+    /// <param name="specificationBuilder"></param>
+    public static ISpecificationBuilder<T> AsTracking<T>(
+        this ISpecificationBuilder<T> specificationBuilder) where T : class
+        => AsTracking(specificationBuilder, true);
+
+    /// <summary>
+    /// If the entity instances are modified, this will be detected
+    /// by the change tracker.
+    /// </summary>
+    /// <param name="specificationBuilder"></param>
+    /// <param name="condition">If false, the setting will be discarded.</param>
+    public static ISpecificationBuilder<T> AsTracking<T>(
+        this ISpecificationBuilder<T> specificationBuilder,
+        bool condition) where T : class
+    {
+      if (condition)
+      {
+        specificationBuilder.Specification.AsTracking = true;
+      }
+
+      return specificationBuilder;
+    }
+
+    /// <summary>
     /// If the entity instances are modified, this will not be detected
     /// by the change tracker.
     /// </summary>

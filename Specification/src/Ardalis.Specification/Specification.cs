@@ -109,6 +109,9 @@ namespace Ardalis.Specification
     public bool CacheEnabled { get; internal set; }
 
     /// <inheritdoc/>
+    public bool AsTracking { get; internal set; } = false;
+
+    /// <inheritdoc/>
     public bool AsNoTracking { get; internal set; } = false;
 
     /// <inheritdoc/>
