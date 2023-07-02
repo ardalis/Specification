@@ -391,6 +391,8 @@ namespace Ardalis.Specification
     {
       if (condition)
       {
+        specificationBuilder.Specification.AsNoTracking = false;
+        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
         specificationBuilder.Specification.AsTracking = true;
       }
 
@@ -418,6 +420,8 @@ namespace Ardalis.Specification
     {
       if (condition)
       {
+        specificationBuilder.Specification.AsTracking = false;
+        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
         specificationBuilder.Specification.AsNoTracking = true;
       }
 
@@ -490,6 +494,8 @@ namespace Ardalis.Specification
     {
       if (condition)
       {
+        specificationBuilder.Specification.AsTracking = false;
+        specificationBuilder.Specification.AsNoTracking = false;
         specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
       }
 
