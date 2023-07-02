@@ -15,7 +15,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-      if (specification is { TrackingFlag: true, AsNoTracking: true })
+      if (specification.AsNoTracking)
       {
         query = query.AsNoTracking();
       }

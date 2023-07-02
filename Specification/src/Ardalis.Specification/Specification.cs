@@ -109,18 +109,33 @@ namespace Ardalis.Specification
     public bool CacheEnabled { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsNoTracking { get; internal set; }
+    public bool AsNoTracking => TrackingFlag && NoTrackingFlag;
 
     /// <inheritdoc/>
     public bool AsSplitQuery { get; internal set; } = false;
 
     /// <inheritdoc/>
-    public bool AsNoTrackingWithIdentityResolution { get; internal set; }
+    public bool AsNoTrackingWithIdentityResolution => TrackingFlag && NoTrackingWithIdentityResolutionFlag;
 
     /// <inheritdoc/>
     public bool IgnoreQueryFilters { get; internal set; } = false;
     
     /// <inheritdoc/>
-    public bool TrackingFlag { get;  internal set;}
+    public bool AsTracking => TrackingFlag && !NoTrackingFlag && !NoTrackingWithIdentityResolutionFlag;
+    
+    /// <summary>
+    /// Returns true when tracking behavior is changed
+    /// </summary>
+    internal bool TrackingFlag { get; set;}
+    
+    /// <summary>
+    /// Returns true when as no tracking
+    /// </summary>
+    internal bool NoTrackingFlag { get; set;}
+    
+    /// <summary>
+    /// Returns true when as no tracking with identity resolution
+    /// </summary>
+    internal bool NoTrackingWithIdentityResolutionFlag { get; set;}
   }
 }

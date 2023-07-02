@@ -16,7 +16,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
     /// <inheritdoc />
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class =>
-      specification is { TrackingFlag: true, AsNoTracking: false, AsNoTrackingWithIdentityResolution: false }
+      specification.AsTracking
         ? query.AsTracking()
         : query;
   }

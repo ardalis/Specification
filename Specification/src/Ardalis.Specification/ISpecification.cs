@@ -132,9 +132,11 @@ namespace Ardalis.Specification
     bool IgnoreQueryFilters { get; }
     
     /// <summary>
-    /// Returns true when tracking behavior is changed
+    /// Returns whether or not the change tracker will track any of the entities
+    /// that are returned. When true, if the entity instances are modified, this will be detected
+    /// by the change tracker.
     /// </summary>
-    bool TrackingFlag { get; }
+    bool AsTracking { get; }
 
     /// <summary>
     /// Applies the query defined within the specification to the given objects.
