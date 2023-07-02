@@ -29,5 +29,13 @@ namespace Ardalis.Specification.UnitTests.BuilderTests
 
       spec.AsNoTracking.Should().Be(true);
     }
+
+    [Fact]
+    public void FlagsAsNoTracking_GivenSpecWithAsTrackingAndEndWithAsNoTracking()
+    {
+      var spec = new CompanyByIdWithAsTrackingAsUntrackedSpec(1);
+
+      spec.AsNoTracking.Should().Be(true);
+    }
   }
 }
