@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// Encapsulates data needed to build Include/ThenInclude query.
+/// </summary>
+public class IncludeExpressionInfo
 {
-  /// <summary>
-  /// Encapsulates data needed to build Include/ThenInclude query.
-  /// </summary>
-  public class IncludeExpressionInfo
-  {
     /// <summary>
     /// If <see cref="Type" /> is <see cref="IncludeTypeEnum.Include" />, represents a related entity that should be included.<para />
     /// If <see cref="Type" /> is <see cref="IncludeTypeEnum.ThenInclude" />, represents a related entity that should be included as part of the previously included entity.
@@ -41,20 +41,20 @@ namespace Ardalis.Specification
                                   IncludeTypeEnum includeType)
 
     {
-      _ = expression ?? throw new ArgumentNullException(nameof(expression));
-      _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-      _ = propertyType ?? throw new ArgumentNullException(nameof(propertyType));
+        _ = expression ?? throw new ArgumentNullException(nameof(expression));
+        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
+        _ = propertyType ?? throw new ArgumentNullException(nameof(propertyType));
 
-      if (includeType == IncludeTypeEnum.ThenInclude)
-      {
-        _ = previousPropertyType ?? throw new ArgumentNullException(nameof(previousPropertyType));
-      }
+        if (includeType == IncludeTypeEnum.ThenInclude)
+        {
+            _ = previousPropertyType ?? throw new ArgumentNullException(nameof(previousPropertyType));
+        }
 
-      this.LambdaExpression = expression;
-      this.EntityType = entityType;
-      this.PropertyType = propertyType;
-      this.PreviousPropertyType = previousPropertyType;
-      this.Type = includeType;
+        LambdaExpression = expression;
+        EntityType = entityType;
+        PropertyType = propertyType;
+        PreviousPropertyType = previousPropertyType;
+        Type = includeType;
     }
 
     /// <summary>
@@ -86,5 +86,4 @@ namespace Ardalis.Specification
         : this(expression, entityType, propertyType, previousPropertyType, IncludeTypeEnum.ThenInclude)
     {
     }
-  }
 }

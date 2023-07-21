@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using Xunit;
 
-namespace Ardalis.Specification.UnitTests
+namespace Ardalis.Specification.UnitTests;
+
+public class InvalidSearchPatternExceptionTests
 {
-  public class InvalidSearchPatternExceptionTests
-  {
-    private const string defaultMessage = "Invalid search pattern: " + pattern;
-    private const string pattern = "x";
+    private const string _defaultMessage = "Invalid search pattern: " + _pattern;
+    private const string _pattern = "x";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-      Action action = () => throw new InvalidSearchPatternException(pattern);
+        Action action = () => throw new InvalidSearchPatternException(_pattern);
 
-      action.Should().Throw<InvalidSearchPatternException>(pattern).WithMessage(defaultMessage);
+        action.Should().Throw<InvalidSearchPatternException>(_pattern).WithMessage(_defaultMessage);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
-      Exception inner = new Exception("test");
-      Action action = () => throw new InvalidSearchPatternException(pattern, inner);
+        var inner = new Exception("test");
+        Action action = () => throw new InvalidSearchPatternException(_pattern, inner);
 
-      action.Should().Throw<InvalidSearchPatternException>(pattern).WithMessage(defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        action.Should().Throw<InvalidSearchPatternException>(_pattern).WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
     }
-  }
 }

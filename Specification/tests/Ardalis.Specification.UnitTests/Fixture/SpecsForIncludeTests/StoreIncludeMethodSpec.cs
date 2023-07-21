@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
+﻿namespace Ardalis.Specification.UnitTests.Fixture.Specs;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Specs
+public class StoreIncludeMethodSpec : Specification<Store>
 {
-  public class StoreIncludeMethodSpec : Specification<Store>
-  {
     public StoreIncludeMethodSpec()
     {
-      Query.Include(x => x.GetSomethingFromStore());
+        Query.Include(x => Store.GetSomethingFromStore());
     }
-  }
 }

@@ -25,8 +25,8 @@ jobs:
     - name: Setup dotnet
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
-    - name: Build with dotnet 6
+        dotnet-version: 7.0.x
+    - name: Build with dotnet 7
       run: |
         dotnet build Specification/src/Ardalis.Specification/Ardalis.Specification.csproj --configuration Release
         dotnet build Specification/tests/Ardalis.Specification.UnitTests/Ardalis.Specification.UnitTests.csproj --configuration Release

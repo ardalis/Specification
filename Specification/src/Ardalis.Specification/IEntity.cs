@@ -1,7 +1,6 @@
-﻿namespace Ardalis.Specification
+﻿namespace Ardalis.Specification;
+
+public interface IEntity<TId>
 {
-  public interface IEntity<TId>
-  {
     TId Id { get; set; }
-  }
 }

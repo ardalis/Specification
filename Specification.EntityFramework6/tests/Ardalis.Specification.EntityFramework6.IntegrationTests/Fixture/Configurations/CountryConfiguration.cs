@@ -1,14 +1,13 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using Ardalis.Specification.UnitTests.Fixture.Entities;
+﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
+using System.Data.Entity.ModelConfiguration;
 
-namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture.Configurations
+namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture.Configurations;
+
+public class CountryConfiguration : EntityTypeConfiguration<Country>
 {
-  public class CountryConfiguration : EntityTypeConfiguration<Country>
-  {
     public CountryConfiguration()
     {
-      ToTable("Country");
-      HasKey(c => c.Id);
+        ToTable("Country");
+        HasKey(c => c.Id);
     }
-  }
 }

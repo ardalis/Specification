@@ -1,13 +1,10 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
+﻿namespace Ardalis.Specification.UnitTests.Fixture.Specs;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Specs
+public class StoreByIdAndNameSpec : Specification<Store>
 {
-  public class StoreByIdAndNameSpec : Specification<Store>
-  {
-    public StoreByIdAndNameSpec(int Id, string name)
+    public StoreByIdAndNameSpec(int id, string name)
     {
-      Query.Where(x => x.Id == Id)
-          .Where(x => x.Name == name);
+        Query.Where(x => x.Id == id)
+            .Where(x => x.Name == name);
     }
-  }
 }

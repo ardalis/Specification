@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Entities
+namespace Ardalis.Specification.UnitTests.Fixture.Entities;
+
+public class Store
 {
-  public class Store
-  {
     public int Id { get; set; }
     public string? Name { get; set; }
     public string? City { get; set; }
@@ -16,9 +16,8 @@ namespace Ardalis.Specification.UnitTests.Fixture.Entities
 
     public List<Product> Products { get; set; } = new List<Product>();
 
-    public object GetSomethingFromStore()
+    public static object GetSomethingFromStore()
     {
-      return new object();
+        return new object();
     }
-  }
 }

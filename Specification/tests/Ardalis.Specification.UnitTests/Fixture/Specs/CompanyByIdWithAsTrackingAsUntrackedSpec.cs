@@ -1,12 +1,9 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
+﻿namespace Ardalis.Specification.UnitTests.Fixture.Specs;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Specs
+public class CompanyByIdWithAsTrackingAsUntrackedSpec : Specification<Company>, ISingleResultSpecification<Company>
 {
-  public class CompanyByIdWithAsTrackingAsUntrackedSpec : Specification<Company>, ISingleResultSpecification<Company>
-  {
     public CompanyByIdWithAsTrackingAsUntrackedSpec(int id)
     {
-      Query.Where(company => company.Id == id).AsTracking().AsNoTracking();
+        Query.Where(company => company.Id == id).AsTracking().AsNoTracking();
     }
-  }
 }

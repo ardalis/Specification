@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 
-namespace Ardalis.Specification.EntityFramework6
+namespace Ardalis.Specification.EntityFramework6;
+
+public class IncludeEvaluator : IEvaluator
 {
-  public class IncludeEvaluator : IEvaluator
-  {
     private IncludeEvaluator() { }
     public static IncludeEvaluator Instance { get; } = new IncludeEvaluator();
 
@@ -12,24 +12,23 @@ namespace Ardalis.Specification.EntityFramework6
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-      foreach (var includeString in specification.IncludeStrings)
-      {
-        query = query.Include(includeString);
-      }
-
-      foreach (var includeInfo in specification.IncludeExpressions)
-      {
-        if (includeInfo.Type == IncludeTypeEnum.Include)
+        foreach (var includeString in specification.IncludeStrings)
         {
-          query = query.Include(includeInfo);
+            query = query.Include(includeString);
         }
-        else if (includeInfo.Type == IncludeTypeEnum.ThenInclude)
-        {
-          query = query.ThenInclude(includeInfo);
-        }
-      }
 
-      return query;
+        foreach (var includeInfo in specification.IncludeExpressions)
+        {
+            if (includeInfo.Type == IncludeTypeEnum.Include)
+            {
+                query = query.Include(includeInfo);
+            }
+            else if (includeInfo.Type == IncludeTypeEnum.ThenInclude)
+            {
+                query = query.ThenInclude(includeInfo);
+            }
+        }
+
+        return query;
     }
-  }
 }

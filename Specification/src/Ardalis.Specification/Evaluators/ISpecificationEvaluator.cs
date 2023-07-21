@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// Evaluates the logic encapsulated by an <see cref="ISpecification{T}"/>.
+/// </summary>
+public interface ISpecificationEvaluator
 {
-  /// <summary>
-  /// Evaluates the logic encapsulated by an <see cref="ISpecification{T}"/>.
-  /// </summary>
-  public interface ISpecificationEvaluator
-  {
     /// <summary>
     /// Applies the logic encapsulated by <paramref name="specification"/> to given <paramref name="inputQuery"/>,
     /// and projects the result into <typeparamref name="TResult"/>.
@@ -26,5 +23,4 @@ namespace Ardalis.Specification
     /// <param name="specification">The encapsulated query logic.</param>
     /// <returns>A filtered sequence of <typeparamref name="T"/></returns>
     IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery, ISpecification<T> specification, bool evaluateCriteriaOnly = false) where T : class;
-  }
 }

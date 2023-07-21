@@ -1,9 +1,7 @@
-﻿using System.Linq;
+﻿namespace Ardalis.Specification.EntityFrameworkCore;
 
-namespace Ardalis.Specification.EntityFrameworkCore
+public class SearchEvaluator : IEvaluator
 {
-  public class SearchEvaluator : IEvaluator
-  {
     private SearchEvaluator() { }
     public static SearchEvaluator Instance { get; } = new SearchEvaluator();
 
@@ -11,12 +9,11 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-      foreach (var searchCriteria in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
-      {
-        query = query.Search(searchCriteria);
-      }
+        foreach (var searchCriteria in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
+        {
+            query = query.Search(searchCriteria);
+        }
 
-      return query;
+        return query;
     }
-  }
 }

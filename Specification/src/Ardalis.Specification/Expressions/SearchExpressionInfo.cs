@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// Encapsulates data needed to perform 'SQL LIKE' operation.
+/// </summary>
+/// <typeparam name="T">Type of the source from which search target should be selected.</typeparam>
+public class SearchExpressionInfo<T>
 {
-  /// <summary>
-  /// Encapsulates data needed to perform 'SQL LIKE' operation.
-  /// </summary>
-  /// <typeparam name="T">Type of the source from which search target should be selected.</typeparam>
-  public class SearchExpressionInfo<T>
-  {
-    private readonly Lazy<Func<T, string>> selectorFunc;
+    private readonly Lazy<Func<T, string>> _selectorFunc;
 
     /// <summary>
     /// Creates instance of <see cref="SearchExpressionInfo{T}" />.
@@ -18,17 +18,17 @@ namespace Ardalis.Specification
     /// <param name="searchTerm">The value to use for the SQL LIKE.</param>
     /// <param name="searchGroup">The index used to group sets of Selectors and SearchTerms together.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="selector"/> is null.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="searchTerm"/> is null or empty.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="searchTerm"/> is null or empty.</exception>
     public SearchExpressionInfo(Expression<Func<T, string>> selector, string searchTerm, int searchGroup = 1)
     {
-      _ = selector ?? throw new ArgumentNullException(nameof(selector));
-      if (string.IsNullOrEmpty(searchTerm)) throw new ArgumentException(nameof(searchTerm));
+        _ = selector ?? throw new ArgumentNullException(nameof(selector));
+        if (string.IsNullOrEmpty(searchTerm)) throw new ArgumentException("The search term can not be null or empty.");
 
-      this.Selector = selector;
-      this.SearchTerm = searchTerm;
-      this.SearchGroup = searchGroup;
+        Selector = selector;
+        SearchTerm = searchTerm;
+        SearchGroup = searchGroup;
 
-      this.selectorFunc = new Lazy<Func<T, string>>(this.Selector.Compile);
+        _selectorFunc = new Lazy<Func<T, string>>(Selector.Compile);
     }
 
     /// <summary>
@@ -49,6 +49,5 @@ namespace Ardalis.Specification
     /// <summary>
     /// Compiled <see cref="Selector" />.
     /// </summary>
-    public Func<T, string> SelectorFunc => this.selectorFunc.Value;
-  }
+    public Func<T, string> SelectorFunc => _selectorFunc.Value;
 }

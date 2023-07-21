@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Ardalis.Specification.EntityFrameworkCore
+namespace Ardalis.Specification.EntityFrameworkCore;
+
+public class AsSplitQueryEvaluator : IEvaluator
 {
-#if !NETSTANDARD2_0
-  public class AsSplitQueryEvaluator : IEvaluator
-  {
     private AsSplitQueryEvaluator() { }
     public static AsSplitQueryEvaluator Instance { get; } = new AsSplitQueryEvaluator();
 
@@ -16,13 +11,11 @@ namespace Ardalis.Specification.EntityFrameworkCore
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-      if (specification.AsSplitQuery)
-      {
-        query = query.AsSplitQuery();
-      }
+        if (specification.AsSplitQuery)
+        {
+            query = query.AsSplitQuery();
+        }
 
-      return query;
+        return query;
     }
-  }
-#endif
 }

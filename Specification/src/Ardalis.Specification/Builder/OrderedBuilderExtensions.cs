@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+public static class OrderedBuilderExtensions
 {
-  public static class OrderedBuilderExtensions
-  {
     public static IOrderedSpecificationBuilder<T> ThenBy<T>(
         this IOrderedSpecificationBuilder<T> orderedBuilder,
         Expression<Func<T, object?>> orderExpression)
@@ -17,16 +16,16 @@ namespace Ardalis.Specification
         Expression<Func<T, object?>> orderExpression,
         bool condition)
     {
-      if (condition && !orderedBuilder.IsChainDiscarded)
-      {
-        ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenBy));
-      }
-      else
-      {
-        orderedBuilder.IsChainDiscarded = true;
-      }
+        if (condition && !orderedBuilder.IsChainDiscarded)
+        {
+            ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenBy));
+        }
+        else
+        {
+            orderedBuilder.IsChainDiscarded = true;
+        }
 
-      return orderedBuilder;
+        return orderedBuilder;
     }
 
     public static IOrderedSpecificationBuilder<T> ThenByDescending<T>(
@@ -39,16 +38,15 @@ namespace Ardalis.Specification
         Expression<Func<T, object?>> orderExpression,
         bool condition)
     {
-      if (condition && !orderedBuilder.IsChainDiscarded)
-      {
-        ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenByDescending));
-      }
-      else
-      {
-        orderedBuilder.IsChainDiscarded = true;
-      }
+        if (condition && !orderedBuilder.IsChainDiscarded)
+        {
+            ((List<OrderExpressionInfo<T>>)orderedBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.ThenByDescending));
+        }
+        else
+        {
+            orderedBuilder.IsChainDiscarded = true;
+        }
 
-      return orderedBuilder;
+        return orderedBuilder;
     }
-  }
 }

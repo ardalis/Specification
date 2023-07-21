@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using Xunit;
 
-namespace Ardalis.Specification.UnitTests
+namespace Ardalis.Specification.UnitTests;
+
+public class DuplicateSkipExceptionTests
 {
-  public class DuplicateSkipExceptionTests
-  {
-    private const string defaultMessage = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
+    private const string _defaultMessage = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-      Action action = () => throw new DuplicateSkipException();
+        Action action = () => throw new DuplicateSkipException();
 
-      action.Should().Throw<DuplicateSkipException>().WithMessage(defaultMessage);
+        action.Should().Throw<DuplicateSkipException>().WithMessage(_defaultMessage);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
-      Exception inner = new Exception("test");
-      Action action = () => throw new DuplicateSkipException(inner);
+        var inner = new Exception("test");
+        Action action = () => throw new DuplicateSkipException(inner);
 
-      action.Should().Throw<DuplicateSkipException>().WithMessage(defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        action.Should().Throw<DuplicateSkipException>().WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
     }
-  }
 }

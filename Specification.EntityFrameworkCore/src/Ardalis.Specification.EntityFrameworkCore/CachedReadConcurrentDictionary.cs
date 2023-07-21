@@ -1,44 +1,41 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
-namespace Ardalis.Specification.EntityFrameworkCore
+namespace Ardalis.Specification.EntityFrameworkCore;
+
+/// <summary>
+/// A thread-safe dictionary for read-heavy workloads.
+/// </summary>
+/// <typeparam name="TKey">The key type.</typeparam>
+/// <typeparam name="TValue">The value type.</typeparam>
+internal class CachedReadConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
 {
-  /// <summary>
-  /// A thread-safe dictionary for read-heavy workloads.
-  /// </summary>
-  /// <typeparam name="TKey">The key type.</typeparam>
-  /// <typeparam name="TValue">The value type.</typeparam>
-  internal class CachedReadConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
-  {
     /// <summary>
     /// The number of cache misses which are tolerated before the cache is regenerated.
     /// </summary>
-    private const int CacheMissesBeforeCaching = 10;
-    private readonly ConcurrentDictionary<TKey, TValue> dictionary;
-    private readonly IEqualityComparer<TKey>? comparer;
+    private const int _cacheMissesBeforeCaching = 10;
+    private readonly ConcurrentDictionary<TKey, TValue> _dictionary;
+    private readonly IEqualityComparer<TKey>? _comparer;
 
     /// <summary>
     /// Approximate number of reads which did not hit the cache since it was last invalidated.
     /// This is used as a heuristic that the dictionary is not being modified frequently with respect to the read volume.
     /// </summary>
-    private int cacheMissReads;
+    private int _cacheMissReads;
 
     /// <summary>
-    /// Cached version of <see cref="dictionary"/>.
+    /// Cached version of <see cref="_dictionary"/>.
     /// </summary>
-    private Dictionary<TKey, TValue>? readCache;
+    private Dictionary<TKey, TValue>? _readCache;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CachedReadConcurrentDictionary{TKey,TValue}"/> class.
     /// </summary>
     public CachedReadConcurrentDictionary()
     {
-      this.dictionary = new ConcurrentDictionary<TKey, TValue>();
+        _dictionary = new ConcurrentDictionary<TKey, TValue>();
     }
 
     /// <summary>
@@ -50,7 +47,7 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// </param>
     public CachedReadConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
     {
-      this.dictionary = new ConcurrentDictionary<TKey, TValue>(collection);
+        _dictionary = new ConcurrentDictionary<TKey, TValue>(collection);
     }
 
     /// <summary>
@@ -63,8 +60,8 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// </param>
     public CachedReadConcurrentDictionary(IEqualityComparer<TKey> comparer)
     {
-      this.comparer = comparer;
-      this.dictionary = new ConcurrentDictionary<TKey, TValue>(comparer);
+        _comparer = comparer;
+        _dictionary = new ConcurrentDictionary<TKey, TValue>(comparer);
     }
 
     /// <summary>
@@ -80,49 +77,49 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// </param>
     public CachedReadConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
     {
-      this.comparer = comparer;
-      this.dictionary = new ConcurrentDictionary<TKey, TValue>(collection, comparer);
+        _comparer = comparer;
+        _dictionary = new ConcurrentDictionary<TKey, TValue>(collection, comparer);
     }
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <inheritdoc />
-    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => this.GetReadDictionary().GetEnumerator();
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => GetReadDictionary().GetEnumerator();
 
     /// <inheritdoc />
     public void Add(KeyValuePair<TKey, TValue> item)
     {
-      ((IDictionary<TKey, TValue>)this.dictionary).Add(item);
-      this.InvalidateCache();
+        ((IDictionary<TKey, TValue>)_dictionary).Add(item);
+        InvalidateCache();
     }
 
     /// <inheritdoc />
     public void Clear()
     {
-      this.dictionary.Clear();
-      this.InvalidateCache();
+        _dictionary.Clear();
+        InvalidateCache();
     }
 
     /// <inheritdoc />
-    public bool Contains(KeyValuePair<TKey, TValue> item) => this.GetReadDictionary().Contains(item);
+    public bool Contains(KeyValuePair<TKey, TValue> item) => GetReadDictionary().Contains(item);
 
     /// <inheritdoc />
     public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
     {
-      this.GetReadDictionary().CopyTo(array, arrayIndex);
+        GetReadDictionary().CopyTo(array, arrayIndex);
     }
 
     /// <inheritdoc />
     public bool Remove(KeyValuePair<TKey, TValue> item)
     {
-      var result = ((IDictionary<TKey, TValue>)this.dictionary).Remove(item);
-      if (result) this.InvalidateCache();
-      return result;
+        var result = ((IDictionary<TKey, TValue>)_dictionary).Remove(item);
+        if (result) InvalidateCache();
+        return result;
     }
 
     /// <inheritdoc />
-    public int Count => this.GetReadDictionary().Count;
+    public int Count => GetReadDictionary().Count;
 
     /// <inheritdoc />
     public bool IsReadOnly => false;
@@ -130,8 +127,8 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// <inheritdoc />
     public void Add(TKey key, TValue value)
     {
-      ((IDictionary<TKey, TValue>)this.dictionary).Add(key, value);
-      this.InvalidateCache();
+        ((IDictionary<TKey, TValue>)_dictionary).Add(key, value);
+        InvalidateCache();
     }
 
     /// <summary>
@@ -142,15 +139,15 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// <returns>The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.</returns>
     public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
     {
-      if (this.GetReadDictionary().TryGetValue(key, out var value))
-      {
+        if (GetReadDictionary().TryGetValue(key, out var value))
+        {
+            return value;
+        }
+
+        value = _dictionary.GetOrAdd(key, valueFactory);
+        InvalidateCache();
+
         return value;
-      }
-
-      value = this.dictionary.GetOrAdd(key, valueFactory);
-      InvalidateCache();
-
-      return value;
     }
 
     /// <summary>
@@ -162,72 +159,65 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// <returns>true if the key/value pair was added successfully; otherwise, false.</returns>
     public bool TryAdd(TKey key, TValue value)
     {
-      if (this.dictionary.TryAdd(key, value))
-      {
-        this.InvalidateCache();
-        return true;
-      }
+        if (_dictionary.TryAdd(key, value))
+        {
+            InvalidateCache();
+            return true;
+        }
 
-      return false;
+        return false;
     }
 
     /// <inheritdoc />
-    public bool ContainsKey(TKey key) => this.GetReadDictionary().ContainsKey(key);
+    public bool ContainsKey(TKey key) => GetReadDictionary().ContainsKey(key);
 
     /// <inheritdoc />
     public bool Remove(TKey key)
     {
-      var result = ((IDictionary<TKey, TValue>)this.dictionary).Remove(key);
-      if (result) this.InvalidateCache();
-      return result;
+        var result = ((IDictionary<TKey, TValue>)_dictionary).Remove(key);
+        if (result) InvalidateCache();
+        return result;
     }
 
-#if NET6_0_OR_GREATER
     /// <inheritdoc />
-    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value) => this.GetReadDictionary().TryGetValue(key, out value);
-#else
-        /// <inheritdoc />
-        public bool TryGetValue(TKey key, out TValue value) => this.GetReadDictionary().TryGetValue(key, out value);
-
-#endif
+    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value) => GetReadDictionary().TryGetValue(key, out value);
 
     /// <inheritdoc />
     public TValue this[TKey key]
     {
-      get => this.GetReadDictionary()[key];
-      set
-      {
-        this.dictionary[key] = value;
-        this.InvalidateCache();
-      }
+        get => GetReadDictionary()[key];
+        set
+        {
+            _dictionary[key] = value;
+            InvalidateCache();
+        }
     }
 
     /// <inheritdoc />
-    public ICollection<TKey> Keys => this.GetReadDictionary().Keys;
+    public ICollection<TKey> Keys => GetReadDictionary().Keys;
 
     /// <inheritdoc />
-    public ICollection<TValue> Values => this.GetReadDictionary().Values;
+    public ICollection<TValue> Values => GetReadDictionary().Values;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IDictionary<TKey, TValue> GetReadDictionary() => this.readCache ?? this.GetWithoutCache();
+    private IDictionary<TKey, TValue> GetReadDictionary() => _readCache ?? GetWithoutCache();
 
     private IDictionary<TKey, TValue> GetWithoutCache()
     {
-      // If the dictionary was recently modified or the cache is being recomputed, return the dictionary directly.
-      if (Interlocked.Increment(ref this.cacheMissReads) < CacheMissesBeforeCaching)
-      {
-        return this.dictionary;
-      }
+        // If the dictionary was recently modified or the cache is being recomputed, return the dictionary directly.
+        if (Interlocked.Increment(ref _cacheMissReads) < _cacheMissesBeforeCaching)
+        {
+            return _dictionary;
+        }
 
-      // Recompute the cache if too many cache misses have occurred.
-      this.cacheMissReads = 0;
-      return this.readCache = new Dictionary<TKey, TValue>(this.dictionary, this.comparer);
+        // Recompute the cache if too many cache misses have occurred.
+        _cacheMissReads = 0;
+        return _readCache = new Dictionary<TKey, TValue>(_dictionary, _comparer);
     }
 
     private void InvalidateCache()
     {
-      this.cacheMissReads = 0;
-      this.readCache = null;
+        _cacheMissReads = 0;
+        _readCache = null;
     }
-  }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Entities
+namespace Ardalis.Specification.UnitTests.Fixture.Entities;
+
+public class Company
 {
-  public class Company
-  {
     public int Id { get; set; }
     public string? Name { get; set; }
 
@@ -13,5 +11,4 @@ namespace Ardalis.Specification.UnitTests.Fixture.Entities
     public Country? Country { get; set; }
 
     public List<Store> Stores { get; set; } = new List<Store>();
-  }
 }

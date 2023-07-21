@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+public static class SpecificationBuilderExtensions
 {
-  public static class SpecificationBuilderExtensions
-  {
     /// <summary>
     /// Specify a predicate that will be applied to the query
     /// </summary>
@@ -29,12 +29,12 @@ namespace Ardalis.Specification
         Expression<Func<T, bool>> criteria,
         bool condition)
     {
-      if (condition)
-      {
-        ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
-      }
+        if (condition)
+        {
+            ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -60,14 +60,14 @@ namespace Ardalis.Specification
         Expression<Func<T, object?>> orderExpression,
         bool condition)
     {
-      if (condition)
-      {
-        ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
-      }
+        if (condition)
+        {
+            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
+        }
 
-      var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
+        var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
-      return orderedSpecificationBuilder;
+        return orderedSpecificationBuilder;
     }
 
     /// <summary>
@@ -93,14 +93,14 @@ namespace Ardalis.Specification
         Expression<Func<T, object?>> orderExpression,
         bool condition)
     {
-      if (condition)
-      {
-        ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
-      }
+        if (condition)
+        {
+            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
+        }
 
-      var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
+        var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
-      return orderedSpecificationBuilder;
+        return orderedSpecificationBuilder;
     }
 
     /// <summary>
@@ -132,16 +132,16 @@ namespace Ardalis.Specification
         Expression<Func<T, TProperty>> includeExpression,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
+        if (condition)
+        {
+            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
 
-        ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
-      }
+            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+        }
 
-      var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, !condition);
+        var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, !condition);
 
-      return includeBuilder;
+        return includeBuilder;
     }
 
     /// <summary>
@@ -167,12 +167,12 @@ namespace Ardalis.Specification
         string includeString,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
-      }
+        if (condition)
+        {
+            ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -206,12 +206,12 @@ namespace Ardalis.Specification
         bool condition,
         int searchGroup = 1) where T : class
     {
-      if (condition)
-      {
-        ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
-      }
+        if (condition)
+        {
+            ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -235,14 +235,14 @@ namespace Ardalis.Specification
         int take,
         bool condition)
     {
-      if (condition)
-      {
-        if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
+        if (condition)
+        {
+            if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
 
-        specificationBuilder.Specification.Take = take;
-      }
+            specificationBuilder.Specification.Take = take;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -268,14 +268,14 @@ namespace Ardalis.Specification
         int skip,
         bool condition)
     {
-      if (condition)
-      {
-        if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
+        if (condition)
+        {
+            if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
 
-        specificationBuilder.Specification.Skip = skip;
-      }
+            specificationBuilder.Specification.Skip = skip;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -286,9 +286,9 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T, TResult> specificationBuilder,
         Expression<Func<T, TResult>> selector)
     {
-      specificationBuilder.Specification.Selector = selector;
+        specificationBuilder.Specification.Selector = selector;
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -299,9 +299,9 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T, TResult> specificationBuilder,
         Expression<Func<T, IEnumerable<TResult>>> selector)
     {
-      specificationBuilder.Specification.SelectorMany = selector;
+        specificationBuilder.Specification.SelectorMany = selector;
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -312,9 +312,9 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         Func<IEnumerable<T>, IEnumerable<T>> predicate)
     {
-      specificationBuilder.Specification.PostProcessingAction = predicate;
+        specificationBuilder.Specification.PostProcessingAction = predicate;
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -325,9 +325,9 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T, TResult> specificationBuilder,
         Func<IEnumerable<TResult>, IEnumerable<TResult>> predicate)
     {
-      specificationBuilder.Specification.PostProcessingAction = predicate;
+        specificationBuilder.Specification.PostProcessingAction = predicate;
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -353,21 +353,21 @@ namespace Ardalis.Specification
         bool condition,
         params object[] args) where T : class
     {
-      if (condition)
-      {
-        if (string.IsNullOrEmpty(specificationName))
+        if (condition)
         {
-          throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
+            if (string.IsNullOrEmpty(specificationName))
+            {
+                throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
+            }
+
+            specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+
+            specificationBuilder.Specification.CacheEnabled = true;
         }
 
-        specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
+        var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
 
-        specificationBuilder.Specification.CacheEnabled = true;
-      }
-
-      var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
-
-      return cacheBuilder;
+        return cacheBuilder;
     }
 
     /// <summary>
@@ -389,14 +389,14 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        specificationBuilder.Specification.AsNoTracking = false;
-        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
-        specificationBuilder.Specification.AsTracking = true;
-      }
+        if (condition)
+        {
+            specificationBuilder.Specification.AsNoTracking = false;
+            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
+            specificationBuilder.Specification.AsTracking = true;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -418,14 +418,14 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        specificationBuilder.Specification.AsTracking = false;
-        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
-        specificationBuilder.Specification.AsNoTracking = true;
-      }
+        if (condition)
+        {
+            specificationBuilder.Specification.AsTracking = false;
+            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = false;
+            specificationBuilder.Specification.AsNoTracking = true;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -455,12 +455,12 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        specificationBuilder.Specification.AsSplitQuery = true;
-      }
+        if (condition)
+        {
+            specificationBuilder.Specification.AsSplitQuery = true;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -492,14 +492,14 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        specificationBuilder.Specification.AsTracking = false;
-        specificationBuilder.Specification.AsNoTracking = false;
-        specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
-      }
+        if (condition)
+        {
+            specificationBuilder.Specification.AsTracking = false;
+            specificationBuilder.Specification.AsNoTracking = false;
+            specificationBuilder.Specification.AsNoTrackingWithIdentityResolution = true;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
 
     /// <summary>
@@ -527,12 +527,11 @@ namespace Ardalis.Specification
         this ISpecificationBuilder<T> specificationBuilder,
         bool condition) where T : class
     {
-      if (condition)
-      {
-        specificationBuilder.Specification.IgnoreQueryFilters = true;
-      }
+        if (condition)
+        {
+            specificationBuilder.Specification.IgnoreQueryFilters = true;
+        }
 
-      return specificationBuilder;
+        return specificationBuilder;
     }
-  }
 }

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// Encapsulates query logic for <typeparamref name="T"/>,
+/// and projects the result into <typeparamref name="TResult"/>.
+/// </summary>
+/// <typeparam name="T">The type being queried against.</typeparam>
+/// <typeparam name="TResult">The type of the result.</typeparam>
+public interface ISpecification<T, TResult> : ISpecification<T>
 {
-  /// <summary>
-  /// Encapsulates query logic for <typeparamref name="T"/>,
-  /// and projects the result into <typeparamref name="TResult"/>.
-  /// </summary>
-  /// <typeparam name="T">The type being queried against.</typeparam>
-  /// <typeparam name="TResult">The type of the result.</typeparam>
-  public interface ISpecification<T, TResult> : ISpecification<T>
-  {
-    ISpecificationBuilder<T, TResult> Query { get; }
+    new ISpecificationBuilder<T, TResult> Query { get; }
 
     /// <summary>
     /// The Select transform function to apply to the <typeparamref name="T"/> element.
@@ -30,14 +30,14 @@ namespace Ardalis.Specification
     new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; }
 
     new IEnumerable<TResult> Evaluate(IEnumerable<T> entities);
-  }
+}
 
-  /// <summary>
-  /// Encapsulates query logic for <typeparamref name="T"/>.
-  /// </summary>
-  /// <typeparam name="T">The type being queried against.</typeparam>
-  public interface ISpecification<T>
-  {
+/// <summary>
+/// Encapsulates query logic for <typeparamref name="T"/>.
+/// </summary>
+/// <typeparam name="T">The type being queried against.</typeparam>
+public interface ISpecification<T>
+{
     ISpecificationBuilder<T> Query { get; }
 
     /// <summary>
@@ -151,5 +151,4 @@ namespace Ardalis.Specification
     /// <param name="entity">The entity to be validated</param>
     /// <returns></returns>
     bool IsSatisfiedBy(T entity);
-  }
 }

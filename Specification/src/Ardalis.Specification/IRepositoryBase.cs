@@ -2,18 +2,18 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification
-{
+namespace Ardalis.Specification;
 
-  /// <summary>
-  /// <para>
-  /// A <see cref="IRepositoryBase{T}" /> can be used to query and save instances of <typeparamref name="T" />.
-  /// An <see cref="ISpecification{T}"/> (or derived) is used to encapsulate the LINQ queries against the database.
-  /// </para>
-  /// </summary>
-  /// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
-  public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
-  {
+
+/// <summary>
+/// <para>
+/// A <see cref="IRepositoryBase{T}" /> can be used to query and save instances of <typeparamref name="T" />.
+/// An <see cref="ISpecification{T}"/> (or derived) is used to encapsulate the LINQ queries against the database.
+/// </para>
+/// </summary>
+/// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
+public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
+{
     /// <summary>
     /// Adds an entity in the database.
     /// </summary>
@@ -32,7 +32,6 @@ namespace Ardalis.Specification
     /// <param name="cancellationToken"></param>
     /// <returns>
     /// A task that represents the asynchronous operation.
-    /// The task result contains the <typeparamref name="IEnumerable<T>" />.
     /// </returns>
     Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
@@ -70,5 +69,4 @@ namespace Ardalis.Specification
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-  }
 }

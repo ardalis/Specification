@@ -1,15 +1,12 @@
-﻿using Ardalis.Specification.UnitTests.Fixture.Entities;
+﻿namespace Ardalis.Specification.UnitTests.Fixture.Specs;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Specs
+public class CompanyByIdAsSplitQuery : Specification<Company>, ISingleResultSpecification
 {
-  public class CompanyByIdAsSplitQuery : Specification<Company>, ISingleResultSpecification
-  {
     public CompanyByIdAsSplitQuery(int id)
     {
-      Query.Where(company => company.Id == id)
-          .Include(x => x.Stores)
-          .ThenInclude(x => x.Products)
-          .AsSplitQuery();
+        Query.Where(company => company.Id == id)
+            .Include(x => x.Stores)
+            .ThenInclude(x => x.Products)
+            .AsSplitQuery();
     }
-  }
 }

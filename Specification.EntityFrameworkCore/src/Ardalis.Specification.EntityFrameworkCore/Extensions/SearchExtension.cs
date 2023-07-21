@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 
-namespace Ardalis.Specification.EntityFrameworkCore
+namespace Ardalis.Specification.EntityFrameworkCore;
+
+public static class SearchExtension
 {
-  public static class SearchExtension
-  {
-    private static readonly MethodInfo LikeMethodInfo = typeof(DbFunctionsExtensions)
+    private static readonly MethodInfo _likeMethodInfo = typeof(DbFunctionsExtensions)
         .GetMethod(nameof(DbFunctionsExtensions.Like), new Type[] { typeof(DbFunctions), typeof(string), typeof(string) })
         ?? throw new TargetException("The EF.Functions.Like not found");
 
-    private static readonly MemberExpression Functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))
+    private static readonly MemberExpression _functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))
         ?? throw new TargetException("The EF.Functions not found!"));
 
     /// <summary>
@@ -31,33 +28,32 @@ namespace Ardalis.Specification.EntityFrameworkCore
     /// <returns></returns>
     public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> criterias)
     {
-      Expression? expr = null;
-      var parameter = Expression.Parameter(typeof(T), "x");
+        Expression? expr = null;
+        var parameter = Expression.Parameter(typeof(T), "x");
 
-      foreach (var criteria in criterias)
-      {
-        if (string.IsNullOrEmpty(criteria.SearchTerm))
-          continue;
+        foreach (var criteria in criterias)
+        {
+            if (string.IsNullOrEmpty(criteria.SearchTerm))
+                continue;
 
-        var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter) as LambdaExpression;
-        _ = propertySelector ?? throw new InvalidExpressionException();
+            var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter) as LambdaExpression;
+            _ = propertySelector ?? throw new InvalidExpressionException();
 
-        // Create a closure
-        var searchTermAsExpression = ((Expression<Func<string>>)(() => criteria.SearchTerm)).Body;
+            // Create a closure
+            var searchTermAsExpression = ((Expression<Func<string>>)(() => criteria.SearchTerm)).Body;
 
-        var likeExpression = Expression.Call(
-                                null,
-                                LikeMethodInfo,
-                                Functions,
-                                propertySelector.Body,
-                                searchTermAsExpression);
+            var likeExpression = Expression.Call(
+                                    null,
+                                    _likeMethodInfo,
+                                    _functions,
+                                    propertySelector.Body,
+                                    searchTermAsExpression);
 
-        expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
-      }
+            expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
+        }
 
-      return expr == null
-          ? source
-          : source.Where(Expression.Lambda<Func<T, bool>>(expr, parameter));
+        return expr == null
+            ? source
+            : source.Where(Expression.Lambda<Func<T, bool>>(expr, parameter));
     }
-  }
 }

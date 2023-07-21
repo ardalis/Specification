@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+public static class IncludableBuilderExtensions
 {
-  public static class IncludableBuilderExtensions
-  {
     public static IIncludableSpecificationBuilder<TEntity, TProperty> ThenInclude<TEntity, TPreviousProperty, TProperty>(
         this IIncludableSpecificationBuilder<TEntity, TPreviousProperty> previousBuilder,
         Expression<Func<TPreviousProperty, TProperty>> thenIncludeExpression)
@@ -18,16 +18,16 @@ namespace Ardalis.Specification
         bool condition)
         where TEntity : class
     {
-      if (condition && !previousBuilder.IsChainDiscarded)
-      {
-        var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
+        if (condition && !previousBuilder.IsChainDiscarded)
+        {
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
 
-        ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
-      }
+            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+        }
 
-      var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);
+        var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);
 
-      return includeBuilder;
+        return includeBuilder;
     }
 
     public static IIncludableSpecificationBuilder<TEntity, TProperty> ThenInclude<TEntity, TPreviousProperty, TProperty>(
@@ -42,16 +42,15 @@ namespace Ardalis.Specification
         bool condition)
         where TEntity : class
     {
-      if (condition && !previousBuilder.IsChainDiscarded)
-      {
-        var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(IEnumerable<TPreviousProperty>));
+        if (condition && !previousBuilder.IsChainDiscarded)
+        {
+            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(IEnumerable<TPreviousProperty>));
 
-        ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
-      }
+            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+        }
 
-      var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);
+        var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);
 
-      return includeBuilder;
+        return includeBuilder;
     }
-  }
 }

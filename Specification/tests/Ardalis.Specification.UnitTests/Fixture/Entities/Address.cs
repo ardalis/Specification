@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Ardalis.Specification.UnitTests.Fixture.Entities;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Entities
+public class Address
 {
-  public class Address
-  {
     public int Id { get; set; }
     public string? Street { get; set; }
 
@@ -14,7 +10,6 @@ namespace Ardalis.Specification.UnitTests.Fixture.Entities
 
     public object GetSomethingFromAddress()
     {
-      return new object();
+        return new object();
     }
-  }
 }

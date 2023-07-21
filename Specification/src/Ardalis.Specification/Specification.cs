@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <inheritdoc cref="ISpecification{T, TResult}"/>
+public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
 {
-  /// <inheritdoc cref="ISpecification{T, TResult}"/>
-  public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
-  {
     public new virtual ISpecificationBuilder<T, TResult> Query { get; }
 
     protected Specification()
@@ -17,12 +17,12 @@ namespace Ardalis.Specification
     protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
         : base(inMemorySpecificationEvaluator)
     {
-      this.Query = new SpecificationBuilder<T, TResult>(this);
+        Query = new SpecificationBuilder<T, TResult>(this);
     }
 
     public new virtual IEnumerable<TResult> Evaluate(IEnumerable<T> entities)
     {
-      return Evaluator.Evaluate(entities, this);
+        return Evaluator.Evaluate(entities, this);
     }
 
     /// <inheritdoc/>
@@ -33,11 +33,11 @@ namespace Ardalis.Specification
 
     /// <inheritdoc/>
     public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;
-  }
+}
 
-  /// <inheritdoc cref="ISpecification{T}"/>
-  public class Specification<T> : ISpecification<T>
-  {
+/// <inheritdoc cref="ISpecification{T}"/>
+public class Specification<T> : ISpecification<T>
+{
     protected IInMemorySpecificationEvaluator Evaluator { get; }
     protected ISpecificationValidator Validator { get; }
     public virtual ISpecificationBuilder<T> Query { get; }
@@ -59,21 +59,21 @@ namespace Ardalis.Specification
 
     protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator, ISpecificationValidator specificationValidator)
     {
-      this.Evaluator = inMemorySpecificationEvaluator;
-      this.Validator = specificationValidator;
-      this.Query = new SpecificationBuilder<T>(this);
+        Evaluator = inMemorySpecificationEvaluator;
+        Validator = specificationValidator;
+        Query = new SpecificationBuilder<T>(this);
     }
 
     /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
     {
-      return Evaluator.Evaluate(entities, this);
+        return Evaluator.Evaluate(entities, this);
     }
 
     /// <inheritdoc/>
     public virtual bool IsSatisfiedBy(T entity)
     {
-      return Validator.IsValid(entity, this);
+        return Validator.IsValid(entity, this);
     }
 
     /// <inheritdoc/>
@@ -122,5 +122,4 @@ namespace Ardalis.Specification
 
     /// <inheritdoc/>
     public bool IgnoreQueryFilters { get; internal set; } = false;
-  }
 }

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// <para>
+/// A <see cref="IRepositoryBase{T}" /> can be used to query instances of <typeparamref name="T" />.
+/// An <see cref="ISpecification{T}"/> (or derived) is used to encapsulate the LINQ queries against the database.
+/// </para>
+/// </summary>
+/// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
+public interface IReadRepositoryBase<T> where T : class
 {
-  /// <summary>
-  /// <para>
-  /// A <see cref="IRepositoryBase{T}" /> can be used to query instances of <typeparamref name="T" />.
-  /// An <see cref="ISpecification{T}"/> (or derived) is used to encapsulate the LINQ queries against the database.
-  /// </para>
-  /// </summary>
-  /// <typeparam name="T">The type of entity being operated on by this repository.</typeparam>
-  public interface IReadRepositoryBase<T> where T : class
-  {
     /// <summary>
     /// Finds an entity with the given primary key value.
     /// </summary>
@@ -176,9 +176,8 @@ namespace Ardalis.Specification
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
     /// <returns>
-    ///  Returns an IAsyncEnumerable<T> which can be enumerated asynchronously.
+    ///  Returns an IAsyncEnumerable which can be enumerated asynchronously.
     /// </returns>
     IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification);
 #endif
-  }
 }

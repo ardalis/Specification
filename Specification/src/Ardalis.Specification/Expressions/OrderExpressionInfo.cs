@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+/// <summary>
+/// Encapsulates data needed to perform sorting.
+/// </summary>
+/// <typeparam name="T">Type of the entity to apply sort on.</typeparam>
+public class OrderExpressionInfo<T>
 {
-  /// <summary>
-  /// Encapsulates data needed to perform sorting.
-  /// </summary>
-  /// <typeparam name="T">Type of the entity to apply sort on.</typeparam>
-  public class OrderExpressionInfo<T>
-  {
-    private readonly Lazy<Func<T, object?>> keySelectorFunc;
+    private readonly Lazy<Func<T, object?>> _keySelectorFunc;
 
     /// <summary>
     /// Creates instance of <see cref="OrderExpressionInfo{T}" />.
@@ -19,12 +19,12 @@ namespace Ardalis.Specification
     /// <exception cref="ArgumentNullException">If <paramref name="keySelector"/> is null.</exception>
     public OrderExpressionInfo(Expression<Func<T, object?>> keySelector, OrderTypeEnum orderType)
     {
-      _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
+        _ = keySelector ?? throw new ArgumentNullException(nameof(keySelector));
 
-      this.KeySelector = keySelector;
-      this.OrderType = orderType;
+        KeySelector = keySelector;
+        OrderType = orderType;
 
-      this.keySelectorFunc = new Lazy<Func<T, object?>>(this.KeySelector.Compile);
+        _keySelectorFunc = new Lazy<Func<T, object?>>(KeySelector.Compile);
     }
 
     /// <summary>
@@ -40,6 +40,5 @@ namespace Ardalis.Specification
     /// <summary>
     /// Compiled <see cref="KeySelector" />.
     /// </summary>
-    public Func<T, object?> KeySelectorFunc => this.keySelectorFunc.Value;
-  }
+    public Func<T, object?> KeySelectorFunc => _keySelectorFunc.Value;
 }

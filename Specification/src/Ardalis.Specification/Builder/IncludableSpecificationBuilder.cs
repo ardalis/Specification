@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Ardalis.Specification;
 
-namespace Ardalis.Specification
+public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty> where T : class
 {
-  public class IncludableSpecificationBuilder<T, TProperty> : IIncludableSpecificationBuilder<T, TProperty> where T : class
-  {
     public Specification<T> Specification { get; }
     public bool IsChainDiscarded { get; set; }
 
@@ -16,8 +12,7 @@ namespace Ardalis.Specification
 
     public IncludableSpecificationBuilder(Specification<T> specification, bool isChainDiscarded)
     {
-      this.Specification = specification;
-      this.IsChainDiscarded = isChainDiscarded;
+        Specification = specification;
+        IsChainDiscarded = isChainDiscarded;
     }
-  }
 }

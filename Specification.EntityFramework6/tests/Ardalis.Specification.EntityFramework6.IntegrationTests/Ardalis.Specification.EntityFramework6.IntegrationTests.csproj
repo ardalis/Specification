@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
+    <LangVersion>11.0</LangVersion>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
@@ -15,22 +16,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="altcover" Version="8.2.837" />
-    <PackageReference Include="coverlet.msbuild" Version="3.1.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.2.0" />
-    <PackageReference Include="ReportGenerator" Version="5.1.9" />
-    <PackageReference Include="FluentAssertions" Version="6.7.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="ReportGenerator" Version="5.1.23" />
+    <PackageReference Include="altcover" Version="8.6.68" />
+    <PackageReference Include="xunit" Version="2.5.0" />
+    <PackageReference Include="xunit.analyzers" Version="1.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
@@ -39,5 +41,10 @@
     <ProjectReference Include="..\..\..\Specification\tests\Ardalis.Specification.UnitTests\Ardalis.Specification.UnitTests.csproj" />
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFramework6\Ardalis.Specification.EntityFramework6.csproj" />
   </ItemGroup>
+
+
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591;1573;1712;0612</NoWarn>
+  </PropertyGroup>
 
 </Project>

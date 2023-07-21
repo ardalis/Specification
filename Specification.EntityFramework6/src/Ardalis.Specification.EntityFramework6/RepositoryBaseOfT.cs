@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ardalis.Specification.EntityFramework6
+namespace Ardalis.Specification.EntityFramework6;
+
+/// <inheritdoc/>
+public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
-  /// <inheritdoc/>
-  public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
-  {
-    private readonly DbContext dbContext;
-    private readonly ISpecificationEvaluator specificationEvaluator;
+    private readonly DbContext _dbContext;
+    private readonly ISpecificationEvaluator _specificationEvaluator;
 
     public RepositoryBase(DbContext dbContext)
         : this(dbContext, SpecificationEvaluator.Default)
@@ -21,159 +21,159 @@ namespace Ardalis.Specification.EntityFramework6
     /// <inheritdoc/>
     public RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
     {
-      this.dbContext = dbContext;
-      this.specificationEvaluator = specificationEvaluator;
+        _dbContext = dbContext;
+        _specificationEvaluator = specificationEvaluator;
     }
 
     /// <inheritdoc/>
     public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {
-      dbContext.Set<T>().Add(entity);
+        _dbContext.Set<T>().Add(entity);
 
-      await SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
 
-      return entity;
+        return entity;
     }
 
     /// <inheritdoc/>
     public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        dbContext.Set<T>().AddRange(entities);
+        _dbContext.Set<T>().AddRange(entities);
 
         await SaveChangesAsync(cancellationToken);
 
         return entities;
     }
-    
+
     /// <inheritdoc/>
     public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
-      dbContext.Entry(entity).State = EntityState.Modified;
+        _dbContext.Entry(entity).State = EntityState.Modified;
 
-      await SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-      foreach (var entity in entities)
-      {
-        dbContext.Entry(entity).State = EntityState.Modified;
-      }
+        foreach (var entity in entities)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+        }
 
-      await SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
-      dbContext.Set<T>().Remove(entity);
+        _dbContext.Set<T>().Remove(entity);
 
-      await SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-      dbContext.Set<T>().RemoveRange(entities);
+        _dbContext.Set<T>().RemoveRange(entities);
 
-      await SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
     }
-    
+
     /// <inheritdoc/>
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-      return await dbContext.SaveChangesAsync(cancellationToken);
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<T> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default)
     {
-      return await dbContext.Set<T>().FindAsync(cancellationToken: cancellationToken, new object[] { id });
+        return await _dbContext.Set<T>().FindAsync(cancellationToken: cancellationToken, new object[] { id });
     }
 
     /// <inheritdoc/>
     [Obsolete]
     public virtual async Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     [Obsolete]
     public virtual async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<T> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<TResult> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<T> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<TResult> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
     {
-      return await dbContext.Set<T>().ToListAsync(cancellationToken);
+        return await _dbContext.Set<T>().ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
+        var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
 
-      return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
     }
 
     /// <inheritdoc/>
     public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
-      var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
+        var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
 
-      return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
     }
 
     /// <inheritdoc/>
     public virtual async Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification, true).CountAsync(cancellationToken);
+        return await ApplySpecification(specification, true).CountAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-      return await dbContext.Set<T>().CountAsync(cancellationToken);
+        return await _dbContext.Set<T>().CountAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-      return await ApplySpecification(specification, true).AnyAsync(cancellationToken);
+        return await ApplySpecification(specification, true).AnyAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
-      return await dbContext.Set<T>().AnyAsync(cancellationToken);
+        return await _dbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ namespace Ardalis.Specification.EntityFramework6
     /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
     {
-      return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
+        return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
     }
 
     /// <summary>
@@ -199,7 +199,6 @@ namespace Ardalis.Specification.EntityFramework6
     /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
     {
-      return specificationEvaluator.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
+        return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
     }
-  }
 }
