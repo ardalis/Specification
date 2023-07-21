@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.SampleApp.Core.Interfaces;
+﻿using Ardalis.SampleApp.Core.Interfaces;
 using Ardalis.Specification;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Infrastructure.Data;
 
@@ -15,7 +15,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   private readonly IMemoryCache _cache;
   private readonly ILogger<CachedRepository<T>> _logger;
   private readonly MyRepository<T> _sourceRepository;
-  private MemoryCacheEntryOptions _cacheOptions;
+  private readonly MemoryCacheEntryOptions _cacheOptions;
 
   public CachedRepository(IMemoryCache cache,
       ILogger<CachedRepository<T>> logger,
@@ -76,16 +76,16 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+  public Task<T> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
   {
     if (specification.CacheEnabled)
     {
-      string key = $"{specification.CacheKey}-GetBySpecAsync";
-      _logger.LogInformation("Checking cache for " + key);
+      var key = $"{specification.CacheKey}-GetBySpecAsync";
+      _logger.LogInformation("Checking cache for {cache_key}", key);
       return _cache.GetOrCreate(key, entry =>
       {
         entry.SetOptions(_cacheOptions);
-        _logger.LogWarning("Fetching source data for " + key);
+        _logger.LogWarning("Fetching source data for {cache_key}", key);
         return _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
       });
     }
@@ -99,19 +99,19 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   }
 
   /// <inheritdoc/>
-  public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  public virtual async Task<TResult> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
   {
     return await _sourceRepository.FirstOrDefaultAsync(specification, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public virtual async Task<T?> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
+  public virtual async Task<T> SingleOrDefaultAsync(ISingleResultSpecification<T> specification, CancellationToken cancellationToken = default)
   {
     return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
   }
 
   /// <inheritdoc/>
-  public virtual async Task<TResult?> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+  public virtual async Task<TResult> SingleOrDefaultAsync<TResult>(ISingleResultSpecification<T, TResult> specification, CancellationToken cancellationToken = default)
   {
     return await _sourceRepository.SingleOrDefaultAsync(specification, cancellationToken);
   }
@@ -119,7 +119,7 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   /// <inheritdoc/>
   public Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
   {
-    string key = $"{nameof(T)}-ListAsync";
+    var key = $"{nameof(T)}-ListAsync";
     return _cache.GetOrCreate(key, entry =>
     {
       entry.SetOptions(_cacheOptions);
@@ -132,12 +132,12 @@ public class CachedRepository<T> : IReadRepository<T> where T : class, IAggregat
   {
     if (specification.CacheEnabled)
     {
-      string key = $"{specification.CacheKey}-ListAsync";
-      _logger.LogInformation("Checking cache for " + key);
+      var key = $"{specification.CacheKey}-ListAsync";
+      _logger.LogInformation("Checking cache for {cache_key}", key);
       return _cache.GetOrCreate(key, entry =>
       {
         entry.SetOptions(_cacheOptions);
-        _logger.LogWarning("Fetching source data for " + key);
+        _logger.LogWarning("Fetching source data for {cache_key}", key);
         return _sourceRepository.ListAsync(specification, cancellationToken);
       });
     }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Ardalis.SampleApp.Web.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Ardalis.SampleApp.Web.Models;
 
 namespace Ardalis.SampleApp.Web.Interfaces;
 

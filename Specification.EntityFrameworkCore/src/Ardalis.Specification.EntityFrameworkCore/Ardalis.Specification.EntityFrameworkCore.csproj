@@ -2,50 +2,57 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>11.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Steve Smith (@ardalis); Fati Iseni (@fiseni); Scott DePouw</Authors>
     <Company>Ardalis.com</Company>
-    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
     <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
+    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
     <Version>7.0.0</Version>
     <PackageReleaseNotes>
-    * Patch 2 by @davidhenley in https://github.com/ardalis/Specification/pull/283
-    * Fix `Just the Docs` link in docs home page by @snowfrogdev in https://github.com/ardalis/Specification/pull/293
-    * Update url path by @ta1H3n in https://github.com/ardalis/Specification/pull/303
-    * Implement SelectMany support by @amdavie in https://github.com/ardalis/Specification/pull/320
-    * Add two methods for consuming repositories in scenarios where repositories could be longer lived (e.g. Blazor component Injections) by @jasonsummers in https://github.com/ardalis/Specification/pull/289
-    * Added support for AsAsyncEnumerable by @nkz-soft in https://github.com/ardalis/Specification/pull/316
-    * Lamadelrae/doc faq ef versions by @Lamadelrae in https://github.com/ardalis/Specification/pull/324
-    * Updated projects, drop support for old TFMs. by @fiseni in https://github.com/ardalis/Specification/pull/326
-    * Update the search feature to generate parameterized query. by @fiseni in https://github.com/ardalis/Specification/pull/327
-    * Add support for extending default evaluator list by @fiseni in https://github.com/ardalis/Specification/pull/328
-    * Ardalis/cleanup by @ardalis in https://github.com/ardalis/Specification/pull/332    </PackageReleaseNotes>
-    <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
-    <PackageIcon>icon.png</PackageIcon>
+      * Patch 2 by @davidhenley in https://github.com/ardalis/Specification/pull/283
+      * Fix `Just the Docs` link in docs home page by @snowfrogdev in https://github.com/ardalis/Specification/pull/293
+      * Update url path by @ta1H3n in https://github.com/ardalis/Specification/pull/303
+      * Implement SelectMany support by @amdavie in https://github.com/ardalis/Specification/pull/320
+      * Add two methods for consuming repositories in scenarios where repositories could be longer lived (e.g. Blazor component Injections) by @jasonsummers in https://github.com/ardalis/Specification/pull/289
+      * Added support for AsAsyncEnumerable by @nkz-soft in https://github.com/ardalis/Specification/pull/316
+      * Lamadelrae/doc faq ef versions by @Lamadelrae in https://github.com/ardalis/Specification/pull/324
+      * Updated projects, drop support for old TFMs. by @fiseni in https://github.com/ardalis/Specification/pull/326
+      * Update the search feature to generate parameterized query. by @fiseni in https://github.com/ardalis/Specification/pull/327
+      * Add support for extending default evaluator list by @fiseni in https://github.com/ardalis/Specification/pull/328
+      * Ardalis/cleanup by @ardalis in https://github.com/ardalis/Specification/pull/332    
+    </PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
     <DocumentationFile>bin\$(Configuration)\Ardalis.Specification.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
+  </ItemGroup>
+      
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
-  </ItemGroup>
+  
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591;1573;1712</NoWarn>
+  </PropertyGroup>
 </Project>

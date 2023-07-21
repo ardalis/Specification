@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds
+namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
+
+public class AddressSeed
 {
-  public class AddressSeed
+#pragma warning disable IDE1006 // Naming Styles
+  public const string VALID_STREET_FOR_STOREID1 = "Street 1";
+#pragma warning restore IDE1006 // Naming Styles
+
+  public static List<Address> Get()
   {
-    public const string VALID_STREET_FOR_STOREID1 = "Street 1";
+    var addresses = new List<Address>();
 
-    public static List<Address> Get()
+    for (var i = 1; i <= 100; i++)
     {
-      var addresses = new List<Address>();
-
-      for (int i = 1; i <= 100; i++)
+      addresses.Add(new Address()
       {
-        addresses.Add(new Address()
-        {
-          Id = i,
-          Street = $"Street {i}",
-          StoreId = i
-        });
-      }
-
-      return addresses;
+        Id = i,
+        Street = $"Street {i}",
+        StoreId = i
+      });
     }
+
+    return addresses;
   }
 }

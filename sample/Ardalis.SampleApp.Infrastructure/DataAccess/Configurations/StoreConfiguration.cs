@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
+﻿using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

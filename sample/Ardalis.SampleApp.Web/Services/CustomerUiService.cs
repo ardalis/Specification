@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.SampleApp.Core.Interfaces;
 using Ardalis.SampleApp.Core.Specifications;
@@ -8,6 +6,8 @@ using Ardalis.SampleApp.Core.Specifications.Filters;
 using Ardalis.SampleApp.Web.Interfaces;
 using Ardalis.SampleApp.Web.Models;
 using AutoMapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Web.Services;
 

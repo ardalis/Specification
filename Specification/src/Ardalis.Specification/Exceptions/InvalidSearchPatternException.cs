@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+public class InvalidSearchPatternException : Exception
 {
-  public class InvalidSearchPatternException : Exception
+  private const string _message = "Invalid search pattern: ";
+
+  public InvalidSearchPatternException(string searchPattern)
+      : base($"{_message}{searchPattern}")
   {
-    private const string message = "Invalid search pattern: ";
+  }
 
-    public InvalidSearchPatternException(string searchPattern)
-        : base($"{message}{searchPattern}")
-    {
-    }
-
-    public InvalidSearchPatternException(string searchPattern, Exception innerException)
-        : base($"{message}{searchPattern}", innerException)
-    {
-    }
+  public InvalidSearchPatternException(string searchPattern, Exception innerException)
+      : base($"{_message}{searchPattern}", innerException)
+  {
   }
 }

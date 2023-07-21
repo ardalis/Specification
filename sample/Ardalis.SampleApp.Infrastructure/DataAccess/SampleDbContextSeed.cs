@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.SampleApp.Core.Entities.Seeds;
+﻿using Ardalis.SampleApp.Core.Entities.Seeds;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Infrastructure.DataAccess;
 

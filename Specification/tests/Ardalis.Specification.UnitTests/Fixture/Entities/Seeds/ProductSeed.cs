@@ -1,33 +1,34 @@
 ﻿using System.Collections.Generic;
 
-namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds
+namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
+
+public class ProductSeed
 {
-  public class ProductSeed
+#pragma warning disable IDE1006 // Naming Styles
+  public const int TOTAL_PRODUCT_COUNT = 100;
+  public const string VALID_PRODUCT_NAME = "Product 1";
+#pragma warning restore IDE1006 // Naming Styles
+
+  public static List<Product> Get()
   {
-    public const int TOTAL_PRODUCT_COUNT = 100;
-    public const string VALID_PRODUCT_NAME = "Product 1";
+    var products = new List<Product>();
 
-    public static List<Product> Get()
+    for (var i = 1; i < TOTAL_PRODUCT_COUNT; i += 2)
     {
-      var products = new List<Product>();
-
-      for (int i = 1; i < TOTAL_PRODUCT_COUNT; i = i + 2)
+      products.Add(new Product()
       {
-        products.Add(new Product()
-        {
-          Id = i,
-          Name = $"Product {i}",
-          StoreId = i,
-        });
-        products.Add(new Product()
-        {
-          Id = i + 1,
-          Name = $"Product {i + 1}",
-          StoreId = i,
-        });
-      }
-
-      return products;
+        Id = i,
+        Name = $"Product {i}",
+        StoreId = i,
+      });
+      products.Add(new Product()
+      {
+        Id = i + 1,
+        Name = $"Product {i + 1}",
+        StoreId = i,
+      });
     }
+
+    return products;
   }
 }

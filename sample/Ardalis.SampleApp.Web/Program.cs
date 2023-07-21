@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ardalis.SampleApp.Infrastructure.DataAccess;
+﻿using Ardalis.SampleApp.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Web;
 

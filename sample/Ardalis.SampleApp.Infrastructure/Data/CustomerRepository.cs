@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
+﻿using Ardalis.SampleApp.Core.Entities.CustomerAggregate;
 using Ardalis.SampleApp.Core.Interfaces;
 using Ardalis.SampleApp.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Infrastructure.Data;
 

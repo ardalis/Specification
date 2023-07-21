@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace Ardalis.Specification
+namespace Ardalis.Specification;
+
+public class SelectorNotFoundException : Exception
 {
-  public class SelectorNotFoundException : Exception
+  private const string _message = "The specification must have a selector transform defined. Ensure either Select() or SelectMany() is used in the specification!";
+
+  public SelectorNotFoundException()
+      : base(_message)
   {
-    private const string message = "The specification must have a selector transform defined. Ensure either Select() or SelectMany() is used in the specification!";
+  }
 
-    public SelectorNotFoundException()
-        : base(message)
-    {
-    }
-
-    public SelectorNotFoundException(Exception innerException)
-        : base(message, innerException)
-    {
-    }
+  public SelectorNotFoundException(Exception innerException)
+      : base(_message, innerException)
+  {
   }
 }

@@ -1,55 +1,54 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Ardalis.SampleApp.Core.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Ardalis.SampleApp.Core.Entities.CustomerAggregate
+namespace Ardalis.SampleApp.Core.Entities.CustomerAggregate;
+
+public class Customer : IAggregateRoot
 {
-  public class Customer : IAggregateRoot
+  public int Id { get; private set; }
+  public string Name { get; private set; }
+  public string Email { get; private set; }
+  public string Address { get; private set; }
+
+  public IEnumerable<Store> Stores => _stores.AsEnumerable();
+  private readonly List<Store> _stores = new();
+
+  public Customer(string name, string email, string address)
   {
-    public int Id { get; private set; }
-    public string Name { get; private set; }
-    public string Email { get; private set; }
-    public string Address { get; private set; }
+    Guard.Against.NullOrEmpty(name, nameof(name));
+    Guard.Against.NullOrEmpty(email, nameof(email));
 
-    public IEnumerable<Store> Stores => _stores.AsEnumerable();
-    private readonly List<Store> _stores = new List<Store>();
+    Name = name;
+    Email = email;
+    Address = address;
+  }
 
-    public Customer(string name, string email, string address)
-    {
-      Guard.Against.NullOrEmpty(name, nameof(name));
-      Guard.Against.NullOrEmpty(email, nameof(email));
+  public Store GetStore(int storeId)
+  {
+    var store = Stores.FirstOrDefault(x => x.Id == storeId);
 
-      this.Name = name;
-      this.Email = email;
-      this.Address = address;
-    }
+    Guard.Against.Null(store, nameof(store));
 
-    public Store GetStore(int storeId)
-    {
-      var store = Stores.FirstOrDefault(x => x.Id == storeId);
+    return store;
+  }
 
-      Guard.Against.Null(store, nameof(store));
+  public Store AddStore(Store store)
+  {
+    Guard.Against.Null(store, nameof(store));
 
-      return store;
-    }
+    // Do some other operation while adding it.
 
-    public Store AddStore(Store store)
-    {
-      Guard.Against.Null(store, nameof(store));
+    _stores.Add(store);
 
-      // Do some other operation while adding it.
+    return store;
+  }
 
-      _stores.Add(store);
+  public void DeleteStore(int storeID)
+  {
+    var store = GetStore(storeID);
 
-      return store;
-    }
-
-    public void DeleteStore(int storeID)
-    {
-      var store = GetStore(storeID);
-
-      _stores.Remove(store);
-    }
+    _stores.Remove(store);
   }
 }

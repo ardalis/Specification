@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using Xunit;
 
-namespace Ardalis.Specification.UnitTests
+namespace Ardalis.Specification.UnitTests;
+
+public class DuplicateOrderChainExceptionTests
 {
-  public class DuplicateOrderChainExceptionTests
+  private const string _defaultMessage = "The specification contains more than one Order chain!";
+
+  [Fact]
+  public void ThrowWithDefaultConstructor()
   {
-    private const string defaultMessage = "The specification contains more than one Order chain!";
+    Action action = () => throw new DuplicateOrderChainException();
 
-    [Fact]
-    public void ThrowWithDefaultConstructor()
-    {
-      Action action = () => throw new DuplicateOrderChainException();
+    action.Should().Throw<DuplicateOrderChainException>().WithMessage(_defaultMessage);
+  }
 
-      action.Should().Throw<DuplicateOrderChainException>().WithMessage(defaultMessage);
-    }
+  [Fact]
+  public void ThrowWithInnerException()
+  {
+    var inner = new Exception("test");
+    Action action = () => throw new DuplicateOrderChainException(inner);
 
-    [Fact]
-    public void ThrowWithInnerException()
-    {
-      Exception inner = new Exception("test");
-      Action action = () => throw new DuplicateOrderChainException(inner);
-
-      action.Should().Throw<DuplicateOrderChainException>().WithMessage(defaultMessage).WithInnerException<Exception>().WithMessage("test");
-    }
+    action.Should().Throw<DuplicateOrderChainException>().WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
   }
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace Ardalis.SampleApp.Web.Models;
+﻿namespace Ardalis.SampleApp.Web.Models;
 
 public class CustomerFilterDto : BaseFilterDto
 {

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ardalis.SampleApp.Web.Interfaces;
+﻿using Ardalis.SampleApp.Web.Interfaces;
 using Ardalis.SampleApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ardalis.SampleApp.Web.Controllers;
 

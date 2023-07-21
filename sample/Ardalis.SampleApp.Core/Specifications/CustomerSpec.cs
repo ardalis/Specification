@@ -2,33 +2,32 @@
 using Ardalis.SampleApp.Core.Specifications.Filters;
 using Ardalis.Specification;
 
-namespace Ardalis.SampleApp.Core.Specifications
+namespace Ardalis.SampleApp.Core.Specifications;
+
+/// <summary>
+/// This specification expects 0 to many results
+/// </summary>
+public class CustomerSpec : Specification<Customer>
 {
-  /// <summary>
-  /// This specification expects 0 to many results
-  /// </summary>
-  public class CustomerSpec : Specification<Customer>
+  public CustomerSpec(CustomerFilter filter)
   {
-    public CustomerSpec(CustomerFilter filter)
-    {
-      Query.OrderBy(x => x.Name)
-              .ThenByDescending(x => x.Address);
+    Query.OrderBy(x => x.Name)
+            .ThenByDescending(x => x.Address);
 
-      if (filter.LoadChildren)
-        Query.Include(x => x.Stores);
+    if (filter.LoadChildren)
+      Query.Include(x => x.Stores);
 
-      if (filter.IsPagingEnabled)
-        Query.Skip(PaginationHelper.CalculateSkip(filter))
-             .Take(PaginationHelper.CalculateTake(filter));
+    if (filter.IsPagingEnabled)
+      Query.Skip(PaginationHelper.CalculateSkip(filter))
+           .Take(PaginationHelper.CalculateTake(filter));
 
-      if (!string.IsNullOrEmpty(filter.Name))
-        Query.Where(x => x.Name == filter.Name);
+    if (!string.IsNullOrEmpty(filter.Name))
+      Query.Where(x => x.Name == filter.Name);
 
-      if (!string.IsNullOrEmpty(filter.Email))
-        Query.Where(x => x.Email == filter.Email);
+    if (!string.IsNullOrEmpty(filter.Email))
+      Query.Where(x => x.Email == filter.Email);
 
-      if (!string.IsNullOrEmpty(filter.Address))
-        Query.Search(x => x.Address, "%" + filter.Address + "%");
-    }
+    if (!string.IsNullOrEmpty(filter.Address))
+      Query.Search(x => x.Address, "%" + filter.Address + "%");
   }
 }
