@@ -7,40 +7,40 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture;
 
 public class SharedDatabaseFixture : IDisposable
 {
-  // (docker)
-  public const string _connectionStringDocker = "Data Source=databaseEF6;Initial Catalog=SpecificationEF6TestsDB;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+    // (docker)
+    public const string _connectionStringDocker = "Data Source=databaseEF6;Initial Catalog=SpecificationEF6TestsDB;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
 
-  // (localdb)
-  public const string _connectionStringLocalDb = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEF6TestsDB;ConnectRetryCount=0";
+    // (localdb)
+    public const string _connectionStringLocalDb = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEF6TestsDB;ConnectRetryCount=0";
 
 
-  public SharedDatabaseFixture()
-  {
-    var isLocalDBInstalled = false;
-
-    using (var localDB = new SqlLocalDbApi())
+    public SharedDatabaseFixture()
     {
-      isLocalDBInstalled = localDB.IsLocalDBInstalled();
+        var isLocalDBInstalled = false;
+
+        using (var localDB = new SqlLocalDbApi())
+        {
+            isLocalDBInstalled = localDB.IsLocalDBInstalled();
+        }
+
+        Connection = isLocalDBInstalled
+                    ? new SqlConnection(_connectionStringLocalDb)
+                    : new SqlConnection(_connectionStringDocker);
     }
 
-    Connection = isLocalDBInstalled
-                ? new SqlConnection(_connectionStringLocalDb)
-                : new SqlConnection(_connectionStringDocker);
-  }
+    public DbConnection Connection { get; }
 
-  public DbConnection Connection { get; }
-
-  public TestDbContext CreateContext(DbTransaction transaction = null)
-  {
-    var context = new TestDbContext(Connection);
-
-    if (transaction != null)
+    public TestDbContext CreateContext(DbTransaction transaction = null)
     {
-      context.Database.UseTransaction(transaction);
+        var context = new TestDbContext(Connection);
+
+        if (transaction != null)
+        {
+            context.Database.UseTransaction(transaction);
+        }
+
+        return context;
     }
 
-    return context;
-  }
-
-  public void Dispose() => Connection.Dispose();
+    public void Dispose() => Connection.Dispose();
 }

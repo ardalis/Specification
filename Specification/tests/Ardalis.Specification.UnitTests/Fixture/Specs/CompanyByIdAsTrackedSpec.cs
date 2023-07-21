@@ -2,8 +2,8 @@
 
 public class CompanyByIdAsTrackedSpec : Specification<Company>, ISingleResultSpecification<Company>
 {
-  public CompanyByIdAsTrackedSpec(int id)
-  {
-    Query.Where(company => company.Id == id).AsTracking();
-  }
+    public CompanyByIdAsTrackedSpec(int id)
+    {
+        Query.Where(company => company.Id == id).AsTracking();
+    }
 }

@@ -5,9 +5,9 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture.Config
 
 public class ProductConfiguration : EntityTypeConfiguration<Product>
 {
-  public ProductConfiguration()
-  {
-    ToTable("Product");
-    HasKey(c => c.Id);
-  }
+    public ProductConfiguration()
+    {
+        ToTable("Product");
+        HasKey(c => c.Id);
+    }
 }

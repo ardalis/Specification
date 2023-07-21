@@ -2,8 +2,8 @@
 
 public class StoreNamesSpec : Specification<Store, string?>
 {
-  public StoreNamesSpec()
-  {
-    Query.Select(x => x.Name);
-  }
+    public StoreNamesSpec()
+    {
+        Query.Select(x => x.Name);
+    }
 }

@@ -2,9 +2,9 @@
 
 public class StoreNamesWithPostProcessingActionSpec : Specification<Store, string?>
 {
-  public StoreNamesWithPostProcessingActionSpec()
-  {
-    Query.Select(x => x.Name)
-         .PostProcessingAction(x => x);
-  }
+    public StoreNamesWithPostProcessingActionSpec()
+    {
+        Query.Select(x => x.Name)
+             .PostProcessingAction(x => x);
+    }
 }

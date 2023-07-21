@@ -9,9 +9,9 @@
 /// </typeparam>
 public interface IRepositoryFactory<TRepository>
 {
-  /// <summary>
-  /// Generates a new repository instance
-  /// </summary>
-  /// <returns>The generated repository instance</returns>
-  public TRepository CreateRepository();
+    /// <summary>
+    /// Generates a new repository instance
+    /// </summary>
+    /// <returns>The generated repository instance</returns>
+    public TRepository CreateRepository();
 }

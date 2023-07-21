@@ -2,10 +2,10 @@
 
 public interface ISpecificationBuilder<T, TResult> : ISpecificationBuilder<T>
 {
-  new Specification<T, TResult> Specification { get; }
+    new Specification<T, TResult> Specification { get; }
 }
 
 public interface ISpecificationBuilder<T>
 {
-  Specification<T> Specification { get; }
+    Specification<T> Specification { get; }
 }

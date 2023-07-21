@@ -9,29 +9,29 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests;
 
 public class RepositoryOfT_AnyAsync : IntegrationTestBase
 {
-  public RepositoryOfT_AnyAsync(SharedDatabaseFixture fixture) : base(fixture) { }
+    public RepositoryOfT_AnyAsync(SharedDatabaseFixture fixture) : base(fixture) { }
 
-  [Fact]
-  public async Task ReturnsTrueOnStoresRecords_WithoutSpec()
-  {
-    var result = await storeRepository.AnyAsync();
+    [Fact]
+    public async Task ReturnsTrueOnStoresRecords_WithoutSpec()
+    {
+        var result = await storeRepository.AnyAsync();
 
-    result.Should().BeTrue();
-  }
+        result.Should().BeTrue();
+    }
 
-  [Fact]
-  public async Task ReturnsTrue_GivenStoreByIdSpecWithValidStore()
-  {
-    var result = await storeRepository.AnyAsync(new StoreByIdSpec(StoreSeed.VALID_STORE_ID));
+    [Fact]
+    public async Task ReturnsTrue_GivenStoreByIdSpecWithValidStore()
+    {
+        var result = await storeRepository.AnyAsync(new StoreByIdSpec(StoreSeed.VALID_STORE_ID));
 
-    result.Should().BeTrue();
-  }
+        result.Should().BeTrue();
+    }
 
-  [Fact]
-  public async Task ReturnsFalse_GivenStoreByIdSpecWithInvalidStore()
-  {
-    var result = await storeRepository.AnyAsync(new StoreByIdSpec(0));
+    [Fact]
+    public async Task ReturnsFalse_GivenStoreByIdSpecWithInvalidStore()
+    {
+        var result = await storeRepository.AnyAsync(new StoreByIdSpec(0));
 
-    result.Should().BeFalse();
-  }
+        result.Should().BeFalse();
+    }
 }

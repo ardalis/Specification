@@ -14,47 +14,47 @@ namespace Ardalis.SampleApp.Web;
 
 public class Startup
 {
-  public Startup(IConfiguration configuration)
-  {
-    Configuration = configuration;
-  }
-
-  public IConfiguration Configuration { get; }
-
-  // This method gets called by the runtime. Use this method to add services to the container.
-  public void ConfigureServices(IServiceCollection services)
-  {
-    services.AddDbContext<SampleDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
-
-    services.AddAutoMapper(typeof(AutomapperMaps));
-
-    services.AddScoped(typeof(IReadRepository<>), typeof(CachedRepository<>));
-    services.AddScoped(typeof(MyRepository<>));
-    services.AddScoped<ICustomerUiService, CustomerUiService>();
-
-    //            services.AddControllers();
-    services.AddMvc();
-    services.AddLogging();
-  }
-
-  // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-  public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-  {
-    if (env.IsDevelopment())
+    public Startup(IConfiguration configuration)
     {
-      app.UseDeveloperExceptionPage();
+        Configuration = configuration;
     }
 
-    app.UseHttpsRedirection();
+    public IConfiguration Configuration { get; }
 
-    app.UseRouting();
-
-    app.UseAuthorization();
-
-    app.UseEndpoints(endpoints =>
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
     {
-      endpoints.MapControllers();
-      endpoints.MapRazorPages();
-    });
-  }
+        services.AddDbContext<SampleDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+
+        services.AddAutoMapper(typeof(AutomapperMaps));
+
+        services.AddScoped(typeof(IReadRepository<>), typeof(CachedRepository<>));
+        services.AddScoped(typeof(MyRepository<>));
+        services.AddScoped<ICustomerUiService, CustomerUiService>();
+
+        //            services.AddControllers();
+        services.AddMvc();
+        services.AddLogging();
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapRazorPages();
+        });
+    }
 }

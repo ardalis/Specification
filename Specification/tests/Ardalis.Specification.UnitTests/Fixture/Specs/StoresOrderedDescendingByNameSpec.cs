@@ -2,8 +2,8 @@
 
 public class StoresOrderedDescendingByNameSpec : Specification<Store>
 {
-  public StoresOrderedDescendingByNameSpec()
-  {
-    Query.OrderByDescending(x => x.Name);
-  }
+    public StoresOrderedDescendingByNameSpec()
+    {
+        Query.OrderByDescending(x => x.Name);
+    }
 }

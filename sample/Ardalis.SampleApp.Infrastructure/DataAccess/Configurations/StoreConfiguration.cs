@@ -6,10 +6,10 @@ namespace Ardalis.SampleApp.Infrastructure.DataAccess.Configurations;
 
 public class StoreConfiguration : IEntityTypeConfiguration<Store>
 {
-  public void Configure(EntityTypeBuilder<Store> builder)
-  {
-    builder.ToTable(nameof(Store));
+    public void Configure(EntityTypeBuilder<Store> builder)
+    {
+        builder.ToTable(nameof(Store));
 
-    builder.HasKey(x => x.Id);
-  }
+        builder.HasKey(x => x.Id);
+    }
 }

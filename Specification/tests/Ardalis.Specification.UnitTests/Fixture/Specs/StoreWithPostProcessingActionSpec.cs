@@ -2,8 +2,8 @@
 
 public class StoreWithPostProcessingActionSpec : Specification<Store>
 {
-  public StoreWithPostProcessingActionSpec()
-  {
-    Query.PostProcessingAction(x => x);
-  }
+    public StoreWithPostProcessingActionSpec()
+    {
+        Query.PostProcessingAction(x => x);
+    }
 }

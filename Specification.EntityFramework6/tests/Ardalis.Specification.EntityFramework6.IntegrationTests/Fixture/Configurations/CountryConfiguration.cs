@@ -5,9 +5,9 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture.Config
 
 public class CountryConfiguration : EntityTypeConfiguration<Country>
 {
-  public CountryConfiguration()
-  {
-    ToTable("Country");
-    HasKey(c => c.Id);
-  }
+    public CountryConfiguration()
+    {
+        ToTable("Country");
+        HasKey(c => c.Id);
+    }
 }

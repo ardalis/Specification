@@ -7,53 +7,53 @@ namespace Ardalis.Specification.EntityFrameworkCore;
 
 public static class SearchExtension
 {
-  private static readonly MethodInfo _likeMethodInfo = typeof(DbFunctionsExtensions)
-      .GetMethod(nameof(DbFunctionsExtensions.Like), new Type[] { typeof(DbFunctions), typeof(string), typeof(string) })
-      ?? throw new TargetException("The EF.Functions.Like not found");
+    private static readonly MethodInfo _likeMethodInfo = typeof(DbFunctionsExtensions)
+        .GetMethod(nameof(DbFunctionsExtensions.Like), new Type[] { typeof(DbFunctions), typeof(string), typeof(string) })
+        ?? throw new TargetException("The EF.Functions.Like not found");
 
-  private static readonly MemberExpression _functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))
-      ?? throw new TargetException("The EF.Functions not found!"));
+    private static readonly MemberExpression _functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))
+        ?? throw new TargetException("The EF.Functions not found!"));
 
-  /// <summary>
-  /// Filters <paramref name="source"/> by applying an 'SQL LIKE' operation to it.
-  /// </summary>
-  /// <typeparam name="T">The type being queried against.</typeparam>
-  /// <param name="source">The sequence of <typeparamref name="T"/></param>
-  /// <param name="criterias">
-  /// <list type="bullet">
-  ///     <item>Selector, the property to apply the SQL LIKE against.</item>
-  ///     <item>SearchTerm, the value to use for the SQL LIKE.</item>
-  /// </list>
-  /// </param>
-  /// <returns></returns>
-  public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> criterias)
-  {
-    Expression? expr = null;
-    var parameter = Expression.Parameter(typeof(T), "x");
-
-    foreach (var criteria in criterias)
+    /// <summary>
+    /// Filters <paramref name="source"/> by applying an 'SQL LIKE' operation to it.
+    /// </summary>
+    /// <typeparam name="T">The type being queried against.</typeparam>
+    /// <param name="source">The sequence of <typeparamref name="T"/></param>
+    /// <param name="criterias">
+    /// <list type="bullet">
+    ///     <item>Selector, the property to apply the SQL LIKE against.</item>
+    ///     <item>SearchTerm, the value to use for the SQL LIKE.</item>
+    /// </list>
+    /// </param>
+    /// <returns></returns>
+    public static IQueryable<T> Search<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> criterias)
     {
-      if (string.IsNullOrEmpty(criteria.SearchTerm))
-        continue;
+        Expression? expr = null;
+        var parameter = Expression.Parameter(typeof(T), "x");
 
-      var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter) as LambdaExpression;
-      _ = propertySelector ?? throw new InvalidExpressionException();
+        foreach (var criteria in criterias)
+        {
+            if (string.IsNullOrEmpty(criteria.SearchTerm))
+                continue;
 
-      // Create a closure
-      var searchTermAsExpression = ((Expression<Func<string>>)(() => criteria.SearchTerm)).Body;
+            var propertySelector = ParameterReplacerVisitor.Replace(criteria.Selector, criteria.Selector.Parameters[0], parameter) as LambdaExpression;
+            _ = propertySelector ?? throw new InvalidExpressionException();
 
-      var likeExpression = Expression.Call(
-                              null,
-                              _likeMethodInfo,
-                              _functions,
-                              propertySelector.Body,
-                              searchTermAsExpression);
+            // Create a closure
+            var searchTermAsExpression = ((Expression<Func<string>>)(() => criteria.SearchTerm)).Body;
 
-      expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
+            var likeExpression = Expression.Call(
+                                    null,
+                                    _likeMethodInfo,
+                                    _functions,
+                                    propertySelector.Body,
+                                    searchTermAsExpression);
+
+            expr = expr == null ? (Expression)likeExpression : Expression.OrElse(expr, likeExpression);
+        }
+
+        return expr == null
+            ? source
+            : source.Where(Expression.Lambda<Func<T, bool>>(expr, parameter));
     }
-
-    return expr == null
-        ? source
-        : source.Where(Expression.Lambda<Func<T, bool>>(expr, parameter));
-  }
 }

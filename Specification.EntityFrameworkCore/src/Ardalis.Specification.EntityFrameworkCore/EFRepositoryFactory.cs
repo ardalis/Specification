@@ -14,21 +14,21 @@ public class EFRepositoryFactory<TRepository, TConcreteRepository, TContext> : I
   where TConcreteRepository : TRepository
   where TContext : DbContext
 {
-  private readonly IDbContextFactory<TContext> _dbContextFactory;
+    private readonly IDbContextFactory<TContext> _dbContextFactory;
 
-  /// <summary>
-  /// Initialises a new instance of the EFRepositoryFactory
-  /// </summary>
-  /// <param name="dbContextFactory">The IDbContextFactory to use to generate the TContext</param>
-  public EFRepositoryFactory(IDbContextFactory<TContext> dbContextFactory)
-  {
-    _dbContextFactory = dbContextFactory;
-  }
+    /// <summary>
+    /// Initialises a new instance of the EFRepositoryFactory
+    /// </summary>
+    /// <param name="dbContextFactory">The IDbContextFactory to use to generate the TContext</param>
+    public EFRepositoryFactory(IDbContextFactory<TContext> dbContextFactory)
+    {
+        _dbContextFactory = dbContextFactory;
+    }
 
-  /// <inheritdoc />
-  public TRepository CreateRepository()
-  {
-    var args = new object[] { _dbContextFactory.CreateDbContext() };
-    return (TRepository)Activator.CreateInstance(typeof(TConcreteRepository), args)!;
-  }
+    /// <inheritdoc />
+    public TRepository CreateRepository()
+    {
+        var args = new object[] { _dbContextFactory.CreateDbContext() };
+        return (TRepository)Activator.CreateInstance(typeof(TConcreteRepository), args)!;
+    }
 }

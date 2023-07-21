@@ -19,7 +19,8 @@ indent_size = 2
 
 # Code files
 [*.{cs,csx,vb,vbx}]
-indent_size = 2
+indent_size = 4
+tab_width = 4
 insert_final_newline = true
 charset = utf-8-bom
 ###############################
@@ -123,8 +124,6 @@ dotnet_naming_rule.members_should_be_pascal_case.style = non_private_static_fiel
 dotnet_naming_symbols.all_members.applicable_kinds = *
 dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
-tab_width = 2
-end_of_line = crlf
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_compound_assignment = true:warning
 dotnet_style_prefer_simplified_interpolation = true:warning

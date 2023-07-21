@@ -2,8 +2,8 @@
 
 public class StoreIncludeProductsSpec : Specification<Store>
 {
-  public StoreIncludeProductsSpec()
-  {
-    Query.Include(x => x.Products);
-  }
+    public StoreIncludeProductsSpec()
+    {
+        Query.Include(x => x.Products);
+    }
 }

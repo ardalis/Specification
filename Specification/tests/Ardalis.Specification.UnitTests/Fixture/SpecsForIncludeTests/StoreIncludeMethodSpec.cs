@@ -2,8 +2,8 @@
 
 public class StoreIncludeMethodSpec : Specification<Store>
 {
-  public StoreIncludeMethodSpec()
-  {
-    Query.Include(x => Store.GetSomethingFromStore());
-  }
+    public StoreIncludeMethodSpec()
+    {
+        Query.Include(x => Store.GetSomethingFromStore());
+    }
 }

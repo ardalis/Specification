@@ -2,8 +2,8 @@
 
 public class StoreIncludeAddressSpec : Specification<Store>
 {
-  public StoreIncludeAddressSpec()
-  {
-    Query.Include(x => x.Address);
-  }
+    public StoreIncludeAddressSpec()
+    {
+        Query.Include(x => x.Address);
+    }
 }

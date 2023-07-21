@@ -2,8 +2,8 @@
 
 public class CompanyByIdSpec : Specification<Company>, ISingleResultSpecification
 {
-  public CompanyByIdSpec(int id)
-  {
-    Query.Where(company => company.Id == id);
-  }
+    public CompanyByIdSpec(int id)
+    {
+        Query.Where(company => company.Id == id);
+    }
 }

@@ -8,10 +8,10 @@ namespace Ardalis.SampleApp.Core.Specifications;
 /// </summary>
 public class CustomerByNameSpec : SingleResultSpecification<Customer>
 {
-  public CustomerByNameSpec(string name)
-  {
-    Query.Where(x => x.Name == name)
-         .OrderBy(x => x.Name)
-            .ThenByDescending(x => x.Address);
-  }
+    public CustomerByNameSpec(string name)
+    {
+        Query.Where(x => x.Name == name)
+             .OrderBy(x => x.Name)
+                .ThenByDescending(x => x.Address);
+    }
 }

@@ -2,8 +2,8 @@
 
 public class StoreProductNamesEmptySpec : Specification<Store, string?>
 {
-  public StoreProductNamesEmptySpec()
-  {
+    public StoreProductNamesEmptySpec()
+    {
 
-  }
+    }
 }

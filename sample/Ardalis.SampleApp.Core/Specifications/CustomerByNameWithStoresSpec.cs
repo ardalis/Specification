@@ -8,10 +8,10 @@ namespace Ardalis.SampleApp.Core.Specifications;
 /// </summary>
 public class CustomerByNameWithStoresSpec : SingleResultSpecification<Customer>
 {
-  public CustomerByNameWithStoresSpec(string name)
-  {
-    Query.Where(x => x.Name == name)
-        .Include(x => x.Stores)
-        .EnableCache(nameof(CustomerByNameWithStoresSpec), name);
-  }
+    public CustomerByNameWithStoresSpec(string name)
+    {
+        Query.Where(x => x.Name == name)
+            .Include(x => x.Stores)
+            .EnableCache(nameof(CustomerByNameWithStoresSpec), name);
+    }
 }

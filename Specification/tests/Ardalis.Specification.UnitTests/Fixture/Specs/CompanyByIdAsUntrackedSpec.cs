@@ -2,8 +2,8 @@
 
 public class CompanyByIdAsUntrackedSpec : Specification<Company>, ISingleResultSpecification
 {
-  public CompanyByIdAsUntrackedSpec(int id)
-  {
-    Query.Where(company => company.Id == id).AsNoTracking();
-  }
+    public CompanyByIdAsUntrackedSpec(int id)
+    {
+        Query.Where(company => company.Id == id).AsNoTracking();
+    }
 }

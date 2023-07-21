@@ -5,13 +5,13 @@ namespace Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
 public class CompanySeed
 {
 #pragma warning disable IDE1006 // Naming Styles
-  public const int VALID_COMPANY_ID = 1;
-  public const string VALID_COMPANY_NAME = "Company 1";
+    public const int VALID_COMPANY_ID = 1;
+    public const string VALID_COMPANY_NAME = "Company 1";
 #pragma warning restore IDE1006 // Naming Styles
 
-  public static List<Company> Get()
-  {
-    var companies = new List<Company>
+    public static List<Company> Get()
+    {
+        var companies = new List<Company>
     {
       new Company()
       {
@@ -35,6 +35,6 @@ public class CompanySeed
       }
     };
 
-    return companies;
-  }
+        return companies;
+    }
 }
