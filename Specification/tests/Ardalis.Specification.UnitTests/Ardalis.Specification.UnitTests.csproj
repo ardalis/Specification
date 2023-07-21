@@ -25,7 +25,7 @@
     <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
     <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
   </ItemGroup>
   
