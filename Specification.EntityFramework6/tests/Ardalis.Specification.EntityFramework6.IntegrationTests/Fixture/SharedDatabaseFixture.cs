@@ -7,12 +7,11 @@ namespace Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture;
 
 public class SharedDatabaseFixture : IDisposable
 {
-    // (docker)
-    public const string _connectionStringDocker = "Data Source=databaseEF6;Initial Catalog=SpecificationEF6TestsDB;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!";
+    public const string _connectionStringDocker =
+        "Data Source=databaseEF;Initial Catalog=SpecificationEF6TestsDB;PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!;ConnectRetryCount=0;";
 
-    // (localdb)
-    public const string _connectionStringLocalDb = "Server=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEF6TestsDB;ConnectRetryCount=0";
-
+    public const string _connectionStringLocalDb = 
+        "Data Source=(localdb)\\mssqllocaldb;Integrated Security=SSPI;Initial Catalog=SpecificationEF6TestsDB;ConnectRetryCount=0;";
 
     public SharedDatabaseFixture()
     {

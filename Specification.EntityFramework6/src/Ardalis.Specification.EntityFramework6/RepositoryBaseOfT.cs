@@ -176,6 +176,14 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         return await _dbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
+#if NET6_0_OR_GREATER
+    /// <inheritdoc/>
+    public virtual IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification)
+    {
+        throw new NotImplementedException();
+    }
+#endif
+
     /// <summary>
     /// Filters the entities  of <typeparamref name="T"/>, to those that match the encapsulated query logic of the
     /// <paramref name="specification"/>.
