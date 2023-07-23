@@ -1,0 +1,25 @@
+name: Release to Nuget
+
+on: 
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Build
+      run: dotnet build ci.slnf --configuration Release
+    - name: Test
+      run: dotnet test ci.slnf --configuration Release --no-build --no-restore
+    - name: Pack
+      run: dotnet pack ci.slnf --configuration Release --no-build --no-restore --output .
+    - name: Push to NuGet
+      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

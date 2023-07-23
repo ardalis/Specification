@@ -1,0 +1,13 @@
+{
+  "solution": {
+    "path": "Ardalis.Specification.sln",
+    "projects": [
+      "Specification.EntityFramework6\\src\\Ardalis.Specification.EntityFramework6\\Ardalis.Specification.EntityFramework6.csproj",
+      "Specification.EntityFramework6\\tests\\Ardalis.Specification.EntityFramework6.IntegrationTests\\Ardalis.Specification.EntityFramework6.IntegrationTests.csproj",
+      "Specification.EntityFrameworkCore\\src\\Ardalis.Specification.EntityFrameworkCore\\Ardalis.Specification.EntityFrameworkCore.csproj",
+      "Specification.EntityFrameworkCore\\tests\\Ardalis.Specification.EntityFrameworkCore.IntegrationTests\\Ardalis.Specification.EntityFrameworkCore.IntegrationTests.csproj",
+      "Specification\\src\\Ardalis.Specification\\Ardalis.Specification.csproj",
+      "Specification\\tests\\Ardalis.Specification.UnitTests\\Ardalis.Specification.UnitTests.csproj"
+    ]
+  }
+}
