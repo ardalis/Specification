@@ -1,0 +1,34 @@
+name: Build and Test
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Specification/**'
+      - 'Specification.EntityFrameworkCore/**'
+      - 'Specification.EntityFramework6/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'Specification/**'
+      - 'Specification.EntityFrameworkCore/**'
+      - 'Specification.EntityFramework6/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Build
+      run: dotnet build ci.slnf --configuration Release
+    - name: Test
+      run: dotnet test ci.slnf --configuration Release --no-build --no-restore
