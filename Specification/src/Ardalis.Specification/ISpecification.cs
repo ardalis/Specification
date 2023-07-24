@@ -15,7 +15,7 @@ public interface ISpecification<T, TResult> : ISpecification<T>
     new ISpecificationBuilder<T, TResult> Query { get; }
 
     /// <summary>
-    /// The Select transform function to apply to the <typeparamref name="T"/> element.
+    /// The Select transform function to apply to the <typeparamref name="T"/> element. 
     /// </summary>
     Expression<Func<T, TResult>>? Selector { get; }
 
