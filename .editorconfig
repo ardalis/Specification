@@ -9,6 +9,10 @@ indent_style = space
 # Standard properties
 end_of_line = crlf
 
+# bash scripts
+[*.{sh,bash}]
+end_of_line = lf
+
 # XML project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
