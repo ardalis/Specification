@@ -101,3 +101,10 @@ Ardalis.Specification by default sets the minimum required version.
 Which is: `EF Core 6.0.6` and `EF 6.4.4`.
 
 But you are free to explicitly set higher versions if you like.
+
+## ISingleResultSpecification is Obsolete
+
+I'm getting a warning or error telling me that `ISingleResultSpecification` is obsolete. What am I supposed to do to fix it?
+
+> You can just remove the interface usage from any specification that is using it. It was useful with `GetBySpec` calls in earlier versions of the library but newer versions use the more canonical `FirstOrDefault` or `SingleOrDefault` methods on repositories whenever a single result is desired or expected (which eliminates the need for the interface).
+
