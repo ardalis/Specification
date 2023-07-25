@@ -1,7 +1,7 @@
 ﻿using Ardalis.Sample.Domain.Filters;
 using System.Text.Json.Serialization;
 
-namespace Ardalis.Sample.App2;
+namespace Ardalis.Sample.App3;
 
 public class Pagination
 {

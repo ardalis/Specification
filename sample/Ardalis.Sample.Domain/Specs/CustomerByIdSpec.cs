@@ -2,7 +2,7 @@
 
 namespace Ardalis.Sample.Domain.Specs;
 
-public class CustomerByIdSpec : Specification<Customer>
+public class CustomerByIdSpec : SingleResultSpecification<Customer>
 {
     public CustomerByIdSpec(int id)
     {
