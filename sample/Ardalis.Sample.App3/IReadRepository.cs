@@ -1,7 +1,7 @@
 ﻿using Ardalis.Sample.Domain.Filters;
 using Ardalis.Specification;
 
-namespace Ardalis.Sample.App2;
+namespace Ardalis.Sample.App3;
 
 public interface IReadRepository<T> where T : class
 {

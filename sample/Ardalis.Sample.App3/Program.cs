@@ -1,23 +1,25 @@
-﻿using Ardalis.Sample.Domain;
+﻿using Ardalis.Sample.App3;
+using Ardalis.Sample.Domain;
+using Ardalis.Sample.Domain.Filters;
 using Ardalis.Sample.Domain.Specs;
-using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
-// Sample Application 1
-// This application demonstrates the most basic usage of specifications.
-// We're utilizing the provided built-in repositories in this sample
-// - Define your IRepository interface and inherit from IRepositoryBase
-// - Define your Repository and inherit from RepositoryBase. Pass your concrete DbContext to the base class.
-// - Register the interface in DI
-// You're good to go!
+// Sample Application 2
+// The focus of this library are not the repositories. We're providing the built-in repository implementations just as a convenience.
+// You can certainly have your own repository implementations and tweak them per your needs.
+// In this sample we demonstrate how to do that, and some other more advanced features.
+// - Defined custom RepositoryBase implementation (also added an additional evaluator)
+// - Defined separate IRepository and IReadRepository interfaces. IRepository requires IAggregateRoot.
+// - Defined pagination constructs.
+// - We're utilizing Automapper projections in our repository and defined ProjectTo methods for the IReadRepository. These methods return paginated response automatically.
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DbConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddEndpointsApiExplorer();
@@ -28,21 +30,21 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 
-app.MapGet("/customers", async (IRepository<Customer> repo, IMapper mapper, CancellationToken cancellationToken) =>
+// Projecting directly to response DTOs. In addition the response is paginated and wrapped in PagedResponse<T>.
+app.MapGet("/customers", async (IReadRepository<Customer> repo, [AsParameters] CustomerFilter filter, CancellationToken cancellationToken) =>
 {
-    var spec = new CustomerSpec();
-    var customers = await repo.ListAsync(spec, cancellationToken);
-    var customersDto = mapper.Map<List<CustomerDto>>(customers);
-    return Results.Ok(customersDto);
+    var spec = new CustomerSpec(filter);
+    var result = await repo.ProjectToListAsync<CustomerDto>(spec, filter, cancellationToken);
+    return Results.Ok(result);
 });
 
-app.MapGet("/customers/{id}", async (IRepository<Customer> repo, IMapper mapper, int id, CancellationToken cancellationToken) =>
+// Projecting directly to response DTOs.
+app.MapGet("/customers/{id}", async (IReadRepository<Customer> repo, int id, CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdSpec(id);
-    var customer = await repo.FirstOrDefaultAsync(spec, cancellationToken);
-    if (customer is null) return Results.NotFound();
-    var customerDto = mapper.Map<CustomerDto>(customer);
-    return Results.Ok(customerDto);
+    var result = await repo.ProjectToFirstOrDefaultAsync<CustomerDto>(spec, cancellationToken);
+    if (result is null) return Results.NotFound();
+    return Results.Ok(result);
 });
 
 app.MapPost("/customers", async (IRepository<Customer> repo, IMapper mapper, CustomerCreateDto customerCreateDto, CancellationToken cancellationToken) =>
@@ -87,12 +89,16 @@ public class AppDbContext : DbContext
     }
 }
 
-public interface IRepository<T> : IRepositoryBase<T> where T : class
+public class Repository<T> : RepositoryBase<T>, IRepository<T> where T : class, IAggregateRoot
 {
+    public Repository(AppDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    {
+    }
 }
-public class Repository<T> : RepositoryBase<T>, IRepository<T> where T : class
+
+public class ReadRepository<T> : RepositoryBase<T>, IReadRepository<T> where T : class
 {
-    public Repository(AppDbContext dbContext) : base(dbContext)
+    public ReadRepository(AppDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 }

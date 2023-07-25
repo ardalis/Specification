@@ -5,7 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ardalis.Sample.App2;
+namespace Ardalis.Sample.App3;
 
 public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 {
@@ -13,6 +13,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     private readonly AutoMapper.IConfigurationProvider _configurationProvider;
     protected ISpecificationEvaluator Evaluator { get; }
 
+    // We have a custom evaluator for QueryTag, therefore we're passing our custom specification evaluator
     protected RepositoryBase(DbContext dbContext, IMapper mapper)
         : this(dbContext, AppSpecificationEvaluator.Instance, mapper)
     {
@@ -43,7 +44,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
-        //dbContext.Set<T>().Update(entity);
+        _dbContext.Set<T>().Update(entity);
 
         await SaveChangesAsync(cancellationToken);
     }

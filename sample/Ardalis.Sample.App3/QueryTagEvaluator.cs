@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ardalis.Sample.App2;
+namespace Ardalis.Sample.App3;
 
 public class QueryTagEvaluator : IEvaluator
 {
