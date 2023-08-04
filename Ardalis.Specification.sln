@@ -18,7 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{A74A4C
 		Dockerfile = Dockerfile
 		run-tests-docker.bat = run-tests-docker.bat
 		run-tests-docker.sh = run-tests-docker.sh
-		run-tests.sh = run-tests.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{C443291A-7311-455F-9AC6-995EB29DD6D2}"
@@ -26,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		README.md = README.md
+		run-tests.sh = run-tests.sh
+		setup-sqllocaldb.ps1 = setup-sqllocaldb.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}"
@@ -46,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Sample.App1", "samp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Sample.App3", "sample\Ardalis.Sample.App3\Ardalis.Sample.App3.csproj", "{ECBFDD7F-E60F-48C4-8279-DD6B3B03D27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Sample.App2", "sample\Ardalis.Sample.App2\Ardalis.Sample.App2.csproj", "{BDEF2EFE-6690-4022-86EF-AF7626366AD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Sample.App2", "sample\Ardalis.Sample.App2\Ardalis.Sample.App2.csproj", "{BDEF2EFE-6690-4022-86EF-AF7626366AD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
