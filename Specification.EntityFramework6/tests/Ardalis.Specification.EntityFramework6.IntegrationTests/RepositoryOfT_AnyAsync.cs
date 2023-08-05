@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
 using Ardalis.Specification.UnitTests.Fixture.Specs;
 using FluentAssertions;
@@ -7,14 +8,23 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFramework6.IntegrationTests;
 
-public class RepositoryOfT_AnyAsync : IntegrationTestBase
+[Collection("ReadCollection")]
+public class RepositoryOfT_AnyAsync
 {
-    public RepositoryOfT_AnyAsync(SharedDatabaseFixture fixture) : base(fixture) { }
+    private readonly string _connectionString;
+
+    public RepositoryOfT_AnyAsync(DatabaseFixture fixture)
+    {
+        _connectionString = fixture.ConnectionString;
+    }
 
     [Fact]
     public async Task ReturnsTrueOnStoresRecords_WithoutSpec()
     {
-        var result = await storeRepository.AnyAsync();
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.AnyAsync();
 
         result.Should().BeTrue();
     }
@@ -22,7 +32,10 @@ public class RepositoryOfT_AnyAsync : IntegrationTestBase
     [Fact]
     public async Task ReturnsTrue_GivenStoreByIdSpecWithValidStore()
     {
-        var result = await storeRepository.AnyAsync(new StoreByIdSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.AnyAsync(new StoreByIdSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().BeTrue();
     }
@@ -30,7 +43,10 @@ public class RepositoryOfT_AnyAsync : IntegrationTestBase
     [Fact]
     public async Task ReturnsFalse_GivenStoreByIdSpecWithInvalidStore()
     {
-        var result = await storeRepository.AnyAsync(new StoreByIdSpec(0));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.AnyAsync(new StoreByIdSpec(0));
 
         result.Should().BeFalse();
     }

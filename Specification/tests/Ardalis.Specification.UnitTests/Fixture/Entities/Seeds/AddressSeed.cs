@@ -14,7 +14,7 @@ public class AddressSeed
 
         for (var i = 1; i <= 100; i++)
         {
-            addresses.Add(new Address()
+            addresses.Add(new()
             {
                 Id = i,
                 Street = $"Street {i}",

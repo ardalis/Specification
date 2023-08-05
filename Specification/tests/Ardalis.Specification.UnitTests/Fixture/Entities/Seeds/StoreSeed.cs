@@ -34,7 +34,7 @@ public class StoreSeed
 
         for (var i = 1; i <= 50; i++)
         {
-            stores.Add(new Store()
+            stores.Add(new()
             {
                 Id = i,
                 Name = $"Store {i}",
@@ -45,7 +45,7 @@ public class StoreSeed
         }
         for (var i = 51; i <= 100; i++)
         {
-            stores.Add(new Store()
+            stores.Add(new()
             {
                 Id = i,
                 Name = $"Store {i}",
@@ -66,10 +66,5 @@ public class StoreSeed
         stores[50 - 1].Name = "ABCEFGH";
 
         return stores;
-    }
-
-    internal static IQueryable<Store> AsQueryable()
-    {
-        return Get().AsQueryable();
     }
 }

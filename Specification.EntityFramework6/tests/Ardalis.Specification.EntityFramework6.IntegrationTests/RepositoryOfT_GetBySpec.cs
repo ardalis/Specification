@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification.EntityFramework6.IntegrationTests.Fixture;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
 using Ardalis.Specification.UnitTests.Fixture.Specs;
 using FluentAssertions;
@@ -9,14 +10,23 @@ using Xunit;
 
 namespace Ardalis.Specification.EntityFramework6.IntegrationTests;
 
-public class RepositoryOfT_GetBySpec : IntegrationTestBase
+[Collection("ReadCollection")]
+public class RepositoryOfT_GetBySpec
 {
-    public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture) { }
+    private readonly string _connectionString;
+
+    public RepositoryOfT_GetBySpec(DatabaseFixture fixture)
+    {
+        _connectionString = fixture.ConnectionString;
+    }
 
     [Fact]
     public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -26,7 +36,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsStoreWithAddress_GivenStoreByIdIncludeAddressSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -36,7 +49,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsStoreWithAddressAndProduct_GivenStoreByIdIncludeAddressAndProductsSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -47,7 +63,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsUsingStringSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -57,7 +76,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsCompanyWithStoresAndAddress_GivenCompanyByIdIncludeStoresThenIncludeAddressSpec()
     {
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Company>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -68,7 +90,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsCompanyWithStoresAndProducts_GivenCompanyByIdIncludeStoresThenIncludeProductsSpec()
     {
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Company>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -79,9 +104,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsUntrackedCompany_GivenCompanyByIdAsUntrackedSpec()
     {
-        //dbContext.ChangeTracker.Clear();
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Company>(dbContext);
 
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID));
+        var result = await repo.GetBySpecAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -91,7 +117,10 @@ public class RepositoryOfT_GetBySpec : IntegrationTestBase
     [Fact]
     public async Task ReturnsStoreWithCompanyAndCountryAndStoresForCompany_GivenStoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_connectionString);
+        var repo = new Repository<Store>(dbContext);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
