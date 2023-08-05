@@ -20,6 +20,8 @@ public class DatabaseFixture : IDisposable
                 : $"Data Source=databaseEF;Initial Catalog={databaseName};PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!;ConnectRetryCount=0;TrustServerCertificate=Yes;";
         }
 
+        Console.WriteLine($"Connection string: {ConnectionString}");
+
         DbContextOptions = new DbContextOptionsBuilder<TestDbContext>()
             .UseSqlServer(ConnectionString)
             .EnableSensitiveDataLogging()
