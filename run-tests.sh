@@ -8,6 +8,6 @@ if [ "$testtarget" = "" ]; then
 testtarget="ci.slnf"
 fi
 
-dotnet build "$testtarget" --configuration release
-dotnet test "$testtarget" --configuration release --no-build --no-restore --collect:"xplat code coverage"
+dotnet build "$testtarget" --configuration Release
+dotnet test "$testtarget" --configuration Release --no-build --no-restore --collect:"xplat code coverage"
 reportgenerator -reports:Specification*/**/coverage.cobertura.xml -targetdir:TestResults -assemblyfilters:"-*Tests*;"

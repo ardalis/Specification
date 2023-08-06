@@ -10,6 +10,6 @@ RUN /bin/bash -c 'ls -la /wait; chmod +x /wait; ls -la /wait'
 RUN dotnet tool install dotnet-reportgenerator-globaltool --version 5.1.23 --tool-path /tools
 
 CMD /wait && \
-dotnet build ci.slnf --configuration release && \
-dotnet test -f net7.0 ci.slnf --configuration release --no-build --no-restore --collect:"xplat code coverage" && \
+dotnet build ci.slnf --configuration Release && \
+dotnet test -f net7.0 ci.slnf --configuration Release --no-build --no-restore --collect:"xplat code coverage" && \
 tools/reportgenerator -reports:Specification*/**/coverage.cobertura.xml -targetdir:/var/temp/TestResults -assemblyfilters:"-*Tests*;"

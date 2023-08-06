@@ -15,8 +15,8 @@ public class DatabaseFixture : IDisposable
         using (var localDB = new SqlLocalDbApi())
         {
             ConnectionString = localDB.IsLocalDBInstalled()
-                ? $"Data Source=(localdb)\\mssqllocaldb;Initial Catalog={databaseName};Integrated Security=SSPI;ConnectRetryCount=1;"
-                : $"Data Source=databaseEF;Initial Catalog={databaseName};PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!;ConnectRetryCount=1;";
+                ? $"Data Source=(localdb)\\mssqllocaldb;Initial Catalog={databaseName};Integrated Security=SSPI;"
+                : $"Data Source=databaseEF;Initial Catalog={databaseName};PersistSecurityInfo=True;User ID=sa;Password=P@ssW0rd!;";
         }
 
         Console.WriteLine($"Connection string: {ConnectionString}");
