@@ -21,8 +21,8 @@ public class EFRepositoryFactoryTests : IClassFixture<DatabaseFixture>
         _dbContextOptions = fixture.DbContextOptions;
 
         _serviceProvider = new ServiceCollection()
-          .AddDbContextFactory<TestDbContext>((builder => builder.UseSqlServer(fixture.ConnectionString)),
-            ServiceLifetime.Transient).BuildServiceProvider();
+          .AddDbContextFactory<TestDbContext>((builder => builder.UseSqlServer(fixture.ConnectionString)), ServiceLifetime.Transient)
+          .BuildServiceProvider();
 
         _contextFactory = _serviceProvider.GetService<IDbContextFactory<TestDbContext>>();
         _repositoryFactory = new EFRepositoryFactory<IRepositoryBase<Company>, Repository<Company>, TestDbContext>(_contextFactory);
