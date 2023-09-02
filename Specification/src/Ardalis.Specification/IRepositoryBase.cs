@@ -65,6 +65,14 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Removes the all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    /// <paramref name="specification"/>, from the database.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Persists changes to the database.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>

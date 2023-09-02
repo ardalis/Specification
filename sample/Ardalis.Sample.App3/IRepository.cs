@@ -10,6 +10,7 @@ public interface IRepository<T> where T : class, IAggregateRoot
     Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
     Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
     Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     Task<T?> FindAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
