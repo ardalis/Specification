@@ -60,6 +60,13 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 
         await SaveChangesAsync(cancellationToken);
     }
+    public virtual async Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        _dbContext.Set<T>().RemoveRange(query);
+
+        await SaveChangesAsync(cancellationToken);
+    }
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.SaveChangesAsync(cancellationToken);
