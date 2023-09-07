@@ -36,11 +36,11 @@ public class RepositoryOfT_DeleteRangeAsync
         using var dbContext = new TestDbContext(_connectionString);
         var repo = new Repository<Product>(dbContext, SpecificationEvaluator.Default);
 
-        await repo.DeleteRangeAsync(new ProductByIdSpec(1));
+        await repo.DeleteRangeAsync(new ProductByIdSpec(2));
 
         var products = await repo.ListAsync();
         products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 1);
+        products.Should().NotContain(e => e.Id == 2);
     }
 
     [Fact]
@@ -49,11 +49,11 @@ public class RepositoryOfT_DeleteRangeAsync
         using var dbContext = new TestDbContext(_connectionString);
         var repo = new Repository<Product>(dbContext, SpecificationEvaluator.Default);
 
-        await repo.DeleteRangeAsync(new ProductByIdAsUntrackedWithIdentityResolutionSpec(1));
+        await repo.DeleteRangeAsync(new ProductByIdAsUntrackedWithIdentityResolutionSpec(3));
 
         var products = await repo.ListAsync();
         products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 1);
+        products.Should().NotContain(e => e.Id == 3);
     }
 
     [Fact]
@@ -62,11 +62,11 @@ public class RepositoryOfT_DeleteRangeAsync
         using var dbContext = new TestDbContext(_connectionString);
         var repo = new Repository<Product>(dbContext, SpecificationEvaluator.Default);
 
-        await repo.DeleteRangeAsync(new ProductByIdAsUntrackedSpec(1));
+        await repo.DeleteRangeAsync(new ProductByIdAsUntrackedSpec(4));
 
         var products = await repo.ListAsync();
         products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 1);
+        products.Should().NotContain(e => e.Id == 4);
     }
 
     [Fact]
@@ -75,10 +75,10 @@ public class RepositoryOfT_DeleteRangeAsync
         using var dbContext = new TestDbContext(_connectionString);
         var repo = new Repository<Product>(dbContext, SpecificationEvaluator.Default);
 
-        await repo.DeleteRangeAsync(new ProductByIdAsTrackedSpec(1));
+        await repo.DeleteRangeAsync(new ProductByIdAsTrackedSpec(5));
 
         var products = await repo.ListAsync();
         products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 1);
+        products.Should().NotContain(e => e.Id == 5);
     }
 }
