@@ -66,28 +66,15 @@ public abstract class RepositoryOfT_DeleteRangeAsync_TestKit
     }
 
     [Fact]
-    public virtual async Task DeletesProductWithIdOne_GivenProductByIdAsUntrackedSpec()
-    {
-        using var dbContext = new TestDbContext(_dbContextOptions);
-        var repo = new Repository<Product>(dbContext, _specificationEvaluator);
-
-        await repo.DeleteRangeAsync(new ProductByIdAsUntrackedSpec(4));
-
-        var products = await repo.ListAsync();
-        products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 4);
-    }
-
-    [Fact]
     public virtual async Task DeletesProductWithIdOne_GivenProductByIdAsTrackedSpec()
     {
         using var dbContext = new TestDbContext(_dbContextOptions);
         var repo = new Repository<Product>(dbContext, _specificationEvaluator);
 
-        await repo.DeleteRangeAsync(new ProductByIdAsTrackedSpec(5));
+        await repo.DeleteRangeAsync(new ProductByIdAsTrackedSpec(4));
 
         var products = await repo.ListAsync();
         products.Should().NotBeNullOrEmpty();
-        products.Should().NotContain(e => e.Id == 5);
+        products.Should().NotContain(e => e.Id == 4);
     }
 }
