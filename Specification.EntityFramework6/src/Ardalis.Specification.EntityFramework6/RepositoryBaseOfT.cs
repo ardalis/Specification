@@ -102,14 +102,14 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    [Obsolete]
+    [Obsolete("Use ListAsync to query against a class extending Specification<T> when returning a collection. Use SingleOrDefault to query for a single record against a class extending SingleResultSpecification<T>")]
     public virtual async Task<T> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
-    [Obsolete]
+    [Obsolete("Use ListAsync to query against a class extending Specification<T> when returning a collection. Use SingleOrDefault to query for a single record against a class extending SingleResultSpecification<T>")]
     public virtual async Task<TResult> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);

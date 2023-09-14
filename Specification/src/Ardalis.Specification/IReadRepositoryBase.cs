@@ -34,7 +34,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
-    [Obsolete]
+    [Obsolete("Use ListAsync to query against a class extending Specification<T> when returning a collection. Use SingleOrDefault to query for a single record against a class extending SingleResultSpecification<T>")]
     Task<T?> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -46,7 +46,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />.
     /// </returns>
-    [Obsolete]
+    [Obsolete("Use ListAsync to query against a class extending Specification<T> when returning a collection. Use SingleOrDefault to query for a single record against a class extending SingleResultSpecification<T>")]
     Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
