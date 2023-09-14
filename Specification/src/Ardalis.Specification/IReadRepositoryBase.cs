@@ -34,7 +34,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
-    [Obsolete]
+    [Obsolete("Use FirstOrDefaultAsync<T> or SingleOrDefaultAsync<T> instead. The SingleOrDefaultAsync<T> can be applied only to SingleResultSpecification<T> specifications.")]
     Task<T?> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -46,7 +46,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />.
     /// </returns>
-    [Obsolete]
+    [Obsolete("Use FirstOrDefaultAsync<T> or SingleOrDefaultAsync<T> instead. The SingleOrDefaultAsync<T> can be applied only to SingleResultSpecification<T> specifications.")]
     Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
