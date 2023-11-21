@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net7.0</TargetFrameworks>
-    <LangVersion>11.0</LangVersion>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <LangVersion>12.0</LangVersion>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
@@ -35,7 +35,7 @@
 
 
   <PropertyGroup>
-    <NoWarn>1701;1702;1591;1573;1712;0612</NoWarn>
+    <NoWarn>1701;1702;1591;1573;1712;0612;0618</NoWarn>
   </PropertyGroup>
 
 </Project>
