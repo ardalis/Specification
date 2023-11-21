@@ -190,6 +190,16 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     }
 
     /// <inheritdoc/>
+    public async Task DeleteRangeAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    {
+        await using var dbContext = _dbContextFactory.CreateDbContext();
+        var query = ApplySpecification(specification, dbContext);
+        dbContext.Set<TEntity>().RemoveRange(query);
+
+        await SaveChangesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         throw new InvalidOperationException();

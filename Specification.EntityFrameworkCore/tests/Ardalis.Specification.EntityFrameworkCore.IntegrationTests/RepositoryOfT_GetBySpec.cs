@@ -1,33 +1,47 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore.IntegrationTests.Fixture;
+using Ardalis.Specification.UnitTests.Fixture.Entities;
 using Ardalis.Specification.UnitTests.Fixture.Entities.Seeds;
 using Ardalis.Specification.UnitTests.Fixture.Specs;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace Ardalis.Specification.EntityFrameworkCore.IntegrationTests;
 
+[Collection("ReadCollection")]
 public class RepositoryOfT_GetBySpec : RepositoryOfT_GetBySpec_TestKit
 {
-    public RepositoryOfT_GetBySpec(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Default)
+    public RepositoryOfT_GetBySpec(DatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Default)
     {
     }
 }
 
+[Collection("ReadCollection")]
 public class RepositoryOfT_GetBySpec_Cached : RepositoryOfT_GetBySpec_TestKit
 {
-    public RepositoryOfT_GetBySpec_Cached(SharedDatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Cached)
+    public RepositoryOfT_GetBySpec_Cached(DatabaseFixture fixture) : base(fixture, SpecificationEvaluator.Cached)
     {
     }
 }
 
-public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
+public abstract class RepositoryOfT_GetBySpec_TestKit
 {
-    protected RepositoryOfT_GetBySpec_TestKit(SharedDatabaseFixture fixture, ISpecificationEvaluator specificationEvaluator) : base(fixture, specificationEvaluator) { }
+    private readonly DbContextOptions<TestDbContext> _dbContextOptions;
+    private readonly ISpecificationEvaluator _specificationEvaluator;
+
+    protected RepositoryOfT_GetBySpec_TestKit(DatabaseFixture fixture, ISpecificationEvaluator specificationEvaluator)
+    {
+        _dbContextOptions = fixture.DbContextOptions;
+        _specificationEvaluator = specificationEvaluator;
+    }
 
     [Fact]
     public virtual async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Store>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeProductsSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -37,7 +51,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsStoreWithAddress_GivenStoreByIdIncludeAddressSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Store>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeAddressSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -47,7 +64,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsStoreWithAddressAndProduct_GivenStoreByIdIncludeAddressAndProductsSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Store>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeAddressAndProductsSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -58,7 +78,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsStoreWithProducts_GivenStoreByIdIncludeProductsUsingStringSpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Store>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeProductsUsingStringSpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -68,7 +91,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsCompanyWithStoresAndAddress_GivenCompanyByIdIncludeStoresThenIncludeAddressSpec()
     {
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Company>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeAddressSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -79,7 +105,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsCompanyWithStoresAndProducts_GivenCompanyByIdIncludeStoresThenIncludeProductsSpec()
     {
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Company>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new CompanyByIdIncludeStoresThenIncludeProductsSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -90,9 +119,12 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsUntrackedCompany_GivenCompanyByIdAsUntrackedSpec()
     {
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Company>(dbContext, _specificationEvaluator);
+
         dbContext.ChangeTracker.Clear();
 
-        var result = await companyRepository.GetBySpecAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID));
+        var result = await repo.GetBySpecAsync(new CompanyByIdAsUntrackedSpec(CompanySeed.VALID_COMPANY_ID));
 
         result.Should().NotBeNull();
         result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -102,7 +134,10 @@ public abstract class RepositoryOfT_GetBySpec_TestKit : IntegrationTestBase
     [Fact]
     public virtual async Task ReturnsStoreWithCompanyAndCountryAndStoresForCompany_GivenStoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec()
     {
-        var result = await storeRepository.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
+        using var dbContext = new TestDbContext(_dbContextOptions);
+        var repo = new Repository<Store>(dbContext, _specificationEvaluator);
+
+        var result = await repo.GetBySpecAsync(new StoreByIdIncludeCompanyAndCountryAndStoresForCompanySpec(StoreSeed.VALID_STORE_ID));
 
         result.Should().NotBeNull();
         result!.Name.Should().Be(StoreSeed.VALID_STORE_NAME);

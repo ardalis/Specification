@@ -12,28 +12,26 @@ public class CompanySeed
     public static List<Company> Get()
     {
         var companies = new List<Company>
-    {
-      new Company()
-      {
-        Id = 1,
-        Name = "Company 1",
-        CountryId = 1,
-      },
-
-      new Company()
-      {
-        Id = 2,
-        Name = "Company 2",
-        CountryId = 2,
-      },
-
-      new Company()
-      {
-        Id = 3,
-        Name = "Company 3",
-        CountryId = 1,
-      }
-    };
+        {
+            new()
+            {
+                Id = 1,
+                Name = "Company 1",
+                CountryId = 1,
+            },
+            new()
+            {
+                Id = 2,
+                Name = "Company 2",
+                CountryId = 2,
+            },
+            new()
+            {
+                Id = 3,
+                Name = "Company 3",
+                CountryId = 1,
+            }
+        };
 
         return companies;
     }

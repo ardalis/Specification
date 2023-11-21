@@ -15,13 +15,13 @@ public class ProductSeed
 
         for (var i = 1; i < TOTAL_PRODUCT_COUNT; i += 2)
         {
-            products.Add(new Product()
+            products.Add(new()
             {
                 Id = i,
                 Name = $"Product {i}",
                 StoreId = i,
             });
-            products.Add(new Product()
+            products.Add(new()
             {
                 Id = i + 1,
                 Name = $"Product {i + 1}",
