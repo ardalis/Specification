@@ -5,6 +5,56 @@ parent: Getting Started
 nav_order: 4
 ---
 
+## How do I Combine Specifications?
+
+This is a very common question we get. See: [52](https://github.com/ardalis/Specification/issues/52),[122](https://github.com/ardalis/Specification/issues/122),[139](https://github.com/ardalis/Specification/issues/139),[169](https://github.com/ardalis/Specification/issues/169),[254](https://github.com/ardalis/Specification/issues/254),[274](https://github.com/ardalis/Specification/issues/274),[335](https://github.com/ardalis/Specification/issues/335),[379](https://github.com/ardalis/Specification/issues/379).
+
+We don't recommend or support combining *specifications*, because doing so moves query logic out of the domain model and into the consumer (typically UI) layer. Choosing which predicates to AND or OR or NOT together is basically the logic that specifications are meant to encapsulate. Instead, if you have predicates you want to share, these can be shared between Specifications by simply creating (static) properties of type `Func<T,bool>` and then using these within your well-named specifications. It's worth remembering that our implementation of Specification has more scope than merely an `IsSatisfiedby()` method, and that operations like `Skip`, `Take`, `OrderBy`, etc. are within that scope but are not combinable using generic logical operations like predicates are.
+
+However, that's not to say there's no way to extract common predicate logic and reuse it. The recommended approach is to extract the predicate logic (if needed) and reuse that between specifications but still within your domain model. If you find value in using something like a [PredicateBuilder](https://www.albahari.com/nutshell/predicatebuilder.aspx) to support easy AND and OR combinations of your predicates from within your individual specifications, by all means do so.
+
+Here's a quick example:
+
+```csharp
+// CustomerPredicates.cs
+// Predicates should take in an entity (and optionally, other arguments) and return a boolean
+// Optionally these can be extension methods, but that may reduce the ability to combine them consistently
+internal static class CustomerPredicates
+{
+    public static Func<Customer, bool> IsAdult => customer => customer.Age >= 18;
+    public static Func<Customer, int, bool> IsAtLeastYearsOld => (customer, years) => customer.Age >= years;
+    public static Func<Customer, string, bool> NameIncludes => 
+        (customer, nameString) => customer.Name.Contains(nameString, StringComparison.CurrentCultureIgnoreCase);
+}
+
+// AdultCustomersByNameSpec.cs
+using Ardalis.Specification;
+
+namespace Ardalis.Sample.Domain.Specs;
+
+public class AdultCustomersByNameSpec : Specification<Customer>
+{
+    public AdultCustomersByNameSpec(string nameSubstring)
+    {
+        Query.Where(c => CustomerPredicates.IsAdult(c) &&
+             CustomerPredicates.NameIncludes(c, nameSubstring));
+    }
+}
+
+// Customer.cs
+public class Customer : IAggregateRoot
+{
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public required int Age { get; set; }
+
+    public List<Address> Addresses { get; set; } = new();
+}
+
+```
+
+The goal is to keep each specification self-contained and inside the domain model. Predicates may be reused, but at the end of the day a given combination of predicates should be a specification. Flexibility can still be achieved through parameters passed into the specification. For an example of this, see the filters approach below.
+
 ## Does the use of filters break the Open-Closed Principle?
 
 Filters are an optional approach to use with specifications. You'll find samples of them [here](https://github.com/ardalis/Specification/tree/master/sample/Ardalis.SampleApp.Core/Specifications/Filters).
@@ -51,7 +101,7 @@ public class AwbForInvoiceSpec : Specification<Awb>
 
 In the context of that particular application, the `Awb` has quite significant importance in the overall business workflow, and it might be a bit more complicated than it should be. First of all, the `AwbPurchase` and `CargoManifest` represent 1:1 relationships. So, we end up with two 1:n navigations. This is relatively OK if you're retrieving one Awb record (as in this case). On the other hand, if you're trying to get a list of records, then you should reconsider if you need the child collections or not. Try to measure the performance, consider the usage of the application, number of users, peak usages, etc, and then you can decide if that meets your criteria or not.
 
-One key benefit of using the specification pattern is that you can easily have different specifiations that include just the related data necessary for a given operation or context.
+One key benefit of using the specification pattern is that you can easily have different specifications that include just the related data necessary for a given operation or context.
 
 ## Anti-pattern usage
 
@@ -107,4 +157,3 @@ But you are free to explicitly set higher versions if you like.
 I'm getting a warning or error telling me that `ISingleResultSpecification` is obsolete. What am I supposed to do to fix it?
 
 > You can just remove the interface usage from any specification that is using it. It was useful with `GetBySpec` calls in earlier versions of the library but newer versions use the more canonical `FirstOrDefault` or `SingleOrDefault` methods on repositories whenever a single result is desired or expected (which eliminates the need for the interface).
-
