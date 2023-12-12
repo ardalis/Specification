@@ -3,7 +3,7 @@ using Ardalis.Specification;
 
 namespace Ardalis.Sample.Domain.Specs;
 
-// Examples how to add extend specifications.
+// Examples how to extend specifications.
 // These extensions are applied in Ardalis.Sample.Domain.Specs.CustomerSpec
 public static class CustomerSpecExtensions
 {
@@ -33,4 +33,13 @@ public static class CustomerSpecExtensions
         builder.Specification.Items.TryAdd("TagWith", tag);
         return builder;
     }
+
+    // Some more extension examples.
+    // These extensions are applied in Ardalis.Sample.Domain.Specs.AdultCustomersByNameSpec
+    public static ISpecificationBuilder<Customer> IsAdult(this ISpecificationBuilder<Customer> builder)
+        => builder.Where(x => x.Age >= 18);
+    public static ISpecificationBuilder<Customer> IsAtLeastYearsOld(this ISpecificationBuilder<Customer> builder, int years)
+        => builder.Where(x => x.Age >= years);
+    public static ISpecificationBuilder<Customer> NameIncludes(this ISpecificationBuilder<Customer> builder, string name)
+        => builder.Where(x => x.Name.Contains(name));
 }

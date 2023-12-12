@@ -6,7 +6,7 @@ public class AdultCustomersByNameSpec : Specification<Customer>
 {
     public AdultCustomersByNameSpec(string nameSubstring)
     {
-        Query.Where(c => CustomerPredicates.IsAdult(c) &&
-             CustomerPredicates.NameIncludes(c, nameSubstring));
+        Query.IsAdult()
+            .NameIncludes(nameSubstring);
     }
 }
