@@ -28,7 +28,9 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 
-app.MapGet("/customers", async (IRepository<Customer> repo, IMapper mapper, CancellationToken cancellationToken) =>
+app.MapGet("/customers", async (IRepository<Customer> repo,
+                                IMapper mapper,
+                                CancellationToken cancellationToken) =>
 {
     var spec = new CustomerSpec();
     var customers = await repo.ListAsync(spec, cancellationToken);
@@ -36,7 +38,10 @@ app.MapGet("/customers", async (IRepository<Customer> repo, IMapper mapper, Canc
     return Results.Ok(customersDto);
 });
 
-app.MapGet("/customers/{id}", async (IRepository<Customer> repo, IMapper mapper, int id, CancellationToken cancellationToken) =>
+app.MapGet("/customers/{id}", async (IRepository<Customer> repo,
+                                     IMapper mapper,
+                                     int id,
+                                     CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdSpec(id);
     var customer = await repo.FirstOrDefaultAsync(spec, cancellationToken);
@@ -45,7 +50,10 @@ app.MapGet("/customers/{id}", async (IRepository<Customer> repo, IMapper mapper,
     return Results.Ok(customerDto);
 });
 
-app.MapPost("/customers", async (IRepository<Customer> repo, IMapper mapper, CustomerCreateDto customerCreateDto, CancellationToken cancellationToken) =>
+app.MapPost("/customers", async (IRepository<Customer> repo,
+                                 IMapper mapper,
+                                 CustomerCreateDto customerCreateDto,
+                                 CancellationToken cancellationToken) =>
 {
     var customer = new Customer
     {
@@ -58,7 +66,11 @@ app.MapPost("/customers", async (IRepository<Customer> repo, IMapper mapper, Cus
     return Results.Ok(customerDto);
 });
 
-app.MapPut("/customers/{id}", async (IRepository<Customer> repo, IMapper mapper, int id, CustomerUpdateDto customerUpdate, CancellationToken cancellationToken) =>
+app.MapPut("/customers/{id}", async (IRepository<Customer> repo,
+                                     IMapper mapper,
+                                     int id,
+                                     CustomerUpdateDto customerUpdate,
+                                     CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdSpec(id);
     var customer = await repo.FirstOrDefaultAsync(spec, cancellationToken);

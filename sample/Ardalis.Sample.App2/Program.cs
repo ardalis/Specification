@@ -30,7 +30,9 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 
-app.MapGet("/customers", async (IReadRepository<Customer> repo, IMapper mapper, CancellationToken cancellationToken) =>
+app.MapGet("/customers", async (IReadRepository<Customer> repo,
+                                IMapper mapper,
+                                CancellationToken cancellationToken) =>
 {
     var spec = new CustomerSpec();
     var customers = await repo.ListAsync(spec, cancellationToken);
@@ -38,7 +40,10 @@ app.MapGet("/customers", async (IReadRepository<Customer> repo, IMapper mapper, 
     return Results.Ok(customersDto);
 });
 
-app.MapGet("/customers/{id}", async (IReadRepository<Customer> repo, IMapper mapper, int id, CancellationToken cancellationToken) =>
+app.MapGet("/customers/{id}", async (IReadRepository<Customer> repo,
+                                     IMapper mapper,
+                                     int id,
+                                     CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdSpec(id);
     // If you want to use the SingleOrDefault methods, the specification must inherit from SingleResultSpecification
@@ -49,7 +54,10 @@ app.MapGet("/customers/{id}", async (IReadRepository<Customer> repo, IMapper map
 });
 
 // Using the specification directly with the dbContext (no repositories).
-app.MapGet("/customers/v2/{id}", async (AppDbContext dbContext, IMapper mapper, int id, CancellationToken cancellationToken) =>
+app.MapGet("/customers/v2/{id}", async (AppDbContext dbContext,
+                                        IMapper mapper,
+                                        int id,
+                                        CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdSpec(id);
     var customer = await dbContext.Customers
@@ -61,7 +69,10 @@ app.MapGet("/customers/v2/{id}", async (AppDbContext dbContext, IMapper mapper, 
 });
 
 // In this version, we're projecting the result to a DTO directly in the specification
-app.MapGet("/customers/v3/{id}", async (IReadRepository<Customer> repo, IMapper mapper, int id, CancellationToken cancellationToken) =>
+app.MapGet("/customers/v3/{id}", async (IReadRepository<Customer> repo,
+                                        IMapper mapper,
+                                        int id,
+                                        CancellationToken cancellationToken) =>
 {
     var spec = new CustomerByIdProjectionSpec(id);
     var customerDto = await repo.FirstOrDefaultAsync(spec, cancellationToken);
@@ -70,7 +81,10 @@ app.MapGet("/customers/v3/{id}", async (IReadRepository<Customer> repo, IMapper 
 });
 
 // We're selecting only a name from Customer.
-app.MapGet("/customer-names/{id}", async (IReadRepository<Customer> repo, IMapper mapper, int id, CancellationToken cancellationToken) =>
+app.MapGet("/customer-names/{id}", async (IReadRepository<Customer> repo,
+                                          IMapper mapper,
+                                          int id,
+                                          CancellationToken cancellationToken) =>
 {
     var spec = new CustomerNameSpec(id);
     var name = await repo.FirstOrDefaultAsync(spec, cancellationToken);
