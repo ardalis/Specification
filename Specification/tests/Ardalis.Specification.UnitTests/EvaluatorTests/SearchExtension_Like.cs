@@ -72,6 +72,12 @@ public class SearchExtension_Like
     [InlineData(false, "_Stuff_.txt_", "1Stuff.txt4")]
     [InlineData(false, "_Stuff_.txt_", "1Stuff3.txt")]
     [InlineData(false, "_Stuff_.txt_", "Stuff3.txt4")]
+    [InlineData(true, "%ab%", "ab")]
+    [InlineData(true, "%ab%", "abb")]
+    [InlineData(true, "%ab%", "aaab")]
+    [InlineData(true, "%ab%", "aaaab")]
+    [InlineData(true, "%ab%", "aaaaab")]
+    [InlineData(true, "%ab%", "aab")]
     public void ReturnsExpectedResult_GivenPatternAndInput(bool expectedResult, string pattern, string input)
     {
         var result = input.Like(pattern);

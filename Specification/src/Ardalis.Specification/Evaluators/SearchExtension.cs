@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Ardalis.Specification;
 
@@ -11,16 +12,33 @@ public static class SearchExtension
         {
             return SqlLike(input, pattern);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new InvalidSearchPatternException(pattern);
+            throw new InvalidSearchPatternException(pattern, ex);
         }
+    }
+
+    private static bool SqlLike(this string input, string pattern)
+    {
+        // Escape special regex characters, excluding those handled separately
+        var regexPattern = Regex.Escape(pattern)
+            .Replace("%", ".*")     // Translate SQL LIKE wildcard '%' to regex '.*'
+            .Replace("_", ".")      // Translate SQL LIKE wildcard '_' to regex '.'
+            .Replace(@"\[", "[")    // Unescape '[' as it's used for character classes/ranges
+            .Replace(@"\^", "^");   // Unescape '^' as it can be used for negation in character classes
+
+        // Step 4: Ensure the pattern matches the entire string
+        regexPattern = "^" + regexPattern + "$";
+        var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+        return regex.IsMatch(input);
     }
 
     // This C# implementation of SQL Like operator is based on the following SO post https://stackoverflow.com/a/8583383/10577116
     // It covers almost all of the scenarios, and it's faster than regex based implementations.
     // It may fail/throw in some very specific and edge cases, hence, wrap it in try/catch.
-    private static bool SqlLike(string str, string pattern)
+    // UPDATE: it returns incorrect results for some obvious cases.
+    // More details in this issue https://github.com/ardalis/Specification/issues/390
+    private static bool SqlLikeOption2(string str, string pattern)
     {
         var isMatch = true;
         var isWildCardOn = false;
