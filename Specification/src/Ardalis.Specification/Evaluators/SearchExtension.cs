@@ -27,9 +27,10 @@ public static class SearchExtension
             .Replace(@"\[", "[")    // Unescape '[' as it's used for character classes/ranges
             .Replace(@"\^", "^");   // Unescape '^' as it can be used for negation in character classes
 
-        // Step 4: Ensure the pattern matches the entire string
+        // Ensure the pattern matches the entire string
         regexPattern = "^" + regexPattern + "$";
         var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+
         return regex.IsMatch(input);
     }
 
