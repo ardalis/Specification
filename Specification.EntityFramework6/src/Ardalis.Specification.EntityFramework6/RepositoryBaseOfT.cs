@@ -10,8 +10,8 @@ namespace Ardalis.Specification.EntityFramework6;
 /// <inheritdoc/>
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
-    private readonly DbContext _dbContext;
-    private readonly ISpecificationEvaluator _specificationEvaluator;
+    protected readonly DbContext _dbContext;
+    protected readonly ISpecificationEvaluator _specificationEvaluator;
 
     public RepositoryBase(DbContext dbContext)
         : this(dbContext, SpecificationEvaluator.Default)
