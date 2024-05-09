@@ -9,8 +9,8 @@ namespace Ardalis.Sample.App3;
 
 public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 {
-    private readonly DbContext _dbContext;
-    private readonly AutoMapper.IConfigurationProvider _configurationProvider;
+    protected readonly DbContext _dbContext;
+    protected readonly AutoMapper.IConfigurationProvider _configurationProvider;
     protected ISpecificationEvaluator Evaluator { get; }
 
     // We have a custom evaluator for QueryTag, therefore we're passing our custom specification evaluator
