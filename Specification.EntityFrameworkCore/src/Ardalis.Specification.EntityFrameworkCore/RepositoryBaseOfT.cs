@@ -5,25 +5,25 @@ namespace Ardalis.Specification.EntityFrameworkCore;
 /// <inheritdoc/>
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
-    protected readonly DbContext _dbContext;
-    protected readonly ISpecificationEvaluator _specificationEvaluator;
+    protected DbContext DbContext { get; private set; }
+    protected ISpecificationEvaluator SpecificationEvaluator { get; private set; }
 
     public RepositoryBase(DbContext dbContext)
-        : this(dbContext, SpecificationEvaluator.Default)
+        : this(dbContext, EntityFrameworkCore.SpecificationEvaluator.Default)
     {
     }
 
     /// <inheritdoc/>
     public RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
     {
-        _dbContext = dbContext;
-        _specificationEvaluator = specificationEvaluator;
+        DbContext = dbContext;
+        SpecificationEvaluator = specificationEvaluator;
     }
 
     /// <inheritdoc/>
     public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Add(entity);
+        DbContext.Set<T>().Add(entity);
 
         await SaveChangesAsync(cancellationToken);
 
@@ -33,7 +33,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().AddRange(entities);
+        DbContext.Set<T>().AddRange(entities);
 
         await SaveChangesAsync(cancellationToken);
 
@@ -43,7 +43,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Update(entity);
+        DbContext.Set<T>().Update(entity);
 
         await SaveChangesAsync(cancellationToken);
     }
@@ -51,7 +51,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().UpdateRange(entities);
+        DbContext.Set<T>().UpdateRange(entities);
 
         await SaveChangesAsync(cancellationToken);
     }
@@ -59,7 +59,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Remove(entity);
+        DbContext.Set<T>().Remove(entity);
 
         await SaveChangesAsync(cancellationToken);
     }
@@ -67,7 +67,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().RemoveRange(entities);
+        DbContext.Set<T>().RemoveRange(entities);
 
         await SaveChangesAsync(cancellationToken);
     }
@@ -76,7 +76,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public virtual async Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         var query = ApplySpecification(specification);
-        _dbContext.Set<T>().RemoveRange(query);
+        DbContext.Set<T>().RemoveRange(query);
 
         await SaveChangesAsync(cancellationToken);
     }
@@ -84,13 +84,13 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        return await DbContext.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
     public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
     {
-        return await _dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
+        return await DbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -134,7 +134,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().ToListAsync(cancellationToken);
+        return await DbContext.Set<T>().ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -162,7 +162,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().CountAsync(cancellationToken);
+        return await DbContext.Set<T>().CountAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -174,7 +174,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().AnyAsync(cancellationToken);
+        return await DbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -191,7 +191,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
     {
-        return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
+        return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification, evaluateCriteriaOnly);
     }
 
     /// <summary>
@@ -206,6 +206,6 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
     {
-        return _specificationEvaluator.GetQuery(_dbContext.Set<T>().AsQueryable(), specification);
+        return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
     }
 }
