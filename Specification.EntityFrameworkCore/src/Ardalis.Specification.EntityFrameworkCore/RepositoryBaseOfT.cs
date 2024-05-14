@@ -5,8 +5,8 @@ namespace Ardalis.Specification.EntityFrameworkCore;
 /// <inheritdoc/>
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
-    protected DbContext DbContext { get; private set; }
-    protected ISpecificationEvaluator SpecificationEvaluator { get; private set; }
+    protected DbContext DbContext { get; set; }
+    protected ISpecificationEvaluator SpecificationEvaluator { get; set; }
 
     public RepositoryBase(DbContext dbContext)
         : this(dbContext, EntityFrameworkCore.SpecificationEvaluator.Default)

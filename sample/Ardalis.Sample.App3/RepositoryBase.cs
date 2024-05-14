@@ -9,7 +9,7 @@ namespace Ardalis.Sample.App3;
 
 public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 {
-    protected DbContext DbContext { get; private set; }
+    protected DbContext DbContext { get; set; }
     protected readonly AutoMapper.IConfigurationProvider _configurationProvider;
     protected ISpecificationEvaluator Evaluator { get; }
 
