@@ -9,8 +9,8 @@ namespace Ardalis.Sample.App3;
 
 public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 {
-    private readonly DbContext _dbContext;
-    private readonly AutoMapper.IConfigurationProvider _configurationProvider;
+    protected DbContext DbContext { get; set; }
+    protected readonly AutoMapper.IConfigurationProvider _configurationProvider;
     protected ISpecificationEvaluator Evaluator { get; }
 
     // We have a custom evaluator for QueryTag, therefore we're passing our custom specification evaluator
@@ -21,14 +21,14 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 
     protected RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator, IMapper mapper)
     {
-        _dbContext = dbContext;
+        DbContext = dbContext;
         Evaluator = specificationEvaluator;
         _configurationProvider = mapper.ConfigurationProvider;
     }
 
     public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Add(entity);
+        DbContext.Set<T>().Add(entity);
 
         await SaveChangesAsync(cancellationToken);
 
@@ -36,7 +36,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().AddRange(entities);
+        DbContext.Set<T>().AddRange(entities);
 
         await SaveChangesAsync(cancellationToken);
 
@@ -44,37 +44,37 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Update(entity);
+        DbContext.Set<T>().Update(entity);
 
         await SaveChangesAsync(cancellationToken);
     }
     public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().Remove(entity);
+        DbContext.Set<T>().Remove(entity);
 
         await SaveChangesAsync(cancellationToken);
     }
     public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<T>().RemoveRange(entities);
+        DbContext.Set<T>().RemoveRange(entities);
 
         await SaveChangesAsync(cancellationToken);
     }
     public virtual async Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         var query = ApplySpecification(specification);
-        _dbContext.Set<T>().RemoveRange(query);
+        DbContext.Set<T>().RemoveRange(query);
 
         await SaveChangesAsync(cancellationToken);
     }
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        return await DbContext.SaveChangesAsync(cancellationToken);
     }
 
     public virtual async Task<T?> FindAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
     {
-        return await _dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
+        return await DbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
     }
     public async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
@@ -94,7 +94,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().ToListAsync(cancellationToken);
+        return await DbContext.Set<T>().ToListAsync(cancellationToken);
     }
     public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
@@ -114,7 +114,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().CountAsync(cancellationToken);
+        return await DbContext.Set<T>().CountAsync(cancellationToken);
     }
     public virtual async Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
@@ -122,7 +122,7 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
     }
     public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().AnyAsync(cancellationToken);
+        return await DbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
     public async Task<TResult?> ProjectToFirstOrDefaultAsync<TResult>(ISpecification<T> specification, CancellationToken cancellationToken)
@@ -155,10 +155,10 @@ public abstract class RepositoryBase<T> : IReadRepository<T> where T : class
 
     protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
     {
-        return Evaluator.GetQuery(_dbContext.Set<T>(), specification, evaluateCriteriaOnly);
+        return Evaluator.GetQuery(DbContext.Set<T>(), specification, evaluateCriteriaOnly);
     }
     protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
     {
-        return Evaluator.GetQuery(_dbContext.Set<T>(), specification);
+        return Evaluator.GetQuery(DbContext.Set<T>(), specification);
     }
 }
