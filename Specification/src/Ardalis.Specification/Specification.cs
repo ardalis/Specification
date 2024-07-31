@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Ardalis.Specification.Operators;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Ardalis.Specification;
 
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
-public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
+public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
 {
     public new virtual ISpecificationBuilder<T, TResult> Query { get; }
 
@@ -36,7 +37,7 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 }
 
 /// <inheritdoc cref="ISpecification{T}"/>
-public class Specification<T> : ISpecification<T>
+public abstract class Specification<T> : ISpecification<T>
 {
     protected IInMemorySpecificationEvaluator Evaluator { get; }
     protected ISpecificationValidator Validator { get; }
