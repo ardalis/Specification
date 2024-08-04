@@ -17,10 +17,7 @@ public class SpecificationValidator : ISpecificationValidator
             SearchValidator.Instance
         });
     }
-    public SpecificationValidator(IEnumerable<IValidator> validators)
-    {
-        _validators.AddRange(validators);
-    }
+    public SpecificationValidator(IEnumerable<IValidator> validators) => _validators.AddRange(validators);
 
     public virtual bool IsValid<T>(T entity, ISpecification<T> specification)
     {

@@ -2,23 +2,17 @@
 
 namespace Ardalis.Specification.EntityFrameworkCore;
 
-public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepositoryBase<TEntity>
+public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext>(IDbContextFactory<TContext> dbContextFactory,
+  ISpecificationEvaluator specificationEvaluator) : IRepositoryBase<TEntity>
   where TEntity : class
   where TContext : DbContext
 {
-    private readonly IDbContextFactory<TContext> _dbContextFactory;
-    private readonly ISpecificationEvaluator _specificationEvaluator;
+    private readonly IDbContextFactory<TContext> _dbContextFactory = dbContextFactory;
+    private readonly ISpecificationEvaluator _specificationEvaluator = specificationEvaluator;
 
     public ContextFactoryRepositoryBaseOfT(IDbContextFactory<TContext> dbContextFactory)
       : this(dbContextFactory, SpecificationEvaluator.Default)
     {
-    }
-
-    public ContextFactoryRepositoryBaseOfT(IDbContextFactory<TContext> dbContextFactory,
-      ISpecificationEvaluator specificationEvaluator)
-    {
-        _dbContextFactory = dbContextFactory;
-        _specificationEvaluator = specificationEvaluator;
     }
 
     /// <inheritdoc/>
@@ -205,10 +199,8 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
         throw new InvalidOperationException();
     }
 
-    public async Task<int> SaveChangesAsync(TContext dbContext, CancellationToken cancellationToken = default)
-    {
-        return await dbContext.SaveChangesAsync(cancellationToken);
-    }
+    public async Task<int> SaveChangesAsync(TContext dbContext, CancellationToken cancellationToken = default) 
+        => await dbContext.SaveChangesAsync(cancellationToken);
 
     /// <summary>
     /// Filters the entities  of <typeparamref name="TEntity"/>, to those that match the encapsulated query logic of the
@@ -216,10 +208,8 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
     /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
-    protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification, TContext dbContext, bool evaluateCriteriaOnly = false)
-    {
-        return _specificationEvaluator.GetQuery(dbContext.Set<TEntity>().AsQueryable(), specification, evaluateCriteriaOnly);
-    }
+    protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification, TContext dbContext, bool evaluateCriteriaOnly = false) 
+        => _specificationEvaluator.GetQuery(dbContext.Set<TEntity>().AsQueryable(), specification, evaluateCriteriaOnly);
 
     /// <summary>
     /// Filters all entities of <typeparamref name="TEntity" />, that matches the encapsulated query logic of the
@@ -232,7 +222,5 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     /// <param name="specification">The encapsulated query logic.</param>
     /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<TEntity, TResult> specification, TContext dbContext)
-    {
-        return _specificationEvaluator.GetQuery(dbContext.Set<TEntity>().AsQueryable(), specification);
-    }
+        => _specificationEvaluator.GetQuery(dbContext.Set<TEntity>().AsQueryable(), specification);
 }

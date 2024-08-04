@@ -15,15 +15,9 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
     }
 
     protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
-        : base(inMemorySpecificationEvaluator)
-    {
-        Query = new SpecificationBuilder<T, TResult>(this);
-    }
+        : base(inMemorySpecificationEvaluator) => Query = new SpecificationBuilder<T, TResult>(this);
 
-    public new virtual IEnumerable<TResult> Evaluate(IEnumerable<T> entities)
-    {
-        return Evaluator.Evaluate(entities, this);
-    }
+    public new virtual IEnumerable<TResult> Evaluate(IEnumerable<T> entities) => Evaluator.Evaluate(entities, this);
 
     /// <inheritdoc/>
     public Expression<Func<T, TResult>>? Selector { get; internal set; }
@@ -65,16 +59,10 @@ public class Specification<T> : ISpecification<T>
     }
 
     /// <inheritdoc/>
-    public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
-    {
-        return Evaluator.Evaluate(entities, this);
-    }
+    public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities) => Evaluator.Evaluate(entities, this);
 
     /// <inheritdoc/>
-    public virtual bool IsSatisfiedBy(T entity)
-    {
-        return Validator.IsValid(entity, this);
-    }
+    public virtual bool IsSatisfiedBy(T entity) => Validator.IsValid(entity, this);
 
     /// <inheritdoc/>
     public IDictionary<string, object> Items { get; set; } = new Dictionary<string, object>();
