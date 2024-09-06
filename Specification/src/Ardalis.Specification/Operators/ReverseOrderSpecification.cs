@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace Ardalis.Specification.Operators
 {
-    public sealed class ReverseOrderSpecification<T> : CompositeSpecification<T> where T:class
+    public sealed class ReverseOrderSpecification<T> : CompositeSpecification<T> 
     {
         public ReverseOrderSpecification(Specification<T> specification)
         {

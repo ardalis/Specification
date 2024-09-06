@@ -1,6 +1,6 @@
 namespace Ardalis.Specification.Operators
 {
-    public sealed class TrueSpecification<T> : Specification<T> where T:class
+    public sealed class TrueSpecification<T> : Specification<T>
     {
         public TrueSpecification()
         {

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 namespace Ardalis.Specification;
 
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
-public abstract class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
+public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
 {
     public new virtual ISpecificationBuilder<T, TResult> Query { get; }
 
@@ -37,7 +37,7 @@ public abstract class Specification<T, TResult> : Specification<T>, ISpecificati
 }
 
 /// <inheritdoc cref="ISpecification{T}"/>
-public abstract class Specification<T> : ISpecification<T>
+public class Specification<T> : ISpecification<T>
 {
     protected IInMemorySpecificationEvaluator Evaluator { get; }
     protected ISpecificationValidator Validator { get; }
@@ -123,4 +123,23 @@ public abstract class Specification<T> : ISpecification<T>
 
     /// <inheritdoc/>
     public bool IgnoreQueryFilters { get; internal set; } = false;
+    public static bool operator true(Specification<T> specification) => false;
+    public static bool operator false(Specification<T> specification) => false;
+    public static Specification<T> operator &(Specification<T> lSpec,Specification<T> rSpec) => new AndSpecification<T>(lSpec, rSpec);
+    public static Specification<T> operator |(Specification<T> lSpec,Specification<T> rSpec) => new OrSpecification<T>(lSpec, rSpec); 
+    public static Specification<T> operator !(Specification<T> specification) => new NotSpecification<T>(specification);
+    public static Specification<T> operator -(Specification<T> specification) => new ReverseOrderSpecification<T>(specification);
+
+    public override bool Equals(object other)
+    {
+        if (ReferenceEquals(null, other))
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
+        return GetType() == other.GetType();
+    }
+    public override int GetHashCode()
+    {
+        return GetType().GetHashCode();
+    }
 }

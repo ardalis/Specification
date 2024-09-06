@@ -4,14 +4,13 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification.Operators
 {
-    public sealed class OrSpecification<T> : CompositeSpecification<T> where T:class
+    public sealed class OrSpecification<T> : CompositeSpecification<T>
     {
         public OrSpecification(Specification<T> leftSpec, Specification<T> rightSpec)
         {
             CombineWhereExpressions(leftSpec, rightSpec);
             CombineIncludeAggregators(leftSpec, rightSpec);
             CombineOrderExpressions(leftSpec,rightSpec);
-            Query.Where(e => e == null);
         }
 
         protected override void CombineWhereExpressions(Specification<T> leftSpec, Specification<T> rightSpec)

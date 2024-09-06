@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification.Operators
 {
-    public sealed class NotSpecification<T> : CompositeSpecification<T> where T:class
+    public sealed class NotSpecification<T> : CompositeSpecification<T>
     {
         public NotSpecification(Specification<T> specification)
         {

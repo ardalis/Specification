@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ardalis.Specification.Operators
 {
-    public sealed class AndSpecification<T> : CompositeSpecification<T> where T:class
+    public sealed class AndSpecification<T> : CompositeSpecification<T> 
     {
         public AndSpecification(Specification<T> leftSpec, Specification<T> rightSpec)
         {

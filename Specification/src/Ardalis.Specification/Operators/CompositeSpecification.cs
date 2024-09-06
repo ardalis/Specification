@@ -6,7 +6,7 @@ using Ardalis.Specification;
 
 namespace Ardalis.Specification.Operators
 {
-    public abstract class CompositeSpecification<T> : Specification<T> where T : class
+    public abstract class CompositeSpecification<T> : Specification<T>
     {
         protected abstract void CombineWhereExpressions(Specification<T> spec1, Specification<T> spec2);
         protected virtual void CombineOrderExpressions(Specification<T> spec1, Specification<T> spec2)
@@ -47,11 +47,12 @@ namespace Ardalis.Specification.Operators
 
         protected virtual void CombineIncludeAggregators(Specification<T> leftSpec, Specification<T> rightSpec)
         {
-            var includeInfo = ((List<IncludeExpressionInfo>)Query.Specification.IncludeExpressions);
-            leftSpec.IncludeExpressions.ToList().ForEach(qAgg=>includeInfo.Add(qAgg));
-            leftSpec.IncludeStrings.ToList().ForEach(incStr=>Query.Include(incStr));
-            rightSpec.IncludeExpressions.ToList().ForEach(qAgg=>includeInfo.Add(qAgg));
-            rightSpec.IncludeStrings.ToList().ForEach(incStr=>Query.Include(incStr));
+            var includeExp = ((List<IncludeExpressionInfo>)Query.Specification.IncludeExpressions);
+            var includeStrings = ((List<string>)Query.Specification.IncludeStrings);
+            leftSpec.IncludeExpressions.ToList().ForEach(qAgg=>includeExp.Add(qAgg));
+            leftSpec.IncludeStrings.ToList().ForEach(incStr=>includeStrings.Add(incStr));
+            rightSpec.IncludeExpressions.ToList().ForEach(qAgg=>includeExp.Add(qAgg));
+            rightSpec.IncludeStrings.ToList().ForEach(incStr=>includeStrings.Add(incStr));
             
         }
 
