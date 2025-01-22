@@ -9,12 +9,12 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 {
     public new virtual ISpecificationBuilder<T, TResult> Query { get; }
 
-    protected Specification()
+    public Specification()
         : this(InMemorySpecificationEvaluator.Default)
     {
     }
 
-    protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
+    public Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
         : base(inMemorySpecificationEvaluator)
     {
         Query = new SpecificationBuilder<T, TResult>(this);
@@ -42,22 +42,22 @@ public class Specification<T> : ISpecification<T>
     protected ISpecificationValidator Validator { get; }
     public virtual ISpecificationBuilder<T> Query { get; }
 
-    protected Specification()
+    public Specification()
         : this(InMemorySpecificationEvaluator.Default, SpecificationValidator.Default)
     {
     }
 
-    protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
+    public Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator)
         : this(inMemorySpecificationEvaluator, SpecificationValidator.Default)
     {
     }
 
-    protected Specification(ISpecificationValidator specificationValidator)
+    public Specification(ISpecificationValidator specificationValidator)
         : this(InMemorySpecificationEvaluator.Default, specificationValidator)
     {
     }
 
-    protected Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator, ISpecificationValidator specificationValidator)
+    public Specification(IInMemorySpecificationEvaluator inMemorySpecificationEvaluator, ISpecificationValidator specificationValidator)
     {
         Evaluator = inMemorySpecificationEvaluator;
         Validator = specificationValidator;
