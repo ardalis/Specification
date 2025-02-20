@@ -5,8 +5,8 @@ root = true
 charset = utf-8
 end_of_line = crlf
 indent_style = space
-indent_size = 4
-tab_width = 4
+indent_size = 2
+tab_width = 2
 trim_trailing_whitespace = true
 insert_final_newline = true
 spelling_exclusion_path = exclusion.dic
@@ -19,6 +19,8 @@ tab_width = 2
 
 # C# and VB files
 [*.{cs,vb}]
+indent_size = 4
+tab_width = 4
 charset = utf-8-bom
 
 #### .NET Code Actions ####

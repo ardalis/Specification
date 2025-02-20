@@ -29,9 +29,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.5.1" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="EntityFramework"/>
+    <PackageReference Include="Microsoft.CSharp"/>
+    <PackageReference Include="System.Data.DataSetExtensions"/>
   </ItemGroup>
   
   <ItemGroup>

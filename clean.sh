@@ -54,10 +54,8 @@ deleteLocalGitBranches()
   git fetch -p && git branch -vv | awk '/: gone\]/{print $1}' | xargs -I {} git branch -D {}
 }
 
-safetyCheck;
-echo "";
-
-if [ "$1" = "help" ]; then
+showhelp()
+{
   echo "Usage:";
   echo "";
   echo -e "clean.sh [obj | vs | logs | user | coverages | branches | all]";
@@ -69,7 +67,13 @@ if [ "$1" = "help" ]; then
   echo -e "coverages\t-\tDeletes test and coverage artifacts.";
   echo -e "branches\t-\tDeletes local unused git branches (e.g. no corresponding remote branch).";
   echo -e "all\t\t-\tApply all options";
+}
 
+safetyCheck;
+echo "";
+
+if [ "$1" = "help" ]; then
+  showhelp;
 elif [ "$1" = "obj" ]; then
   deleteBinObj;
 elif [ "$1" = "vs" ]; then
@@ -90,5 +94,5 @@ elif [ "$1" = "all" ]; then
   deleteTestResults;
   deleteLocalGitBranches;
 else
-  deleteBinObj;
+  showhelp;
 fi
