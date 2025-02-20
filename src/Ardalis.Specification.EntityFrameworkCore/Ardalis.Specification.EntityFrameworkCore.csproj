@@ -2,34 +2,23 @@
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <LangVersion>12.0</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>13.0</LangVersion>
     <Nullable>enable</Nullable>
     
     <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
     <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
     <Title>Ardalis.Specification.EntityFrameworkCore</Title>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Steve Smith (@ardalis); Fati Iseni (@fiseni); Scott DePouw</Authors>
-    <Company>Ardalis.com</Company>
     <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
-    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
-    <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
+    
     <Version>8.0.0</Version>
+    <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
     <PackageReleaseNotes>
       * Added TFMs net6.0, net7.0 and net8.0
     </PackageReleaseNotes>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <DocumentationFile>bin\$(Configuration)\Ardalis.Specification.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
   </ItemGroup>
@@ -37,12 +26,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
   
-  <PropertyGroup>
-    <NoWarn>1701;1702;1591;1573;1712</NoWarn>
-  </PropertyGroup>
 </Project>

@@ -1,0 +1,45 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>13.0</LangVersion>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Symbols">
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <!--<DebugType>Embedded</DebugType>-->
+    <!--<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>-->
+  </PropertyGroup>
+  
+  <PropertyGroup Label="Package MetaData">
+    <Authors>Steve Smith (@ardalis); Fati Iseni (@fiseni); Scott DePouw</Authors>
+    <Company>Ardalis.com</Company>
+    <Copyright>Copyright © 2025 Ardalis</Copyright>
+    <Product>Ardalis Specification</Product>
+
+    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readme-nuget.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591;1573;1712</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../icon.png" Pack="true" PackagePath="\" />
+    <None Include="../../readme-nuget.md" Pack="true" PackagePath="\" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -4,3 +4,7 @@ global using Ardalis.Specification;
 global using Ardalis.Specification.EntityFrameworkCore;
 global using Tests.Fixture;
 global using Xunit;
+global using System;
+global using System.Linq;
+global using System.Collections.Generic;
+global using System.Threading.Tasks;

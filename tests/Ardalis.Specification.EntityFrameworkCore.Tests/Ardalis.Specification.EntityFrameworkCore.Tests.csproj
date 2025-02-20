@@ -2,39 +2,18 @@
 
   <PropertyGroup>
     <TargetFrameworks>net9.0</TargetFrameworks>
-	  <LangVersion>13.0</LangVersion>
-	  <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-    <PackageReference Include="Moq"/>
-    <PackageReference Include="FluentAssertions"/>
     <PackageReference Include="MartinCostello.SqlLocalDb"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console"/>
     <PackageReference Include="Respawn"/>
     <PackageReference Include="Testcontainers.MsSql"/>
-    <PackageReference Include="xunit"/>
-    <PackageReference Include="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <NoWarn>1701;1702;1591;1573;0612;0618</NoWarn>
-  </PropertyGroup>
 
 </Project>

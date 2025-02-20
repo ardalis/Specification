@@ -9,23 +9,14 @@
     <AssemblyName>Ardalis.Specification.EntityFramework6</AssemblyName>
     <PackageId>Ardalis.Specification.EntityFramework6</PackageId>
     <Title>Ardalis.Specification.EntityFramework6</Title>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Steve Smith (@ardalis); Fati Iseni (@fiseni); Scott DePouw</Authors>
-    <Company>Ardalis.com</Company>
     <Description>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Description>
     <Summary>EF6 plugin package to Ardalis.Specification containing EF6 evaluator and abstract repository.</Summary>
-    <PackageProjectUrl>https://github.com/ardalis/specification</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ardalis/specification</RepositoryUrl>
-    <PackageTags>spec;specification;repository;ddd;ef;ef6;entity framework</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
+    
     <Version>8.0.0</Version>
+    <PackageTags>spec;specification;repository;ddd;ef;ef6;entity framework</PackageTags>
     <PackageReleaseNotes>
       * Added TFM for net6.0
     </PackageReleaseNotes>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <DocumentationFile>bin\$(Configuration)\Ardalis.Specification.EntityFramework6.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,12 +28,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <NoWarn>1701;1702;1591;1573;1712</NoWarn>
-  </PropertyGroup>
+  
 </Project>
