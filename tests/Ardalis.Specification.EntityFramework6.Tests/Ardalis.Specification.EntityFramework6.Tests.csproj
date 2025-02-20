@@ -12,10 +12,6 @@
     <PackageReference Include="System.Data.DataSetExtensions"/>
     <PackageReference Include="Testcontainers.MsSql"/>
     <PackageReference Include="Microsoft.CSharp"/>
-    <PackageReference Include="xunit.analyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Polyfill">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
