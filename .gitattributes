@@ -3,6 +3,9 @@
 ###############################################################################
 * text=auto
 
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
@@ -40,9 +43,10 @@
 #
 # image files are treated as binary by default.
 ###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+*.jpg   binary
+*.png   binary
+*.gif   binary
+*.ico   binary
 
 ###############################################################################
 # diff behavior for common document formats

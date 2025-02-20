@@ -37,9 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
-    <ProjectReference Include="..\..\..\Specification\tests\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFramework6\Ardalis.Specification.EntityFramework6.csproj" />
+    <ProjectReference Include="..\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
   </ItemGroup>
 
 

@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Specification\tests\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
     <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFrameworkCore\Ardalis.Specification.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

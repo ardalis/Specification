@@ -94,5 +94,5 @@ elif [ "$1" = "all" ]; then
   deleteTestResults;
   deleteLocalGitBranches;
 else
-  showhelp;
+  deleteBinObj;
 fi

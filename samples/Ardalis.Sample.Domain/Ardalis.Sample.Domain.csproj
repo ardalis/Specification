@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
+    <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
   </ItemGroup>
 
 </Project>
