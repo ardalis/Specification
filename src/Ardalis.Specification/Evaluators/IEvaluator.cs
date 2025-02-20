@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public interface IEvaluator
 {

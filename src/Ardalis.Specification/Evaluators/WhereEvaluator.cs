@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
 {

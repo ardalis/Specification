@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Tests;
+﻿namespace Tests;
 
 [Collection("WriteCollection")]
 public class RepositoryOfT_DeleteRangeAsync

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Tests;
+﻿namespace Tests;
 
 [Collection("ReadCollection")]
 public class RepositoryOfT_AnyAsync

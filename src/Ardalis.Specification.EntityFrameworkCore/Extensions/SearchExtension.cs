@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq.Expressions;
+﻿using System.Data;
 using System.Reflection;
 
 namespace Ardalis.Specification.EntityFrameworkCore;

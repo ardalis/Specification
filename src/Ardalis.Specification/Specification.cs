@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
 public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>

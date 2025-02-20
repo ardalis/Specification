@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public static class IncludableBuilderExtensions
 {

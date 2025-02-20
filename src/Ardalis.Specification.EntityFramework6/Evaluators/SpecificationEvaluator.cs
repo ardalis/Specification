@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Ardalis.Specification.EntityFramework6;
+﻿namespace Ardalis.Specification.EntityFramework6;
 
 /// <inheritdoc/>
 public class SpecificationEvaluator : ISpecificationEvaluator

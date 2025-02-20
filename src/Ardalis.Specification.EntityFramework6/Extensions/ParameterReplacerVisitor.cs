@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Ardalis.Specification.EntityFramework6;
+﻿namespace Ardalis.Specification.EntityFramework6;
 
 internal class ParameterReplacerVisitor : ExpressionVisitor
 {

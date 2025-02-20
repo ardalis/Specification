@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public class SelectorNotFoundException : Exception
 {

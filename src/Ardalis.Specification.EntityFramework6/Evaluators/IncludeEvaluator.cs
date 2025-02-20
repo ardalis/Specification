@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 
 namespace Ardalis.Specification.EntityFramework6;
 

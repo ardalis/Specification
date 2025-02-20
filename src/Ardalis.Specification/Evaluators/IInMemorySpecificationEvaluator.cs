@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public interface IInMemorySpecificationEvaluator
 {

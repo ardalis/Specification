@@ -1,6 +1,4 @@
 ﻿using MartinCostello.SqlLocalDb;
-using System;
-using System.Threading.Tasks;
 using Testcontainers.MsSql;
 
 namespace Tests.Fixture;

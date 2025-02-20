@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 /// <summary>
 /// Encapsulates data needed to perform 'SQL LIKE' operation.

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Ardalis.Specification.EntityFrameworkCore;
+﻿namespace Ardalis.Specification.EntityFrameworkCore;
 
 /// <summary>
 /// 

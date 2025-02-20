@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace Ardalis.Specification.EntityFramework6;
+﻿namespace Ardalis.Specification.EntityFramework6;
 
 public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
 {
