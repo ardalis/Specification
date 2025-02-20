@@ -1,10 +1,10 @@
-﻿global using FluentAssertions;
-global using Microsoft.EntityFrameworkCore;
-global using Ardalis.Specification;
+﻿global using Ardalis.Specification;
 global using Ardalis.Specification.EntityFrameworkCore;
+global using FluentAssertions;
+global using Microsoft.EntityFrameworkCore;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
 global using Tests.Fixture;
 global using Xunit;
-global using System;
-global using System.Linq;
-global using System.Collections.Generic;
-global using System.Threading.Tasks;

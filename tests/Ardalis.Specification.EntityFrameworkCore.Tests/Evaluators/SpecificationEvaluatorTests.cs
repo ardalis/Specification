@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Tests.Evaluators;
+﻿namespace Tests.Evaluators;
 
 [Collection("SharedCollection")]
 public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
