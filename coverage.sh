@@ -20,7 +20,7 @@ dotnet build $testtarget --configuration Release
 dotnet test $testtarget --configuration Release --no-build --no-restore --collect:"XPlat Code Coverage"
 
 reportgenerator \
-    -reports:*/tests/**/coverage.cobertura.xml \
+    -reports:tests/**/coverage.cobertura.xml \
     -targetdir:TestResults \
     -reporttypes:"Html;Badges;MarkdownSummaryGithub" \
     -assemblyfilters:-*Tests*

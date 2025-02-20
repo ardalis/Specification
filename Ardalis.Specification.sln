@@ -20,8 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		coverage.sh = coverage.sh
+		src\Directory.Build.props = src\Directory.Build.props
+		tests\Directory.Build.props = tests\Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		exclusion.dic = exclusion.dic
+		readme-nuget.md = readme-nuget.md
 		README.md = README.md
 		setup-sqllocaldb.ps1 = setup-sqllocaldb.ps1
 	EndProjectSection
