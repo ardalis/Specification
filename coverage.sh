@@ -17,7 +17,7 @@ testtarget="ci.slnf"
 fi
 
 dotnet build $testtarget --configuration Release
-dotnet test $testtarget --configuration Release --no-build --no-restore --collect:"XPlat Code Coverage"
+dotnet test $testtarget --configuration Release --no-build --no-restore --framework net9.0 --collect:"XPlat Code Coverage"
 
 reportgenerator \
     -reports:tests/**/coverage.cobertura.xml \

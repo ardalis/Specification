@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout
@@ -15,13 +15,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.x
-    - name: Install SQL Local DB
-      run: ./setup-sqllocaldb.ps1
-      shell: pwsh
     - name: Build
       run: dotnet build ci.slnf --configuration Release
     - name: Test
-      run: dotnet test ci.slnf --configuration Release --no-build --no-restore
+      run: dotnet test ci.slnf --configuration Release --no-build --no-restore --framework net9.0
     - name: Pack
       run: dotnet pack ci.slnf --configuration Release --no-build --no-restore --output .
     - name: Push to NuGet
