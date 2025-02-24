@@ -1,0 +1,1 @@
+A .NET library for building query specifications.

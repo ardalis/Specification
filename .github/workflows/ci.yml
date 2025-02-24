@@ -6,16 +6,14 @@ on:
     branches:
       - main
     paths:
-      - 'Specification/**'
-      - 'Specification.EntityFrameworkCore/**'
-      - 'Specification.EntityFramework6/**'
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'Specification/**'
-      - 'Specification.EntityFrameworkCore/**'
-      - 'Specification.EntityFramework6/**'
+      - 'src/**'
+      - 'tests/**'
 
 jobs:
   build:
@@ -23,11 +21,11 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.x
     - name: Install SQL Local DB
       run: ./setup-sqllocaldb.ps1
       shell: pwsh

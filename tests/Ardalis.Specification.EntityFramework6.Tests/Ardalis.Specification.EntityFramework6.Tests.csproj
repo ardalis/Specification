@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net472;</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MartinCostello.SqlLocalDb"/>
+    <PackageReference Include="EntityFramework"/>
+    <PackageReference Include="System.Data.DataSetExtensions"/>
+    <PackageReference Include="Testcontainers.MsSql"/>
+    <PackageReference Include="Microsoft.CSharp"/>
+    <PackageReference Include="Polyfill">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
+    <ProjectReference Include="..\..\src\Ardalis.Specification.EntityFramework6\Ardalis.Specification.EntityFramework6.csproj" />
+    <ProjectReference Include="..\Ardalis.Specification.Tests\Ardalis.Specification.Tests.csproj" />
+  </ItemGroup>
+
+</Project>

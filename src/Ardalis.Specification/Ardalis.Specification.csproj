@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    
+    <AssemblyName>Ardalis.Specification</AssemblyName>
+    <PackageId>Ardalis.Specification</PackageId>
+    <Title>Ardalis.Specification</Title>
+    <Description>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Description>
+    <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
+    
+    <Version>8.0.0</Version>
+    <PackageTags>spec;specification;repository;ddd</PackageTags>
+    <PackageReleaseNotes>
+      * Added TFMs net6.0, net7.0 and net8.0
+    </PackageReleaseNotes>    
+  </PropertyGroup>
+
+</Project>

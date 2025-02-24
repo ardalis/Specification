@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    
+    <AssemblyName>Ardalis.Specification.EntityFrameworkCore</AssemblyName>
+    <PackageId>Ardalis.Specification.EntityFrameworkCore</PackageId>
+    <Title>Ardalis.Specification.EntityFrameworkCore</Title>
+    <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
+    <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
+    
+    <Version>8.0.0</Version>
+    <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
+    <PackageReleaseNotes>
+      * Added TFMs net6.0, net7.0 and net8.0
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Specification\src\Ardalis.Specification\Ardalis.Specification.csproj" />
+  </ItemGroup>
+  
+</Project>
