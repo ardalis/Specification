@@ -39,7 +39,7 @@ public interface ISpecification<T>
     /// <summary>
     /// Arbitrary state to be accessed from builders and evaluators.
     /// </summary>
-    IDictionary<string, object> Items { get; set; }
+    Dictionary<string, object> Items { get; }
 
     /// <summary>
     /// The collection of filters.
@@ -71,12 +71,12 @@ public interface ISpecification<T>
     /// <summary>
     /// The number of elements to return.
     /// </summary>
-    int? Take { get; }
+    int Take { get; }
 
     /// <summary>
     /// The number of elements to skip before returning the remaining elements.
     /// </summary>
-    int? Skip { get; }
+    int Skip { get; }
 
     /// <summary>
     /// The transform function to apply to the result of the query encapsulated by the <see cref="ISpecification{T}"/>.

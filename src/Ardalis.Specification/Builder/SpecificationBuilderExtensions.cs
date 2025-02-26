@@ -27,7 +27,8 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            ((List<WhereExpressionInfo<T>>)specificationBuilder.Specification.WhereExpressions).Add(new WhereExpressionInfo<T>(criteria));
+            var expr = new WhereExpressionInfo<T>(criteria);
+            specificationBuilder.Specification.Add(expr);
         }
 
         return specificationBuilder;
@@ -58,7 +59,8 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy));
+            var expr = new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderBy);
+            specificationBuilder.Specification.Add(expr);
         }
 
         var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
@@ -91,7 +93,8 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            ((List<OrderExpressionInfo<T>>)specificationBuilder.Specification.OrderExpressions).Add(new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending));
+            var expr = new OrderExpressionInfo<T>(orderExpression, OrderTypeEnum.OrderByDescending);
+            specificationBuilder.Specification.Add(expr);
         }
 
         var orderedSpecificationBuilder = new OrderedSpecificationBuilder<T>(specificationBuilder.Specification, !condition);
@@ -130,9 +133,8 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            var info = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
-
-            ((List<IncludeExpressionInfo>)specificationBuilder.Specification.IncludeExpressions).Add(info);
+            var expr = new IncludeExpressionInfo(includeExpression, typeof(T), typeof(TProperty));
+            specificationBuilder.Specification.Add(expr);
         }
 
         var includeBuilder = new IncludableSpecificationBuilder<T, TProperty>(specificationBuilder.Specification, !condition);
@@ -165,7 +167,7 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            ((List<string>)specificationBuilder.Specification.IncludeStrings).Add(includeString);
+            specificationBuilder.Specification.Add(includeString);
         }
 
         return specificationBuilder;
@@ -204,7 +206,8 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            ((List<SearchExpressionInfo<T>>)specificationBuilder.Specification.SearchCriterias).Add(new SearchExpressionInfo<T>(selector, searchTerm, searchGroup));
+            var expr = new SearchExpressionInfo<T>(selector, searchTerm, searchGroup);
+            specificationBuilder.Specification.Add(expr);
         }
 
         return specificationBuilder;
@@ -233,7 +236,7 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            if (specificationBuilder.Specification.Take != null) throw new DuplicateTakeException();
+            if (specificationBuilder.Specification.Take != -1) throw new DuplicateTakeException();
 
             specificationBuilder.Specification.Take = take;
         }
@@ -266,7 +269,7 @@ public static class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            if (specificationBuilder.Specification.Skip != null) throw new DuplicateSkipException();
+            if (specificationBuilder.Specification.Skip != -1) throw new DuplicateSkipException();
 
             specificationBuilder.Specification.Skip = skip;
         }
@@ -357,8 +360,6 @@ public static class SpecificationBuilderExtensions
             }
 
             specificationBuilder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
-
-            specificationBuilder.Specification.CacheEnabled = true;
         }
 
         var cacheBuilder = new CacheSpecificationBuilder<T>(specificationBuilder.Specification, !condition);

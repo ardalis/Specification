@@ -10,8 +10,8 @@ public class Builder_Skip
         var spec1 = new Specification<Customer>();
         var spec2 = new Specification<Customer, string>();
 
-        spec1.Skip.Should().BeNull();
-        spec2.Skip.Should().BeNull();
+        spec1.Skip.Should().Be(-1);
+        spec2.Skip.Should().Be(-1);
     }
 
     [Fact]
@@ -27,8 +27,8 @@ public class Builder_Skip
         spec2.Query
             .Skip(skip, false);
 
-        spec1.Skip.Should().BeNull();
-        spec2.Skip.Should().BeNull();
+        spec1.Skip.Should().Be(-1);
+        spec2.Skip.Should().Be(-1);
     }
 
     [Fact]

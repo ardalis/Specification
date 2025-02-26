@@ -10,6 +10,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
+    <PackageReference Include="ManagedObjectSize.ObjectPool" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ardalis.Specification\Ardalis.Specification.csproj" />
