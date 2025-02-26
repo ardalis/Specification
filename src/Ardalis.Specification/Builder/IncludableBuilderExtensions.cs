@@ -16,9 +16,8 @@ public static class IncludableBuilderExtensions
     {
         if (condition && !previousBuilder.IsChainDiscarded)
         {
-            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
-
-            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+            var expr = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(TPreviousProperty));
+            previousBuilder.Specification.Add(expr);
         }
 
         var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);
@@ -40,9 +39,8 @@ public static class IncludableBuilderExtensions
     {
         if (condition && !previousBuilder.IsChainDiscarded)
         {
-            var info = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(IEnumerable<TPreviousProperty>));
-
-            ((List<IncludeExpressionInfo>)previousBuilder.Specification.IncludeExpressions).Add(info);
+            var expr = new IncludeExpressionInfo(thenIncludeExpression, typeof(TEntity), typeof(TProperty), typeof(IEnumerable<TPreviousProperty>));
+            previousBuilder.Specification.Add(expr);
         }
 
         var includeBuilder = new IncludableSpecificationBuilder<TEntity, TProperty>(previousBuilder.Specification, !condition || previousBuilder.IsChainDiscarded);

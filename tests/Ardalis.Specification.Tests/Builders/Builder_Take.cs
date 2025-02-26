@@ -10,8 +10,8 @@ public class Builder_Take
         var spec1 = new Specification<Customer>();
         var spec2 = new Specification<Customer, string>();
 
-        spec1.Take.Should().BeNull();
-        spec2.Take.Should().BeNull();
+        spec1.Take.Should().Be(-1);
+        spec2.Take.Should().Be(-1);
     }
 
     [Fact]
@@ -27,8 +27,8 @@ public class Builder_Take
         spec2.Query
             .Take(take, false);
 
-        spec1.Take.Should().BeNull();
-        spec2.Take.Should().BeNull();
+        spec1.Take.Should().Be(-1);
+        spec2.Take.Should().Be(-1);
     }
 
     [Fact]
