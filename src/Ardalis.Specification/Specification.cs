@@ -1,4 +1,6 @@
-﻿namespace Ardalis.Specification;
+﻿using System.ComponentModel;
+
+namespace Ardalis.Specification;
 
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
 public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
@@ -24,6 +26,13 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 /// <inheritdoc cref="ISpecification{T}"/>
 public class Specification<T> : ISpecification<T>
 {
+    // It is utilized only during the building stage for the sub-chains. Once the state is built, we don't care about it anymore.
+    // The initial value is not important since the value is always initialized by the root of the chain. Therefore, we don't need ThreadLocal (it's more expensive).
+    // With this we're saving 8 bytes per include builder, and we don't need an order builder at all (saving 32 bytes per order builder instance).
+    [ThreadStatic]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static bool IsChainDiscarded;
+
     // The state is null initially, but we're spending 8 bytes per reference (on x64).
     // This will be reconsidered for version 10 where we may store the whole state as a single array of structs.
     private List<WhereExpressionInfo<T>>? _whereExpressions;
