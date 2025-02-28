@@ -17,4 +17,9 @@
     </PackageReleaseNotes>    
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Buffers" />
+    <PackageReference Include="System.Memory" />
+  </ItemGroup>
+
 </Project>

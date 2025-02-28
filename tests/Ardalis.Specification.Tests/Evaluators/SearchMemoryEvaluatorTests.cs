@@ -2,7 +2,7 @@
 
 public class SearchMemoryEvaluatorTests
 {
-    private static readonly SearchEvaluator _evaluator = SearchEvaluator.Instance;
+    private static readonly SearchMemoryEvaluator _evaluator = SearchMemoryEvaluator.Instance;
 
     public record Customer(int Id, string FirstName, string? LastName);
 
