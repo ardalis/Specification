@@ -76,24 +76,20 @@ public class SearchMemoryEvaluator : IInMemoryEvaluator
         // but CollectionsMarshal.AsSpan is not available in .NET Standard 2.0
         private static bool IsValid<T>(T sourceItem, List<SearchExpressionInfo<T>> list)
         {
-            var valid = true;
             var groupStart = 0;
-
             for (var i = 1; i <= list.Count; i++)
             {
                 // If we reached the end of the list or the group has changed, we slice and process the group.
                 if (i == list.Count || list[i].SearchGroup != list[groupStart].SearchGroup)
                 {
-                    var validOrGroup = IsValidInOrGroup(sourceItem, list, groupStart, i);
-                    if ((valid = valid && validOrGroup) is false)
+                    if (IsValidInOrGroup(sourceItem, list, groupStart, i) is false)
                     {
-                        break;
+                        return false;
                     }
                     groupStart = i;
                 }
             }
-
-            return valid;
+            return true;
 
             static bool IsValidInOrGroup(T sourceItem, List<SearchExpressionInfo<T>> list, int from, int to)
             {
