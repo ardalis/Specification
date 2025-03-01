@@ -16,7 +16,7 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> Search<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
-        Expression<Func<T, string>> keySelector,
+        Expression<Func<T, string?>> keySelector,
         string pattern,
         int group = 1) where T : class
         => Search(builder, keySelector, pattern, true, group);
@@ -34,7 +34,7 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> Search<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
-        Expression<Func<T, string>> keySelector,
+        Expression<Func<T, string?>> keySelector,
         string pattern,
         bool condition,
         int group = 1) where T : class
@@ -59,7 +59,7 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T> Search<T>(
         this ISpecificationBuilder<T> builder,
-        Expression<Func<T, string>> keySelector,
+        Expression<Func<T, string?>> keySelector,
         string pattern,
         int group = 1) where T : class
         => Search(builder, keySelector, pattern, true, group);
@@ -76,7 +76,7 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T> Search<T>(
         this ISpecificationBuilder<T> builder,
-        Expression<Func<T, string>> keySelector,
+        Expression<Func<T, string?>> keySelector,
         string pattern,
         bool condition,
         int group = 1) where T : class

@@ -14,7 +14,7 @@ public class SearchMemoryEvaluatorTests
             new(1, "axxa", "axya"),
             new(2, "aaaa", "aaaa"),
             new(3, "aaaa", "axya"),
-            //new(4, "aaaa", null) // TODO: Fix null cases. [fatii, 11/02/2025]
+            new(4, "aaaa", null)
         ];
 
         List<Customer> expected =
@@ -44,7 +44,7 @@ public class SearchMemoryEvaluatorTests
             new(1, "axxa", "axya"),
             new(2, "aaaa", "aaaa"),
             new(3, "aaaa", "axya"),
-            //new(4, "aaaa", null)
+            new(4, "aaaa", null)
         ];
 
         List<Customer> expected =
@@ -70,8 +70,8 @@ public class SearchMemoryEvaluatorTests
             new(1, "axxa", "axya"),
             new(2, "aaaa", "aaaa"),
             new(3, "axxa", "axza"),
-            //new(4, "aaaa", null),
-            //new(5, "axxa", null)
+            new(4, "aaaa", null),
+            new(5, "axxa", null)
         ];
 
         List<Customer> expected =
