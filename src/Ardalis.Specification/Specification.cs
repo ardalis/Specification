@@ -84,10 +84,30 @@ public class Specification<T> : ISpecification<T>
 
     // Specs are not intended to be thread-safe, so we don't need to worry about thread-safety here.
     internal void Add(WhereExpressionInfo<T> whereExpression) => (_whereExpressions ??= new(2)).Add(whereExpression);
-    internal void Add(SearchExpressionInfo<T> searchExpression) => (_searchExpressions ??= new(2)).Add(searchExpression);
     internal void Add(OrderExpressionInfo<T> orderExpression) => (_orderExpressions ??= new(2)).Add(orderExpression);
     internal void Add(IncludeExpressionInfo includeExpression) => (_includeExpressions ??= new(2)).Add(includeExpression);
     internal void Add(string includeString) => (_includeStrings ??= new(1)).Add(includeString);
+    internal void Add(SearchExpressionInfo<T> searchExpression)
+    {
+        if (_searchExpressions is null)
+        {
+            _searchExpressions = new(2) { searchExpression };
+            return;
+        }
+
+        // We'll keep the search expressions sorted by the search group.
+        // We could keep the state as SortedList instead of List, but it has additional 56 bytes overhead and it's not worth it for our use-case.
+        // Having multiple search groups is not a common scenario, and usually there may be just few search expressions.
+        var index = _searchExpressions.FindIndex(x => x.SearchGroup > searchExpression.SearchGroup);
+        if (index == -1)
+        {
+            _searchExpressions.Add(searchExpression);
+        }
+        else
+        {
+            _searchExpressions.Insert(index, searchExpression);
+        }
+    }
 
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
