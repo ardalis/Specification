@@ -26,8 +26,15 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 /// <inheritdoc cref="ISpecification{T}"/>
 public class Specification<T> : ISpecification<T>
 {
+    private const int DEFAULT_CAPACITY_WHERE = 2;
+    private const int DEFAULT_CAPACITY_SEARCH = 2;
+    private const int DEFAULT_CAPACITY_ORDER = 2;
+    private const int DEFAULT_CAPACITY_INCLUDE = 2;
+    private const int DEFAULT_CAPACITY_INCLUDESTRING = 1;
+
     // It is utilized only during the building stage for the sub-chains. Once the state is built, we don't care about it anymore.
-    // The initial value is not important since the value is always initialized by the root of the chain. Therefore, we don't need ThreadLocal (it's more expensive).
+    // The initial value is not important since the value is always initialized by the root of the chain.
+    // Therefore, we don't need ThreadLocal (it's more expensive).
     // With this we're saving 8 bytes per include builder, and we don't need an order builder at all (saving 32 bytes per order builder instance).
     [ThreadStatic]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -83,15 +90,15 @@ public class Specification<T> : ISpecification<T>
 
 
     // Specs are not intended to be thread-safe, so we don't need to worry about thread-safety here.
-    internal void Add(WhereExpressionInfo<T> whereExpression) => (_whereExpressions ??= new(2)).Add(whereExpression);
-    internal void Add(OrderExpressionInfo<T> orderExpression) => (_orderExpressions ??= new(2)).Add(orderExpression);
-    internal void Add(IncludeExpressionInfo includeExpression) => (_includeExpressions ??= new(2)).Add(includeExpression);
-    internal void Add(string includeString) => (_includeStrings ??= new(1)).Add(includeString);
+    internal void Add(WhereExpressionInfo<T> whereExpression) => (_whereExpressions ??= new(DEFAULT_CAPACITY_WHERE)).Add(whereExpression);
+    internal void Add(OrderExpressionInfo<T> orderExpression) => (_orderExpressions ??= new(DEFAULT_CAPACITY_ORDER)).Add(orderExpression);
+    internal void Add(IncludeExpressionInfo includeExpression) => (_includeExpressions ??= new(DEFAULT_CAPACITY_INCLUDE)).Add(includeExpression);
+    internal void Add(string includeString) => (_includeStrings ??= new(DEFAULT_CAPACITY_INCLUDESTRING)).Add(includeString);
     internal void Add(SearchExpressionInfo<T> searchExpression)
     {
         if (_searchExpressions is null)
         {
-            _searchExpressions = new(2) { searchExpression };
+            _searchExpressions = new(DEFAULT_CAPACITY_SEARCH) { searchExpression };
             return;
         }
 
