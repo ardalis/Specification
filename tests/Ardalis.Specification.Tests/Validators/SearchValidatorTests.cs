@@ -142,20 +142,19 @@ public class SearchValidatorTests
         result.Should().BeTrue();
     }
 
-    // TODO: Fix null support in SearchValidator [fatii, 11/02/2025]
-    //[Fact]
-    //public void ReturnsFalse_GivenSpecWithMultipleSearchDifferentGroup_WithNullProperty()
-    //{
-    //    var customer = new Customer(1, "FirstName1", null);
+    [Fact]
+    public void ReturnsFalse_GivenSpecWithMultipleSearchDifferentGroup_WithNullProperty()
+    {
+        var customer = new Customer(1, "FirstName1", null);
 
-    //    var term = "irst";
-    //    var spec = new Specification<Customer>();
-    //    spec.Query
-    //        .Search(x => x.FirstName, $"%{term}%", 1)
-    //        .Search(x => x.LastName, $"%{term}%", 2);
+        var term = "irst";
+        var spec = new Specification<Customer>();
+        spec.Query
+            .Search(x => x.FirstName, $"%{term}%", 1)
+            .Search(x => x.LastName, $"%{term}%", 2);
 
-    //    var result = _validator.IsValid(customer, spec);
+        var result = _validator.IsValid(customer, spec);
 
-    //    result.Should().BeFalse();
-    //}
+        result.Should().BeFalse();
+    }
 }

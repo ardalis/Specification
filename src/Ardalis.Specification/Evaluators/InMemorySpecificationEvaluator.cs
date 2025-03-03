@@ -12,7 +12,7 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
         Evaluators.AddRange(new IInMemoryEvaluator[]
         {
             WhereEvaluator.Instance,
-            SearchEvaluator.Instance,
+            SearchMemoryEvaluator.Instance,
             OrderEvaluator.Instance,
             PaginationEvaluator.Instance
         });
