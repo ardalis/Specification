@@ -4,25 +4,22 @@
 public class SpecificationEvaluator : ISpecificationEvaluator
 {
     // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
+
     /// <summary>
-    /// <see cref="SpecificationEvaluator" /> instance with default evaluators and without any additional features enabled.
+    /// <see cref="SpecificationEvaluator" /> instance with default evaluators..
     /// </summary>
     public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
 
-    /// <summary>
-    /// <see cref="SpecificationEvaluator" /> instance with default evaluators and enabled caching.
-    /// </summary>
-    public static SpecificationEvaluator Cached { get; } = new SpecificationEvaluator(true);
-
     protected List<IEvaluator> Evaluators { get; } = new List<IEvaluator>();
 
-    public SpecificationEvaluator(bool cacheEnabled = false)
+    public SpecificationEvaluator()
     {
         Evaluators.AddRange(new IEvaluator[]
         {
             WhereEvaluator.Instance,
             SearchEvaluator.Instance,
-            cacheEnabled ? IncludeEvaluator.Cached : IncludeEvaluator.Default,
+            IncludeStringEvaluator.Instance,
+            IncludeEvaluator.Instance,
             OrderEvaluator.Instance,
             PaginationEvaluator.Instance,
             AsNoTrackingEvaluator.Instance,

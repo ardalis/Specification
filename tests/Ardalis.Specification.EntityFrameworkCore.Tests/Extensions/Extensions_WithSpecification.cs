@@ -34,8 +34,7 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
 
         var actual = DbContext.Stores
             .WithSpecification(spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         // The expression in the spec are applied in a predefined order.
         var expected = DbContext.Stores
@@ -90,8 +89,7 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
 
         var actual = DbContext.Stores
             .WithSpecification(spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         // The expression in the spec are applied in a predefined order.
         var expected = DbContext.Stores
@@ -148,8 +146,7 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
 
     //    var actual = DbContext.Stores
     //        .WithSpecification(spec)
-    //        .ToQueryString()
-    //        .Replace("__criteria_SearchTerm_", "__Format_");
+    //        .ToQueryString();
 
     //    // The expression in the spec are applied in a predefined order.
     //    var expected = DbContext.Stores

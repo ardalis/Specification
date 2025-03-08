@@ -3,7 +3,7 @@
 [Collection("SharedCollection")]
 public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
 {
-    private static readonly IncludeEvaluator _evaluator = IncludeEvaluator.Default;
+    private static readonly IncludeEvaluator _evaluator = IncludeEvaluator.Instance;
 
     [Fact]
     public void QueriesMatch_GivenIncludeExpressions()

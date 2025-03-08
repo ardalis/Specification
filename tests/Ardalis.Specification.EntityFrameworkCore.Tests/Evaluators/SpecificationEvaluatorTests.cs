@@ -75,8 +75,7 @@ public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(
             .IgnoreQueryFilters();
 
         var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         // The expression in the spec are applied in a predefined order.
         var expected = DbContext.Stores
@@ -129,8 +128,7 @@ public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(
             .IgnoreQueryFilters();
 
         var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         // The expression in the spec are applied in a predefined order.
         var expected = DbContext.Stores
@@ -184,8 +182,7 @@ public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(
         spec.Query.Select(x => x.Name);
 
         var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         // The expression in the spec are applied in a predefined order.
         var expected = DbContext.Stores
@@ -241,8 +238,7 @@ public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(
     //    spec.Query.SelectMany(x => x.Products.Select(x => x.Name));
 
     //    var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-    //        .ToQueryString()
-    //        .Replace("__criteria_SearchTerm_", "__Format_");
+    //        .ToQueryString();
 
     //    // The expression in the spec are applied in a predefined order.
     //    var expected = DbContext.Stores
