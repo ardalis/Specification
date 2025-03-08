@@ -3,7 +3,7 @@
 [Collection("SharedCollection")]
 public class SearchEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
 {
-    private static readonly Ardalis.Specification.EntityFrameworkCore.SearchEvaluator _evaluator = Ardalis.Specification.EntityFrameworkCore.SearchEvaluator.Instance;
+    private static readonly SearchEvaluator _evaluator = SearchEvaluator.Instance;
 
     [Fact]
     public void QueriesMatch_GivenNoSearch()
@@ -32,8 +32,7 @@ public class SearchEvaluatorTests(TestFactory factory) : IntegrationTest(factory
             .Search(x => x.Name, $"%{storeTerm}%");
 
         var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-            .ToQueryString()
-            .Replace("__criteria_SearchTerm_", "__Format_");
+            .ToQueryString();
 
         var expected = DbContext.Stores
             .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%"))
@@ -42,34 +41,32 @@ public class SearchEvaluatorTests(TestFactory factory) : IntegrationTest(factory
         actual.Should().Be(expected);
     }
 
-    // TODO: Fix this case. [fatii, 11/02/2025]
-    //[Fact]
-    //public void QueriesMatch_GivenMultipleSearch()
-    //{
-    //    var storeTerm = "ab1";
-    //    var companyTerm = "ab2";
-    //    var countryTerm = "ab3";
-    //    var streetTerm = "ab4";
+    [Fact]
+    public void QueriesMatch_GivenMultipleSearch()
+    {
+        var storeTerm = "ab1";
+        var companyTerm = "ab2";
+        var countryTerm = "ab3";
+        var streetTerm = "ab4";
 
-    //    var spec = new Specification<Store>();
-    //    spec.Query
-    //        .Where(x => x.Id > 0)
-    //        .Search(x => x.Name, $"%{storeTerm}%")
-    //        .Search(x => x.Company.Name, $"%{companyTerm}%")
-    //        .Search(x => x.Company.Country.Name, $"%{countryTerm}%", 3)
-    //        .Search(x => x.Address.Street, $"%{streetTerm}%", 2);
+        var spec = new Specification<Store>();
+        spec.Query
+            .Where(x => x.Id > 0)
+            .Search(x => x.Name, $"%{storeTerm}%")
+            .Search(x => x.Company.Name, $"%{companyTerm}%")
+            .Search(x => x.Company.Country.Name, $"%{countryTerm}%", 3)
+            .Search(x => x.Address.Street, $"%{streetTerm}%", 2);
 
-    //    var actual = _evaluator.GetQuery(DbContext.Stores, spec)
-    //        .ToQueryString()
-    //        .Replace("__criteria_SearchTerm_", "__Format_");
+        var actual = _evaluator.GetQuery(DbContext.Stores, spec)
+            .ToQueryString();
 
-    //    var expected = DbContext.Stores
-    //        .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%")
-    //                || EF.Functions.Like(x.Company.Name, $"%{companyTerm}%"))
-    //        .Where(x => EF.Functions.Like(x.Address.Street, $"%{streetTerm}%"))
-    //        .Where(x => EF.Functions.Like(x.Company.Country.Name, $"%{countryTerm}%"))
-    //        .ToQueryString();
+        var expected = DbContext.Stores
+            .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%")
+                    || EF.Functions.Like(x.Company.Name, $"%{companyTerm}%"))
+            .Where(x => EF.Functions.Like(x.Address.Street, $"%{streetTerm}%"))
+            .Where(x => EF.Functions.Like(x.Company.Country.Name, $"%{countryTerm}%"))
+            .ToQueryString();
 
-    //    actual.Should().Be(expected);
-    //}
+        actual.Should().Be(expected);
+    }
 }
