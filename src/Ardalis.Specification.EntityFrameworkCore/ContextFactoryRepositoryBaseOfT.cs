@@ -27,20 +27,6 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     }
 
     /// <inheritdoc/>
-    public async Task<TEntity?> GetBySpecAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
-    {
-        await using var dbContext = _dbContextFactory.CreateDbContext();
-        return await ApplySpecification(specification, dbContext).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public async Task<TResult?> GetBySpecAsync<TResult>(ISpecification<TEntity, TResult> specification, CancellationToken cancellationToken = default)
-    {
-        await using var dbContext = _dbContextFactory.CreateDbContext();
-        return await ApplySpecification(specification, dbContext).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
     public async Task<TEntity?> FirstOrDefaultAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
