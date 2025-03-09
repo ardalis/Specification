@@ -27,20 +27,6 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     }
 
     /// <inheritdoc/>
-    public async Task<TEntity?> GetBySpecAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
-    {
-        await using var dbContext = _dbContextFactory.CreateDbContext();
-        return await ApplySpecification(specification, dbContext).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public async Task<TResult?> GetBySpecAsync<TResult>(ISpecification<TEntity, TResult> specification, CancellationToken cancellationToken = default)
-    {
-        await using var dbContext = _dbContextFactory.CreateDbContext();
-        return await ApplySpecification(specification, dbContext).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
     public async Task<TEntity?> FirstOrDefaultAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
@@ -152,49 +138,54 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     }
 
     /// <inheritdoc/>
-    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         dbContext.Set<TEntity>().Update(entity);
 
-        await SaveChangesAsync(dbContext, cancellationToken);
+        var result = await SaveChangesAsync(dbContext, cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public async Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task<int> UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         dbContext.Set<TEntity>().UpdateRange(entities);
 
-        await SaveChangesAsync(dbContext, cancellationToken);
+        var result = await SaveChangesAsync(dbContext, cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         dbContext.Set<TEntity>().Remove(entity);
 
-        await SaveChangesAsync(dbContext, cancellationToken);
+        var result = await SaveChangesAsync(dbContext, cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public async Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         dbContext.Set<TEntity>().RemoveRange(entities);
 
-        await SaveChangesAsync(dbContext, cancellationToken);
+        var result = await SaveChangesAsync(dbContext, cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public async Task DeleteRangeAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteRangeAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         var query = ApplySpecification(specification, dbContext);
         dbContext.Set<TEntity>().RemoveRange(query);
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(dbContext, cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>

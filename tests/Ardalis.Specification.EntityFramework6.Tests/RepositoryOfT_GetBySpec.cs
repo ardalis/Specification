@@ -21,7 +21,7 @@ public class RepositoryOfT_GetBySpec
         spec.Query.Where(x => x.Id == StoreSeed.VALID_STORE_ID)
             .Include(x => x.Products);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -37,7 +37,7 @@ public class RepositoryOfT_GetBySpec
         spec.Query.Where(x => x.Id == StoreSeed.VALID_STORE_ID)
             .Include(x => x.Address);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -54,7 +54,7 @@ public class RepositoryOfT_GetBySpec
             .Include(x => x.Address)
             .Include(x => x.Products);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -71,7 +71,7 @@ public class RepositoryOfT_GetBySpec
         spec.Query.Where(x => x.Id == StoreSeed.VALID_STORE_ID)
             .Include(nameof(Store.Products));
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);
@@ -88,7 +88,7 @@ public class RepositoryOfT_GetBySpec
             .Include(x => x.Stores)
             .ThenInclude(x => x.Address);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -106,7 +106,7 @@ public class RepositoryOfT_GetBySpec
             .Include(x => x.Stores)
             .ThenInclude(x => x.Products);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -123,7 +123,7 @@ public class RepositoryOfT_GetBySpec
         spec.Query.Where(x => x.Id == CompanySeed.VALID_COMPANY_ID)
             .AsNoTracking();
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result?.Name.Should().Be(CompanySeed.VALID_COMPANY_NAME);
@@ -140,7 +140,7 @@ public class RepositoryOfT_GetBySpec
             .Include(x => x.Company).ThenInclude(x => x!.Country)
             .Include(x => x.Company).ThenInclude(x => x!.Stores).ThenInclude(x => x.Products);
 
-        var result = await repo.GetBySpecAsync(spec);
+        var result = await repo.FirstOrDefaultAsync(spec);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(StoreSeed.VALID_STORE_NAME);

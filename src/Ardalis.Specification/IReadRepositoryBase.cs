@@ -22,29 +22,6 @@ public interface IReadRepositoryBase<T> where T : class
     Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
 
     /// <summary>
-    /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
-    /// </summary>
-    /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>
-    /// A task that represents the asynchronous operation.
-    /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
-    /// </returns>
-    [Obsolete("Use FirstOrDefaultAsync<T> or SingleOrDefaultAsync<T> instead. The SingleOrDefaultAsync<T> can be applied only to SingleResultSpecification<T> specifications.")]
-    Task<T?> GetBySpecAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Finds an entity that matches the encapsulated query logic of the <paramref name="specification"/>.
-    /// </summary>
-    /// <typeparam name="TResult">The type of the result.</typeparam>
-    /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>
-    /// A task that represents the asynchronous operation.
-    /// The task result contains the <typeparamref name="TResult" />.
-    /// </returns>
-    [Obsolete("Use FirstOrDefaultAsync<T> or SingleOrDefaultAsync<T> instead. The SingleOrDefaultAsync<T> can be applied only to SingleResultSpecification<T> specifications.")]
-    Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
