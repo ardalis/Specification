@@ -41,47 +41,52 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    public virtual async Task<int> UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         DbContext.Entry(entity).State = EntityState.Modified;
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public virtual async Task<int> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
         foreach (var entity in entities)
         {
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
+    public virtual async Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
         DbContext.Set<T>().Remove(entity);
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public virtual async Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
         DbContext.Set<T>().RemoveRange(entities);
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<int> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         var query = ApplySpecification(specification);
         DbContext.Set<T>().RemoveRange(query);
 
-        await SaveChangesAsync(cancellationToken);
+        var result = await SaveChangesAsync(cancellationToken);
+        return result;
     }
 
     /// <inheritdoc/>

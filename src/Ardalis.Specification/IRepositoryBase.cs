@@ -35,38 +35,38 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Updates an entity in the database
     /// </summary>
     /// <param name="entity">The entity to update.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    Task<int> UpdateAsync(T entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates the given entities in the database
     /// </summary>
     /// <param name="entities">The entities to update.</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    Task<int> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes an entity in the database
     /// </summary>
     /// <param name="entity">The entity to delete.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the given entities in the database
     /// </summary>
     /// <param name="entities">The entities to remove.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
     /// <paramref name="specification"/>, from the database.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    Task DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    Task<int> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persists changes to the database.
