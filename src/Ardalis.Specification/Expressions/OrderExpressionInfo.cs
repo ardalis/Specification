@@ -6,7 +6,7 @@
 /// <typeparam name="T">Type of the entity to apply sort on.</typeparam>
 public class OrderExpressionInfo<T>
 {
-    private readonly Lazy<Func<T, object?>> _keySelectorFunc;
+    private Func<T, object?>? _keySelectorFunc;
 
     /// <summary>
     /// Creates instance of <see cref="OrderExpressionInfo{T}" />.
@@ -20,8 +20,6 @@ public class OrderExpressionInfo<T>
 
         KeySelector = keySelector;
         OrderType = orderType;
-
-        _keySelectorFunc = new Lazy<Func<T, object?>>(KeySelector.Compile);
     }
 
     /// <summary>
@@ -37,5 +35,5 @@ public class OrderExpressionInfo<T>
     /// <summary>
     /// Compiled <see cref="KeySelector" />.
     /// </summary>
-    public Func<T, object?> KeySelectorFunc => _keySelectorFunc.Value;
+    public Func<T, object?> KeySelectorFunc => _keySelectorFunc ??= KeySelector.Compile();
 }

@@ -6,7 +6,7 @@
 /// <typeparam name="T">Type of the entity to apply filter on.</typeparam>
 public class WhereExpressionInfo<T>
 {
-    private readonly Lazy<Func<T, bool>> _filterFunc;
+    private Func<T, bool>? _filterFunc;
 
     /// <summary>
     /// Creates instance of <see cref="WhereExpressionInfo{T}" />.
@@ -16,10 +16,7 @@ public class WhereExpressionInfo<T>
     public WhereExpressionInfo(Expression<Func<T, bool>> filter)
     {
         _ = filter ?? throw new ArgumentNullException(nameof(filter));
-
         Filter = filter;
-
-        _filterFunc = new Lazy<Func<T, bool>>(Filter.Compile);
     }
 
     /// <summary>
@@ -30,5 +27,5 @@ public class WhereExpressionInfo<T>
     /// <summary>
     /// Compiled <see cref="Filter" />.
     /// </summary>
-    public Func<T, bool> FilterFunc => _filterFunc.Value;
+    public Func<T, bool> FilterFunc => _filterFunc ??= Filter.Compile();
 }

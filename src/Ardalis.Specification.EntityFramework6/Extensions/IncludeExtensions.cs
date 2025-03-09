@@ -16,7 +16,6 @@ public static class IncludeExtensions
     public static IQueryable<T> ThenInclude<T>(this IQueryable<T> source, IncludeExpressionInfo info)
     {
         _ = info ?? throw new ArgumentNullException(nameof(info));
-        _ = info.PreviousPropertyType ?? throw new ArgumentNullException(nameof(info.PreviousPropertyType));
 
         var exp = source.Expression as MethodCallExpression;
         var arg = exp.Arguments[0] as ConstantExpression;
@@ -47,7 +46,7 @@ public static class IncludeExtensions
         return QueryableExtensions.Include(source, $"{previousPropertyName}.{propertyName}");
     }
 
-    private static string GetPropertyName(this Expression propertySelector, char delimiter = '.', char endTrim = ')')
+    private static string GetPropertyName(this LambdaExpression propertySelector, char delimiter = '.', char endTrim = ')')
     {
 
         var asString = propertySelector.ToString();
