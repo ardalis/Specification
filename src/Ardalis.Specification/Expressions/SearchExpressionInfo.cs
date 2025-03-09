@@ -6,7 +6,7 @@
 /// <typeparam name="T">Type of the source from which search target should be selected.</typeparam>
 public class SearchExpressionInfo<T>
 {
-    private readonly Lazy<Func<T, string?>> _selectorFunc;
+    private Func<T, string?>? _selectorFunc;
 
     /// <summary>
     /// Creates instance of <see cref="SearchExpressionInfo{T}" />.
@@ -24,8 +24,6 @@ public class SearchExpressionInfo<T>
         Selector = selector;
         SearchTerm = searchTerm;
         SearchGroup = searchGroup;
-
-        _selectorFunc = new Lazy<Func<T, string?>>(Selector.Compile);
     }
 
     /// <summary>
@@ -46,5 +44,5 @@ public class SearchExpressionInfo<T>
     /// <summary>
     /// Compiled <see cref="Selector" />.
     /// </summary>
-    public Func<T, string?> SelectorFunc => _selectorFunc.Value;
+    public Func<T, string?> SelectorFunc => _selectorFunc ??= Selector.Compile();
 }
