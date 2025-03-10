@@ -84,6 +84,11 @@ public interface ISpecification<T>
     Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; }
 
     /// <summary>
+    /// A query tag to help correlate specification with generated SQL queries captured in logs
+    /// </summary>
+    string? Tag { get; }
+
+    /// <summary>
     /// Return whether or not the results should be cached.
     /// </summary>
     bool CacheEnabled { get; }

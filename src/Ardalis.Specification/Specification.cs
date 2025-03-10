@@ -57,6 +57,9 @@ public class Specification<T> : ISpecification<T>
     public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; }
 
     /// <inheritdoc/>
+    public string? Tag { get; internal set; }
+
+    /// <inheritdoc/>
     public string? CacheKey { get; internal set; }
 
     /// <inheritdoc/>
