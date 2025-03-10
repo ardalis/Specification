@@ -74,10 +74,13 @@ public class Specification<T> : ISpecification<T>
 
     // We may store all the flags in a single byte. But, based on the object alignment of 8 bytes, we won't save any space anyway.
     // And we'll have unnecessary overhead with enum flags for now. This will be reconsidered for version 10.
-    // Based on the alignment of 8 bytes (on x64) we can store 8 flags here. So, we have space for 3 more flags for free.
+    // Based on the alignment of 8 bytes (on x64) we can store 8 flags here. So, we have space for 2 more flags for free.
 
     /// <inheritdoc/>
     public bool IgnoreQueryFilters { get; internal set; } = false;
+
+    /// <inheritdoc/>
+    public bool IgnoreAutoIncludes { get; internal set; } = false;
 
     /// <inheritdoc/>
     public bool AsSplitQuery { get; internal set; } = false;

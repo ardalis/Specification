@@ -1,42 +1,38 @@
 ﻿namespace Tests.Evaluators;
 
 [Collection("SharedCollection")]
-public class TagWithEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
+public class IgnoreAutoIncludesEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
 {
-    private static readonly TagWithEvaluator _evaluator = TagWithEvaluator.Instance;
+    private static readonly IgnoreAutoIncludesEvaluator _evaluator = IgnoreAutoIncludesEvaluator.Instance;
 
     [Fact]
-    public void QueriesMatch_GivenTag()
+    public void QueriesMatch_GivenIgnoreAutoIncludes()
     {
-        var tag = "asd";
-
         var spec = new Specification<Country>();
-        spec.Query.TagWith(tag);
+        spec.Query.IgnoreAutoIncludes();
 
         var actual = _evaluator.GetQuery(DbContext.Countries, spec)
             .ToQueryString();
 
         var expected = DbContext.Countries
-            .TagWith(tag)
+            .IgnoreAutoIncludes()
             .ToQueryString();
 
         actual.Should().Be(expected);
     }
 
     [Fact]
-    public void Applies_GivenTag()
+    public void Applies_GivenIgnoreAutoIncludes()
     {
-        var tag = "asd";
-
         var spec = new Specification<Country>();
-        spec.Query.TagWith(tag);
+        spec.Query.IgnoreAutoIncludes();
 
         var actual = _evaluator.GetQuery(DbContext.Countries, spec)
             .Expression
             .ToString();
 
         var expected = DbContext.Countries
-            .TagWith(tag)
+            .IgnoreAutoIncludes()
             .Expression
             .ToString();
 

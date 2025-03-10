@@ -139,6 +139,11 @@ public interface ISpecification<T>
     bool IgnoreQueryFilters { get; }
 
     /// <summary>
+    /// Returns whether or not the query should ignore the defined AutoInclude configurations. 
+    /// </summary>
+    bool IgnoreAutoIncludes { get; }
+
+    /// <summary>
     /// Applies the query defined within the specification to the given objects.
     /// This is specially helpful when unit testing specification classes
     /// </summary>
