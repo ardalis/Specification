@@ -84,6 +84,11 @@ public interface ISpecification<T>
     Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; }
 
     /// <summary>
+    /// A query tag to help correlate specification with generated SQL queries captured in logs
+    /// </summary>
+    string? QueryTag { get; }
+
+    /// <summary>
     /// Return whether or not the results should be cached.
     /// </summary>
     bool CacheEnabled { get; }
@@ -132,6 +137,11 @@ public interface ISpecification<T>
     /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
     /// </remarks>
     bool IgnoreQueryFilters { get; }
+
+    /// <summary>
+    /// Returns whether or not the query should ignore the defined AutoInclude configurations. 
+    /// </summary>
+    bool IgnoreAutoIncludes { get; }
 
     /// <summary>
     /// Applies the query defined within the specification to the given objects.

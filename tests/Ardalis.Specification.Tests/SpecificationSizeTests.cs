@@ -22,7 +22,7 @@ public class SpecificationSizeTests
 
         var size = ObjectSize.GetObjectInclusiveSize(spec);
 
-        size.Should().BeLessThan(100);
+        size.Should().BeLessThan(105);
         PrintObjectSize(spec);
     }
 

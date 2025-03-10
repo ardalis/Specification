@@ -26,7 +26,9 @@ public class SpecificationEvaluator : ISpecificationEvaluator
             AsNoTrackingWithIdentityResolutionEvaluator.Instance,
             AsTrackingEvaluator.Instance,
             IgnoreQueryFiltersEvaluator.Instance,
-            AsSplitQueryEvaluator.Instance
+            IgnoreAutoIncludesEvaluator.Instance,
+            AsSplitQueryEvaluator.Instance,
+            TagWithEvaluator.Instance,
         });
     }
 

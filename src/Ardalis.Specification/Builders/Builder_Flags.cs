@@ -63,6 +63,66 @@ public static partial class SpecificationBuilderExtensions
     }
 
     /// <summary>
+    /// Configures the specification to ignore auto includes.
+    /// </summary>
+    /// <typeparam name="T">The type of the entity.</typeparam>
+    /// <typeparam name="TResult">The type of the result.</typeparam>
+    /// <param name="builder">The specification builder.</param>
+    /// <returns>The updated specification builder.</returns>
+    public static ISpecificationBuilder<T, TResult> IgnoreAutoIncludes<T, TResult>(
+        this ISpecificationBuilder<T, TResult> builder) where T : class
+        => IgnoreAutoIncludes(builder, true);
+
+    /// <summary>
+    /// Configures the specification to ignore auto includes if the condition is true.
+    /// </summary>
+    /// <typeparam name="T">The type of the entity.</typeparam>
+    /// <typeparam name="TResult">The type of the result.</typeparam>
+    /// <param name="builder">The specification builder.</param>
+    /// <param name="condition">The condition to evaluate.</param>
+    /// <returns>The updated specification builder.</returns>
+    public static ISpecificationBuilder<T, TResult> IgnoreAutoIncludes<T, TResult>(
+        this ISpecificationBuilder<T, TResult> builder,
+        bool condition) where T : class
+    {
+        if (condition)
+        {
+            builder.Specification.IgnoreAutoIncludes = true;
+        }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures the specification to ignore auto includes.
+    /// </summary>
+    /// <typeparam name="T">The type of the entity.</typeparam>
+    /// <param name="builder">The specification builder.</param>
+    /// <returns>The updated specification builder.</returns>
+    public static ISpecificationBuilder<T> IgnoreAutoIncludes<T>(
+        this ISpecificationBuilder<T> builder) where T : class
+        => IgnoreAutoIncludes(builder, true);
+
+    /// <summary>
+    /// Configures the specification to ignore auto includes if the condition is true.
+    /// </summary>
+    /// <typeparam name="T">The type of the entity.</typeparam>
+    /// <param name="builder">The specification builder.</param>
+    /// <param name="condition">The condition to evaluate.</param>
+    /// <returns>The updated specification builder.</returns>
+    public static ISpecificationBuilder<T> IgnoreAutoIncludes<T>(
+        this ISpecificationBuilder<T> builder,
+        bool condition) where T : class
+    {
+        if (condition)
+        {
+            builder.Specification.IgnoreAutoIncludes = true;
+        }
+
+        return builder;
+    }
+
+    /// <summary>
     /// Configures the specification to use split queries.
     /// </summary>
     /// <typeparam name="T">The type of the entity.</typeparam>
