@@ -10,8 +10,8 @@ public class Builder_TagWith
         var spec1 = new Specification<Customer>();
         var spec2 = new Specification<Customer, string>();
 
-        spec1.Tag.Should().BeNull();
-        spec2.Tag.Should().BeNull();
+        spec1.QueryTag.Should().BeNull();
+        spec2.QueryTag.Should().BeNull();
     }
 
     [Fact]
@@ -25,8 +25,8 @@ public class Builder_TagWith
         spec2.Query
             .TagWith("asd", false);
 
-        spec1.Tag.Should().BeNull();
-        spec2.Tag.Should().BeNull();
+        spec1.QueryTag.Should().BeNull();
+        spec2.QueryTag.Should().BeNull();
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class Builder_TagWith
         spec2.Query
             .TagWith(tag);
 
-        spec1.Tag.Should().Be(tag);
-        spec2.Tag.Should().Be(tag);
+        spec1.QueryTag.Should().Be(tag);
+        spec2.QueryTag.Should().Be(tag);
     }
 }

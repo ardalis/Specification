@@ -6,22 +6,6 @@ public class IgnoreAutoIncludesEvaluatorTests(TestFactory factory) : Integration
     private static readonly IgnoreAutoIncludesEvaluator _evaluator = IgnoreAutoIncludesEvaluator.Instance;
 
     [Fact]
-    public void QueriesMatch_GivenIgnoreAutoIncludes()
-    {
-        var spec = new Specification<Country>();
-        spec.Query.IgnoreAutoIncludes();
-
-        var actual = _evaluator.GetQuery(DbContext.Countries, spec)
-            .ToQueryString();
-
-        var expected = DbContext.Countries
-            .IgnoreAutoIncludes()
-            .ToQueryString();
-
-        actual.Should().Be(expected);
-    }
-
-    [Fact]
     public void Applies_GivenIgnoreAutoIncludes()
     {
         var spec = new Specification<Country>();

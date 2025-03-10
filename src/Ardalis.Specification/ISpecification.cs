@@ -86,7 +86,7 @@ public interface ISpecification<T>
     /// <summary>
     /// A query tag to help correlate specification with generated SQL queries captured in logs
     /// </summary>
-    string? Tag { get; }
+    string? QueryTag { get; }
 
     /// <summary>
     /// Return whether or not the results should be cached.

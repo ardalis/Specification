@@ -31,7 +31,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            builder.Specification.Tag = tag;
+            builder.Specification.QueryTag = tag;
         }
 
         return builder;
@@ -64,7 +64,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            builder.Specification.Tag = tag;
+            builder.Specification.QueryTag = tag;
         }
 
         return builder;
