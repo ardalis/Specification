@@ -1,5 +1,5 @@
 
-[![NuGet](https://img.shields.io/nuget/v/Ardalis.Specification.svg)](https://www.nuget.org/packages/Ardalis.Specification)[![NuGet](https://img.shields.io/nuget/dt/Ardalis.Specification.svg)](https://www.nuget.org/packages/Ardalis.Specification)
+[![NuGet](https://img.shields.io/nuget/v/Ardalis.Specification.svg)](https://www.nuget.org/packages/Ardalis.Specification)
 [![Actions Status](https://github.com/ardalis/Specification/actions/workflows/ci.yml/badge.svg)](https://github.com/ardalis/Specification/actions/workflows/ci.yml)
 [![Generic badge](https://img.shields.io/badge/Documentation-Ardalis.Specification-Green.svg)](https://ardalis.github.io/Specification/)
 
@@ -23,36 +23,9 @@ Base class with tests for adding specifications to a DDD model. Also includes a 
 
 ### [Read the Documentation](https://ardalis.github.io/Specification/)
 
-### Videos
+## Releases
 
-🎥 [Watch What's New in v5 of Ardalis.Specification](https://www.youtube.com/watch?v=gT72mWdD4Qo&ab_channel=Ardalis)
-
-🎥 [Watch an Overview of the Pattern and this Package](https://www.youtube.com/watch?v=BgWWbBUWyig)
-
-## Version 7 Release Notes
-
-Version 7 is now available on NuGet.org! We have had a lot of confusion about the need to have the version of Ardalis.Specification (and/or the EF6/EFCore packages) match the consuming project's version of .NET. We intend to version this package more frequently in the near future to make it clear that it need not match.
-
-### Breaking Changes
-
-* Updated projects, drop support for old TFMs. by @fiseni in https://github.com/ardalis/Specification/pull/326
-
-### Other updates
-
-* Patch 2 by @davidhenley in https://github.com/ardalis/Specification/pull/283
-* Fix `Just the Docs` link in docs home page by @snowfrogdev in https://github.com/ardalis/Specification/pull/293
-* Update url path by @ta1H3n in https://github.com/ardalis/Specification/pull/303
-* Implement SelectMany support by @amdavie in https://github.com/ardalis/Specification/pull/320
-* Add two methods for consuming repositories in scenarios where repositories could be longer lived (e.g. Blazor component Injections) by @jasonsummers in https://github.com/ardalis/Specification/pull/289
-* Added support for AsAsyncEnumerable by @nkz-soft in https://github.com/ardalis/Specification/pull/316
-* Lamadelrae/doc faq ef versions by @Lamadelrae in https://github.com/ardalis/Specification/pull/324
-* Update the search feature to generate parameterized query. by @fiseni in https://github.com/ardalis/Specification/pull/327
-* Add support for extending default evaluator list by @fiseni in https://github.com/ardalis/Specification/pull/328
-* Ardalis/cleanup by @ardalis in https://github.com/ardalis/Specification/pull/332
-
-## Version 6 Release Notes
-
-See [Releases](https://github.com/ardalis/Specification/releases/tag/v6.1.0)
+The change log for `version 9` and the list of breaking changes can be found [here](https://github.com/ardalis/Specification/issues/427).
 
 ## Sample Usage
 
@@ -63,12 +36,8 @@ Example implementation in your repository using specifications
 ```c#
 public async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
 {
-	return await ApplySpecification(specification).ToListAsync(cancellationToken);
-}
-
-private IQueryable<T> ApplySpecification(ISpecification<T> specification)
-{
-	return SpecificationEvaluator.Default.GetQuery(dbContext.Set<T>().AsQueryable(), specification);
+    var query = SpecificationEvaluator.GetQuery(DbContext.Set<T>(), specification);
+    return await query.ToListAsync(cancellationToken);
 }
 ```
 
@@ -80,11 +49,7 @@ var customers = await _repository.ListAsync(spec, cancellationToken);
 ```
 Specifications should be defined in an easily-discovered location in the application, so developers can easily reuse them. The use of this pattern helps to eliminate many commonly duplicated lambda expressions in applications, reducing bugs associated with this duplication.
 
-We're shipping a built-in repository implementation [RepositoryBase](https://github.com/ardalis/Specification/blob/main/Specification.EntityFrameworkCore/src/Ardalis.Specification.EntityFrameworkCore/RepositoryBaseOfT.cs), ready to be consumed in your apps. You can use it as a reference and create your own custom repository implementation.
-
-## Running the tests
-
-This project needs a database to test, since a lot of the tests validate that a specification is translated from LINQ to SQL by EF Core. To run the tests, we're using docker containers, including a docker-hosted SQL Server instance. You run the tests by simply running `RunTests.bat` or `RunTests.sh`.
+We're shipping a built-in repository implementation [RepositoryBase](https://github.com/ardalis/Specification/blob/main/src/Ardalis.Specification.EntityFrameworkCore/RepositoryBaseOfT.cs), ready to be consumed in your apps. You can use it as a reference and create your own custom repository implementation.
 
 ## Reference
 
