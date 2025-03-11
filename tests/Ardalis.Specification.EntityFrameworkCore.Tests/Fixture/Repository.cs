@@ -1,5 +1,5 @@
 ﻿namespace Tests.Fixture;
 
-public class Repository<T>(DbContext context) : RepositoryBase<T>(context) where T : class
+public class Repository<T>(TestDbContext context) : RepositoryBase<T>(context) where T : class
 {
 }
