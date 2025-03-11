@@ -21,8 +21,12 @@ internal abstract class Iterator<TSource> : IEnumerable<TSource>, IEnumerator<TS
     public abstract bool MoveNext();
 
     public TSource Current => _current;
-    object? IEnumerator.Current => Current;
     IEnumerator<TSource> IEnumerable<TSource>.GetEnumerator() => GetEnumerator();
+
+    [ExcludeFromCodeCoverage]
+    object? IEnumerator.Current => Current;
+
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     [ExcludeFromCodeCoverage]

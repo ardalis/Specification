@@ -36,7 +36,7 @@ public class WhereEvaluatorTests
         actualForIEnumerable.Should().NotBeNull();
         actualForIEnumerable.Should().Equal(expected);
 
-        var actualForIQueryable = _evaluator.Evaluate(input.AsQueryable(), spec);
+        var actualForIQueryable = _evaluator.GetQuery(input.AsQueryable(), spec);
         actualForIQueryable.Should().NotBeNull();
         actualForIQueryable.Should().Equal(expected);
     }

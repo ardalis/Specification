@@ -2,23 +2,27 @@
 
 public class InvalidSearchPatternExceptionTests
 {
-    private const string _defaultMessage = "Invalid search pattern: " + _pattern;
-    private const string _pattern = "x";
+    private const string DEFAULT_MESSAGE = "Invalid search pattern: " + PATTERN;
+    private const string PATTERN = "x";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-        Action action = () => throw new InvalidSearchPatternException(_pattern);
+        Action sut = () => throw new InvalidSearchPatternException(PATTERN);
 
-        action.Should().Throw<InvalidSearchPatternException>(_pattern).WithMessage(_defaultMessage);
+        sut.Should().Throw<InvalidSearchPatternException>(PATTERN)
+            .WithMessage(DEFAULT_MESSAGE);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
         var inner = new Exception("test");
-        Action action = () => throw new InvalidSearchPatternException(_pattern, inner);
+        Action sut = () => throw new InvalidSearchPatternException(PATTERN, inner);
 
-        action.Should().Throw<InvalidSearchPatternException>(_pattern).WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        sut.Should().Throw<InvalidSearchPatternException>(PATTERN)
+            .WithMessage(DEFAULT_MESSAGE)
+            .WithInnerException<Exception>()
+            .WithMessage("test");
     }
 }

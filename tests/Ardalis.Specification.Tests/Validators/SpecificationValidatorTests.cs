@@ -73,4 +73,49 @@ public class SpecificationValidatorTests
         result.Should().Be(resultFromSpec);
         result.Should().BeFalse();
     }
+
+#if NET8_0_OR_GREATER
+    [Fact]
+    public void Constructor_SetsProvidedValidators()
+    {
+        var validators = new List<IValidator>
+        {
+            WhereValidator.Instance,
+            SearchValidator.Instance,
+            WhereValidator.Instance,
+        };
+
+        var validator = new SpecificationValidator(validators);
+
+        var result = ValidatorsOf(validator);
+        result.Should().HaveSameCount(validators);
+        result.Should().Equal(validators);
+    }
+
+    [Fact]
+    public void DerivedSpecificationValidatorCanAlterDefaultValidators()
+    {
+        var validator = new SpecificationValidatorDerived();
+
+        var result = ValidatorsOf(validator);
+        result.Should().HaveCount(4);
+        result[0].Should().BeOfType<SearchValidator>();
+        result[1].Should().BeOfType<WhereValidator>();
+        result[2].Should().BeOfType<SearchValidator>();
+        result[3].Should().BeOfType<WhereValidator>();
+    }
+
+    private class SpecificationValidatorDerived : SpecificationValidator
+    {
+        public SpecificationValidatorDerived()
+        {
+            Validators.Add(WhereValidator.Instance);
+            Validators.Insert(0, SearchValidator.Instance);
+        }
+    }
+
+    [System.Runtime.CompilerServices.UnsafeAccessor(System.Runtime.CompilerServices.UnsafeAccessorKind.Field, Name = "<Validators>k__BackingField")]
+    public static extern ref List<IValidator> ValidatorsOf(SpecificationValidator @this);
+
+#endif
 }

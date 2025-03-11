@@ -2,15 +2,15 @@
 
 public class SelectorNotFoundException : Exception
 {
-    private const string _message = "The specification must have a selector transform defined. Ensure either Select() or SelectMany() is used in the specification!";
+    private const string MESSAGE = "The specification must have a selector transform defined. Ensure either Select() or SelectMany() is used in the specification!";
 
     public SelectorNotFoundException()
-        : base(_message)
+        : base(MESSAGE)
     {
     }
 
     public SelectorNotFoundException(Exception innerException)
-        : base(_message, innerException)
+        : base(MESSAGE, innerException)
     {
     }
 }
