@@ -2,15 +2,15 @@
 
 public class DuplicateOrderChainException : Exception
 {
-    private const string _message = "The specification contains more than one Order chain!";
+    private const string MESSAGE = "The specification contains more than one Order chain!";
 
     public DuplicateOrderChainException()
-        : base(_message)
+        : base(MESSAGE)
     {
     }
 
     public DuplicateOrderChainException(Exception innerException)
-        : base(_message, innerException)
+        : base(MESSAGE, innerException)
     {
     }
 }

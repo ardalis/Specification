@@ -7,6 +7,24 @@ public class OrderEvaluatorTests
     public record Customer(int Id, string? Name = null);
 
     [Fact]
+    public void ThrowsDuplicateOrderChainException_GivenMultipleOrderChains()
+    {
+        List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
+        List<Customer> expected = [new(1), new(2), new(3), new(4), new(5)];
+
+        var spec = new Specification<Customer>();
+        spec.Query
+            .OrderBy(x => x.Id)
+            .OrderBy(x => x.Name);
+
+        var sut1 = new Action(() => _evaluator.Evaluate(input, spec));
+        var sut2 = new Action(() => _evaluator.GetQuery(input.AsQueryable(), spec));
+
+        sut1.Should().Throw<DuplicateOrderChainException>();
+        sut2.Should().Throw<DuplicateOrderChainException>();
+    }
+
+    [Fact]
     public void OrdersItemsAscending_GivenOrderBy()
     {
         List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
@@ -104,7 +122,7 @@ public class OrderEvaluatorTests
         actualForIEnumerable.Should().NotBeNull();
         actualForIEnumerable.Should().Equal(expected);
 
-        var actualForIQueryable = _evaluator.Evaluate(input.AsQueryable(), spec);
+        var actualForIQueryable = _evaluator.GetQuery(input.AsQueryable(), spec);
         actualForIQueryable.Should().NotBeNull();
         actualForIQueryable.Should().Equal(expected);
     }

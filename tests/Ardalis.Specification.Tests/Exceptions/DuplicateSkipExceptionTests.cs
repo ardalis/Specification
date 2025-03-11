@@ -2,22 +2,25 @@
 
 public class DuplicateSkipExceptionTests
 {
-    private const string _defaultMessage = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
+    private const string DEFAULT_MESSAGE = "Duplicate use of Skip(). Ensure you don't use Skip() more than once in the same specification!";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-        Action action = () => throw new DuplicateSkipException();
+        Action sut = () => throw new DuplicateSkipException();
 
-        action.Should().Throw<DuplicateSkipException>().WithMessage(_defaultMessage);
+        sut.Should().Throw<DuplicateSkipException>().WithMessage(DEFAULT_MESSAGE);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
         var inner = new Exception("test");
-        Action action = () => throw new DuplicateSkipException(inner);
+        Action sut = () => throw new DuplicateSkipException(inner);
 
-        action.Should().Throw<DuplicateSkipException>().WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        sut.Should().Throw<DuplicateSkipException>()
+            .WithMessage(DEFAULT_MESSAGE)
+            .WithInnerException<Exception>()
+            .WithMessage("test");
     }
 }

@@ -10,12 +10,12 @@ public class SpecificationEvaluator : ISpecificationEvaluator
     /// </summary>
     public static SpecificationEvaluator Default { get; } = new SpecificationEvaluator();
 
-    protected List<IEvaluator> Evaluators { get; } = new List<IEvaluator>();
+    protected List<IEvaluator> Evaluators { get; }
 
     public SpecificationEvaluator()
     {
-        Evaluators.AddRange(new IEvaluator[]
-        {
+        Evaluators =
+        [
             WhereEvaluator.Instance,
             SearchEvaluator.Instance,
             IncludeStringEvaluator.Instance,
@@ -29,12 +29,12 @@ public class SpecificationEvaluator : ISpecificationEvaluator
             IgnoreAutoIncludesEvaluator.Instance,
             AsSplitQueryEvaluator.Instance,
             TagWithEvaluator.Instance,
-        });
+        ];
     }
 
     public SpecificationEvaluator(IEnumerable<IEvaluator> evaluators)
     {
-        Evaluators.AddRange(evaluators);
+        Evaluators = evaluators.ToList();
     }
 
     /// <inheritdoc/>

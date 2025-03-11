@@ -2,22 +2,26 @@
 
 public class DuplicateOrderChainExceptionTests
 {
-    private const string _defaultMessage = "The specification contains more than one Order chain!";
+    private const string DEFAULT_MESSAGE = "The specification contains more than one Order chain!";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-        Action action = () => throw new DuplicateOrderChainException();
+        Action sut = () => throw new DuplicateOrderChainException();
 
-        action.Should().Throw<DuplicateOrderChainException>().WithMessage(_defaultMessage);
+        sut.Should().Throw<DuplicateOrderChainException>()
+            .WithMessage(DEFAULT_MESSAGE);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
         var inner = new Exception("test");
-        Action action = () => throw new DuplicateOrderChainException(inner);
+        Action sut = () => throw new DuplicateOrderChainException(inner);
 
-        action.Should().Throw<DuplicateOrderChainException>().WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        sut.Should().Throw<DuplicateOrderChainException>()
+            .WithMessage(DEFAULT_MESSAGE)
+            .WithInnerException<Exception>()
+            .WithMessage("test");
     }
 }

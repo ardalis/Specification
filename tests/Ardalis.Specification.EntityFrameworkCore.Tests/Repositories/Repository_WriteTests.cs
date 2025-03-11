@@ -61,6 +61,33 @@ public class Repository_WriteTests(TestFactory factory) : IntegrationTest(factor
     }
 
     [Fact]
+    public async Task UpdateRangeAsync_ShouldUpdateEntities()
+    {
+        var repo = new Repository<Country>(DbContext);
+        var countries = new[]
+        {
+            new Country { Name = Guid.NewGuid().ToString() },
+            new Country { Name = Guid.NewGuid().ToString() },
+            new Country { Name = Guid.NewGuid().ToString() },
+        };
+        await SeedRangeAsync(countries);
+
+        countries = await DbContext.Countries.ToArrayAsync();
+        foreach (var country in countries)
+        {
+            country.Name = Guid.NewGuid().ToString();
+        }
+        await repo.UpdateRangeAsync(countries);
+        DbContext.ChangeTracker.Clear();
+
+        var countriesInDb = await DbContext.Countries.ToListAsync();
+        countriesInDb.Should().NotBeNull();
+        countriesInDb[0].Name.Should().Be(countries[0].Name);
+        countriesInDb[1].Name.Should().Be(countries[1].Name);
+        countriesInDb[2].Name.Should().Be(countries[2].Name);
+    }
+
+    [Fact]
     public async Task DeleteAsync_ShouldDeleteEntity()
     {
         var repo = new Repository<Country>(DbContext);
@@ -72,6 +99,48 @@ public class Repository_WriteTests(TestFactory factory) : IntegrationTest(factor
 
         var countryInDb = await DbContext.Countries.FirstAsync();
         await repo.DeleteAsync(countryInDb);
+        DbContext.ChangeTracker.Clear();
+
+        var countriesInDb = await DbContext.Countries.ToListAsync();
+        countriesInDb.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task DeleteRangeAsync_ShouldDeleteEntities()
+    {
+        var repo = new Repository<Country>(DbContext);
+        var countries = new[]
+        {
+            new Country { Name = Guid.NewGuid().ToString() },
+            new Country { Name = Guid.NewGuid().ToString() },
+            new Country { Name = Guid.NewGuid().ToString() },
+        };
+        await SeedRangeAsync(countries);
+
+        var countriesInDb = await DbContext.Countries.ToListAsync();
+        await repo.DeleteRangeAsync(countriesInDb);
+        DbContext.ChangeTracker.Clear();
+
+        countriesInDb = await DbContext.Countries.ToListAsync();
+        countriesInDb.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task DeleteRangeAsync_ShouldDeleteEntitiesBySpec()
+    {
+        var guid = Guid.NewGuid().ToString();
+        var repo = new Repository<Country>(DbContext);
+        var countries = new[]
+        {
+            new Country { Name = guid },
+            new Country { Name = guid },
+            new Country { Name = guid },
+        };
+        await SeedRangeAsync(countries);
+
+        var spec = new Specification<Country>();
+        spec.Query.Where(x=>x.Name == guid);
+        await repo.DeleteRangeAsync(spec);
         DbContext.ChangeTracker.Clear();
 
         var countriesInDb = await DbContext.Countries.ToListAsync();

@@ -2,15 +2,15 @@
 
 public class DuplicateTakeException : Exception
 {
-    private const string _message = "Duplicate use of Take(). Ensure you don't use Take() more than once in the same specification!";
+    private const string MESSAGE = "Duplicate use of Take(). Ensure you don't use Take() more than once in the same specification!";
 
     public DuplicateTakeException()
-        : base(_message)
+        : base(MESSAGE)
     {
     }
 
     public DuplicateTakeException(Exception innerException)
-        : base(_message, innerException)
+        : base(MESSAGE, innerException)
     {
     }
 }

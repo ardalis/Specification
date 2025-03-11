@@ -2,22 +2,26 @@
 
 public class ConcurrentSelectorsExceptionTests
 {
-    private const string _defaultMessage = "Concurrent specification selector transforms defined. Ensure only one of the Select() or SelectMany() transforms is used in the same specification!";
+    private const string DEFAULT_MESSAGE = "Concurrent specification selector transforms defined. Ensure only one of the Select() or SelectMany() transforms is used in the same specification!";
 
     [Fact]
     public void ThrowWithDefaultConstructor()
     {
-        Action action = () => throw new ConcurrentSelectorsException();
+        Action sut = () => throw new ConcurrentSelectorsException();
 
-        action.Should().Throw<ConcurrentSelectorsException>().WithMessage(_defaultMessage);
+        sut.Should().Throw<ConcurrentSelectorsException>()
+            .WithMessage(DEFAULT_MESSAGE);
     }
 
     [Fact]
     public void ThrowWithInnerException()
     {
         var inner = new Exception("test");
-        Action action = () => throw new ConcurrentSelectorsException(inner);
+        Action sut = () => throw new ConcurrentSelectorsException(inner);
 
-        action.Should().Throw<ConcurrentSelectorsException>().WithMessage(_defaultMessage).WithInnerException<Exception>().WithMessage("test");
+        sut.Should().Throw<ConcurrentSelectorsException>()
+            .WithMessage(DEFAULT_MESSAGE)
+            .WithInnerException<Exception>()
+            .WithMessage("test");
     }
 }

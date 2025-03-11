@@ -26,7 +26,7 @@ public class SpecificationSizeTests
         PrintObjectSize(spec);
     }
 
-    private record Customer(int id);
+    private record Customer(int Id);
 
     private void PrintObjectSize(object obj, [CallerArgumentExpression(nameof(obj))] string caller = "")
     {

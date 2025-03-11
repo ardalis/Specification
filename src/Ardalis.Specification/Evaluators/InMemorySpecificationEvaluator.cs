@@ -5,21 +5,22 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
     // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided evaluators.
     public static InMemorySpecificationEvaluator Default { get; } = new InMemorySpecificationEvaluator();
 
-    protected List<IInMemoryEvaluator> Evaluators { get; } = new List<IInMemoryEvaluator>();
+    protected List<IInMemoryEvaluator> Evaluators { get; }
 
     public InMemorySpecificationEvaluator()
     {
-        Evaluators.AddRange(new IInMemoryEvaluator[]
-        {
+        Evaluators =
+        [
             WhereEvaluator.Instance,
             SearchMemoryEvaluator.Instance,
             OrderEvaluator.Instance,
             PaginationEvaluator.Instance
-        });
+        ];
     }
+
     public InMemorySpecificationEvaluator(IEnumerable<IInMemoryEvaluator> evaluators)
     {
-        Evaluators.AddRange(evaluators);
+        Evaluators = evaluators.ToList();
     }
 
     public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)

@@ -115,62 +115,62 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
         actual.Should().Be(expected);
     }
 
-    // TODO: Fix SelectMany query  [fatii, 11/02/2025]
-    //[Fact]
-    //public void QueriesMatch_GivenFullQueryWithSelectMany()
-    //{
-    //    var id = 1;
-    //    var name = "Store1";
-    //    var storeTerm = "ab1";
-    //    var companyTerm = "ab2";
-    //    var streetTerm = "ab3";
+    // TODO: There is a known flaw. Pagination should be applied after SelectMany [Fati, 11/03/2025]
+    // It's a major breaking change, so it will be postponed to v10.
+    [Fact]
+    public void QueriesMatch_GivenFullQueryWithSelectMany()
+    {
+        var id = 1;
+        var name = "Store1";
+        var storeTerm = "ab1";
+        var companyTerm = "ab2";
+        var streetTerm = "ab3";
 
-    //    var spec = new Specification<Store, string?>();
-    //    spec.Query
-    //        .Where(x => x.Id > id)
-    //        .Where(x => x.Name == name)
-    //        .Search(x => x.Name, $"%{storeTerm}%")
-    //        .Search(x => x.Company.Name, $"%{companyTerm}%")
-    //        .Search(x => x.Address.Street, $"%{streetTerm}%", 2)
-    //        .Include(nameof(Address))
-    //        .Include(x => x.Products.Where(x => x.Id > 10))
-    //            .ThenInclude(x => x.Images)
-    //        .Include(x => x.Company)
-    //            .ThenInclude(x => x.Country)
-    //        .OrderBy(x => x.Id)
-    //            .ThenByDescending(x => x.Name)
-    //        .Skip(1)
-    //        .Take(10)
-    //        .IgnoreQueryFilters();
-    //    spec.Query.SelectMany(x => x.Products.Select(x => x.Name));
+        var spec = new Specification<Store, string?>();
+        spec.Query
+            .Where(x => x.Id > id)
+            .Where(x => x.Name == name)
+            .Search(x => x.Name, $"%{storeTerm}%")
+            .Search(x => x.Company.Name, $"%{companyTerm}%")
+            .Search(x => x.Address.Street, $"%{streetTerm}%", 2)
+            .Include(nameof(Address))
+            .Include(x => x.Products.Where(x => x.Id > 10))
+                .ThenInclude(x => x.Images)
+            .Include(x => x.Company)
+                .ThenInclude(x => x.Country)
+            .OrderBy(x => x.Id)
+                .ThenByDescending(x => x.Name)
+            .Skip(1)
+            .Take(10)
+            .IgnoreQueryFilters();
+        spec.Query.SelectMany(x => x.Products.Select(x => x.Name));
 
-    //    var actual = DbContext.Stores
-    //        .WithSpecification(spec)
-    //        .ToQueryString();
+        var actual = DbContext.Stores
+            .WithSpecification(spec)
+            .ToQueryString();
 
-    //    // The expression in the spec are applied in a predefined order.
-    //    var expected = DbContext.Stores
-    //        .Where(x => x.Id > id)
-    //        .Where(x => x.Name == name)
-    //        .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%")
-    //                || EF.Functions.Like(x.Company.Name, $"%{companyTerm}%"))
-    //        .Where(x => EF.Functions.Like(x.Address.Street, $"%{streetTerm}%"))
-    //        .Include(nameof(Address))
-    //        .Include(x => x.Products.Where(x => x.Id > 10))
-    //            .ThenInclude(x => x.Images)
-    //        .Include(x => x.Company)
-    //            .ThenInclude(x => x.Country)
-    //        .OrderBy(x => x.Id)
-    //            .ThenByDescending(x => x.Name)
-    //        .IgnoreQueryFilters()
-    //        .SelectMany(x => x.Products.Select(x => x.Name))
-    //        // Pagination always applied in the end
-    //        .Skip(1)
-    //        .Take(10)
-    //        .ToQueryString();
+        // The expression in the spec are applied in a predefined order.
+        var expected = DbContext.Stores
+            .Where(x => x.Id > id)
+            .Where(x => x.Name == name)
+            .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%")
+                    || EF.Functions.Like(x.Company.Name, $"%{companyTerm}%"))
+            .Where(x => EF.Functions.Like(x.Address.Street, $"%{streetTerm}%"))
+            .Include(nameof(Address))
+            .Include(x => x.Products.Where(x => x.Id > 10))
+                .ThenInclude(x => x.Images)
+            .Include(x => x.Company)
+                .ThenInclude(x => x.Country)
+            .OrderBy(x => x.Id)
+                .ThenByDescending(x => x.Name)
+            .Skip(1)
+            .Take(10)
+            .IgnoreQueryFilters()
+            .SelectMany(x => x.Products.Select(x => x.Name))
+            .ToQueryString();
 
-    //    actual.Should().Be(expected);
-    //}
+        actual.Should().Be(expected);
+    }
 
     [Fact]
     public void QueriesMatch_GivenCustomEvaluator()

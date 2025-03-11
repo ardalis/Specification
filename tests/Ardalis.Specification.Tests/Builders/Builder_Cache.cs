@@ -36,6 +36,19 @@ public class Builder_Cache
     }
 
     [Fact]
+    public void ThrowsArgumentException_GivenNullSpecificationName()
+    {
+        var spec1 = new Specification<Customer>();
+        var spec2 = new Specification<Customer, string>();
+
+        Action sut1 = () => spec1.Query.EnableCache(null!);
+        Action sut2 = () => spec2.Query.EnableCache(null!);
+
+        sut1.Should().Throw<ArgumentException>();
+        sut2.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
     public void SetsCacheKey_GivenEnableCache()
     {
         var spec1 = new Specification<Customer>();

@@ -5,24 +5,25 @@ public class SpecificationValidator : ISpecificationValidator
     // Will use singleton for default configuration. Yet, it can be instantiated if necessary, with default or provided validators.
     public static SpecificationValidator Default { get; } = new SpecificationValidator();
 
-    private readonly List<IValidator> _validators = new();
+    protected List<IValidator> Validators { get; }
 
     public SpecificationValidator()
     {
-        _validators.AddRange(new IValidator[]
-        {
+        Validators =
+        [
             WhereValidator.Instance,
             SearchValidator.Instance
-        });
+        ];
     }
+
     public SpecificationValidator(IEnumerable<IValidator> validators)
     {
-        _validators.AddRange(validators);
+        Validators = validators.ToList();
     }
 
     public virtual bool IsValid<T>(T entity, ISpecification<T> specification)
     {
-        foreach (var partialValidator in _validators)
+        foreach (var partialValidator in Validators)
         {
             if (partialValidator.IsValid(entity, specification) == false) return false;
         }
