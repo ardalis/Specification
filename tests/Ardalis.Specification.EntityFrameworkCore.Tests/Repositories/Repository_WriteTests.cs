@@ -139,7 +139,7 @@ public class Repository_WriteTests(TestFactory factory) : IntegrationTest(factor
         await SeedRangeAsync(countries);
 
         var spec = new Specification<Country>();
-        spec.Query.Where(x=>x.Name == guid);
+        spec.Query.Where(x => x.Name == guid);
         await repo.DeleteRangeAsync(spec);
         DbContext.ChangeTracker.Clear();
 

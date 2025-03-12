@@ -31,7 +31,8 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <NoWarn>1701;1702;1591;1573;1712</NoWarn>
+    <!--Missing XML comment-->
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

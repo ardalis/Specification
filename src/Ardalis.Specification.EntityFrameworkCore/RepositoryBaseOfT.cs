@@ -177,6 +177,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <paramref name="specification"/>.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="evaluateCriteriaOnly">It ignores pagination and evaluators that don't affect Count.</param>
     /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
     {

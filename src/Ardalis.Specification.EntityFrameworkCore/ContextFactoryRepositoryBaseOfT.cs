@@ -204,6 +204,8 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     /// <paramref name="specification"/>.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="dbContext">The DbContext instance.</param>
+    /// <param name="evaluateCriteriaOnly">It ignores pagination and evaluators that don't affect Count.</param>
     /// <returns>The filtered entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification, TContext dbContext, bool evaluateCriteriaOnly = false)
     {
@@ -219,6 +221,7 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
     /// </summary>
     /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="dbContext">The DbContext instance.</param>
     /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
     protected virtual IQueryable<TResult> ApplySpecification<TResult>(ISpecification<TEntity, TResult> specification, TContext dbContext)
     {
