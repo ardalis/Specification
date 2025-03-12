@@ -14,7 +14,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Adds an entity in the database.
     /// </summary>
     /// <param name="entity">The entity to add.</param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />.
@@ -25,7 +25,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Adds the given entities in the database
     /// </summary>
     /// <param name="entities"></param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// </returns>
@@ -35,6 +35,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Updates an entity in the database
     /// </summary>
     /// <param name="entity">The entity to update.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> UpdateAsync(T entity, CancellationToken cancellationToken = default);
 
@@ -42,7 +43,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Updates the given entities in the database
     /// </summary>
     /// <param name="entities">The entities to update.</param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
@@ -50,6 +51,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Removes an entity in the database
     /// </summary>
     /// <param name="entity">The entity to delete.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default);
 
@@ -57,6 +59,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// Removes the given entities in the database
     /// </summary>
     /// <param name="entities">The entities to remove.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
@@ -65,6 +68,7 @@ public interface IRepositoryBase<T> : IReadRepositoryBase<T> where T : class
     /// <paramref name="specification"/>, from the database.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 

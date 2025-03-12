@@ -14,7 +14,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// </summary>
     /// <typeparam name="TId">The type of primary key.</typeparam>
     /// <param name="id">The value of the primary key for the entity to be found.</param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
@@ -25,7 +25,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
@@ -36,7 +36,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
@@ -47,7 +47,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
@@ -58,7 +58,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
@@ -68,6 +68,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// <summary>
     /// Finds all entities of <typeparamref name="T" /> from the database.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains a <see cref="List{T}" /> that contains elements from the input sequence.
@@ -79,6 +80,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// <paramref name="specification"/>, from the database.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains a <see cref="List{T}" /> that contains elements from the input sequence.
@@ -94,6 +96,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// </summary>
     /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains a <see cref="List{TResult}" /> that contains elements from the input sequence.
@@ -105,6 +108,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// of the <paramref name="specification"/>.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains the
     /// number of elements in the input sequence.
@@ -114,6 +118,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// <summary>
     /// Returns the total number of records.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains the
     /// number of elements in the input sequence.
@@ -125,6 +130,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// of the <paramref name="specification"/> or not.
     /// </summary>
     /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains true if the 
     /// source sequence contains any elements; otherwise, false.
@@ -134,6 +140,7 @@ public interface IReadRepositoryBase<T> where T : class
     /// <summary>
     /// Returns a boolean whether any entity exists or not.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains true if the 
     /// source sequence contains any elements; otherwise, false.
@@ -141,7 +148,7 @@ public interface IReadRepositoryBase<T> where T : class
     Task<bool> AnyAsync(CancellationToken cancellationToken = default);
 
 
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
     /// <summary>
     /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
     /// <paramref name="specification"/>, from the database.

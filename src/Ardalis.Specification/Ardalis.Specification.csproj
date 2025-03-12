@@ -10,10 +10,11 @@
     <Description>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Description>
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     
-    <Version>8.0.0</Version>
+    <Version>9.0.0</Version>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
     <PackageReleaseNotes>
-      * Added TFMs net6.0, net7.0 and net8.0
+      The change log and breaking changes are listed here.
+      https://github.com/ardalis/Specification/issues/427
     </PackageReleaseNotes>    
   </PropertyGroup>
 
