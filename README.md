@@ -36,7 +36,7 @@ Example implementation in your repository using specifications
 ```c#
 public async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
 {
-    var query = SpecificationEvaluator.GetQuery(DbContext.Set<T>(), specification);
+    var query = SpecificationEvaluator.Default.GetQuery(_dbContext.Set<T>(), specification);
     return await query.ToListAsync(cancellationToken);
 }
 ```
