@@ -84,8 +84,8 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
                 .ThenByDescending(x => x.Name)
             .Skip(1)
             .Take(10)
-            .IgnoreQueryFilters();
-        spec.Query.Select(x => x.Name);
+            .IgnoreQueryFilters()
+            .Select(x => x.Name);
 
         var actual = DbContext.Stores
             .WithSpecification(spec)
@@ -142,8 +142,8 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
                 .ThenByDescending(x => x.Name)
             .Skip(1)
             .Take(10)
-            .IgnoreQueryFilters();
-        spec.Query.SelectMany(x => x.Products.Select(x => x.Name));
+            .IgnoreQueryFilters()
+            .SelectMany(x => x.Products.Select(x => x.Name));
 
         var actual = DbContext.Stores
             .WithSpecification(spec)
@@ -204,8 +204,8 @@ public class Extensions_WithSpecification(TestFactory factory) : IntegrationTest
         spec.Query
             .Where(x => x.Id > id)
             .Skip(1)
-            .Take(10);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Take(10)
+            .Select(x => new CountryDto(x.Name));
 
         var actual = DbContext.Stores
             .WithSpecification(spec, new MySpecificationEvaluator())

@@ -13,7 +13,10 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> Where<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
         Expression<Func<T, bool>> predicate)
-        => Where(builder, predicate, true);
+    {
+        Where((ISpecificationBuilder<T>)builder, predicate, true);
+        return builder;
+    }
 
     /// <summary>
     /// Adds a Where clause to the specification if the condition is true.
@@ -29,12 +32,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, bool>> predicate,
         bool condition)
     {
-        if (condition)
-        {
-            var expr = new WhereExpressionInfo<T>(predicate);
-            builder.Specification.Add(expr);
-        }
-
+        Where((ISpecificationBuilder<T>)builder, predicate, condition);
         return builder;
     }
 

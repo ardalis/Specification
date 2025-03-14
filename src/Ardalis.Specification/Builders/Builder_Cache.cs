@@ -16,7 +16,10 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         string specificationName,
         params object[] args) where T : class
-        => EnableCache(builder, specificationName, true, args);
+    {
+        EnableCache((ISpecificationBuilder<T>)builder, specificationName, true, args);
+        return (SpecificationBuilder<T, TResult>)builder;
+    }
 
     /// <summary>
     /// Set's the cache key for the specification.
@@ -35,17 +38,7 @@ public static partial class SpecificationBuilderExtensions
         bool condition,
         params object[] args) where T : class
     {
-        if (condition)
-        {
-            if (string.IsNullOrEmpty(specificationName))
-            {
-                throw new ArgumentException($"Required input {specificationName} was null or empty.", specificationName);
-            }
-
-            builder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
-        }
-
-        Specification<T, TResult>.IsChainDiscarded = !condition;
+        EnableCache((ISpecificationBuilder<T>)builder, specificationName, condition, args);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -106,7 +99,10 @@ public static partial class SpecificationBuilderExtensions
     public static ICacheSpecificationBuilder<T, TResult> WithCacheKey<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
         string cacheKey) where T : class
-        => WithCacheKey(builder, cacheKey, true);
+    {
+        WithCacheKey((ISpecificationBuilder<T>)builder, cacheKey, true);
+        return (SpecificationBuilder<T, TResult>)builder;
+    }
 
     /// <summary>
     /// Sets the cache key for the specification.
@@ -123,12 +119,7 @@ public static partial class SpecificationBuilderExtensions
         string cacheKey,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.CacheKey = cacheKey;
-        }
-
-        Specification<T, TResult>.IsChainDiscarded = !condition;
+        WithCacheKey((ISpecificationBuilder<T>)builder, cacheKey, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 

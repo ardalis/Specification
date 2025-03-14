@@ -1,10 +1,12 @@
 ﻿namespace Ardalis.Specification;
 
-public interface IIncludableSpecificationBuilder<T, TResult, out TProperty> : ISpecificationBuilder<T, TResult> where T : class
+public interface IIncludableSpecificationBuilder<T, TResult, out TProperty>
+    : ISpecificationBuilder<T, TResult>, IIncludableSpecificationBuilder<T, TProperty> where T : class
 {
 }
 
-public interface IIncludableSpecificationBuilder<T, out TProperty> : ISpecificationBuilder<T> where T : class
+public interface IIncludableSpecificationBuilder<T, out TProperty>
+    : ISpecificationBuilder<T> where T : class
 {
 }
 

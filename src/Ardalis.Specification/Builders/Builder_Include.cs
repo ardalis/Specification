@@ -105,7 +105,7 @@ public static partial class SpecificationBuilderExtensions
             builder.Specification.Add(expr);
         }
 
-        Specification<T, TResult>.IsChainDiscarded = !condition;
+        Specification<T>.IsChainDiscarded = !condition;
         var includeBuilder = new IncludableSpecificationBuilder<T, TResult, TProperty>(builder.Specification);
         return includeBuilder;
     }
@@ -181,14 +181,14 @@ public static partial class SpecificationBuilderExtensions
         bool condition)
         where TEntity : class
     {
-        if (condition && !Specification<TEntity, TResult>.IsChainDiscarded)
+        if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
             var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
             builder.Specification.Add(expr);
         }
         else
         {
-            Specification<TEntity, TResult>.IsChainDiscarded = true;
+            Specification<TEntity>.IsChainDiscarded = true;
         }
 
         var includeBuilder = new IncludableSpecificationBuilder<TEntity, TResult, TProperty>(builder.Specification);
@@ -273,14 +273,14 @@ public static partial class SpecificationBuilderExtensions
         bool condition)
         where TEntity : class
     {
-        if (condition && !Specification<TEntity, TResult>.IsChainDiscarded)
+        if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
             var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
             builder.Specification.Add(expr);
         }
         else
         {
-            Specification<TEntity, TResult>.IsChainDiscarded = true;
+            Specification<TEntity>.IsChainDiscarded = true;
         }
 
         var includeBuilder = new IncludableSpecificationBuilder<TEntity, TResult, TProperty>(builder.Specification);

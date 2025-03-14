@@ -102,8 +102,8 @@ public class Repository_CountTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new Specification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == "b");
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == "b")
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.CountAsync(spec);
 
@@ -167,8 +167,8 @@ public class Repository_CountTests(TestFactory factory) : IntegrationTest(factor
         spec.Query
             .Where(x => x.Name == "b")
             .Skip(1)
-            .Take(1);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Take(1)
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.CountAsync(spec);
 

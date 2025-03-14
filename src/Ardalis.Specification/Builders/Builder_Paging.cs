@@ -14,7 +14,10 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> Take<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
         int take)
-        => Take(builder, take, true);
+    {
+        Take((ISpecificationBuilder<T>)builder, take, true);
+        return builder;
+    }
 
     /// <summary>
     /// Sets the number of items to take in the specification if the condition is true.
@@ -31,12 +34,7 @@ public static partial class SpecificationBuilderExtensions
         int take,
         bool condition)
     {
-        if (condition)
-        {
-            if (builder.Specification.Take != -1) throw new DuplicateTakeException();
-            builder.Specification.Take = take;
-        }
-
+        Take((ISpecificationBuilder<T>)builder, take, condition);
         return builder;
     }
 
@@ -88,7 +86,10 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> Skip<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
         int skip)
-        => Skip(builder, skip, true);
+    {
+        Skip((ISpecificationBuilder<T>)builder, skip, true);
+        return builder;
+    }
 
     /// <summary>
     /// Sets the number of items to skip in the specification if the condition is true.
@@ -105,12 +106,7 @@ public static partial class SpecificationBuilderExtensions
         int skip,
         bool condition)
     {
-        if (condition)
-        {
-            if (builder.Specification.Skip != -1) throw new DuplicateSkipException();
-            builder.Specification.Skip = skip;
-        }
-
+        Skip((ISpecificationBuilder<T>)builder, skip, condition);
         return builder;
     }
 

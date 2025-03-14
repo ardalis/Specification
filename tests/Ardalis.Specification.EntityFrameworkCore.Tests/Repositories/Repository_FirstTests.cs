@@ -56,8 +56,8 @@ public class Repository_FirstTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new Specification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == expected.Name);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == expected.Name)
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.FirstOrDefaultAsync(spec);
 
@@ -73,8 +73,8 @@ public class Repository_FirstTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new Specification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == expected.Name);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == expected.Name)
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.FirstOrDefaultAsync(spec);
 
@@ -154,8 +154,8 @@ public class Repository_FirstTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new SingleResultSpecification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == expected.Name);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == expected.Name)
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.SingleOrDefaultAsync(spec);
 
@@ -171,8 +171,8 @@ public class Repository_FirstTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new SingleResultSpecification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == expected.Name);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == expected.Name)
+            .Select(x => new CountryDto(x.Name));
 
         var result = await repo.SingleOrDefaultAsync(spec);
 
@@ -194,8 +194,8 @@ public class Repository_FirstTests(TestFactory factory) : IntegrationTest(factor
         var repo = new Repository<Country>(DbContext);
         var spec = new SingleResultSpecification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == expected.Name);
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == expected.Name)
+            .Select(x => new CountryDto(x.Name));
 
         var result = () => repo.SingleOrDefaultAsync(spec);
 
