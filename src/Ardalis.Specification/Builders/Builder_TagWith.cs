@@ -13,7 +13,10 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> TagWith<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder,
         string tag)
-        => TagWith(builder, tag, true);
+    {
+        TagWith((ISpecificationBuilder<T>)builder, tag, true);
+        return builder;
+    }
 
     /// <summary>
     /// Adds a query tag to the specification if the condition is true.
@@ -29,7 +32,7 @@ public static partial class SpecificationBuilderExtensions
         string tag,
         bool condition)
     {
-        ((ISpecificationBuilder<T>)builder).TagWith(tag, condition);
+        TagWith((ISpecificationBuilder<T>)builder, tag, condition);
         return builder;
     }
 

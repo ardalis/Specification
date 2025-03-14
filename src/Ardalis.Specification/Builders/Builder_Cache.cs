@@ -17,7 +17,7 @@ public static partial class SpecificationBuilderExtensions
         string specificationName,
         params object[] args) where T : class
     {
-        ((ISpecificationBuilder<T>)builder).EnableCache(specificationName, true, args);
+        EnableCache((ISpecificationBuilder<T>)builder, specificationName, true, args);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -38,7 +38,7 @@ public static partial class SpecificationBuilderExtensions
         bool condition,
         params object[] args) where T : class
     {
-        ((ISpecificationBuilder<T>)builder).EnableCache(specificationName, condition, args);
+        EnableCache((ISpecificationBuilder<T>)builder, specificationName, condition, args);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -100,7 +100,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         string cacheKey) where T : class
     {
-        ((ISpecificationBuilder<T>)builder).WithCacheKey(cacheKey, true);
+        WithCacheKey((ISpecificationBuilder<T>)builder, cacheKey, true);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -119,7 +119,7 @@ public static partial class SpecificationBuilderExtensions
         string cacheKey,
         bool condition) where T : class
     {
-        ((ISpecificationBuilder<T>)builder).WithCacheKey(cacheKey, condition);
+        WithCacheKey((ISpecificationBuilder<T>)builder, cacheKey, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
