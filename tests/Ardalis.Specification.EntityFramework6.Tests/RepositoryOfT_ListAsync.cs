@@ -88,8 +88,8 @@ public class RepositoryOfT_ListAsync
         spec.Query
             .OrderBy(x => x.Id)
             .Skip(skip)
-            .Take(take);
-        spec.Query.Select(x => x.Name);
+            .Take(take)
+            .Select(x => x.Name);
 
         var storeNames = await repo.ListAsync(spec);
 

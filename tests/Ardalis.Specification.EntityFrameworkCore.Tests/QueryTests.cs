@@ -145,8 +145,8 @@ public class QueryTests(TestFactory factory) : IntegrationTest(factory)
 
         var spec = new Specification<Country, CountryDto>();
         spec.Query
-            .Where(x => x.Name == "b");
-        spec.Query.Select(x => new CountryDto(x.Name));
+            .Where(x => x.Name == "b")
+            .Select(x => new CountryDto(x.Name));
 
         var result = await DbContext.Countries
             .WithSpecification(spec)

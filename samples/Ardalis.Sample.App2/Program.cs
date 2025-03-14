@@ -103,11 +103,13 @@ public class CustomerByIdProjectionSpec : Specification<Customer, CustomerDto>
 {
     public CustomerByIdProjectionSpec(int id)
     {
-        Query.Where(x => x.Id == id);
-        Query.Select(x => new CustomerDto(x.Id, x.Name, x.Age,
-            x.Addresses
-            .Select(a => new AddressDto(a.Id, a.Street, a.CustomerId))
-            .ToList()));
+        Query
+            .Where(x => x.Id == id)
+            .Select(x => new CustomerDto(
+                x.Id,
+                x.Name,
+                x.Age,
+                x.Addresses.Select(a => new AddressDto(a.Id, a.Street, a.CustomerId)).ToList()));
     }
 }
 
@@ -115,8 +117,9 @@ public class CustomerNameSpec : Specification<Customer, string>
 {
     public CustomerNameSpec(int id)
     {
-        Query.Where(x => x.Id == id);
-        Query.Select(x => x.Name);
+        Query
+            .Where(x => x.Id == id)
+            .Select(x => x.Name);
     }
 }
 
