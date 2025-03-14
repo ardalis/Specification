@@ -11,7 +11,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> IgnoreQueryFilters<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => IgnoreQueryFilters(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).IgnoreQueryFilters(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to ignore query filters if the condition is true.
@@ -25,11 +28,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.IgnoreQueryFilters = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).IgnoreQueryFilters(condition);
         return builder;
     }
 
@@ -71,7 +70,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> IgnoreAutoIncludes<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => IgnoreAutoIncludes(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).IgnoreAutoIncludes(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to ignore auto includes if the condition is true.
@@ -85,11 +87,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.IgnoreAutoIncludes = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).IgnoreAutoIncludes(condition);
         return builder;
     }
 
@@ -131,7 +129,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> AsSplitQuery<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => AsSplitQuery(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).AsSplitQuery(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to use split queries if the condition is true.
@@ -145,11 +146,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.AsSplitQuery = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).AsSplitQuery(condition);
         return builder;
     }
 
@@ -192,7 +189,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> AsNoTracking<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => AsNoTracking(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).AsNoTracking(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to apply NoTracking behavior if the condition is true.
@@ -207,13 +207,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.AsTracking = false;
-            builder.Specification.AsNoTrackingWithIdentityResolution = false;
-            builder.Specification.AsNoTracking = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).AsNoTracking(condition);
         return builder;
     }
 
@@ -260,7 +254,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> AsNoTrackingWithIdentityResolution<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => AsNoTrackingWithIdentityResolution(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).AsNoTrackingWithIdentityResolution(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to apply AsNoTrackingWithIdentityResolution behavior if the condition is true.
@@ -275,13 +272,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.AsTracking = false;
-            builder.Specification.AsNoTracking = false;
-            builder.Specification.AsNoTrackingWithIdentityResolution = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).AsNoTrackingWithIdentityResolution(condition);
         return builder;
     }
 
@@ -328,7 +319,10 @@ public static partial class SpecificationBuilderExtensions
     /// <returns>The updated specification builder.</returns>
     public static ISpecificationBuilder<T, TResult> AsTracking<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
-        => AsTracking(builder, true);
+    {
+        ((ISpecificationBuilder<T>)builder).AsTracking(true);
+        return builder;
+    }
 
     /// <summary>
     /// Configures the specification to apply AsTracking behavior if the condition is true.
@@ -343,13 +337,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        if (condition)
-        {
-            builder.Specification.AsNoTracking = false;
-            builder.Specification.AsNoTrackingWithIdentityResolution = false;
-            builder.Specification.AsTracking = true;
-        }
-
+        ((ISpecificationBuilder<T>)builder).AsTracking(condition);
         return builder;
     }
 

@@ -29,13 +29,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        if (condition)
-        {
-            var expr = new OrderExpressionInfo<T>(keySelector, OrderTypeEnum.OrderBy);
-            builder.Specification.Add(expr);
-        }
-
-        Specification<T, TResult>.IsChainDiscarded = !condition;
+        ((ISpecificationBuilder<T>)builder).OrderBy(keySelector, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -101,13 +95,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        if (condition)
-        {
-            var expr = new OrderExpressionInfo<T>(keySelector, OrderTypeEnum.OrderByDescending);
-            builder.Specification.Add(expr);
-        }
-
-        Specification<T, TResult>.IsChainDiscarded = !condition;
+        ((ISpecificationBuilder<T>)builder).OrderByDescending(keySelector, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -173,16 +161,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        if (condition && !Specification<T, TResult>.IsChainDiscarded)
-        {
-            var expr = new OrderExpressionInfo<T>(keySelector, OrderTypeEnum.ThenBy);
-            builder.Specification.Add(expr);
-        }
-        else
-        {
-            Specification<T, TResult>.IsChainDiscarded = true;
-        }
-
+        ((IOrderedSpecificationBuilder<T>)builder).ThenBy(keySelector, condition);
         return builder;
     }
 
@@ -251,16 +230,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        if (condition && !Specification<T, TResult>.IsChainDiscarded)
-        {
-            var expr = new OrderExpressionInfo<T>(keySelector, OrderTypeEnum.ThenByDescending);
-            builder.Specification.Add(expr);
-        }
-        else
-        {
-            Specification<T, TResult>.IsChainDiscarded = true;
-        }
-
+        ((IOrderedSpecificationBuilder<T>)builder).ThenByDescending(keySelector, condition);
         return builder;
     }
 

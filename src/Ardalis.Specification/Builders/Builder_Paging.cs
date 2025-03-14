@@ -31,12 +31,7 @@ public static partial class SpecificationBuilderExtensions
         int take,
         bool condition)
     {
-        if (condition)
-        {
-            if (builder.Specification.Take != -1) throw new DuplicateTakeException();
-            builder.Specification.Take = take;
-        }
-
+        ((ISpecificationBuilder<T>)builder).Take(take, condition);
         return builder;
     }
 
@@ -105,12 +100,7 @@ public static partial class SpecificationBuilderExtensions
         int skip,
         bool condition)
     {
-        if (condition)
-        {
-            if (builder.Specification.Skip != -1) throw new DuplicateSkipException();
-            builder.Specification.Skip = skip;
-        }
-
+        ((ISpecificationBuilder<T>)builder).Skip(skip, condition);
         return builder;
     }
 

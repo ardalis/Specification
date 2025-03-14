@@ -29,12 +29,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, bool>> predicate,
         bool condition)
     {
-        if (condition)
-        {
-            var expr = new WhereExpressionInfo<T>(predicate);
-            builder.Specification.Add(expr);
-        }
-
+        ((ISpecificationBuilder<T>)builder).Where(predicate, condition);
         return builder;
     }
 

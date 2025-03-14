@@ -29,11 +29,7 @@ public static partial class SpecificationBuilderExtensions
         string tag,
         bool condition)
     {
-        if (condition)
-        {
-            builder.Specification.QueryTag = tag;
-        }
-
+        ((ISpecificationBuilder<T>)builder).TagWith(tag, condition);
         return builder;
     }
 

@@ -39,12 +39,7 @@ public static partial class SpecificationBuilderExtensions
         bool condition,
         int group = 1) where T : class
     {
-        if (condition)
-        {
-            var expr = new SearchExpressionInfo<T>(keySelector, pattern, group);
-            builder.Specification.Add(expr);
-        }
-
+        ((ISpecificationBuilder<T>)builder).Search(keySelector, pattern, condition, group);
         return builder;
     }
 
