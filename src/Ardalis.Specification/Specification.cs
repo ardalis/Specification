@@ -153,4 +153,54 @@ public class Specification<T> : ISpecification<T>
         var validator = Validator;
         return validator.IsValid(entity, this);
     }
+
+    Specification<T> ISpecification<T>.CopyTo(Specification<T> otherSpec)
+    {
+        otherSpec.PostProcessingAction = PostProcessingAction;
+        otherSpec.QueryTag = QueryTag;
+        otherSpec.CacheKey = CacheKey;
+        otherSpec.Take = Take;
+        otherSpec.Skip = Skip;
+        otherSpec.IgnoreQueryFilters = IgnoreQueryFilters;
+        otherSpec.IgnoreAutoIncludes = IgnoreAutoIncludes;
+        otherSpec.AsSplitQuery = AsSplitQuery;
+        otherSpec.AsNoTracking = AsNoTracking;
+        otherSpec.AsTracking = AsTracking;
+        otherSpec.AsNoTrackingWithIdentityResolution = AsNoTrackingWithIdentityResolution;
+
+        // The expression containers are immutable, having the same instance is fine.
+        // We'll just create new collections.
+
+        if (_whereExpressions is not null)
+        {
+            otherSpec._whereExpressions = _whereExpressions.ToList();
+        }
+
+        if (_includeExpressions is not null)
+        {
+            otherSpec._includeExpressions = _includeExpressions.ToList();
+        }
+
+        if (_includeStrings is not null)
+        {
+            otherSpec._includeStrings = _includeStrings.ToList();
+        }
+
+        if (_orderExpressions is not null)
+        {
+            otherSpec._orderExpressions = _orderExpressions.ToList();
+        }
+
+        if (_searchExpressions is not null)
+        {
+            otherSpec._searchExpressions = _searchExpressions.ToList();
+        }
+
+        if (_items is not null)
+        {
+            otherSpec._items = new Dictionary<string, object>(_items);
+        }
+
+        return otherSpec;
+    }
 }
