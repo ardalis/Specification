@@ -154,7 +154,7 @@ public class Specification<T> : ISpecification<T>
         return validator.IsValid(entity, this);
     }
 
-    Specification<T> ISpecification<T>.CopyTo(Specification<T> otherSpec)
+    void ISpecification<T>.CopyTo(Specification<T> otherSpec)
     {
         otherSpec.PostProcessingAction = PostProcessingAction;
         otherSpec.QueryTag = QueryTag;
@@ -200,7 +200,5 @@ public class Specification<T> : ISpecification<T>
         {
             otherSpec._items = new Dictionary<string, object>(_items);
         }
-
-        return otherSpec;
     }
 }

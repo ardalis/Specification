@@ -158,5 +158,5 @@ public interface ISpecification<T>
     /// <returns></returns>
     bool IsSatisfiedBy(T entity);
 
-    internal Specification<T> CopyTo(Specification<T> otherSpec);
+    internal void CopyTo(Specification<T> otherSpec);
 }
