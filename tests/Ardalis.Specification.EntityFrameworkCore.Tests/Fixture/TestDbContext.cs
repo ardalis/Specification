@@ -2,6 +2,7 @@
 
 public class TestDbContext(DbContextOptions options) : DbContext(options)
 {
+    public DbSet<Bar> Bars => Set<Bar>();
     public DbSet<Foo> Foos => Set<Foo>();
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<Company> Companies => Set<Company>();
@@ -23,5 +24,8 @@ public class TestDbContext(DbContextOptions options) : DbContext(options)
 
         modelBuilder.Entity<Country>()
             .HasQueryFilter(x => !x.IsDeleted);
+
+        modelBuilder.Entity<BarDerived>()
+            .HasBaseType<BarChild>();
     }
 }
