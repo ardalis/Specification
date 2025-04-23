@@ -35,7 +35,7 @@ public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factor
         var spec = new Specification<Bar>();
         spec.Query
             .Include(x => x.BarChildren)
-            .ThenInclude<Bar, BarChild, BarDerivedInfo>(x => (x as BarDerived)!.BarDerivedInfo);
+            .ThenInclude(x => (x as BarDerived)!.BarDerivedInfo);
 
         var actual = _evaluator
             .GetQuery(DbContext.Bars, spec)
