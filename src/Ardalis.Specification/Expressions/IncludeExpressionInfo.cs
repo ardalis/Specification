@@ -12,15 +12,31 @@ public class IncludeExpressionInfo
     public LambdaExpression LambdaExpression { get; }
 
     /// <summary>
+    /// The type of the previously included entity.
+    /// </summary>
+    public Type? PreviousPropertyType { get; }
+
+    /// <summary>
     /// The include type.
     /// </summary>
     public IncludeTypeEnum Type { get; }
 
-    public IncludeExpressionInfo(LambdaExpression expression, IncludeTypeEnum includeType)
+    public IncludeExpressionInfo(LambdaExpression expression)
     {
         _ = expression ?? throw new ArgumentNullException(nameof(expression));
 
         LambdaExpression = expression;
-        Type = includeType;
+        PreviousPropertyType = null;
+        Type = IncludeTypeEnum.Include;
+    }
+
+    public IncludeExpressionInfo(LambdaExpression expression, Type previousPropertyType)
+    {
+        _ = expression ?? throw new ArgumentNullException(nameof(expression));
+        _ = previousPropertyType ?? throw new ArgumentNullException(nameof(previousPropertyType));
+
+        LambdaExpression = expression;
+        PreviousPropertyType = previousPropertyType;
+        Type = IncludeTypeEnum.ThenInclude;
     }
 }

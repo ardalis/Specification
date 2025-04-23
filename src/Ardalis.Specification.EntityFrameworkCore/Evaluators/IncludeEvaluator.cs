@@ -41,7 +41,6 @@ public class IncludeEvaluator : IEvaluator
     /// <inheritdoc/>
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        Type? previousReturnType = null;
         foreach (var includeExpression in specification.IncludeExpressions)
         {
             var lambdaExpr = includeExpression.LambdaExpression;
@@ -49,14 +48,12 @@ public class IncludeEvaluator : IEvaluator
             if (includeExpression.Type == IncludeTypeEnum.Include)
             {
                 var key = new CacheKey(typeof(T), lambdaExpr.ReturnType, null);
-                previousReturnType = lambdaExpr.ReturnType;
                 var include = _cache.GetOrAdd(key, CreateIncludeDelegate);
                 query = (IQueryable<T>)include(query, lambdaExpr);
             }
             else if (includeExpression.Type == IncludeTypeEnum.ThenInclude)
             {
-                var key = new CacheKey(typeof(T), lambdaExpr.ReturnType, previousReturnType);
-                previousReturnType = lambdaExpr.ReturnType;
+                var key = new CacheKey(typeof(T), lambdaExpr.ReturnType, includeExpression.PreviousPropertyType);
                 var include = _cache.GetOrAdd(key, CreateThenIncludeDelegate);
                 query = (IQueryable<T>)include(query, lambdaExpr);
             }
@@ -104,7 +101,7 @@ public class IncludeEvaluator : IEvaluator
 
     private static bool IsGenericEnumerable(Type type, out Type propertyType)
     {
-        if (type.IsGenericType && typeof(IEnumerable).IsAssignableFrom(type))
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
         {
             propertyType = type.GenericTypeArguments[0];
             return true;

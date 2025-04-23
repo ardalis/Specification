@@ -101,7 +101,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.Include);
+            var expr = new IncludeExpressionInfo(navigationSelector);
             builder.Specification.Add(expr);
         }
 
@@ -139,7 +139,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.Include);
+            var expr = new IncludeExpressionInfo(navigationSelector);
             builder.Specification.Add(expr);
         }
 
@@ -183,7 +183,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
+            var expr = new IncludeExpressionInfo(navigationSelector, typeof(TPreviousProperty));
             builder.Specification.Add(expr);
         }
         else
@@ -228,7 +228,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
+            var expr = new IncludeExpressionInfo(navigationSelector, typeof(TPreviousProperty));
             builder.Specification.Add(expr);
         }
         else
@@ -275,7 +275,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
+            var expr = new IncludeExpressionInfo(navigationSelector, typeof(IEnumerable<TPreviousProperty>));
             builder.Specification.Add(expr);
         }
         else
@@ -320,7 +320,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition && !Specification<TEntity>.IsChainDiscarded)
         {
-            var expr = new IncludeExpressionInfo(navigationSelector, IncludeTypeEnum.ThenInclude);
+            var expr = new IncludeExpressionInfo(navigationSelector, typeof(IEnumerable<TPreviousProperty>));
             builder.Specification.Add(expr);
         }
         else
