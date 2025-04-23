@@ -10,7 +10,7 @@
     <Description>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Description>
     <Summary>A simple package with a base Specification class, for use in creating queries that work with Repository types.</Summary>
     
-    <Version>9.0.1</Version>
+    <Version>9.1.0</Version>
     <PackageTags>spec;specification;repository;ddd</PackageTags>
     <PackageReleaseNotes>
       The change log and breaking changes are listed here.
