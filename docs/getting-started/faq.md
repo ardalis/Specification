@@ -7,7 +7,7 @@ nav_order: 4
 
 ## Does the use of filters break the Open-Closed Principle?
 
-Filters are an optional approach to use with specifications. You'll find samples of them [here](https://github.com/ardalis/Specification/tree/master/sample/Ardalis.SampleApp.Core/Specifications/Filters).
+Filters are an optional approach to use with specifications. You'll find samples of them [here](https://github.com/ardalis/Specification/tree/main/samples/Ardalis.Sample.Domain/Filters).
 
 This is a totally valid question. If the intention by using the specifications is to conform to this principle, then by adding the concept of filters, aren't we doing the opposite? We go back and update the specification by adding additional conditions.
 As a brief recap, the OCP predicates that we should have constructs that are open to extension and closed to changes. This means, if we need to add a "behavior" to a class, we should be able to do that without changing the class itself. Even more simplified, if you have switch statements and too much conditional logic, it might be a sign that the behavior is too hardcoded, and might be refactored in a better way.

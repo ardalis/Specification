@@ -39,7 +39,7 @@ public class HeroRepository : IHeroRepository
 }
 ```
 
-It's possible to extend this existing repository to support Specifications by adding a parameter for the specification to the `GetAllHeroes` method and then modifying the repository to apply the query of the Specification to the underlying data store. A basic implementation of this using the default value for `SpecificationEvaluator` and no `PostProcessingAction` is as follows. For a deeper dive, it is worth looking into the internals of [this abstract class](https://github.com/ardalis/Specification/blob/main/Specification.EntityFrameworkCore/src/Ardalis.Specification.EntityFrameworkCore/RepositoryBaseOfT.cs). This example also depends on DbContext provided by Entity Framework, although any IQueryable should work in place of `_dbContext.Heroes`.
+It's possible to extend this existing repository to support Specifications by adding a parameter for the specification to the `GetAllHeroes` method and then modifying the repository to apply the query of the Specification to the underlying data store. A basic implementation of this using the default value for `SpecificationEvaluator` and no `PostProcessingAction` is as follows. For a deeper dive, it is worth looking into the internals of [this abstract class](https://github.com/ardalis/Specification/blob/main/src/Ardalis.Specification.EntityFrameworkCore/RepositoryBaseOfT.cs). This example also depends on DbContext provided by Entity Framework, although any IQueryable should work in place of `_dbContext.Heroes`.
 
 ```csharp
 public interface IHeroRepository
@@ -109,3 +109,5 @@ var result = GetHeroes(repository: repository, isAlive: true, isAvenger: true);
 ## Further Reading
 
 For more information on the Repository Pattern and the sample generic implementation included in this package, see the [How to use the Built In Abstract Repository](./use-built-in-abstract-repository.md) tutorial.
+
+You can also see [this sample app in the Specification repo](https://github.com/ardalis/Specification/blob/main/samples/Ardalis.Sample.App3/) that shows how to define a custom RepositoryBase, separate IRepository and IReadRepository interfaces, and pagination constructs.

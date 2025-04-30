@@ -53,3 +53,5 @@ int customerCount = dbContext.Customers.WithSpecification(specification).Count()
 
 var customers = dbContext.Customers.WithSpecification(specification).ToList();
 ```
+
+You can see this in action in [this sample app in the Specification repo](https://github.com/ardalis/Specification/tree/main/samples/Ardalis.Sample.App2).
