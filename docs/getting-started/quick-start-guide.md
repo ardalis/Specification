@@ -31,7 +31,7 @@ nav_order: 2
 
    ```csharp
     var spec = new CustomerByLastNameSpec("Smith");
-    var customers = _dbContext.Customers
+    var customers = await _dbContext.Customers
         .WithSpecification(spec)
         .ToListAsync();
    ```
