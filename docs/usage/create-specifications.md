@@ -9,48 +9,60 @@ nav_order: 1
 
 ## Basic Specification
 
-A Specification class should inherit from `Specification<T>`, where `T` is the type being retrieved in the query:
+Create your specification by inheriting from `Specification<T>`, and use the `Query` builder in the constructor to define your conditions.
 
 ```csharp
-public class ItemByIdSpec : Specification<Item>
-```
-
-A Specification can take parameters in its constructor and use these parameters to make the appropriate query. Since the above class's name indicates that it will retrieve an `Item` *by id*, its constructor should take in an `id` parameter:
-
-```csharp
-public ItemByIdSpec(int Id)
-```
-
-In its constructor, the Specification should define a `Query` expression, using its parameter to retrieve the desired object:
-
-```csharp
-Query.Where(x => x.Id == Id);
-```
-
-Based on the above, the most basic specification should look something like this:
-
-```csharp
-public class ItemByIdSpec : Specification<Item>
+public class CustomerSpec : Specification<Customer>
 {
-    public ItemByIdSpec(int Id)
+    public CustomerSpec(int age)
     {
-        Query.Where(x => x.Id == Id);
+        Query
+            .Where(x => x.Age > age)
+            .Include(x => x.Addresses)
+            .OrderBy(x => x.FirstName);
     }
 }
 ```
 
-Finally: the Specification above should also implement the marker interface `ISingleResultSpecification<T>`, which makes clear that this Specification will return only one result. Any "ById" Specification, and any other Specification intended to return only one result, should implement this interface to make clear that it returns a single result.
+## Single Result Specification
+
+The library exposes an `ISingleResultSpecification<T>` marker interface. We also define a `SingleResultSpecification<T>` base class as a convenience.
 
 ```csharp
-public class ItemByIdSpec : SingleResultSpecification<Item>
+public class SingleResultSpecification<T> : Specification<T>, ISingleResultSpecification<T>
 {
-    public ItemByIdSpec(int Id)
+}
+```
+
+Create your specification by inheriting from `SingleResultSpecification<T>`
+
+```csharp
+public class CustomerByIdSpec : SingleResultSpecification<Customer>
+{
+    public CustomerByIdSpec(int id)
     {
-        Query.Where(x => x.Id == Id);
+        Query.Where(c => c.Id == id);
     }
 }
 ```
 
-## Advanced Specification
+The `ISingleResultSpecification<T>` and `SingleResultSpecification<T>` are functionally dormant. They act just as a marker and the consumers may utilize them to further clarify the intent of the given specification. For instance, `Single` or `SingleOrDefault` repository methods are constrained to accept only single result specifications.
+
+## Projection Specification
+
+The specification can be used to project the result into a different type. Inherit from `Specification<T, TResult>` base class, where `TResult` is the type you want to project into. This offers strongly typed experience in the builder and during the evaluation.
+
+```csharp
+public class CustomerSpec : Specification<Customer, CustomerDto>
+{
+    public CustomerSpec(int age)
+    {
+        Query
+            .Where(x => x.Age > age)
+            .OrderBy(x => x.FirstName)
+            .Select(x => new CustomerDto(x.Id, x.Name));
+    }
+}
+```
 
 From here, additional operators can be used to further refine the Specification. These operators follow LINQ syntax and are described in more detail in the [Features](../features/index.md) section.
