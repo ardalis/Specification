@@ -2,7 +2,7 @@
 layout: default
 title: How to use Specifications with the Repository Pattern
 parent: Usage
-nav_order: 2
+nav_order: 3
 ---
 
 # How to use Specifications with the Repository Pattern

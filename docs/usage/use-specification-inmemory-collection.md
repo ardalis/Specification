@@ -2,7 +2,7 @@
 layout: default
 title: How to use Specifications with In Memory Collections
 parent: Usage
-nav_order: 4
+nav_order: 5
 ---
 
 # How to use Specifications with In Memory Collections

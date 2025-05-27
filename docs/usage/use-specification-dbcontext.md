@@ -2,7 +2,7 @@
 layout: default
 title: How to use Specifications with a DbContext
 parent: Usage
-nav_order: 3
+nav_order: 2
 ---
 
 # How to use Specifications with a DbContext
