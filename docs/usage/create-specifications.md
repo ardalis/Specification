@@ -34,7 +34,7 @@ public class SingleResultSpecification<T> : Specification<T>, ISingleResultSpeci
 }
 ```
 
-Create your specification by inheriting from `SingleResultSpecification<T>`
+Create your specification by inheriting from `SingleResultSpecification<T>`.
 
 ```csharp
 public class CustomerByIdSpec : SingleResultSpecification<Customer>
