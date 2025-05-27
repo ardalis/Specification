@@ -7,7 +7,9 @@ nav_order: 3
 
 # How to use Specifications with the Repository Pattern
 
-Specifications shine when combined with the [Repository Pattern](https://deviq.com/design-patterns/repository-pattern), a sample generic implementation of which is included in this NuGet package. For the purpose of this walkthrough, the repository can be thought of as a simple data access abstraction over a collection of entities. In this example, the entity for a `Hero`, the repository implementation, and its interface are defined below.
+If you're inclined to use the [Repository Pattern](https://deviq.com/design-patterns/repository-pattern), the specifications can help eliminate the common pain points and reduce the number of methods in the repositories. This library exposes an `ISpecificationEvaluator` evaluator implementation for EF Core and EF 6, which can be utilized to build the desired queries. The default evaluator implementation is a stateless object, and a singleton instance can be retrieved through `SpecificationEvaluator.Default`. 
+
+Let's assume we have the following entity.
 
 ```csharp
 public class Hero
@@ -17,10 +19,15 @@ public class Hero
     public bool IsAlive { get; set; }
     public bool IsAvenger { get; set; }
 }
+```
+
+We can implement a repository for Hero as follows. Instead of having multiple methods (e.g. GetAllAliveHeroes, GetAllAvengerHeroes, etc.), we may have a single method that accepts a specification as a parameter.
+
+```csharp
 
 public interface IHeroRepository
 {
-    List<Hero> GetAllHeroes();
+    List<Hero> ListHeroes(Specifcation<Hero> specification);
 }
 
 public class HeroRepository : IHeroRepository
@@ -32,78 +39,37 @@ public class HeroRepository : IHeroRepository
         _dbContext = dbContext;
     }
 
-    public List<Hero> GetAllHeroes()
+    public List<Hero> ListHeroes(ISpecification<Hero> spec)
     {
-        return _dbContext.Heroes.ToList();
+        var query = SpecificationEvaluator.Default.GetQuery(_dbContext.Heroes, spec);
+        return query.ToList();
     }
 }
 ```
 
-It's possible to extend this existing repository to support Specifications by adding a parameter for the specification to the `GetAllHeroes` method and then modifying the repository to apply the query of the Specification to the underlying data store. A basic implementation of this using the default value for `SpecificationEvaluator` and no `PostProcessingAction` is as follows. For a deeper dive, it is worth looking into the internals of [this abstract class](https://github.com/ardalis/Specification/blob/main/src/Ardalis.Specification.EntityFrameworkCore/RepositoryBaseOfT.cs). This example also depends on DbContext provided by Entity Framework, although any IQueryable should work in place of `_dbContext.Heroes`.
+Once we have that in place, we may create and use various specifications to retrieve the desired data from the repository.
 
 ```csharp
-public interface IHeroRepository
+public class AliveHeroesSpec : Specification<Hero>
 {
-    List<Hero> GetAllHeroes(Specifcation<Hero> specification);
+    public AliveHeroesSpec()
+    {
+        Query.Where(h => h.IsAlive == true);
+    }
 }
 
-public class HeroRepository : IHeroRepository
+public class AliveAvengerHeroesSpec : Specification<Hero>
 {
-    private readonly HeroDbContext _dbContext;
-
-    public HeroRepository(HeroDbContext dbContext)
+    public AliveHeroesSpec()
     {
-        _dbContext = dbContext;
-    }
-
-    public List<Hero> GetAllHeroes(ISpecification<Hero> specification)
-    {
-        var queryResult = SpecificationEvaluator.Default.GetQuery(
-            query: _dbContext.Heroes.AsQueryable(),
-            specification: specification);
-
-        return queryResult.ToList();
+        Query.Where(h => h.IsAlive == true && x.IsAvenger == true);
     }
 }
 ```
 
-Now that the Hero repository supports Specifications, a Specification can be defined that filters by whether the Hero is alive and is an Avenger. Note any fields that are needed to filter the Heroes are passed to the Specification's constructor where the query logic should be implemented.
-
-```csharp
-public class HeroByIsAliveAndIsAvengerSpec : Specification<Hero>
-{
-    public HeroByIsAliveAndIsAvengerSpec(bool isAlive, bool isAvenger)
-    {
-        Query.Where(h => h.IsAlive == isAlive && h.IsAvenger == isAvenger);
-    }
-}
 ```
-
-With the Specification and Repository defined, it is now possible to define a `GetHeroes` method that can take a `HeroRepository` as a parameter along with the filtering conditions and produce a filtered collection of heroes. Applying the Repository to the Specification is done using the `Evaluate` method on the Specification class which takes a `IEnumerable<T>` as a parameter. This should mirror the kind of methods typically found on Controllers or [Api Endpoints](https://github.com/ardalis/ApiEndpoints) where the IHeroRepository might be supplied via Dependency Injection to the class's constructor rather than passed as a parameter.
-
-```csharp
-public List<Hero> GetHeroes(IHeroRepository repository, bool isAlive, bool isAvenger)
-{
-    var specification = new HeroByIsAliveAndIsAvengerSpec(isAlive, isAvenger);
-
-    return repository.GetAllHeroes(specification);
-}
-```
-
-Suppose the data store behind the IHeroRepository has the following state and client code calls the `GetHeroes` as below. The result should be a collection containing only the Spider Man hero.
-
-<div markdown="1">
-
-| Name       | SuperPower   | IsAlive | IsAvenger |
-| :--------- | :----------- | :------ | :-------- |
-| Batman     | Intelligence | true    | false     |
-| Iron Man   | Intelligence | false   | true      |
-| Spider Man | Spidey Sense | true    | true      |
-
-</div>
-
-```csharp
-var result = GetHeroes(repository: repository, isAlive: true, isAvenger: true);
+var aliveHeroes = _repository.ListHeroes(new AliveHeroesSpec());
+var aliveAvengerHeroes = _repository.ListHeroes(new AliveAvengerHeroesSpec());
 ```
 
 ## Further Reading
