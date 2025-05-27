@@ -7,10 +7,21 @@ nav_order: 2
 
 # How to use Specifications with a DbContext
 
-You can use Specifications to define queries that are executed directly using an EF6 or EF Core `DbContext`.
-The following snippet defines a `Customer` entity and a sample `DbContext` which defines a `DbSet` of Customers.
+Specifications can be applied to any `DbSet<>` or `IQueryable<>` source using the `WithSpecification` extension method. This extension method is defined in the `Ardalis.Specification.EntityFrameworkCore` and `Ardalis.Specification.EntityFramework6` plugin packages.
+
+Let's assume we have the following setup.
 
 ```csharp
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(int age)
+    {
+        Query.Where(x => x.Age > age)
+             .Include(x => x.Addresses)
+             .OrderBy(x => x.FirstName);
+    }
+}
+
 public class Customer
 {
     public int Id { get; set; }
@@ -25,33 +36,27 @@ public class SampleDbContext : DbContext
         : base(options)
     {
     }
-
-    // additional overrides intentionally left out
 }
 ```
 
-A specification can be applied directly to this `DbSet` using the `WithSpecification` extension method defined in `Ardalis.Specification.EntityFrameworkCore` package. Assuming a Specification is defined similar to the `ItemByIdSpec` described in [How to Create Specifications](./create-specifications.md), the following code demonstrates putting these pieces together.
+Apply the specification to a given `DbSet` as follows.
 
 ```csharp
-// handling of IDisposable DbContext intentionally left out
+var spec = new CustomerSpec(20);
 
-int id = 1;
-
-var specification = new CustomerByIdSpec(id);
-
-var customer = dbContext.Customers
-    .WithSpecification(specification)
-    .FirstOrDefault();
+var customer = await dbContext.Customers
+    .WithSpecification(spec)
+    .ToListAsync();
 ```
 
-Note that the `WithSpecification` extension method exposes an `IQueryable<T>` so additional extension methods maybe be applied after the specification. Some examples can be found below.
+The `WithSpecification` extension methods returns the `IQueryable<>` source, and you may continue building the state. Having said that, you may chain multiple specifications as follows.
 
 ```csharp
-bool isFound = dbContext.Customers.WithSpecification(specification).Any();
+var spec1 = new CustomerByAgeSpec(20);
+var spec2 = new CustomerByLastNameSpec("Smith");
 
-int customerCount = dbContext.Customers.WithSpecification(specification).Count();
-
-var customers = dbContext.Customers.WithSpecification(specification).ToList();
+var customer = await dbContext.Customers
+    .WithSpecification(spec1)
+    .WithSpecification(spec2)
+    .ToListAsync();
 ```
-
-You can see this in action in [this sample app in the Specification repo](https://github.com/ardalis/Specification/tree/main/samples/Ardalis.Sample.App2).
