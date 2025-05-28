@@ -2,7 +2,7 @@
 layout: default
 title: Videos
 parent: Related Resources
-nav_order: 2
+nav_order: 3
 ---
 
 # Specification Videos
