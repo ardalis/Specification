@@ -5,9 +5,9 @@ parent: Getting Started
 nav_order: 4
 ---
 
-## The new version of .NET is out. Please support the new TFM.
+## The new version of .NET is out. Please support the new Target Framework.
 
-The library sets only the minimum required TFM. If you're on a newer .NET version you still can consume the library with no issues. We do release new versions regularly, but not necessarilly will follow the same cadence as .NET releases.
+The library sets only the minimum required TFM (Target Framework). If you're on a newer .NET version you still can consume the library with no issues. We do release new versions regularly, but not necessarily will follow the same cadence as .NET releases.
 
 ## Which versions of EF Core can I use?
 
@@ -19,13 +19,13 @@ As a consumer, you will always install a EF provider package (e.g. `Microsoft.En
 
 ## How can I use the `Select` operator in Specification? The `Query` does not contain a `Select` method.
 
-To use projections you must inherit from `Specification<T, TResult>` where `TResult` is the type you want to project into. This offers strongly typed experience in the builder and during the evaluation. Please refer to the following [section](../usage/create-specifications.md#projection-specification) for more details.
+To use projections you must inherit from `Specification<T, TResult>` where `TResult` is the type you want to project into. This offers strongly typed experience in the builder and during the evaluation. Please refer to [the projection specification guidance](../usage/create-specifications.md#projection-specification) for more details.
 
 ## ISingleResultSpecification is obsolete?
 
 I'm getting a warning or error telling me that `ISingleResultSpecification` is obsolete. What am I supposed to do to fix it?
 
-Please use the generic version `ISingleResultSpecification<T>`. We also do provide a base `SingleResultSpecification<T>` class as a convenience. Please refer to the following [section](../usage/create-specifications.md#single-result-specification) for more details.
+Please use the generic version `ISingleResultSpecification<T>`. We also do provide a base `SingleResultSpecification<T>` class as a convenience. Please refer to [the single result specification guidance](../usage/create-specifications.md#single-result-specification) for more details.
 
 
 ## How to use OrderBy with string column name?
@@ -47,7 +47,7 @@ A much more practical solution would be:
 Here is a sample solution. Create an extension to the builder, so you can reuse the same logic in all your customer specifications.
 
 ```csharp
-public static class CustomerSpecificationExtensons
+public static class CustomerSpecificationExtensions
 {
   public static IOrderedSpecificationBuilder<Customer> ApplyOrdering(
     this ISpecificationBuilder<Customer> builder, 
