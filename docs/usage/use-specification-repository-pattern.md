@@ -50,17 +50,17 @@ public class HeroRepository : IHeroRepository
 Once we have that in place, we may create and use various specifications to retrieve the desired data from the repository.
 
 ```csharp
-public class AliveHeroesSpec : Specification<Hero>
+public class AliveHeroeSpec : Specification<Hero>
 {
-    public AliveHeroesSpec()
+    public AliveHeroeSpec()
     {
         Query.Where(h => h.IsAlive == true);
     }
 }
 
-public class AliveAvengerHeroesSpec : Specification<Hero>
+public class AliveAvengerHeroeSpec : Specification<Hero>
 {
-    public AliveHeroesSpec()
+    public AliveAvengerHeroeSpec()
     {
         Query.Where(h => h.IsAlive == true && x.IsAvenger == true);
     }
@@ -68,8 +68,8 @@ public class AliveAvengerHeroesSpec : Specification<Hero>
 ```
 
 ```
-var aliveHeroes = _repository.ListHeroes(new AliveHeroesSpec());
-var aliveAvengerHeroes = _repository.ListHeroes(new AliveAvengerHeroesSpec());
+var aliveHeroes = _repository.ListHeroes(new AliveHeroeSpec());
+var aliveAvengerHeroes = _repository.ListHeroes(new AliveAvengerHeroeSpec());
 ```
 
 ## Further Reading
