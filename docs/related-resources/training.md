@@ -2,7 +2,7 @@
 layout: default
 title: Training
 parent: Related Resources
-nav_order: 1
+nav_order: 2
 ---
 
 # Specification (and DDD) Training

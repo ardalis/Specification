@@ -2,7 +2,7 @@
 layout: default
 title: Podcasts
 parent: Related Resources
-nav_order: 4
+nav_order: 5
 ---
 
 # Specification Podcasts

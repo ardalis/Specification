@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Patterns Used
-parent: Getting Started
-nav_order: 3
+parent: Related Resources
+nav_order: 1
 ---
 
 # Design Patterns Used
