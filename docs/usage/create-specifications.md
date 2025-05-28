@@ -7,8 +7,6 @@ nav_order: 1
 
 # How to Create Specifications
 
-## Basic Specification
-
 Create your specification by inheriting from `Specification<T>`, and use the `Query` builder in the constructor to define your conditions.
 
 ```csharp
@@ -16,10 +14,9 @@ public class CustomerSpec : Specification<Customer>
 {
     public CustomerSpec(int age)
     {
-        Query
-            .Where(x => x.Age > age)
-            .Include(x => x.Addresses)
-            .OrderBy(x => x.FirstName);
+        Query.Where(x => x.Age > age)
+             .Include(x => x.Addresses)
+             .OrderBy(x => x.FirstName);
     }
 }
 ```
@@ -57,10 +54,9 @@ public class CustomerSpec : Specification<Customer, CustomerDto>
 {
     public CustomerSpec(int age)
     {
-        Query
-            .Where(x => x.Age > age)
-            .OrderBy(x => x.FirstName)
-            .Select(x => new CustomerDto(x.Id, x.Name));
+        Query.Where(x => x.Age > age)
+             .OrderBy(x => x.FirstName)
+             .Select(x => new CustomerDto(x.Id, x.Name));
     }
 }
 ```
