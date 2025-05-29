@@ -15,7 +15,8 @@ The `Ardalis.Specification.EntityFrameworkCore` package depends only on the core
 
 As a consumer, you will always install a EF provider package (e.g. `Microsoft.EntityFrameworkCore.SqlServer`). By doing so, the dependency graph is updated automatically and you'll be consuming the specified newer version, regardless of our defined minimum version. 
 
-![Image](https://github.com/user-attachments/assets/9e84cf9f-f99f-458b-a1ca-c856b4d0d8f2)
+[![Dependencies in the csproj file showing Microsoft.EntityFrameworkCore.SqlServer version 9.0.2 and Ardalis.Specification.EntityFrameworkCore version 8.0.0. In the Packages list, there is also Microsoft.EntityFrameworkCore version 9.0.2 and Microsoft.EntityFrameworkCore.Relation version 9.0.2.](../assets/images/dependencies.png)](../assets/images/dependencies.png)
+
 
 ## How can I use the `Select` operator in Specification? The `Query` does not contain a `Select` method.
 
