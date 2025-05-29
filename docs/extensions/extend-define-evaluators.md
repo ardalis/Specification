@@ -1,61 +1,62 @@
 ---
 layout: default
-title: How to extend or define your own evaluators
+title: How to Define Your Own Evaluators
 parent: Extensions
 nav_order: 3
 ---
 
-How to extend or define your own evaluators.
+# How to Define Your Own Evaluators
 
-## Evaluators
+The evaluation of specifications is handled by the `SpecificationEvaluator`, which delegates the work to multiple `IEvaluator` instances, each responsible for a specific feature or operator (e.g., Where, Search, Include, etc.). This design promotes composability and makes the evaluation pipeline easy to extend with custom behavior.
 
-Evaluators are used within the specification to compose the query that will be executed. You can add your own evaluators to extend the behavior of the base Specification class.
+1. Create a Custom Partial Evaluator
 
-Here is an example:
+Define your partial evaluator by implementing the `IEvaluator` interface. Most evaluators are stateless, so you might want to expose them as singleton instances to reduce allocations.
 
 ```csharp
 public class MyPartialEvaluator : IEvaluator
 {
-  private MyPartialEvaluator () { }
-  public static MyPartialEvaluator Instance { get; } = new MyPartialEvaluator();
+    private MyPartialEvaluator() { }
+    public static MyPartialEvaluator Instance { get; } = new MyPartialEvaluator();
+    public bool IsCriteriaEvaluator { get; } = true;
 
-  public bool IsCriteriaEvaluator { get; } = true;
-
-  public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
-  {
-    // Write your desired implementation
-
-    return query;
-  }
-}
-
-public class MySpecificationEvaluator : SpecificationEvaluator
-{
-  public static MySpecificationEvaluator Instance { get; } = new MySpecificationEvaluator();
-
-  private MySpecificationEvaluator() : base()
-  {
-    Evaluators.Add(MyPartialEvaluator.Instance);
-  }
+    public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
+    {
+        // Write your desired implementation
+        return query;
+    }
 }
 ```
 
-To use the evaluator, you would pass it into your repository implementation's constructor:
+2. Create a Custom Specification Evaluator
+
+Inherit from the `SpecificationEvaluator` class and add your custom evaluator to the evaluator list. By community request, the `Evaluators` property is exposed as a `List`, allowing you to insert or remove evaluators as needed. As previously stated, it might be wise to expose it as a singleton instance.
+
+```csharp
+
+public class MySpecificationEvaluator : SpecificationEvaluator
+{
+    public static MySpecificationEvaluator Instance { get; } = new MySpecificationEvaluator();
+
+    private MySpecificationEvaluator() : base()
+    {
+        Evaluators.Add(MyPartialEvaluator.Instance);
+    }
+}
+```
+
+3. Register the Evaluator in Your Repository
+
+The base `Repository<>` implementation includes a constructor overload that accepts a custom `ISpecificationEvaluator`. Pass your custom evaluator as follows.
 
 ```csharp
 public class Repository<T> : RepositoryBase<T>, IRepository<T> where T : class
 {
-  public Repository(AppDbContext dbContext) 
-    : base(dbContext, MySpecificationEvaluator.Instance)
-  {
-  }
+    public Repository(AppDbContext dbContext)
+      : base(dbContext, MySpecificationEvaluator.Instance)
+    {
+    }
 }
-```
-
-Of course you would also need to register the service in `Program.cs`:
-
-```csharp
-builder.Services.AddScoped<ISpecificationEvaluator, MySpecificationEvaluator>();
 ```
 
 ## References
