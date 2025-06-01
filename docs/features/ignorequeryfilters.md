@@ -9,24 +9,21 @@ grand_parent: Features
 
 # IgnoreQueryFilters
 
-Compatible with:
+The `IgnoreQueryFilters` feature is used to indicate to `EF Core` that it should ignore global query filters for this query. It simply passes along this call to the underlying [EF Core feature for disabling global filters](https://docs.microsoft.com/ef/core/querying/filters#disabling-filters).
 
-- [EF Core](https://www.nuget.org/packages/Ardalis.Specification.EntityFrameworkCore/)
+Compatible with the following providers:
+- [EF Core](https://docs.microsoft.com/ef/core/querying/filters#disabling-filters)
+- EF6 - not supported
 
-The `IgnoreQueryFilters` feature is used to indicate to EF Core (it is not supported by EF 6) that it should ignore global query filters for this query. It simply passes along this call to the underlying [EF Core feature for disabling global filters](https://docs.microsoft.com/ef/core/querying/filters#disabling-filters).
-
-## Example
-
-The following specification implements the `IgnoreQueryFilters()` expression:
+The following example shows how to add `IgnoreQueryFilters` to a specification.
 
 ```csharp
-public class CompanyByIdIgnoreQueryFilters : Specification<Company>, ISingleResultSpecification
+public class CustomerSpec : Specification<Customer>
 {
-  public CompanyByIdIgnoreQueryFilters(int id)
-  {
-    Query
-      .Where(company => company.Id == id)
-      .IgnoreQueryFilters();
-  }
+    public CustomerSpec(string name)
+    {
+        Query.Where(x => x.Name == name)
+             .IgnoreQueryFilters();
+    }
 }
 ```
