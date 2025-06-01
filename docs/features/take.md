@@ -9,26 +9,42 @@ grand_parent: Features
 
 # Take
 
-The `Take` feature defined in the Specification behaves the same as `Take` in Linq, and it accepts an `int count` as a parameter.
-
-`Take` is used to select a certain number of the results in a query, starting from the beginning. For example:
+The `Take` feature in specifications mirrors LINQ’s `Take` method. It accepts an `int count` and limits the number of elements returned from the beginning of the result set.
 
 ```csharp
-int[] numbers = { 1, 3, 2, 5, 7, 4 };
-
-IEnumerable<int> subsetOfNumbers = numbers.Take(3);
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(int take)
+    {
+        Query.Take(take);
+    }
+}
 ```
 
-Here, `subsetOfNumbers` would contain `{ 1, 3, 2 }`.
-
-Alternatively:
+`Take `is often used in combination with [Skip](skip.md) to implement pagination, but it can also be used independently to cap the result size.
 
 ```csharp
-int[] numbers = { 1, 3, 2, 5, 7, 4 };
-
-IEnumerable<int> subsetOfNumbers = numbers.OrderBy(n => n).Take(3);
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(PagingFilter filter)
+    {
+        Query.Skip(filter.Skip)
+             .Take(filter.Take);
+    }
+}
 ```
 
-Here, `subsetOfNumbers` would contain `{ 1, 2, 3 }`.
+## Conditional Overloads
 
-`Take` is commonly used in combination with [Skip](skip.md) to implement [Paging](paging.md), but as the above demonstrates, `Take` can also be used on its own.
+`Take` provides an overload that accepts a `bool condition`. If the condition evaluates to false, the operation is skipped. This is useful for dynamic scenarios, such as optional paging.
+
+```csharp
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(PagingFilter filter)
+    {
+        Query.Skip(filter.Skip, filter.Skip > 0)
+             .Take(filter.Take, filter.Take > 0);
+    }
+}
+```
