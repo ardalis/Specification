@@ -9,20 +9,46 @@ grand_parent: Features
 
 # Caching
 
-To implement caching using Specification, you will need to enable caching on your specification when it is defined:
+The `EnableCache` feature allows you to enable caching for a specification. When enabled, the results of the query can be cached by a compatible repository or infrastructure, improving performance for repeated queries with the same parameters.
+
+## How to Enable Caching
+
+Use the `EnableCache()` method in your specification. It accepts two parameters:
+1. A cache key (typically the specification name)
+2. Any additional parameters that uniquely identify the query
 
 ```csharp
-public class CustomerByNameWithStoresSpec : Specification<Customer>, ISingleResultSpecification
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(string name)
     {
-        public CustomerByNameWithStoresSpec(string name)
-        {
-            Query.Where(x => x.Name == name)
-                .Include(x => x.Stores)
-                .EnableCache(nameof(CustomerByNameWithStoresSpec), name);
-        }
+        Query.Where(x => x.Name == name)
+             .EnableCache(nameof(CustomerSpec), name);
     }
+}
 ```
 
-The `.EnableCache` method takes in two parameters: the name of the specification and the parameters of the specification. It does not include any parameters to control how the cache should behave (e.g. absolute expiration date, expiration tokens, ...). However, one could create an extension method to the specification builder in order to add this information ([example](../extensions/extend-specification-builder.md)).
+Alternatively, you can use the `WithCacheKey()` method to manually set a custom cache key.
 
-Implementing caching will also require infrastructure such as a CachedRepository, an example of which is given in [the sample](https://github.com/ardalis/Specification/blob/2605202df4d8e40fe388732db6d8f7a3754fcc2b/sample/Ardalis.SampleApp.Infrastructure/Data/CachedCustomerRepository.cs#L13) on GitHub. The `EnableCache` method is used to inform the cache implementation that caching should be used, and to configure the `CacheKey` based on the arguments supplied.
+```csharp
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(string name)
+    {
+        Query.Where(x => x.Name == name)
+             .WithCacheKey($"{nameof(CustomerSpec)} - {name}");
+    }
+}
+```
+
+## How Caching Works
+
+- The `EnableCache` and `WithCacheKey` methods store the cache key in the specification's internal state.
+- The actual caching logic is implemented by the consuming infrastructure (e.g., a `CachedRepository`).
+
+🔍 Note: `EnableCache` and `WithCacheKey` do not manage cache expiration or eviction. For advanced scenarios such as expiration policies or tagging, consider extending the builder. See [how to write specification extensions](../extensions/extensions-for-specifications.md) for examples.
+
+## When to Use Caching
+
+- ✅ Use caching for frequently repeated or expensive queries with stable input parameters.
+- ❌ Avoid caching queries that return highly dynamic or user-specific data unless you implement proper cache invalidation strategies.
