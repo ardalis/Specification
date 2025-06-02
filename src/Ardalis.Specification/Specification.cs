@@ -172,12 +172,7 @@ public class Specification<T> : ISpecification<T>
                 return tags;
             }
 
-            return SingleTag(_queryTags);
-
-            static IEnumerable<string> SingleTag(object tag)
-            {
-                yield return (string)tag;
-            }
+            return new string[] { (string)_queryTags };
         }
     }
 
