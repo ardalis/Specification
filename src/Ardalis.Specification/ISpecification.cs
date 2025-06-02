@@ -1,4 +1,6 @@
-﻿namespace Ardalis.Specification;
+﻿using System.ComponentModel;
+
+namespace Ardalis.Specification;
 
 /// <summary>
 /// Encapsulates query logic for <typeparamref name="T"/>,
@@ -87,6 +89,12 @@ public interface ISpecification<T>
     /// A query tags to help correlate specification with generated SQL queries captured in logs
     /// </summary>
     IEnumerable<string> QueryTags { get; }
+
+    /// <summary>
+    /// A query tags to help correlate specification with generated SQL queries captured in logs
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public OneOrMany<string> OneOrManyQueryTags { get; }
 
     /// <summary>
     /// Return whether or not the results should be cached.

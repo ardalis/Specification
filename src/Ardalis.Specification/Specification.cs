@@ -48,8 +48,8 @@ public class Specification<T> : ISpecification<T>
     private List<OrderExpressionInfo<T>>? _orderExpressions;
     private List<IncludeExpressionInfo>? _includeExpressions;
     private List<string>? _includeStrings;
-    private object? _queryTags;
     private Dictionary<string, object>? _items;
+    private OneOrMany<string> _queryTags = new();
 
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
     protected virtual IInMemorySpecificationEvaluator Evaluator => InMemorySpecificationEvaluator.Default;
@@ -120,24 +120,7 @@ public class Specification<T> : ISpecification<T>
             _searchExpressions.Insert(index, searchExpression);
         }
     }
-    internal void AddQueryTag(string queryTag)
-    {
-        if (_queryTags is null)
-        {
-            _queryTags = queryTag;
-            return;
-        }
-
-        if (_queryTags is List<string> list)
-        {
-            list.Add(queryTag);
-            return;
-        }
-
-        var currentTag = _queryTags as string;
-        Debug.Assert(currentTag != null, "Query tags should be either a string or a List<string> at this point.");
-        _queryTags = new List<string>(2) { currentTag!, queryTag };
-    }
+    internal void AddQueryTag(string queryTag) => _queryTags.Add(queryTag);
 
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
@@ -158,23 +141,11 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<string> IncludeStrings => _includeStrings ?? Enumerable.Empty<string>();
 
     /// <inheritdoc/>
-    public IEnumerable<string> QueryTags
-    {
-        get
-        {
-            if (_queryTags is null)
-            {
-                return Enumerable.Empty<string>();
-            }
+    public IEnumerable<string> QueryTags => _queryTags.Values;
 
-            if (_queryTags is List<string> tags)
-            {
-                return tags;
-            }
-
-            return new string[] { (string)_queryTags };
-        }
-    }
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public OneOrMany<string> OneOrManyQueryTags => _queryTags;
 
     /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
@@ -231,16 +202,9 @@ public class Specification<T> : ISpecification<T>
             otherSpec._searchExpressions = _searchExpressions.ToList();
         }
 
-        if (_queryTags is not null)
+        if (!_queryTags.IsEmpty)
         {
-            if (_queryTags is string tag)
-            {
-                otherSpec._queryTags = tag;
-            }
-            else if (_queryTags is List<string> tags)
-            {
-                otherSpec._queryTags = tags.ToList();
-            }
+            otherSpec._queryTags = _queryTags.Clone();
         }
 
         if (_items is not null)
