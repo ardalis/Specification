@@ -9,12 +9,39 @@ grand_parent: Features
 
 # Where
 
-The `Where` feature defined in the Specification behaves the same as `Where` in Linq, and it accepts `Expression<Func<TSource, bool>>` expression as a parameter.
-
-`Where` is used to select objects meeting a certain criteria, as defined by a lambda expression. For example:
+The `Where` feature in specifications behaves the same as LINQ’s `Where` method. It accepts an `Expression<Func<TSource, bool>>` as a parameter and is used to define filtering criteria.
 
 ```csharp
-Query.Where(x => x.Id == Id);
+ public class CustomerByLastNameSpec : Specification<Customer>
+ {
+     public CustomerByLastNameSpec(string lastName)
+     {
+         Query.Where(c => c.LastName == lastName);
+     }
+ }
 ```
 
-This query will select an object `x` if `x.Id` is equal to `Id`. Note that while this particular query likely selects a single object (since Ids should generally be unique), the `Where` operator will select *all* objects matching the specified criteria.
+The `Where` method also provides an overload that accepts a `bool condition` parameter. If the condition is false, the predicate is not added to the specification state. This is especially useful in dynamic scenarios similar to `WhereIf` extensions found in many LINQ helper libraries.
+
+```csharp
+public class CustomerSpec : Specification<Customer>
+{
+    // Instead of having this
+    public CustomerSpec(CustomerFilter filter)
+    {
+        if (!string.IsNullOrEmpty(filter.Name))
+            Query.Where(x => x.Name == filter.Name);
+
+        if (!string.IsNullOrEmpty(filter.Email))
+            Query.Where(x => x.Email == filter.Email);
+    }
+
+    // Users can do this
+    public CustomerSpec(CustomerFilter filter)
+    {
+        Query
+            .Where(x => x.Name == filter.Name, !string.IsNullOrEmpty(filter.Name))
+            .Where(x => x.Email == filter.Email, !string.IsNullOrEmpty(filter.Email));
+    }
+}
+```
