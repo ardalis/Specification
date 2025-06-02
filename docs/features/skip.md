@@ -9,26 +9,42 @@ grand_parent: Features
 
 # Skip
 
-The `Skip` feature defined in the Specification behaves the same as `Skip` in Linq, and it accepts an `int count` as a parameter.
-
-`Skip` is used to skip a certain number of the results in a query, starting from the beginning. For example:
+The `Skip` feature in specifications behaves the same as LINQ’s `Skip` method. It accepts an `int count` parameter and skips the specified number of elements from the beginning of the query result.
 
 ```csharp
-int[] numbers = { 1, 3, 2, 5, 7, 4 };
-
-IEnumerable<int> subsetOfNumbers = numbers.Skip(2);
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(int skip)
+    {
+        Query.Skip(skip);
+    }
+}
 ```
 
-Here, `subsetOfNumbers` would contain `{ 2, 5, 7, 4 }`.
-
-Alternatively:
+`Skip` is typically used together with [Take](take.md) to implement pagination but can also be used independently when needed.
 
 ```csharp
-int[] numbers = { 1, 3, 2, 5, 7, 4 };
-
-IEnumerable<int> subsetOfNumbers = numbers.OrderBy(n => n).Skip(2);
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(PagingFilter filter)
+    {
+        Query.Skip(filter.Skip)
+             .Take(filter.Take);
+    }
+}
 ```
 
-Here, `subsetOfNumbers` would contain `{ 3, 4, 5, 7 }`.
+## Conditional Overloads
 
-`Skip` is commonly used in combination with [Take](take.md) to implement [Paging](paging.md), but as the above demonstrates, `Skip` can also be used on its own.
+The `Skip` method provides an overload that accepts a `bool condition`. If the condition evaluates to false, the skip operation is not applied. This is useful for dynamic scenarios, such as optional paging.
+
+```csharp
+public class CustomerSpec : Specification<Customer>
+{
+    public CustomerSpec(PagingFilter filter)
+    {
+        Query.Skip(filter.Skip, filter.Skip > 0)
+             .Take(filter.Take, filter.Take > 0);
+    }
+}
+```
