@@ -9,9 +9,9 @@ public class TagWithEvaluator : IEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        if (specification.QueryTag is not null)
+        foreach (var tag in specification.QueryTags)
         {
-            query = query.TagWith(specification.QueryTag);
+            query = query.TagWith(tag);
         }
 
         return query;

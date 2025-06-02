@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Ardalis.Specification;
 
@@ -47,6 +48,7 @@ public class Specification<T> : ISpecification<T>
     private List<OrderExpressionInfo<T>>? _orderExpressions;
     private List<IncludeExpressionInfo>? _includeExpressions;
     private List<string>? _includeStrings;
+    private object? _queryTags;
     private Dictionary<string, object>? _items;
 
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
@@ -55,9 +57,6 @@ public class Specification<T> : ISpecification<T>
 
     /// <inheritdoc/>
     public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; }
-
-    /// <inheritdoc/>
-    public string? QueryTag { get; internal set; }
 
     /// <inheritdoc/>
     public string? CacheKey { get; internal set; }
@@ -121,6 +120,24 @@ public class Specification<T> : ISpecification<T>
             _searchExpressions.Insert(index, searchExpression);
         }
     }
+    internal void AddQueryTag(string queryTag)
+    {
+        if (_queryTags is null)
+        {
+            _queryTags = queryTag;
+            return;
+        }
+
+        if (_queryTags is List<string> list)
+        {
+            list.Add(queryTag);
+            return;
+        }
+
+        var currentTag = _queryTags as string;
+        Debug.Assert(currentTag != null, "Query tags should be either a string or a List<string> at this point.");
+        _queryTags = new List<string>(2) { currentTag!, queryTag };
+    }
 
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
@@ -141,6 +158,30 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<string> IncludeStrings => _includeStrings ?? Enumerable.Empty<string>();
 
     /// <inheritdoc/>
+    public IEnumerable<string> QueryTags
+    {
+        get
+        {
+            if (_queryTags is null)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            if (_queryTags is List<string> tags)
+            {
+                return tags;
+            }
+
+            return SingleTag(_queryTags);
+
+            static IEnumerable<string> SingleTag(object tag)
+            {
+                yield return (string)tag;
+            }
+        }
+    }
+
+    /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
     {
         var evaluator = Evaluator;
@@ -157,7 +198,6 @@ public class Specification<T> : ISpecification<T>
     void ISpecification<T>.CopyTo(Specification<T> otherSpec)
     {
         otherSpec.PostProcessingAction = PostProcessingAction;
-        otherSpec.QueryTag = QueryTag;
         otherSpec.CacheKey = CacheKey;
         otherSpec.Take = Take;
         otherSpec.Skip = Skip;
@@ -194,6 +234,18 @@ public class Specification<T> : ISpecification<T>
         if (_searchExpressions is not null)
         {
             otherSpec._searchExpressions = _searchExpressions.ToList();
+        }
+
+        if (_queryTags is not null)
+        {
+            if (_queryTags is string tag)
+            {
+                otherSpec._queryTags = tag;
+            }
+            else if (_queryTags is List<string> tags)
+            {
+                otherSpec._queryTags = tags.ToList();
+            }
         }
 
         if (_items is not null)
