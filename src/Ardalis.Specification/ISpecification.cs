@@ -86,12 +86,13 @@ public interface ISpecification<T>
     Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; }
 
     /// <summary>
-    /// A query tags to help correlate specification with generated SQL queries captured in logs
+    /// Query tags to help correlate specification with generated SQL queries captured in logs.
     /// </summary>
     IEnumerable<string> QueryTags { get; }
 
     /// <summary>
-    /// A query tags to help correlate specification with generated SQL queries captured in logs
+    /// Query tags to help correlate specification with generated SQL queries captured in logs.
+    /// Gets the query tags, which can be a single tag or multiple tags.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public OneOrMany<string> OneOrManyQueryTags { get; }
