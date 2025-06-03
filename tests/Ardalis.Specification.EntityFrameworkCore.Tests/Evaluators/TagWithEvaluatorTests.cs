@@ -24,6 +24,45 @@ public class TagWithEvaluatorTests(TestFactory factory) : IntegrationTest(factor
     }
 
     [Fact]
+    public void QueriesMatch_GivenMultipleTags()
+    {
+        var tag1 = "asd";
+        var tag2 = "qwe";
+
+        var spec = new Specification<Country>();
+        spec.Query.TagWith(tag1);
+        spec.Query.TagWith(tag2);
+
+        var actual = _evaluator.GetQuery(DbContext.Countries, spec)
+            .ToQueryString();
+
+        var expected = DbContext.Countries
+            .TagWith(tag1)
+            .TagWith(tag2)
+            .ToQueryString();
+
+        actual.Should().Be(expected);
+    }
+
+
+    [Fact]
+    public void DoesNothing_GivenNoTag()
+    {
+        var spec = new Specification<Country>();
+
+        var actual = _evaluator.GetQuery(DbContext.Countries, spec)
+            .Expression
+            .ToString();
+
+        var expected = DbContext.Countries
+            .AsQueryable()
+            .Expression
+            .ToString();
+
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
     public void Applies_GivenSingleTag()
     {
         var tag = "asd";

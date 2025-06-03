@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 /// <summary>
 /// Encapsulates query logic for <typeparamref name="T"/>,
