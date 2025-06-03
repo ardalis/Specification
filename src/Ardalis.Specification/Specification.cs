@@ -48,6 +48,7 @@ public class Specification<T> : ISpecification<T>
     private List<IncludeExpressionInfo>? _includeExpressions;
     private List<string>? _includeStrings;
     private Dictionary<string, object>? _items;
+    private OneOrMany<string> _queryTags = new();
 
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
     protected virtual IInMemorySpecificationEvaluator Evaluator => InMemorySpecificationEvaluator.Default;
@@ -55,9 +56,6 @@ public class Specification<T> : ISpecification<T>
 
     /// <inheritdoc/>
     public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; }
-
-    /// <inheritdoc/>
-    public string? QueryTag { get; internal set; }
 
     /// <inheritdoc/>
     public string? CacheKey { get; internal set; }
@@ -121,6 +119,7 @@ public class Specification<T> : ISpecification<T>
             _searchExpressions.Insert(index, searchExpression);
         }
     }
+    internal void AddQueryTag(string queryTag) => _queryTags.Add(queryTag);
 
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
@@ -141,6 +140,11 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<string> IncludeStrings => _includeStrings ?? Enumerable.Empty<string>();
 
     /// <inheritdoc/>
+    public IEnumerable<string> QueryTags => _queryTags.Values;
+
+    internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
+
+    /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
     {
         var evaluator = Evaluator;
@@ -157,7 +161,6 @@ public class Specification<T> : ISpecification<T>
     void ISpecification<T>.CopyTo(Specification<T> otherSpec)
     {
         otherSpec.PostProcessingAction = PostProcessingAction;
-        otherSpec.QueryTag = QueryTag;
         otherSpec.CacheKey = CacheKey;
         otherSpec.Take = Take;
         otherSpec.Skip = Skip;
@@ -194,6 +197,11 @@ public class Specification<T> : ISpecification<T>
         if (_searchExpressions is not null)
         {
             otherSpec._searchExpressions = _searchExpressions.ToList();
+        }
+
+        if (!_queryTags.IsEmpty)
+        {
+            otherSpec._queryTags = _queryTags.Clone();
         }
 
         if (_items is not null)

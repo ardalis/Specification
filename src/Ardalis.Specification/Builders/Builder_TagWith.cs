@@ -63,7 +63,7 @@ public static partial class SpecificationBuilderExtensions
     {
         if (condition)
         {
-            builder.Specification.QueryTag = tag;
+            builder.Specification.AddQueryTag(tag);
         }
 
         return builder;
