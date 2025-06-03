@@ -1,12 +1,11 @@
 ﻿namespace Ardalis.Specification;
 
-public struct OneOrMany<T>
+internal struct OneOrMany<T>
 {
     private object? _value;
 
-    public readonly bool IsSingle => _value is T;
-    public readonly bool IsMultiple => _value is List<T>;
-    public readonly bool IsEmpty => _value is null || (_value is List<T> list && list.Count == 0);
+    public readonly bool IsEmpty => _value is null;
+    public readonly bool HasSingleItem => _value is T;
 
     public void Add(T item)
     {
@@ -38,12 +37,7 @@ public struct OneOrMany<T>
                 return singleValue;
             }
 
-            if (_value is List<T> multipleValues && multipleValues.Count == 1)
-            {
-                return multipleValues[0];
-            }
-
-            throw new InvalidOperationException("The value is not a single item or a list with exactly one item.");
+            throw new InvalidOperationException("The value is not a single item.");
         }
     }
 

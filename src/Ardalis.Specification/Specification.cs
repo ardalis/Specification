@@ -142,9 +142,7 @@ public class Specification<T> : ISpecification<T>
     /// <inheritdoc/>
     public IEnumerable<string> QueryTags => _queryTags.Values;
 
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public OneOrMany<string> OneOrManyQueryTags => _queryTags;
+    internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
 
     /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)

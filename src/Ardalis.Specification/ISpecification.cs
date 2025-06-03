@@ -91,13 +91,6 @@ public interface ISpecification<T>
     IEnumerable<string> QueryTags { get; }
 
     /// <summary>
-    /// Query tags to help correlate specification with generated SQL queries captured in logs.
-    /// Gets the query tags, which can be a single tag or multiple tags.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public OneOrMany<string> OneOrManyQueryTags { get; }
-
-    /// <summary>
     /// Return whether or not the results should be cached.
     /// </summary>
     bool CacheEnabled { get; }
