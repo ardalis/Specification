@@ -31,6 +31,7 @@ public class SpecificationEvaluator : ISpecificationEvaluator
         if (specification is null) throw new ArgumentNullException("Specification is required");
         if (specification.Selector is null && specification.SelectorMany is null && specification.SelectorFunc is null) throw new SelectorNotFoundException();
         if ((specification.Selector != null || specification.SelectorFunc != null) && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
+        if (specification.Selector is not null && specification.SelectorFunc is not null) throw new DuplicateSelectorsException();
 
         query = GetQuery(query, (ISpecification<T>)specification);
 

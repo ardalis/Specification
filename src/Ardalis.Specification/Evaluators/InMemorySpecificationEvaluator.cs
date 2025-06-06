@@ -27,6 +27,7 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
     {
         if (specification.Selector is null && specification.SelectorMany is null && specification.SelectorFunc is null) throw new SelectorNotFoundException();
         if ((specification.Selector != null || specification.SelectorFunc != null) && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
+        if (specification.Selector is not null && specification.SelectorFunc is not null) throw new DuplicateSelectorsException();
 
         var baseQuery = Evaluate(source, (ISpecification<T>)specification);
 
