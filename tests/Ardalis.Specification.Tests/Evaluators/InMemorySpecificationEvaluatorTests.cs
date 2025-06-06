@@ -30,6 +30,22 @@ public class InMemorySpecificationEvaluatorTests
     }
 
     [Fact]
+    public void Evaluate_ThrowsConcurrentSelectorsException_GivenSelectFuncAndSelectMany()
+    {
+        var spec = new Specification<CustomerWithMails, string>();
+        spec.Query.Select(SelectorFunc);
+
+        spec.Query.SelectMany(x => x.Emails);
+
+        var sut = () => _evaluator.Evaluate([], spec);
+
+        sut.Should().Throw<ConcurrentSelectorsException>();
+        return;
+
+        IQueryable<string> SelectorFunc(IQueryable<CustomerWithMails> arg) => arg.Select(x => x.FirstName);
+    }
+
+    [Fact]
     public void Evaluate_Filters_GivenSpec()
     {
         List<Customer> input =
@@ -87,6 +103,41 @@ public class InMemorySpecificationEvaluatorTests
 
         actual.Should().Equal(actualFromSpec);
         actual.Should().Equal(expected);
+    }
+
+    [Fact]
+    public void Evaluate_Filters_GivenSpecWithSelectFunc()
+    {
+        List<Customer> input =
+        [
+            new(1, "axxa", "axya"),
+            new(2, "aaaa", "axya"),
+            new(3, "vvvv", "axya"),
+            new(4, "aaaa", "axya")
+        ];
+
+        List<string> expected = ["vvvv"];
+
+        var spec = new Specification<Customer, string>();
+        spec.Query
+            .Where(x => x.Id > 1)
+            .Search(x => x.LastName, "%xy%")
+            .OrderBy(x => x.Id)
+            .Skip(1)
+            .Take(1)
+            .Select(SelectorFunc);
+
+        var actual = _evaluator.Evaluate(input, spec).ToList();
+        var actualFromSpec = spec.Evaluate(input).ToList();
+
+        actual.Should().Equal(actualFromSpec);
+        actual.Should().Equal(expected);
+        return;
+
+        IQueryable<string> SelectorFunc(IQueryable<Customer> arg)
+        {
+            return arg.Select(x => x.FirstName);
+        }
     }
 
     [Fact]

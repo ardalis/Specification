@@ -10,6 +10,7 @@ public class Builder_Select
         var spec = new Specification<Customer, string>();
 
         spec.Selector.Should().BeNull();
+        spec.SelectorFunc.Should().BeNull();
     }
 
     [Fact]
@@ -22,6 +23,7 @@ public class Builder_Select
             .Select(expr);
 
         spec.Selector.Should().NotBeNull();
+        spec.SelectorFunc.Should().BeNull();
         spec.Selector.Should().BeSameAs(expr);
     }
 
@@ -37,6 +39,26 @@ public class Builder_Select
             .Select(expr);
 
         spec.Selector.Should().NotBeNull();
+        spec.SelectorFunc.Should().BeNull();
         spec.Selector.Should().BeSameAs(expr);
+    }
+
+    [Fact]
+    public void AddsSelectorFunc_GivenSelect()
+    {
+        var spec = new Specification<Customer, string>();
+        spec.Query
+            .Select(SelectorFunc);
+
+        spec.Selector.Should().BeNull();
+        spec.SelectorMany.Should().BeNull();
+        spec.SelectorFunc.Should().NotBeNull();
+        spec.SelectorFunc.Should().BeOfType<Func<IQueryable<Customer>, IQueryable<string>>>();
+        return;
+
+        IQueryable<string> SelectorFunc(IQueryable<Customer> arg)
+        {
+            return global::System.Linq.Queryable.Select(arg, p => p.FirstName);
+        }
     }
 }
