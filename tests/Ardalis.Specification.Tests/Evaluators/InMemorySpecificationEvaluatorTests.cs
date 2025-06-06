@@ -46,6 +46,21 @@ public class InMemorySpecificationEvaluatorTests
     }
 
     [Fact]
+    public void Evaluate_ThrowsDuplicateSelectorsException_GivenSelectFuncAndSelect()
+    {
+        var spec = new Specification<CustomerWithMails, string>();
+        spec.Query.Select(SelectorFunc);
+        spec.Query.Select(p => p.FirstName);
+
+        var sut = () => _evaluator.Evaluate([], spec);
+
+        sut.Should().Throw<DuplicateSelectorsException>();
+        return;
+
+        IQueryable<string> SelectorFunc(IQueryable<CustomerWithMails> arg) => arg.Select(x => x.FirstName);
+    }
+
+    [Fact]
     public void Evaluate_Filters_GivenSpec()
     {
         List<Customer> input =
