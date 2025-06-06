@@ -157,6 +157,61 @@ public class QueryTests(TestFactory factory) : IntegrationTest(factory)
     }
 
     [Fact]
+    public async Task QueryWithSelectFunc()
+    {
+        var expected = new List<CountryDto>
+        {
+            new("b"),
+            new("b"),
+            new("b"),
+        };
+        await SeedRangeAsync<Country>(
+        [
+            new() { Name = "a" },
+            new() { Name = "c" },
+            new() { Name = "b" },
+            new() { Name = "b" },
+            new() { Name = "b" },
+            new() { Name = "d" },
+        ]);
+
+        var spec = new Specification<Country, CountryDto>();
+        spec.Query
+            .Where(x => x.Name == "b")
+            .Select(SelectorFunc);
+
+        var result = await DbContext.Countries
+            .WithSpecification(spec)
+            .ToListAsync();
+
+        result.Should().HaveSameCount(expected);
+        result.Should().BeEquivalentTo(expected);
+        return;
+
+        IQueryable<CountryDto> SelectorFunc(IQueryable<Country> arg) => arg.Select(x => new CountryDto(x.Name));
+    }
+
+    [Fact]
+    public void QueryWithSelectFunc_ProjectedColumns()
+    {
+        var spec = new Specification<Country, CountryDto>();
+        spec.Query
+            .Where(x => x.Name == "b")
+            .Select(SelectorFunc);
+
+        var result = DbContext.Countries
+            .WithSpecification(spec)
+            .ToQueryString();
+
+        result.Should().Contain("[Name]");
+        result.Should().NotContain("[Id]");
+        result.Should().NotContain("[No]");
+        return;
+
+        IQueryable<CountryDto> SelectorFunc(IQueryable<Country> arg) => arg.Select(x => new CountryDto(x.Name));
+    }
+
+    [Fact]
     public async Task QueryWithSelectMany()
     {
         var expected = new List<ProductImageDto>
