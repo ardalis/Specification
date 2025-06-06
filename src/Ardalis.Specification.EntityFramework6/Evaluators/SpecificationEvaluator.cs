@@ -29,14 +29,16 @@ public class SpecificationEvaluator : ISpecificationEvaluator
     public virtual IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> query, ISpecification<T, TResult> specification) where T : class
     {
         if (specification is null) throw new ArgumentNullException("Specification is required");
-        if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
-        if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
+        if (specification.Selector is null && specification.SelectorMany is null && specification.SelectorFunc is null) throw new SelectorNotFoundException();
+        if ((specification.Selector != null || specification.SelectorFunc != null) && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
 
         query = GetQuery(query, (ISpecification<T>)specification);
 
         return specification.Selector != null
-          ? query.Select(specification.Selector)
-          : query.SelectMany(specification.SelectorMany);
+            ? query.Select(specification.Selector)
+            : specification.SelectorMany != null
+                ? query.SelectMany(specification.SelectorMany)
+                : specification.SelectorFunc!(query);
     }
 
     /// <inheritdoc/>

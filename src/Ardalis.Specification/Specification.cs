@@ -11,6 +11,9 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
     public Expression<Func<T, TResult>>? Selector { get; internal set; }
 
     /// <inheritdoc/>
+    public Func<IQueryable<T>, IQueryable<TResult>>? SelectorFunc { get; internal set; }
+
+    /// <inheritdoc/>
     public Expression<Func<T, IEnumerable<TResult>>>? SelectorMany { get; internal set; }
 
     /// <inheritdoc/>

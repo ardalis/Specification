@@ -7,6 +7,7 @@ public static class SpecificationExtensions
         var newSpec = new Specification<T, TResult>();
         source.CopyTo(newSpec);
         newSpec.Selector = projectionSpec.Selector;
+        newSpec.SelectorFunc = projectionSpec.SelectorFunc;
         newSpec.SelectorMany = projectionSpec.SelectorMany;
         newSpec.PostProcessingAction = projectionSpec.PostProcessingAction;
         return newSpec;

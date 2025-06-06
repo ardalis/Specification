@@ -16,6 +16,11 @@ public interface ISpecification<T, TResult> : ISpecification<T>
     Expression<Func<T, TResult>>? Selector { get; }
 
     /// <summary>
+    /// The Select transform function to apply to the <typeparamref name="T"/> element.
+    /// </summary>
+    Func<IQueryable<T>, IQueryable<TResult>>? SelectorFunc { get; }
+
+    /// <summary>
     /// The SelectMany transform function to apply to the <typeparamref name="T"/> element.
     /// </summary>
     Expression<Func<T, IEnumerable<TResult>>>? SelectorMany { get; }
@@ -121,8 +126,8 @@ public interface ISpecification<T>
     bool AsSplitQuery { get; }
 
     /// <summary>
-    /// Returns whether or not the query will then keep track of returned instances 
-    /// (without tracking them in the normal way) 
+    /// Returns whether or not the query will then keep track of returned instances
+    /// (without tracking them in the normal way)
     /// and ensure no duplicates are created in the query results
     /// </summary>
     /// <remarks>
@@ -131,7 +136,7 @@ public interface ISpecification<T>
     bool AsNoTrackingWithIdentityResolution { get; }
 
     /// <summary>
-    /// Returns whether or not the query should ignore the defined global query filters 
+    /// Returns whether or not the query should ignore the defined global query filters
     /// </summary>
     /// <remarks>
     /// for more info: https://docs.microsoft.com/en-us/ef/core/querying/filters
@@ -139,7 +144,7 @@ public interface ISpecification<T>
     bool IgnoreQueryFilters { get; }
 
     /// <summary>
-    /// Returns whether or not the query should ignore the defined AutoInclude configurations. 
+    /// Returns whether or not the query should ignore the defined AutoInclude configurations.
     /// </summary>
     bool IgnoreAutoIncludes { get; }
 

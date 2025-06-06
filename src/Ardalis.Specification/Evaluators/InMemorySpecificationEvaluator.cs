@@ -25,14 +25,16 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
 
     public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)
     {
-        if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
-        if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
+        if (specification.Selector is null && specification.SelectorMany is null && specification.SelectorFunc is null) throw new SelectorNotFoundException();
+        if ((specification.Selector != null || specification.SelectorFunc != null) && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
 
         var baseQuery = Evaluate(source, (ISpecification<T>)specification);
 
         var resultQuery = specification.Selector != null
-          ? baseQuery.Select(specification.Selector.Compile())
-          : baseQuery.SelectMany(specification.SelectorMany!.Compile());
+            ? baseQuery.Select(specification.Selector.Compile())
+            : specification.SelectorMany != null
+                ? baseQuery.SelectMany(specification.SelectorMany!.Compile())
+                : specification.SelectorFunc!(baseQuery.AsQueryable());
 
         return specification.PostProcessingAction == null
             ? resultQuery
