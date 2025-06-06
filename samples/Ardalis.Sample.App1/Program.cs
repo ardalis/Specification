@@ -38,6 +38,21 @@ app.MapGet("/customers", async (IRepository<Customer> repo,
     return Results.Ok(customersDto);
 });
 
+
+app.MapGet("/customers/menu", async (IRepository<Customer> repo,
+    IMapper mapper,
+    CancellationToken cancellationToken) =>
+{
+    var spec = new GetCustomers<CustomerMenuItem>(Selector);
+    var customers = await repo.ListAsync(spec, cancellationToken);
+    return Results.Ok(customers);
+
+    IQueryable<CustomerMenuItem> Selector(IQueryable<Customer> arg)
+    {
+        return arg.Select(p => new CustomerMenuItem(p.Id, p.Name));
+    }
+});
+
 app.MapGet("/customers/{id}", async (IRepository<Customer> repo,
                                      IMapper mapper,
                                      int id,
@@ -88,6 +103,7 @@ app.Run();
 public record AddressDto(int Id, string Street, int CustomerId);
 public record AddressCreateDto(string Street);
 public record CustomerDto(int Id, string Name, int Age, List<AddressDto> Addresses);
+public record CustomerMenuItem(int Id, string Name);
 public record CustomerCreateDto(string Name, int Age, List<AddressCreateDto> Addresses);
 public record CustomerUpdateDto(string Name, int Age);
 
