@@ -21,4 +21,5 @@ public interface IReadRepository<T> where T : class
     Task<TResult?> ProjectToFirstOrDefaultAsync<TResult>(ISpecification<T> specification, CancellationToken cancellationToken);
     Task<List<TResult>> ProjectToListAsync<TResult>(ISpecification<T> specification, CancellationToken cancellationToken);
     Task<PagedResponse<TResult>> ProjectToListAsync<TResult>(ISpecification<T> specification, BaseFilter filter, CancellationToken cancellationToken);
+    Task<PagedResponse<TResult>> ProjectToListAsync<TResult>(ISpecification<T, TResult> specification, BaseFilter filter, CancellationToken cancellationToken);
 }

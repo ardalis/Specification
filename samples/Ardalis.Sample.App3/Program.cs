@@ -41,6 +41,18 @@ app.MapGet("/customers", async (IReadRepository<Customer> repo,
     return Results.Ok(result);
 });
 
+
+// Projecting directly to response DTOs. In addition the response is paginated and wrapped in PagedResponse<T>.
+app.MapGet("/customers/menu", async (IReadRepository<Customer> repo,
+    [AsParameters] CustomerFilter filter,
+    CancellationToken cancellationToken) =>
+{
+    var spec = new CustomerSpec<CustomerMenuItem>(filter, CustomerMenuMapper.ProjectToMenuItem);
+    var result = await repo.ProjectToListAsync(spec, filter, cancellationToken);
+    return Results.Ok(result);
+});
+
+
 // Projecting directly to response DTOs.
 app.MapGet("/customers/{id}", async (IReadRepository<Customer> repo,
                                      int id,
@@ -90,6 +102,7 @@ app.Run();
 public record AddressDto(int Id, string Street, int CustomerId);
 public record AddressCreateDto(string Street);
 public record CustomerDto(int Id, string Name, int Age, List<AddressDto> Addresses);
+public record CustomerMenuItem(int Id, string Name);
 public record CustomerCreateDto(string Name, int Age, List<AddressCreateDto> Addresses);
 public record CustomerUpdateDto(string Name, int Age);
 
@@ -123,4 +136,11 @@ public class MappingProfile : Profile
         CreateMap<Address, AddressDto>();
         CreateMap<Customer, CustomerDto>();
     }
+}
+
+// Mapperly configuration
+[Riok.Mapperly.Abstractions.Mapper]
+internal static partial class CustomerMenuMapper
+{
+    internal static partial IQueryable<CustomerMenuItem> ProjectToMenuItem(IQueryable<Customer> arg);
 }

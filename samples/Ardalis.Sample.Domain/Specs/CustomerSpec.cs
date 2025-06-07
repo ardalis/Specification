@@ -22,3 +22,19 @@ public class CustomerSpec : Specification<Customer>
             .TagWith("List customers filtered by user inputs.");
     }
 }
+
+
+public class CustomerSpec<TProj> : Specification<Customer, TProj>
+{
+    public CustomerSpec(CustomerFilter filter, Func<IQueryable<Customer>, IQueryable<TProj>> selector)
+    {
+        Query.Select(selector);
+
+        Query
+            .Where(c => c.Age >= filter.AgeFrom, filter.AgeFrom is not null)
+            .Where(c => c.Age <= filter.AgeTo, filter.AgeTo is not null)
+            .Where(c => c.Name == filter.Name, filter.Name is not null)
+            .ApplyOrdering(filter)
+            .TagWith("List customers filtered by user inputs.");
+    }
+}
