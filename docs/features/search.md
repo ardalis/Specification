@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Search
-nav_order: 5
+nav_order: 2
 has_children: false
 parent: Base Features
 grand_parent: Features

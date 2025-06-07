@@ -2,7 +2,7 @@
 layout: default
 title: Quick Start Guide
 parent: Getting Started
-nav_order: 2
+nav_order: 1
 ---
 
 # Ardalis.Specification Quick Start Guide

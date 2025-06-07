@@ -1,7 +1,7 @@
 ---
 layout: default
 title: IgnoreAutoIncludes
-nav_order: 4
+nav_order: 3
 has_children: false
 parent: ORM-Specific Features
 grand_parent: Features

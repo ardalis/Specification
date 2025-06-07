@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Caching
-nav_order: 6
+nav_order: 7
 has_children: false
 parent: Base Features
 grand_parent: Features

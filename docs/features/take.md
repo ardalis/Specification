@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Take
-nav_order: 4
+nav_order: 5
 has_children: false
 parent: Base Features
 grand_parent: Features

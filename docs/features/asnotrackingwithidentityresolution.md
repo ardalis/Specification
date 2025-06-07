@@ -1,7 +1,7 @@
 ---
 layout: default
 title: AsNoTrackingWithIdentityResolution
-nav_order: 2
+nav_order: 7
 has_children: false
 parent: ORM-Specific Features
 grand_parent: Features
