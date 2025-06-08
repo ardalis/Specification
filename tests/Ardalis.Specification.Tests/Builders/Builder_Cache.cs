@@ -118,4 +118,17 @@ public class Builder_Cache
         spec1.CacheKey.Should().Be(key);
         spec2.CacheEnabled.Should().BeTrue();
     }
+
+    [Fact]
+    public void ThrowsArgumentException_GivenWithCacheKeyAndNullSpecificationName()
+    {
+        var spec1 = new Specification<Customer>();
+        var spec2 = new Specification<Customer, string>();
+
+        Action sut1 = () => spec1.Query.WithCacheKey(null!);
+        Action sut2 = () => spec2.Query.WithCacheKey(null!);
+
+        sut1.Should().Throw<ArgumentException>();
+        sut2.Should().Throw<ArgumentException>();
+    }
 }

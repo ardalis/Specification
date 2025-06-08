@@ -77,7 +77,7 @@ public static partial class SpecificationBuilderExtensions
         {
             if (string.IsNullOrEmpty(specificationName))
             {
-                throw new ArgumentException($"Required input was null or empty.", nameof(specificationName));
+                throw new ArgumentException("Required input was null or empty.", nameof(specificationName));
             }
 
             builder.Specification.CacheKey = $"{specificationName}-{string.Join("-", args)}";
@@ -154,7 +154,7 @@ public static partial class SpecificationBuilderExtensions
         {
             if (string.IsNullOrEmpty(cacheKey))
             {
-                throw new ArgumentException($"Required input was null or empty.", nameof(cacheKey));
+                throw new ArgumentException("Required input was null or empty.", nameof(cacheKey));
             }
 
             builder.Specification.CacheKey = cacheKey;
