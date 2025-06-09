@@ -68,7 +68,9 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
         await using var dbContext = _dbContextFactory.CreateDbContext();
         var queryResult = await ApplySpecification(specification, dbContext).ToListAsync(cancellationToken);
 
-        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction is null
+            ? queryResult
+            : specification.PostProcessingAction(queryResult).AsList();
     }
 
     /// <inheritdoc/>
@@ -77,7 +79,9 @@ public abstract class ContextFactoryRepositoryBaseOfT<TEntity, TContext> : IRepo
         await using var dbContext = _dbContextFactory.CreateDbContext();
         var queryResult = await ApplySpecification(specification, dbContext).ToListAsync(cancellationToken);
 
-        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction is null
+            ? queryResult
+            : specification.PostProcessingAction(queryResult).AsList();
     }
 
     /// <inheritdoc/>

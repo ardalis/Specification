@@ -34,7 +34,7 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
           ? baseQuery.Select(specification.Selector.Compile())
           : baseQuery.SelectMany(specification.SelectorMany!.Compile());
 
-        return specification.PostProcessingAction == null
+        return specification.PostProcessingAction is null
             ? resultQuery
             : specification.PostProcessingAction(resultQuery);
     }
@@ -46,7 +46,7 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
             source = evaluator.Evaluate(source, specification);
         }
 
-        return specification.PostProcessingAction == null
+        return specification.PostProcessingAction is null
             ? source
             : specification.PostProcessingAction(source);
     }
