@@ -136,7 +136,9 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
 
-        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction is null
+            ? queryResult
+            : specification.PostProcessingAction(queryResult).AsList();
     }
 
     /// <inheritdoc/>
@@ -144,7 +146,9 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         var queryResult = await ApplySpecification(specification).ToListAsync(cancellationToken);
 
-        return specification.PostProcessingAction == null ? queryResult : specification.PostProcessingAction(queryResult).ToList();
+        return specification.PostProcessingAction is null
+            ? queryResult
+            : specification.PostProcessingAction(queryResult).AsList();
     }
 
     /// <inheritdoc/>
