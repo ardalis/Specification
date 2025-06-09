@@ -55,7 +55,7 @@ We're shipping a built-in repository implementation [RepositoryBase](https://git
 
 ## Reference
 
-Please refer the documentation for [related resources](https://specification.ardalis.com/related-resources/).
+Please refer to the documentation for [related resources](https://specification.ardalis.com/related-resources/).
 
 Pluralsight resources:
 
