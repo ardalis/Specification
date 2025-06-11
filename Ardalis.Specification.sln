@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ardalis.Specification.EntityFramework6.Tests", "tests\Ardalis.Specification.EntityFramework6.Tests\Ardalis.Specification.EntityFramework6.Tests.csproj", "{4BEB4DC4-DE33-4DF1-8A2F-CE76C1D72A4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ardalis.Specification.Benchmarks", "tests\Ardalis.Specification.Benchmarks\Ardalis.Specification.Benchmarks.csproj", "{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{C443291A-7311-455F-9AC6-995EB29DD6D2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -90,6 +92,10 @@ Global
 		{BDEF2EFE-6690-4022-86EF-AF7626366AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDEF2EFE-6690-4022-86EF-AF7626366AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDEF2EFE-6690-4022-86EF-AF7626366AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{EBABFB82-50D0-41A2-AEAC-F0E2C103ED08} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
 		{ECBFDD7F-E60F-48C4-8279-DD6B3B03D27A} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
 		{BDEF2EFE-6690-4022-86EF-AF7626366AD0} = {1FCFDF4F-D0E2-4E30-8ABC-FE6DC3628228}
+		{CDF3751D-1D9D-4B29-BA25-CC7AD4CA3989} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C153A625-42F7-49A7-B99A-6A78B4B866B2}

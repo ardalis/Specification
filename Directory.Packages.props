@@ -25,6 +25,7 @@
 
   <ItemGroup Label="Test projects dependencies">
     <PackageVersion Include="ManagedObjectSize.ObjectPool" Version="0.0.7-gd53ba9da59" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.0" />
     <PackageVersion Include="MartinCostello.SqlLocalDb" Version="4.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
     <PackageVersion Include="Respawn" Version="6.2.1" />
