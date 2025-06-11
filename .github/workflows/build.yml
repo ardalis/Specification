@@ -1,0 +1,36 @@
+name: Full Build
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.x
+    - name: Build
+      run: dotnet build ci.slnf --configuration Release
+    - name: Test
+      run: dotnet test ci.slnf --configuration Release --no-build --no-restore --framework net9.0 --collect:"XPlat Code Coverage;Format=opencover"
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.9
+      with:
+        reports: tests/**/coverage.opencover.xml
+        targetdir: ${{ runner.temp }}/coveragereport
+        reporttypes: 'Html;Badges;MarkdownSummaryGithub'
+        assemblyfilters: -*Tests*
+    - name: Publish coverage report in build summary
+      run: cat '${{ runner.temp }}'/coveragereport/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      shell: bash
