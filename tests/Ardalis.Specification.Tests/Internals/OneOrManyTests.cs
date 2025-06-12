@@ -98,6 +98,82 @@ public class OneOrManyTests
     }
 
     [Fact]
+    public void AddSorted_CreatesSingleItem_GivenEmptyStruct()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        oneOrMany.AddSorted("foo", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<string>();
+        value.Should().Be("foo");
+    }
+
+    [Fact]
+    public void AddSorted_InsertsInPosition_GivenSingleItem()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = "foo";
+
+        oneOrMany.AddSorted("bar", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<List<string>>();
+        value.Should().BeEquivalentTo(new List<string> { "bar", "foo" });
+    }
+
+    [Fact]
+    public void AddSorted_AddsToTheEnd_GivenSingleItem()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = "bar";
+
+        oneOrMany.AddSorted("foo", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<List<string>>();
+        value.Should().BeEquivalentTo(new List<string> { "bar", "foo" });
+    }
+
+    [Fact]
+    public void AddSorted_InsertsInPosition_GivenTwoItems()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new List<string> { "bar", "foo" };
+
+        oneOrMany.AddSorted("baz", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<List<string>>();
+        value.Should().BeEquivalentTo(new List<string> { "bar", "baz", "foo" });
+    }
+
+    [Fact]
+    public void AddSorted_AddsToTheEnd_GivenTwoItems()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new List<string> { "bar", "baz" };
+
+        oneOrMany.AddSorted("foo", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<List<string>>();
+        value.Should().BeEquivalentTo(new List<string> { "bar", "baz", "foo" });
+    }
+
+    [Fact]
+    public void AddSorted_DoesNothing_GivenInvalidState()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new string[] { "foo", "bar" };
+
+        oneOrMany.AddSorted("baz", Comparer<string>.Default);
+
+        var value = Accessors.ValueOf(ref oneOrMany);
+        value.Should().BeOfType<string[]>();
+        value.Should().BeEquivalentTo(new string[] { "foo", "bar" });
+    }
+
+    [Fact]
     public void Single_ReturnsSingleItem_GivenSingleItem()
     {
         var oneOrMany = new OneOrMany<string>();
@@ -123,6 +199,32 @@ public class OneOrManyTests
 
         var action = () => _ = oneOrMany.Single;
         action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void SingleOrDefault_ReturnsSingleItem_GivenSingleItem()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = "foo";
+
+        oneOrMany.SingleOrDefault.Should().Be("foo");
+    }
+
+    [Fact]
+    public void SingleOrDefault_ReturnsDefault_GivenEmptyStruct()
+    {
+        var oneOrMany = new OneOrMany<string>();
+
+        oneOrMany.SingleOrDefault.Should().BeNull();
+    }
+
+    [Fact]
+    public void SingleOrDefault_ReturnsDefault_GivenMultipleItems()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new string[] { "foo", "bar" };
+
+        oneOrMany.SingleOrDefault.Should().BeNull();
     }
 
     [Fact]
