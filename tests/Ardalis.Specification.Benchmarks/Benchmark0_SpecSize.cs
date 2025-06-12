@@ -15,6 +15,17 @@ public class Benchmark0_SpecSize
      * 3 -> Where, OrderBy, Include
      * 4 -> Where, Order chain, Include chain, Flag (AsNoTracking)
      * 5 -> Where, Order chain, Include chain, Like, Skip, Take, Flag (AsNoTracking)
+     
+         Results from version 9.2.0 on .NET 9.0 (2025-06-12)
+
+        | Method | Type | Mean      | Error     | StdDev    | Gen0   | Gen1   | Allocated |
+        |------- |----- |----------:|----------:|----------:|-------:|-------:|----------:|
+        | Spec   | 0    |  5.113 ns |  4.230 ns | 0.2318 ns | 0.0124 |      - |     104 B |
+        | Spec   | 1    | 13.929 ns |  7.006 ns | 0.3840 ns | 0.0249 |      - |     208 B |
+        | Spec   | 2    | 27.080 ns | 14.668 ns | 0.8040 ns | 0.0382 | 0.0000 |     320 B |
+        | Spec   | 3    | 34.670 ns | 18.903 ns | 1.0361 ns | 0.0516 | 0.0001 |     432 B |
+        | Spec   | 4    | 45.458 ns | 19.777 ns | 1.0841 ns | 0.0612 | 0.0001 |     512 B |
+        | Spec   | 5    | 60.715 ns | 18.731 ns | 1.0267 ns | 0.0783 | 0.0001 |     656 B |
      */
 
     public static class Expressions
