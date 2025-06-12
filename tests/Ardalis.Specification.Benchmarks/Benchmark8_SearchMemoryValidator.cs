@@ -3,6 +3,11 @@
 [MemoryDiagnoser]
 public class Benchmark8_SearchMemoryValidator
 {
+    /*
+     * This benchmark measures search memory validator compared to version 8.
+     * In version 9 we're utilizing allocation free GroupBy.
+     */
+
     private List<Customer> _source = default!;
     private CustomerSpec _specification = default!;
     private SearchValidatorV8 _validatorV8 = default!;

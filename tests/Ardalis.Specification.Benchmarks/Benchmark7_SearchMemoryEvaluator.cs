@@ -3,6 +3,11 @@
 [MemoryDiagnoser]
 public class Benchmark7_SearchMemoryEvaluator
 {
+    /*
+     * This benchmark measures search memory evaluation compared to version 8.
+     * In version 9 we're utilizing allocation free GroupBy.
+     */
+
     private List<Customer> _source = default!;
     private CustomerSpec _specification = default!;
     private SearchMemoryEvaluatorV8 _evaluatorV8 = default!;
