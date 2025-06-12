@@ -9,9 +9,18 @@ public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        foreach (var info in specification.WhereExpressions)
+        if (specification is Specification<T> spec)
         {
-            query = query.Where(info.Filter);
+            if (spec.OneOrManyWhereExpressions.IsEmpty) return query;
+            if (spec.OneOrManyWhereExpressions.SingleOrDefault is { } whereExpression)
+            {
+                return query.Where(whereExpression.Filter);
+            }
+        }
+
+        foreach (var whereExpression in specification.WhereExpressions)
+        {
+            query = query.Where(whereExpression.Filter);
         }
 
         return query;
@@ -19,9 +28,18 @@ public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
 
     public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
     {
-        foreach (var info in specification.WhereExpressions)
+        if (specification is Specification<T> spec)
         {
-            query = query.Where(info.FilterFunc);
+            if (spec.OneOrManyWhereExpressions.IsEmpty) return query;
+            if (spec.OneOrManyWhereExpressions.SingleOrDefault is { } whereExpression)
+            {
+                return query.Where(whereExpression.FilterFunc);
+            }
+        }
+
+        foreach (var whereExpression in specification.WhereExpressions)
+        {
+            query = query.Where(whereExpression.FilterFunc);
         }
 
         return query;

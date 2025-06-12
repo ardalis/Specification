@@ -26,7 +26,6 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 /// <inheritdoc cref="ISpecification{T}"/>
 public class Specification<T> : ISpecification<T>
 {
-    private const int DEFAULT_CAPACITY_WHERE = 2;
     private const int DEFAULT_CAPACITY_SEARCH = 2;
     private const int DEFAULT_CAPACITY_ORDER = 2;
     private const int DEFAULT_CAPACITY_INCLUDE = 2;
@@ -42,7 +41,7 @@ public class Specification<T> : ISpecification<T>
 
     // The state is null initially, but we're spending 8 bytes per reference (on x64).
     // This will be reconsidered for version 10 where we may store the whole state as a single array of structs.
-    private List<WhereExpressionInfo<T>>? _whereExpressions;
+    private OneOrMany<WhereExpressionInfo<T>> _whereExpressions = new();
     private List<SearchExpressionInfo<T>>? _searchExpressions;
     private List<OrderExpressionInfo<T>>? _orderExpressions;
     private List<IncludeExpressionInfo>? _includeExpressions;
@@ -94,7 +93,7 @@ public class Specification<T> : ISpecification<T>
 
 
     // Specs are not intended to be thread-safe, so we don't need to worry about thread-safety here.
-    internal void Add(WhereExpressionInfo<T> whereExpression) => (_whereExpressions ??= new(DEFAULT_CAPACITY_WHERE)).Add(whereExpression);
+    internal void Add(WhereExpressionInfo<T> whereExpression) => _whereExpressions.Add(whereExpression);
     internal void Add(OrderExpressionInfo<T> orderExpression) => (_orderExpressions ??= new(DEFAULT_CAPACITY_ORDER)).Add(orderExpression);
     internal void Add(IncludeExpressionInfo includeExpression) => (_includeExpressions ??= new(DEFAULT_CAPACITY_INCLUDE)).Add(includeExpression);
     internal void Add(string includeString) => (_includeStrings ??= new(DEFAULT_CAPACITY_INCLUDESTRING)).Add(includeString);
@@ -125,7 +124,7 @@ public class Specification<T> : ISpecification<T>
     public Dictionary<string, object> Items => _items ??= [];
 
     /// <inheritdoc/>
-    public IEnumerable<WhereExpressionInfo<T>> WhereExpressions => _whereExpressions ?? Enumerable.Empty<WhereExpressionInfo<T>>();
+    public IEnumerable<WhereExpressionInfo<T>> WhereExpressions => _whereExpressions.Values;
 
     /// <inheritdoc/>
     public IEnumerable<SearchExpressionInfo<T>> SearchCriterias => _searchExpressions ?? Enumerable.Empty<SearchExpressionInfo<T>>();
@@ -142,6 +141,7 @@ public class Specification<T> : ISpecification<T>
     /// <inheritdoc/>
     public IEnumerable<string> QueryTags => _queryTags.Values;
 
+    internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
     internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
 
     /// <inheritdoc/>
@@ -174,9 +174,9 @@ public class Specification<T> : ISpecification<T>
         // The expression containers are immutable, having the same instance is fine.
         // We'll just create new collections.
 
-        if (_whereExpressions is not null)
+        if (!_whereExpressions.IsEmpty)
         {
-            otherSpec._whereExpressions = _whereExpressions.ToList();
+            otherSpec._whereExpressions = _whereExpressions.Clone();
         }
 
         if (_includeExpressions is not null)

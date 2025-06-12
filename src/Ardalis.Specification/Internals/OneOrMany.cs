@@ -2,6 +2,7 @@
 
 internal struct OneOrMany<T> where T : class
 {
+    private const int DEFAULT_CAPACITY = 2;
     private object? _value;
 
     public readonly bool IsEmpty => _value is null;
@@ -58,11 +59,11 @@ internal struct OneOrMany<T> where T : class
         {
             if (comparer.Compare(item, singleValue) <= 0)
             {
-                _value = new List<T>(2) { item, singleValue };
+                _value = new List<T>(DEFAULT_CAPACITY) { item, singleValue };
             }
             else
             {
-                _value = new List<T>(2) { singleValue, item };
+                _value = new List<T>(DEFAULT_CAPACITY) { singleValue, item };
             }
         }
     }
