@@ -35,6 +35,11 @@ internal struct OneOrMany<T> where T : class
             return;
         }
 
+        if (comparer is null)
+        {
+            throw new ArgumentNullException(nameof(comparer), "Comparer cannot be null.");
+        }
+
         if (_value is List<T> list)
         {
             var index = list.FindIndex(x => comparer.Compare(item, x) <= 0);

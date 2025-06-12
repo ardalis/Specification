@@ -161,6 +161,17 @@ public class OneOrManyTests
     }
 
     [Fact]
+    public void AddSorted_ThrowsArgumentNullException_GivenNullComparer()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new List<string> { "bar", "baz" };
+
+        var action = () => oneOrMany.AddSorted("foo", null!);
+
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
     public void AddSorted_DoesNothing_GivenInvalidState()
     {
         var oneOrMany = new OneOrMany<string>();
