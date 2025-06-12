@@ -14,7 +14,7 @@
 [![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
 ## Give a Star! :star:
-If you like or are using this project please give it a star. Thanks!
+If you like or are using this project, please give it a star. Thanks!
 # Specification
 
 A .NET library for building query specifications. Currently used in Microsoft reference application [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb), which is the best place to see it in action, as well as the [Clean Architecture solution template](https://github.com/ardalis/cleanarchitecture). Check out Steve "ardalis" Smith's associated (free!) eBook, [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), as well.
@@ -30,22 +30,26 @@ The change log for `version 9` and the list of breaking changes can be found [he
 ## Sample Usage
 
 The Specification pattern pulls query-specific logic out of other places in the application where it currently exists.
-- For applications with minimal abstraction that use EF Core directly, the specification will eliminate `Where`, `Include`, `Select` and similar expressions from almost all places where they're being used.
-- In applications that abstract database query logic behind a `Repository` abstraction, the specification will typically eliminate the need for many custom `Repository` implementation classes as well as custom query methods on `Repository` implementations. Instead of many different ways to filter and shape data using various methods, the same capability is achieved with few core methods.
+- For applications with minimal abstraction that use EF Core directly, the specification will eliminate `Where`, `Include`, `Select`, and similar expressions from almost all places where they're being used.
+- In applications that abstract database query logic behind a `Repository` abstraction, the specification will typically eliminate the need for many custom `Repository` implementation classes as well as custom query methods on `Repository` implementations. Instead of many different ways to filter and shape data using various methods, the same capability is achieved with a few core methods.
 
 Example implementation in your repository using specifications
 
-```charp
-public async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+```csharp
+public async Task<List<T>> ListAsync(
+    ISpecification<T> specification,
+    CancellationToken cancellationToken = default)
 {
-    var query = SpecificationEvaluator.Default.GetQuery(_dbContext.Set<T>(), specification);
+    var query = SpecificationEvaluator.Default
+        .GetQuery(_dbContext.Set<T>(), specification);
+
     return await query.ToListAsync(cancellationToken);
 }
 ```
 
-Now to use this method, the calling code simply instantiates and passes the appropriate specification.
+Now, to use this method, the calling code simply instantiates and passes the appropriate specification.
 
-```charp
+```csharp
 var spec = new CustomerByNameSpec("customerName");
 var customers = await _repository.ListAsync(spec, cancellationToken);
 ```
