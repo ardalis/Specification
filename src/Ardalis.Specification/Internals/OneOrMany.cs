@@ -1,6 +1,6 @@
 ﻿namespace Ardalis.Specification;
 
-internal struct OneOrMany<T>
+internal struct OneOrMany<T> where T : class
 {
     private object? _value;
 
@@ -24,7 +24,41 @@ internal struct OneOrMany<T>
         if (_value is T singleValue)
         {
             _value = new List<T>(2) { singleValue, item };
+        }
+    }
+
+    public void AddSorted(T item, IComparer<T> comparer)
+    {
+        if (_value is null)
+        {
+            _value = item;
             return;
+        }
+
+        if (_value is List<T> list)
+        {
+            var index = list.FindIndex(x => comparer.Compare(item, x) <= 0);
+            if (index == -1)
+            {
+                list.Add(item);
+            }
+            else
+            {
+                list.Insert(index, item);
+            }
+            return;
+        }
+
+        if (_value is T singleValue)
+        {
+            if (comparer.Compare(item, singleValue) <= 0)
+            {
+                _value = new List<T>(2) { item, singleValue };
+            }
+            else
+            {
+                _value = new List<T>(2) { singleValue, item };
+            }
         }
     }
 
@@ -41,6 +75,19 @@ internal struct OneOrMany<T>
         }
     }
 
+    public readonly T? SingleOrDefault
+    {
+        get
+        {
+            if (_value is T singleValue)
+            {
+                return singleValue;
+            }
+
+            return null;
+        }
+    }
+
     public readonly IEnumerable<T> Values
     {
         get
@@ -50,9 +97,9 @@ internal struct OneOrMany<T>
                 return Enumerable.Empty<T>();
             }
 
-            if (_value is List<T> tags)
+            if (_value is List<T> list)
             {
-                return tags;
+                return list;
             }
 
             if (_value is T singleValue)
