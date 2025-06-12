@@ -6,6 +6,17 @@ namespace Ardalis.Specification.Benchmarks;
 [ShortRunJob]
 public class Benchmark0_SpecSize
 {
+    /* This benchmark is used to measure the Specification sizes and detect eventual regressions.
+     * We measure with provided expressions, so it measures pure spec overhead.
+     * Types:
+     * 0 -> Empty
+     * 1 -> Single Where clause
+     * 2 -> Where and OrderBy
+     * 3 -> Where, OrderBy, Include
+     * 4 -> Where, Order chain, Include chain, Flag (AsNoTracking)
+     * 5 -> Where, Order chain, Include chain, Like, Skip, Take, Flag (AsNoTracking)
+     */
+
     public static class Expressions
     {
         public static Expression<Func<Store, bool>> Criteria { get; } = x => x.Id > 0;
