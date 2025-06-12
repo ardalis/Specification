@@ -6,6 +6,13 @@ public class Benchmark8_SearchMemoryValidator
     /*
      * This benchmark measures search memory validator compared to version 8.
      * In version 9 we're utilizing allocation free GroupBy.
+
+        Results from version 9.2.0 on .NET 9.0 (2025-06-12). They're diabolical :)
+
+        | Method     | Mean      | Error    | StdDev   | Ratio | Gen0    | Allocated | Alloc Ratio |
+        |----------- |----------:|---------:|---------:|------:|--------:|----------:|------------:|
+        | ValidateV8 | 222.87 us | 1.797 us | 1.500 us |  1.00 | 73.9746 |  619016 B |        1.00 |
+        | Validate   |  92.96 us | 0.261 us | 0.218 us |  0.42 |       - |         - |        0.00 |
      */
 
     private List<Customer> _source = default!;
