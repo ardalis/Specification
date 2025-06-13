@@ -7,7 +7,7 @@ public class OrderEvaluatorTests
     public record Customer(int Id, string? Name = null);
 
     [Fact]
-    public void ThrowsDuplicateOrderChainException_GivenMultipleOrderChains()
+    public void ThrowsDuplicateOrderChainException_GivenMultipleOrderByChains()
     {
         List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
         List<Customer> expected = [new(1), new(2), new(3), new(4), new(5)];
@@ -16,6 +16,24 @@ public class OrderEvaluatorTests
         spec.Query
             .OrderBy(x => x.Id)
             .OrderBy(x => x.Name);
+
+        var sut1 = new Action(() => _evaluator.Evaluate(input, spec));
+        var sut2 = new Action(() => _evaluator.GetQuery(input.AsQueryable(), spec));
+
+        sut1.Should().Throw<DuplicateOrderChainException>();
+        sut2.Should().Throw<DuplicateOrderChainException>();
+    }
+
+    [Fact]
+    public void ThrowsDuplicateOrderChainException_GivenMultipleOrderByDescendingChains()
+    {
+        List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
+        List<Customer> expected = [new(1), new(2), new(3), new(4), new(5)];
+
+        var spec = new Specification<Customer>();
+        spec.Query
+            .OrderByDescending(x => x.Id)
+            .OrderByDescending(x => x.Name);
 
         var sut1 = new Action(() => _evaluator.Evaluate(input, spec));
         var sut2 = new Action(() => _evaluator.GetQuery(input.AsQueryable(), spec));
@@ -46,6 +64,19 @@ public class OrderEvaluatorTests
         var spec = new Specification<Customer>();
         spec.Query
             .OrderByDescending(x => x.Id);
+
+        Assert(spec, input, expected);
+    }
+
+    [Fact]
+    public void DoesNothing_GivenInvalidRootChain()
+    {
+        List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
+        List<Customer> expected = [new(3), new(1), new(2), new(5), new(4)];
+
+        var spec = new Specification<Customer>();
+        var expr = new OrderExpressionInfo<Customer>(x => x.Id, OrderTypeEnum.ThenBy);
+        spec.Add(expr);
 
         Assert(spec, input, expected);
     }
