@@ -26,13 +26,14 @@ public class SearchValidator : IValidator
 
         foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
         {
-            if (searchGroup.Any(c => c.SelectorFunc(entity)?.Like(c.SearchTerm) ?? false) == false) return false;
+            if (!searchGroup.Any(c => c.SelectorFunc(entity)?.Like(c.SearchTerm) ?? false))
+                return false;
         }
 
         return true;
     }
 
-    // This would be simpler using Span<SearchExpressionInfo<TSource>>
+    // This would be simpler using Span<SearchExpressionInfo<T>>
     // but CollectionsMarshal.AsSpan is not available in .NET Standard 2.0
     private static bool IsValid<T>(T entity, List<SearchExpressionInfo<T>> list)
     {
