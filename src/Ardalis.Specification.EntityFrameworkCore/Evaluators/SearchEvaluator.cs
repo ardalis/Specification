@@ -11,19 +11,22 @@ public class SearchEvaluator : IEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        if (specification.SearchCriterias is List<SearchExpressionInfo<T>> { Count: > 0 } list)
+        if (specification is Specification<T> spec)
         {
-            // Specs with a single Like are the most common. We can optimize for this case to avoid all the additional overhead.
-            if (list.Count == 1)
+            if (spec.OneOrManySearchExpressions.IsEmpty) return query;
+
+            if (spec.OneOrManySearchExpressions.SingleOrDefault is { } searchExpression)
             {
-                return query.ApplySingleLike(list[0]);
+                return query.ApplySingleLike(searchExpression);
             }
-            else
+
+            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
             {
                 var span = CollectionsMarshal.AsSpan(list);
                 return ApplyLike(query, span);
             }
         }
+
 
         return query;
     }

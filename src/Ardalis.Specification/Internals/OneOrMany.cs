@@ -43,7 +43,7 @@ internal struct OneOrMany<T> where T : class
 
         if (_value is List<T> list)
         {
-            var index = list.FindIndex(x => comparer.Compare(item, x) <= 0);
+            var index = list.FindIndex(x => comparer.Compare(item, x) < 0);
             if (index == -1)
             {
                 list.Add(item);
@@ -57,7 +57,7 @@ internal struct OneOrMany<T> where T : class
 
         if (_value is T singleValue)
         {
-            if (comparer.Compare(item, singleValue) <= 0)
+            if (comparer.Compare(item, singleValue) < 0)
             {
                 _value = new List<T>(DEFAULT_CAPACITY) { item, singleValue };
             }

@@ -39,7 +39,7 @@ public class Specification<T> : ISpecification<T>
     // The state is null initially, but we're spending 8 bytes per reference (on x64).
     // This will be reconsidered for version 10 where we may store the whole state as a single array of structs.
     private OneOrMany<WhereExpressionInfo<T>> _whereExpressions = new();
-    private List<SearchExpressionInfo<T>>? _searchExpressions;
+    private OneOrMany<SearchExpressionInfo<T>> _searchExpressions = new();
     private OneOrMany<OrderExpressionInfo<T>> _orderExpressions = new();
     private OneOrMany<IncludeExpressionInfo> _includeExpressions = new();
     private OneOrMany<string> _includeStrings = new();
@@ -94,27 +94,7 @@ public class Specification<T> : ISpecification<T>
     internal void Add(OrderExpressionInfo<T> orderExpression) => _orderExpressions.Add(orderExpression);
     internal void Add(IncludeExpressionInfo includeExpression) => _includeExpressions.Add(includeExpression);
     internal void Add(string includeString) => _includeStrings.Add(includeString);
-    internal void Add(SearchExpressionInfo<T> searchExpression)
-    {
-        if (_searchExpressions is null)
-        {
-            _searchExpressions = new(DEFAULT_CAPACITY_SEARCH) { searchExpression };
-            return;
-        }
-
-        // We'll keep the search expressions sorted by the search group.
-        // We could keep the state as SortedList instead of List, but it has additional 56 bytes overhead and it's not worth it for our use-case.
-        // Having multiple search groups is not a common scenario, and usually there may be just few search expressions.
-        var index = _searchExpressions.FindIndex(x => x.SearchGroup > searchExpression.SearchGroup);
-        if (index == -1)
-        {
-            _searchExpressions.Add(searchExpression);
-        }
-        else
-        {
-            _searchExpressions.Insert(index, searchExpression);
-        }
-    }
+    internal void Add(SearchExpressionInfo<T> searchExpression) => _searchExpressions.AddSorted(searchExpression, SearchExpressionComparer<T>.Default);
     internal void AddQueryTag(string queryTag) => _queryTags.Add(queryTag);
 
     /// <inheritdoc/>
@@ -124,7 +104,7 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<WhereExpressionInfo<T>> WhereExpressions => _whereExpressions.Values;
 
     /// <inheritdoc/>
-    public IEnumerable<SearchExpressionInfo<T>> SearchCriterias => _searchExpressions ?? Enumerable.Empty<SearchExpressionInfo<T>>();
+    public IEnumerable<SearchExpressionInfo<T>> SearchCriterias => _searchExpressions.Values;
 
     /// <inheritdoc/>
     public IEnumerable<OrderExpressionInfo<T>> OrderExpressions => _orderExpressions.Values;
@@ -139,6 +119,7 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<string> QueryTags => _queryTags.Values;
 
     internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
+    internal OneOrMany<SearchExpressionInfo<T>> OneOrManySearchExpressions => _searchExpressions;
     internal OneOrMany<OrderExpressionInfo<T>> OneOrManyOrderExpressions => _orderExpressions;
     internal OneOrMany<IncludeExpressionInfo> OneOrManyIncludeExpressions => _includeExpressions;
     internal OneOrMany<string> OneOrManyIncludeStrings => _includeStrings;
@@ -194,9 +175,9 @@ public class Specification<T> : ISpecification<T>
             otherSpec._orderExpressions = _orderExpressions.Clone();
         }
 
-        if (_searchExpressions is not null)
+        if (!_searchExpressions.IsEmpty)
         {
-            otherSpec._searchExpressions = _searchExpressions.ToList();
+            otherSpec._searchExpressions = _searchExpressions.Clone();
         }
 
         if (!_queryTags.IsEmpty)

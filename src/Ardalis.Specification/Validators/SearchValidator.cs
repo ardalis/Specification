@@ -7,10 +7,20 @@ public class SearchValidator : IValidator
 
     public bool IsValid<T>(T entity, ISpecification<T> specification)
     {
-        if (specification.SearchCriterias is List<SearchExpressionInfo<T>> { Count: > 0 } list)
+        if (specification is Specification<T> spec)
         {
-            // The search expressions are already sorted by SearchGroup.
-            return IsValid<T>(entity, list);
+            if (spec.OneOrManySearchExpressions.IsEmpty) return true;
+
+            if (spec.OneOrManySearchExpressions.SingleOrDefault is { } searchExpression)
+            {
+                return searchExpression.SelectorFunc(entity)?.Like(searchExpression.SearchTerm) ?? false;
+            }
+
+            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
+            {
+                // The search expressions are already sorted by SearchGroup.
+                return IsValid<T>(entity, list);
+            }
         }
 
         return true;

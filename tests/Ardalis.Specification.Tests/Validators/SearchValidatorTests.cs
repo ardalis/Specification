@@ -63,6 +63,21 @@ public class SearchValidatorTests
     }
 
     [Fact]
+    public void ReturnsFalse_GivenSpecWithSingleSearch_WithNullProperty()
+    {
+        var customer = new Customer(1, "FirstName1", null);
+
+        var term = "irst";
+        var spec = new Specification<Customer>();
+        spec.Query
+            .Search(x => x.LastName, $"%{term}%");
+
+        var result = _validator.IsValid(customer, spec);
+
+        result.Should().BeFalse();
+    }
+
+    [Fact]
     public void ReturnsTrue_GivenSpecWithMultipleSearchSameGroup_WithValidEntity()
     {
         var customer = new Customer(1, "FirstName1", "LastName1");
