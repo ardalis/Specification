@@ -63,7 +63,7 @@ public class SearchValidatorTests
     }
 
     [Fact]
-    public void ReturnsFalse_GivenSpecWithSingleSearch__WithNullProperty()
+    public void ReturnsFalse_GivenSpecWithSingleSearch_WithNullProperty()
     {
         var customer = new Customer(1, "FirstName1", null);
 
