@@ -28,7 +28,7 @@ public class SpecificationEvaluator : ISpecificationEvaluator
             IgnoreQueryFiltersEvaluator.Instance,
             IgnoreAutoIncludesEvaluator.Instance,
             AsSplitQueryEvaluator.Instance,
-            TagWithEvaluator.Instance,
+            QueryTagEvaluator.Instance,
         ];
     }
 

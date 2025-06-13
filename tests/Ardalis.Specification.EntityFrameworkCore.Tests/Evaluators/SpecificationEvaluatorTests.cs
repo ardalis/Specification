@@ -359,7 +359,7 @@ public class SpecificationEvaluatorTests(TestFactory factory) : IntegrationTest(
         result[10].Should().BeOfType<IgnoreQueryFiltersEvaluator>();
         result[11].Should().BeOfType<IgnoreAutoIncludesEvaluator>();
         result[12].Should().BeOfType<AsSplitQueryEvaluator>();
-        result[13].Should().BeOfType<TagWithEvaluator>();
+        result[13].Should().BeOfType<QueryTagEvaluator>();
         result[14].Should().BeOfType<WhereEvaluator>();
     }
 
