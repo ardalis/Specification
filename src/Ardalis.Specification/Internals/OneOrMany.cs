@@ -68,6 +68,27 @@ internal struct OneOrMany<T> where T : class
         }
     }
 
+    /// <summary>
+    /// Gets the list value stored in the instance.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown if the value is Empty or Single.</exception>
+    public readonly List<T> List
+    {
+        get
+        {
+            if (_value is List<T> list)
+            {
+                return list;
+            }
+
+            throw new InvalidOperationException("The value is not a list.");
+        }
+    }
+
+    /// <summary>
+    /// Gets the single value stored in the instance.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown if the value is Empty or Many.</exception>
     public readonly T Single
     {
         get
@@ -81,6 +102,10 @@ internal struct OneOrMany<T> where T : class
         }
     }
 
+    /// <summary>
+    /// Gets the single value stored in the instance.
+    /// If the value is Empty or Many, returns null.
+    /// </summary>
     public readonly T? SingleOrDefault
     {
         get

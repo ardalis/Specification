@@ -20,11 +20,9 @@ public class SearchEvaluator : IEvaluator
                 return query.ApplySingleLike(searchExpression);
             }
 
-            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
-            {
-                var span = CollectionsMarshal.AsSpan(list);
-                return ApplyLike(query, span);
-            }
+            // The search expressions are already sorted by SearchGroup.
+            var span = CollectionsMarshal.AsSpan(spec.OneOrManySearchExpressions.List);
+            return ApplyLike(query, span);
         }
 
 
