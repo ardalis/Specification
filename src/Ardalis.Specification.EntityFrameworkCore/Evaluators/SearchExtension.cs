@@ -2,6 +2,10 @@
 using System.Diagnostics;
 using System.Reflection;
 
+#if NET9_0_OR_GREATER
+using System.Runtime.CompilerServices;
+#endif
+
 namespace Ardalis.Specification.EntityFrameworkCore;
 
 public static class SearchExtension
@@ -39,6 +43,9 @@ public static class SearchExtension
         return source.Where(Expression.Lambda<Func<T, bool>>(likeExpr, param));
     }
 
+#if NET9_0_OR_GREATER
+    [OverloadResolutionPriority(1)]
+#endif
     public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source, ReadOnlySpan<SearchExpressionInfo<T>> searchExpressions)
     {
         Debug.Assert(_likeMethodInfo is not null);
@@ -49,36 +56,63 @@ public static class SearchExtension
 
         foreach (var searchExpression in searchExpressions)
         {
-            mainParam ??= searchExpression.Selector.Parameters[0];
-
-            var selectorExpr = searchExpression.Selector.Body;
-            if (mainParam != searchExpression.Selector.Parameters[0])
-            {
-                visitor ??= new ParameterReplacerVisitor(searchExpression.Selector.Parameters[0], mainParam);
-
-                // If there are more than 2 search items, we want to avoid creating a new visitor instance (saving 32 bytes per instance).
-                // We're in a sequential loop, no concurrency issues.
-                visitor.Update(searchExpression.Selector.Parameters[0], mainParam);
-                selectorExpr = visitor.Visit(selectorExpr);
-            }
-
-            var patternExpr = StringAsExpression(searchExpression.SearchTerm);
-
-            var likeExpr = Expression.Call(
-                null,
-                _likeMethodInfo,
-                _functions,
-                selectorExpr,
-                patternExpr);
-
-            combinedExpr = combinedExpr is null
-                ? likeExpr
-                : Expression.OrElse(combinedExpr, likeExpr);
+            ApplyLikeAsOrGroup(ref combinedExpr, ref mainParam, ref visitor, searchExpression);
         }
 
         return combinedExpr is null || mainParam is null
             ? source
             : source.Where(Expression.Lambda<Func<T, bool>>(combinedExpr, mainParam));
+    }
+
+    public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> searchExpressions)
+    {
+        Debug.Assert(_likeMethodInfo is not null);
+
+        Expression? combinedExpr = null;
+        ParameterExpression? mainParam = null;
+        ParameterReplacerVisitor? visitor = null;
+
+        foreach (var searchExpression in searchExpressions)
+        {
+            ApplyLikeAsOrGroup(ref combinedExpr, ref mainParam, ref visitor, searchExpression);
+        }
+
+        return combinedExpr is null || mainParam is null
+            ? source
+            : source.Where(Expression.Lambda<Func<T, bool>>(combinedExpr, mainParam));
+    }
+
+    private static void ApplyLikeAsOrGroup<T>(
+        ref Expression? combinedExpr,
+        ref ParameterExpression? mainParam,
+        ref ParameterReplacerVisitor? visitor,
+        SearchExpressionInfo<T> searchExpression)
+    {
+        mainParam ??= searchExpression.Selector.Parameters[0];
+
+        var selectorExpr = searchExpression.Selector.Body;
+        if (mainParam != searchExpression.Selector.Parameters[0])
+        {
+            visitor ??= new ParameterReplacerVisitor(searchExpression.Selector.Parameters[0], mainParam);
+
+            // If there are more than 2 search items, we want to avoid creating a new visitor instance (saving 32 bytes per instance).
+            // We're in a sequential loop, no concurrency issues.
+            visitor.Update(searchExpression.Selector.Parameters[0], mainParam);
+            selectorExpr = visitor.Visit(selectorExpr);
+        }
+
+        var patternExpr = StringAsExpression(searchExpression.SearchTerm);
+
+        var likeExpr = Expression.Call(
+            null,
+            _likeMethodInfo,
+            _functions,
+            selectorExpr,
+            patternExpr);
+
+        combinedExpr = combinedExpr is null
+            ? likeExpr
+            : Expression.OrElse(combinedExpr, likeExpr);
     }
 }
 

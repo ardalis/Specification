@@ -22,6 +22,15 @@ public class SearchMemoryEvaluator : IInMemoryEvaluator
             return new SpecLikeIterator<T>(query, spec.OneOrManySearchExpressions.List);
         }
 
+        // We'll never reach this point for our specifications.
+        // This is just to cover the case where users have custom ISpecification<T> implementation but use our evaluator.
+        // We'll fall back to LINQ for this case.
+
+        foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
+        {
+            query = query.Where(x => searchGroup.Any(c => c.SelectorFunc(x)?.Like(c.SearchTerm) ?? false));
+        }
+
         return query;
     }
 

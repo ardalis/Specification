@@ -20,6 +20,15 @@ public class SearchValidator : IValidator
             return IsValid(entity, spec.OneOrManySearchExpressions.List);
         }
 
+        // We'll never reach this point for our specifications.
+        // This is just to cover the case where users have custom ISpecification<T> implementation but use our validator.
+        // We'll fall back to LINQ for this case.
+
+        foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
+        {
+            if (searchGroup.Any(c => c.SelectorFunc(entity)?.Like(c.SearchTerm) ?? false) == false) return false;
+        }
+
         return true;
     }
 

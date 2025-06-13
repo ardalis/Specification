@@ -26,6 +26,15 @@ public class SearchEvaluator : IEvaluator
         }
 
 
+        // We'll never reach this point for our specifications.
+        // This is just to cover the case where users have custom ISpecification<T> implementation but use our evaluator.
+        // We'll fall back to LINQ for this case.
+
+        foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
+        {
+            query = query.ApplyLikesAsOrGroup(searchGroup);
+        }
+
         return query;
     }
 
