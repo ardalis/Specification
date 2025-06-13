@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
@@ -41,6 +40,18 @@ public class IncludeEvaluator : IEvaluator
     /// <inheritdoc/>
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
+        if (specification is Specification<T> spec)
+        {
+            if (spec.OneOrManyIncludeExpressions.IsEmpty) return query;
+            if (spec.OneOrManyIncludeExpressions.SingleOrDefault is { } includeExpression)
+            {
+                var lambdaExpr = includeExpression.LambdaExpression;
+                var key = new CacheKey(typeof(T), lambdaExpr.ReturnType, null);
+                var include = _cache.GetOrAdd(key, CreateIncludeDelegate);
+                return (IQueryable<T>)include(query, lambdaExpr);
+            }
+        }
+
         foreach (var includeExpression in specification.IncludeExpressions)
         {
             var lambdaExpr = includeExpression.LambdaExpression;

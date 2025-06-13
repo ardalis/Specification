@@ -27,8 +27,6 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 public class Specification<T> : ISpecification<T>
 {
     private const int DEFAULT_CAPACITY_SEARCH = 2;
-    private const int DEFAULT_CAPACITY_INCLUDE = 2;
-    private const int DEFAULT_CAPACITY_INCLUDESTRING = 1;
 
     // It is utilized only during the building stage for the sub-chains. Once the state is built, we don't care about it anymore.
     // The initial value is not important since the value is always initialized by the root of the chain.
@@ -43,8 +41,8 @@ public class Specification<T> : ISpecification<T>
     private OneOrMany<WhereExpressionInfo<T>> _whereExpressions = new();
     private List<SearchExpressionInfo<T>>? _searchExpressions;
     private OneOrMany<OrderExpressionInfo<T>> _orderExpressions = new();
-    private List<IncludeExpressionInfo>? _includeExpressions;
-    private List<string>? _includeStrings;
+    private OneOrMany<IncludeExpressionInfo> _includeExpressions = new();
+    private OneOrMany<string> _includeStrings = new();
     private Dictionary<string, object>? _items;
     private OneOrMany<string> _queryTags = new();
 
@@ -94,8 +92,8 @@ public class Specification<T> : ISpecification<T>
     // Specs are not intended to be thread-safe, so we don't need to worry about thread-safety here.
     internal void Add(WhereExpressionInfo<T> whereExpression) => _whereExpressions.Add(whereExpression);
     internal void Add(OrderExpressionInfo<T> orderExpression) => _orderExpressions.Add(orderExpression);
-    internal void Add(IncludeExpressionInfo includeExpression) => (_includeExpressions ??= new(DEFAULT_CAPACITY_INCLUDE)).Add(includeExpression);
-    internal void Add(string includeString) => (_includeStrings ??= new(DEFAULT_CAPACITY_INCLUDESTRING)).Add(includeString);
+    internal void Add(IncludeExpressionInfo includeExpression) => _includeExpressions.Add(includeExpression);
+    internal void Add(string includeString) => _includeStrings.Add(includeString);
     internal void Add(SearchExpressionInfo<T> searchExpression)
     {
         if (_searchExpressions is null)
@@ -132,16 +130,18 @@ public class Specification<T> : ISpecification<T>
     public IEnumerable<OrderExpressionInfo<T>> OrderExpressions => _orderExpressions.Values;
 
     /// <inheritdoc/>
-    public IEnumerable<IncludeExpressionInfo> IncludeExpressions => _includeExpressions ?? Enumerable.Empty<IncludeExpressionInfo>();
+    public IEnumerable<IncludeExpressionInfo> IncludeExpressions => _includeExpressions.Values;
 
     /// <inheritdoc/>
-    public IEnumerable<string> IncludeStrings => _includeStrings ?? Enumerable.Empty<string>();
+    public IEnumerable<string> IncludeStrings => _includeStrings.Values;
 
     /// <inheritdoc/>
     public IEnumerable<string> QueryTags => _queryTags.Values;
 
     internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
     internal OneOrMany<OrderExpressionInfo<T>> OneOrManyOrderExpressions => _orderExpressions;
+    internal OneOrMany<IncludeExpressionInfo> OneOrManyIncludeExpressions => _includeExpressions;
+    internal OneOrMany<string> OneOrManyIncludeStrings => _includeStrings;
     internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
 
     /// <inheritdoc/>
@@ -179,14 +179,14 @@ public class Specification<T> : ISpecification<T>
             otherSpec._whereExpressions = _whereExpressions.Clone();
         }
 
-        if (_includeExpressions is not null)
+        if (!_includeExpressions.IsEmpty)
         {
-            otherSpec._includeExpressions = _includeExpressions.ToList();
+            otherSpec._includeExpressions = _includeExpressions.Clone();
         }
 
-        if (_includeStrings is not null)
+        if (!_includeStrings.IsEmpty)
         {
-            otherSpec._includeStrings = _includeStrings.ToList();
+            otherSpec._includeStrings = _includeStrings.Clone();
         }
 
         if (!_orderExpressions.IsEmpty)
