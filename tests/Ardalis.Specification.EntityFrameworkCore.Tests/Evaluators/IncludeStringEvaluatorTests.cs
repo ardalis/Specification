@@ -6,6 +6,21 @@ public class IncludeStringEvaluatorTests(TestFactory factory) : IntegrationTest(
     private static readonly IncludeStringEvaluator _evaluator = IncludeStringEvaluator.Instance;
 
     [Fact]
+    public void QueriesMatch_GivenNoIncludeString()
+    {
+        var spec = new Specification<Store>();
+
+        var actual = _evaluator
+            .GetQuery(DbContext.Stores, spec)
+            .ToQueryString();
+
+        var expected = DbContext.Stores
+            .ToQueryString();
+
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
     public void QueriesMatch_GivenIncludeString()
     {
         var spec = new Specification<Store>();

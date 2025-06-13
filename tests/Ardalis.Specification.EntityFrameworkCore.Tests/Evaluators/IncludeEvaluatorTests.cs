@@ -6,6 +6,39 @@ public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factor
     private static readonly IncludeEvaluator _evaluator = IncludeEvaluator.Instance;
 
     [Fact]
+    public void QueriesMatch_GivenNoIncludeExpression()
+    {
+        var spec = new Specification<Store>();
+
+        var actual = _evaluator
+            .GetQuery(DbContext.Stores, spec)
+            .ToQueryString();
+
+        var expected = DbContext.Stores
+            .ToQueryString();
+
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
+    public void QueriesMatch_GivenSingleIncludeExpression()
+    {
+        var spec = new Specification<Store>();
+        spec.Query
+            .Include(x => x.Products.Where(x => x.Id > 10));
+
+        var actual = _evaluator
+            .GetQuery(DbContext.Stores, spec)
+            .ToQueryString();
+
+        var expected = DbContext.Stores
+            .Include(x => x.Products.Where(x => x.Id > 10))
+            .ToQueryString();
+
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
     public void QueriesMatch_GivenIncludeExpressions()
     {
         var spec = new Specification<Store>();
