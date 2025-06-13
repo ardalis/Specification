@@ -16,11 +16,8 @@ public class SearchValidator : IValidator
                 return searchExpression.SelectorFunc(entity)?.Like(searchExpression.SearchTerm) ?? false;
             }
 
-            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
-            {
-                // The search expressions are already sorted by SearchGroup.
-                return IsValid<T>(entity, list);
-            }
+            // The search expressions are already sorted by SearchGroup.
+            return IsValid(entity, spec.OneOrManySearchExpressions.List);
         }
 
         return true;

@@ -18,11 +18,8 @@ public class SearchMemoryEvaluator : IInMemoryEvaluator
                 return new SpecSingleLikeIterator<T>(query, searchExpression);
             }
 
-            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
-            {
-                // The search expressions are already sorted by SearchGroup.
-                return new SpecLikeIterator<T>(query, list);
-            }
+            // The search expressions are already sorted by SearchGroup.
+            return new SpecLikeIterator<T>(query, spec.OneOrManySearchExpressions.List);
         }
 
         return query;

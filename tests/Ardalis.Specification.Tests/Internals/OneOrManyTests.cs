@@ -185,6 +185,35 @@ public class OneOrManyTests
     }
 
     [Fact]
+    public void List_ReturnsList_GivenMultipleItems()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = new List<string> { "foo", "bar" };
+
+        oneOrMany.List.Should().BeOfType<List<string>>();
+        oneOrMany.List.Should().Equal(new List<string> { "foo", "bar" });
+    }
+
+    [Fact]
+    public void List_Throws_GivenEmptyStruct()
+    {
+        var oneOrMany = new OneOrMany<string>();
+
+        var action = () => oneOrMany.List;
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void List_Throws_GivenSingleItem()
+    {
+        var oneOrMany = new OneOrMany<string>();
+        Accessors.ValueOf(ref oneOrMany) = "foo";
+
+        var action = () => _ = oneOrMany.List;
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
     public void Single_ReturnsSingleItem_GivenSingleItem()
     {
         var oneOrMany = new OneOrMany<string>();
