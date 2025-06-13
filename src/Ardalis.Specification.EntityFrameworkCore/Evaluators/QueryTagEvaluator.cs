@@ -1,9 +1,9 @@
 ﻿namespace Ardalis.Specification.EntityFrameworkCore;
 
-public class TagWithEvaluator : IEvaluator
+public class QueryTagEvaluator : IEvaluator
 {
-    private TagWithEvaluator() { }
-    public static TagWithEvaluator Instance { get; } = new TagWithEvaluator();
+    private QueryTagEvaluator() { }
+    public static QueryTagEvaluator Instance { get; } = new QueryTagEvaluator();
 
     public bool IsCriteriaEvaluator { get; } = true;
 
@@ -15,8 +15,7 @@ public class TagWithEvaluator : IEvaluator
 
             if (spec.OneOrManyQueryTags.HasSingleItem)
             {
-                query = query.TagWith(spec.OneOrManyQueryTags.Single);
-                return query;
+                return query.TagWith(spec.OneOrManyQueryTags.Single);
             }
         }
 

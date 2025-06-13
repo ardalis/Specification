@@ -1,9 +1,9 @@
 ﻿namespace Tests.Evaluators;
 
 [Collection("SharedCollection")]
-public class TagWithEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
+public class QueryTagEvaluatorTests(TestFactory factory) : IntegrationTest(factory)
 {
-    private static readonly TagWithEvaluator _evaluator = TagWithEvaluator.Instance;
+    private static readonly QueryTagEvaluator _evaluator = QueryTagEvaluator.Instance;
 
     [Fact]
     public void QueriesMatch_GivenTag()
