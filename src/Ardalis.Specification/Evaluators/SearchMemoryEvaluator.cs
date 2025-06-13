@@ -9,13 +9,78 @@ public class SearchMemoryEvaluator : IInMemoryEvaluator
 
     public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
     {
-        if (specification.SearchCriterias is List<SearchExpressionInfo<T>> { Count: > 0 } list)
+        if (specification is Specification<T> spec)
         {
-            // The search expressions are already sorted by SearchGroup.
-            return new SpecLikeIterator<T>(query, list);
+            if (spec.OneOrManySearchExpressions.IsEmpty) return query;
+
+            if (spec.OneOrManySearchExpressions.SingleOrDefault is { } searchExpression)
+            {
+                return new SpecSingleLikeIterator<T>(query, searchExpression);
+            }
+
+            if (spec.OneOrManySearchExpressions.Values is List<SearchExpressionInfo<T>> list)
+            {
+                // The search expressions are already sorted by SearchGroup.
+                return new SpecLikeIterator<T>(query, list);
+            }
         }
 
         return query;
+    }
+
+    private sealed class SpecSingleLikeIterator<TSource> : Iterator<TSource>
+    {
+        private readonly IEnumerable<TSource> _source;
+        private readonly SearchExpressionInfo<TSource> _searchExpression;
+
+        private IEnumerator<TSource>? _enumerator;
+
+        public SpecSingleLikeIterator(IEnumerable<TSource> source, SearchExpressionInfo<TSource> searchExpression)
+        {
+            _source = source;
+            _searchExpression = searchExpression;
+        }
+
+        public override Iterator<TSource> Clone()
+            => new SpecSingleLikeIterator<TSource>(_source, _searchExpression);
+
+        public override void Dispose()
+        {
+            if (_enumerator is not null)
+            {
+                _enumerator.Dispose();
+                _enumerator = null;
+            }
+            base.Dispose();
+        }
+
+        public override bool MoveNext()
+        {
+            switch (_state)
+            {
+                case 1:
+                    _enumerator = _source.GetEnumerator();
+                    _state = 2;
+                    goto case 2;
+                case 2:
+                    Debug.Assert(_enumerator is not null);
+                    var searchExpression = _searchExpression;
+                    while (_enumerator!.MoveNext())
+                    {
+                        TSource sourceItem = _enumerator.Current;
+                        if (searchExpression.SelectorFunc(sourceItem)?.Like(searchExpression.SearchTerm) ?? false)
+                        {
+                            _current = sourceItem;
+                            return true;
+                        }
+                    }
+
+                    Dispose();
+                    break;
+            }
+
+            return false;
+        }
     }
 
     private sealed class SpecLikeIterator<TSource> : Iterator<TSource>

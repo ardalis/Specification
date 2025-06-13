@@ -7,6 +7,34 @@ public class SearchMemoryEvaluatorTests
     public record Customer(int Id, string FirstName, string? LastName);
 
     [Fact]
+    public void Filters_GivenSingleSearch()
+    {
+        List<Customer> input =
+        [
+            new(1, "axxa", "axya"),
+            new(2, "aaaa", "aaaa"),
+            new(3, "aaaa", "axya"),
+            new(4, "aaaa", null)
+        ];
+
+        List<Customer> expected =
+        [
+            new(1, "axxa", "axya"),
+        ];
+
+        var spec = new Specification<Customer>();
+        spec.Query
+            .Search(x => x.FirstName, "%xx%");
+
+        // Not materializing with ToList() intentionally to test cloning in the iterator
+        var actual = _evaluator.Evaluate(input, spec);
+
+        // Multiple iterations will force cloning
+        actual.Should().HaveSameCount(expected);
+        actual.Should().Equal(expected);
+    }
+
+    [Fact]
     public void Filters_GivenSearchInSameGroup()
     {
         List<Customer> input =
