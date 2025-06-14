@@ -157,6 +157,4 @@ public interface ISpecification<T>
     /// <param name="entity">The entity to be validated</param>
     /// <returns></returns>
     bool IsSatisfiedBy(T entity);
-
-    internal void CopyTo(Specification<T> otherSpec);
 }

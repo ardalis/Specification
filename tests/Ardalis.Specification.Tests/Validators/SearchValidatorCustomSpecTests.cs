@@ -192,10 +192,5 @@ public class SearchValidatorCustomSpecTests
             => throw new NotImplementedException();
         public bool IsSatisfiedBy(T entity)
             => throw new NotImplementedException();
-
-        void ISpecification<T>.CopyTo(Specification<T> otherSpec)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

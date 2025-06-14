@@ -17,10 +17,9 @@ public static class SpecificationExtensions
     /// <see langword="null"/>.</param>
     /// <returns>A new <see cref="Specification{T, TResult}"/> that represents the result of applying the projection to the
     /// source specification.</returns>
-    public static Specification<T, TResult> WithProjectionOf<T, TResult>(this ISpecification<T> source, ISpecification<T, TResult> projectionSpec)
+    public static Specification<T, TResult> WithProjectionOf<T, TResult>(this Specification<T> source, Specification<T, TResult> projectionSpec)
     {
-        var newSpec = new Specification<T, TResult>();
-        source.CopyTo(newSpec);
+        var newSpec = source.Clone<TResult>();
         newSpec.Selector = projectionSpec.Selector;
         newSpec.SelectorMany = projectionSpec.SelectorMany;
         newSpec.PostProcessingAction = projectionSpec.PostProcessingAction;
