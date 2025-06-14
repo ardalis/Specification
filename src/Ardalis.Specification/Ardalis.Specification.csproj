@@ -27,6 +27,7 @@
     <InternalsVisibleTo Include="Ardalis.Specification.EntityFrameworkCore" />
     <InternalsVisibleTo Include="Ardalis.Specification.EntityFramework6" />
     <InternalsVisibleTo Include="Ardalis.Specification.Tests" />
+    <InternalsVisibleTo Include="Ardalis.Specification.EntityFrameworkCore.Tests" />
   </ItemGroup>
 
 </Project>
