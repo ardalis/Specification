@@ -1,5 +1,8 @@
 ﻿namespace Ardalis.Specification;
 
+/// <summary>
+/// Extension methods for building specifications.
+/// </summary>
 public static partial class SpecificationBuilderExtensions
 {
     /// <summary>
