@@ -54,8 +54,6 @@ public class SearchExtensionTests(TestFactory factory) : IntegrationTest(factory
     [Fact]
     public void QueriesMatch_GivenEmptyAsSpan()
     {
-        var spec = new Specification<Store>();
-
         var array = Array.Empty<SearchExpressionInfo<Store>>();
 
         var actual = DbContext.Stores
@@ -71,8 +69,6 @@ public class SearchExtensionTests(TestFactory factory) : IntegrationTest(factory
     [Fact]
     public void QueriesMatch_GivenEmptyAsEnumerable()
     {
-        var spec = new Specification<Store>();
-
         var array = Array.Empty<SearchExpressionInfo<Store>>();
 
         var actual = DbContext.Stores
