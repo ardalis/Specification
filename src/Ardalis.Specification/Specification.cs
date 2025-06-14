@@ -5,6 +5,7 @@ namespace Ardalis.Specification;
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
 public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
 {
+    /// <inheritdoc/>
     public new ISpecificationBuilder<T, TResult> Query => new SpecificationBuilder<T, TResult>(this);
 
     /// <inheritdoc/>
@@ -16,6 +17,7 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
     /// <inheritdoc/>
     public new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; internal set; } = null;
 
+    /// <inheritdoc/>
     public new virtual IEnumerable<TResult> Evaluate(IEnumerable<T> entities)
     {
         var evaluator = Evaluator;
@@ -44,9 +46,32 @@ public class Specification<T> : ISpecification<T>
     private OneOrMany<string> _queryTags = new();
     private Dictionary<string, object>? _items;
 
+    /// <inheritdoc/>
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
+
+    /// <summary>
+    /// Gets the evaluator used to process the specification in memory.
+    /// </summary>
     protected virtual IInMemorySpecificationEvaluator Evaluator => InMemorySpecificationEvaluator.Default;
+
+    /// <summary>
+    /// Gets the validator used to validate entities against the specification.
+    /// </summary>
     protected virtual ISpecificationValidator Validator => SpecificationValidator.Default;
+
+    /// <inheritdoc/>
+    public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
+    {
+        var evaluator = Evaluator;
+        return evaluator.Evaluate(entities, this);
+    }
+
+    /// <inheritdoc/>
+    public virtual bool IsSatisfiedBy(T entity)
+    {
+        var validator = Validator;
+        return validator.IsValid(entity, this);
+    }
 
     /// <inheritdoc/>
     public Func<IEnumerable<T>, IEnumerable<T>>? PostProcessingAction { get; internal set; }
@@ -106,20 +131,6 @@ public class Specification<T> : ISpecification<T>
 
     /// <inheritdoc/>
     public IEnumerable<string> QueryTags => _queryTags.Values;
-
-    /// <inheritdoc/>
-    public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
-    {
-        var evaluator = Evaluator;
-        return evaluator.Evaluate(entities, this);
-    }
-
-    /// <inheritdoc/>
-    public virtual bool IsSatisfiedBy(T entity)
-    {
-        var validator = Validator;
-        return validator.IsValid(entity, this);
-    }
 
     internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
     internal OneOrMany<SearchExpressionInfo<T>> OneOrManySearchExpressions => _searchExpressions;

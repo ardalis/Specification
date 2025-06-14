@@ -1,13 +1,15 @@
 ﻿namespace Ardalis.Specification;
 
 /// <summary>
-/// Encapsulates query logic for <typeparamref name="T"/>,
-/// and projects the result into <typeparamref name="TResult"/>.
+/// Represents a specification with a selector for projecting entities of type <typeparamref name="T"/> to <typeparamref name="TResult"/>.
 /// </summary>
 /// <typeparam name="T">The type being queried against.</typeparam>
 /// <typeparam name="TResult">The type of the result.</typeparam>
 public interface ISpecification<T, TResult> : ISpecification<T>
 {
+    /// <summary>
+    /// Gets the specification builder.
+    /// </summary>
     new ISpecificationBuilder<T, TResult> Query { get; }
 
     /// <summary>
@@ -25,15 +27,23 @@ public interface ISpecification<T, TResult> : ISpecification<T>
     /// </summary>
     new Func<IEnumerable<TResult>, IEnumerable<TResult>>? PostProcessingAction { get; }
 
+    /// <summary>
+    /// Applies the specification to the given entities and returns the filtered results.
+    /// </summary>
+    /// <param name="entities">The entities to evaluate.</param>
+    /// <returns>The filtered results after applying the specification.</returns>
     new IEnumerable<TResult> Evaluate(IEnumerable<T> entities);
 }
 
 /// <summary>
-/// Encapsulates query logic for <typeparamref name="T"/>.
+/// Represents a specification for querying entities of type <typeparamref name="T"/>.
 /// </summary>
 /// <typeparam name="T">The type being queried against.</typeparam>
 public interface ISpecification<T>
 {
+    /// <summary>
+    /// Gets the specification builder.
+    /// </summary>
     ISpecificationBuilder<T> Query { get; }
 
     /// <summary>
@@ -144,17 +154,16 @@ public interface ISpecification<T>
     bool IgnoreAutoIncludes { get; }
 
     /// <summary>
-    /// Applies the query defined within the specification to the given objects.
-    /// This is specially helpful when unit testing specification classes
+    /// Applies the specification to the given entities and returns the filtered results.
     /// </summary>
-    /// <param name="entities">the list of entities to which the specification will be applied</param>
-    /// <returns></returns>
+    /// <param name="entities">The entities to evaluate.</param>
+    /// <returns>The filtered results after applying the specification.</returns>
     IEnumerable<T> Evaluate(IEnumerable<T> entities);
 
     /// <summary>
-    /// It returns whether the given entity satisfies the conditions of the specification.
+    /// Determines whether the given entity satisfies the specification.
     /// </summary>
-    /// <param name="entity">The entity to be validated</param>
-    /// <returns></returns>
+    /// <param name="entity">The entity to validate.</param>
+    /// <returns><c>true</c> if the entity satisfies the specification; otherwise, <c>false</c>.</returns>
     bool IsSatisfiedBy(T entity);
 }
