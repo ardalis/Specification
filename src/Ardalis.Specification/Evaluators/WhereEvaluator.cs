@@ -1,12 +1,20 @@
 ﻿namespace Ardalis.Specification;
 
+/// <summary>
+/// Represents an evaluator for where expressions.
+/// </summary>
 public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
 {
-    private WhereEvaluator() { }
+    /// <summary>
+    /// Gets the singleton instance of the <see cref="WhereEvaluator"/> class.
+    /// </summary>
     public static WhereEvaluator Instance { get; } = new WhereEvaluator();
+    private WhereEvaluator() { }
 
+    /// <inheritdoc/>
     public bool IsCriteriaEvaluator { get; } = true;
 
+    /// <inheritdoc/>
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
         if (specification is Specification<T> spec)
@@ -26,6 +34,7 @@ public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
         return query;
     }
 
+    /// <inheritdoc/>
     public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
     {
         if (specification is Specification<T> spec)

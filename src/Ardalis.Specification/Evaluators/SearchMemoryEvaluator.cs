@@ -2,11 +2,18 @@
 
 namespace Ardalis.Specification;
 
+/// <summary>
+/// Represents an in-memory evaluator for search expressions.
+/// </summary>
 public class SearchMemoryEvaluator : IInMemoryEvaluator
 {
-    private SearchMemoryEvaluator() { }
+    /// <summary>
+    /// Gets the singleton instance of the <see cref="SearchMemoryEvaluator"/> class.
+    /// </summary>
     public static SearchMemoryEvaluator Instance { get; } = new SearchMemoryEvaluator();
+    private SearchMemoryEvaluator() { }
 
+    /// <inheritdoc/>
     public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
     {
         if (specification is Specification<T> spec)

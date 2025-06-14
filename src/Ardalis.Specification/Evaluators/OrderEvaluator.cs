@@ -1,12 +1,20 @@
 ﻿namespace Ardalis.Specification;
 
+/// <summary>
+/// Represents an evaluator for order expressions.
+/// </summary>
 public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
 {
-    private OrderEvaluator() { }
+    /// <summary>
+    /// Gets the singleton instance of the <see cref="OrderEvaluator"/> class.
+    /// </summary>
     public static OrderEvaluator Instance { get; } = new OrderEvaluator();
+    private OrderEvaluator() { }
 
+    /// <inheritdoc/>
     public bool IsCriteriaEvaluator { get; } = false;
 
+    /// <inheritdoc/>
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
         if (specification is Specification<T> spec)
@@ -57,6 +65,7 @@ public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
         return query;
     }
 
+    /// <inheritdoc/>
     public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
     {
         if (specification is Specification<T> spec)
