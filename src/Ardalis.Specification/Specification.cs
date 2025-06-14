@@ -139,55 +139,41 @@ public class Specification<T> : ISpecification<T>
         return validator.IsValid(entity, this);
     }
 
-    void ISpecification<T>.CopyTo(Specification<T> otherSpec)
+    internal Specification<T> Clone()
     {
-        otherSpec.PostProcessingAction = PostProcessingAction;
-        otherSpec.CacheKey = CacheKey;
-        otherSpec.Take = Take;
-        otherSpec.Skip = Skip;
-        otherSpec.IgnoreQueryFilters = IgnoreQueryFilters;
-        otherSpec.IgnoreAutoIncludes = IgnoreAutoIncludes;
-        otherSpec.AsSplitQuery = AsSplitQuery;
-        otherSpec.AsNoTracking = AsNoTracking;
-        otherSpec.AsTracking = AsTracking;
-        otherSpec.AsNoTrackingWithIdentityResolution = AsNoTrackingWithIdentityResolution;
+        var newSpec = new Specification<T>();
+        CopyState(this, newSpec);
+        return newSpec;
+    }
 
-        // The expression containers are immutable, having the same instance is fine.
-        // We'll just create new collections.
+    internal Specification<T, TResult> Clone<TResult>()
+    {
+        var newSpec = new Specification<T, TResult>();
+        CopyState(this, newSpec);
+        return newSpec;
+    }
 
-        if (!_whereExpressions.IsEmpty)
+    private static void CopyState(Specification<T> source, Specification<T> target)
+    {
+        target.PostProcessingAction = source.PostProcessingAction;
+        target.CacheKey = source.CacheKey;
+        target.Take = source.Take;
+        target.Skip = source.Skip;
+        target.IgnoreAutoIncludes = source.IgnoreAutoIncludes;
+        target.IgnoreQueryFilters = source.IgnoreQueryFilters;
+        target.AsSplitQuery = source.AsSplitQuery;
+        target.AsNoTracking = source.AsNoTracking;
+        target.AsTracking = source.AsTracking;
+        target.AsNoTrackingWithIdentityResolution = source.AsNoTrackingWithIdentityResolution;
+        target._whereExpressions = source._whereExpressions.Clone();
+        target._searchExpressions = source._searchExpressions.Clone();
+        target._orderExpressions = source._orderExpressions.Clone();
+        target._includeExpressions = source._includeExpressions.Clone();
+        target._includeStrings = source._includeStrings.Clone();
+        target._queryTags = source._queryTags.Clone();
+        if (source._items is not null)
         {
-            otherSpec._whereExpressions = _whereExpressions.Clone();
-        }
-
-        if (!_includeExpressions.IsEmpty)
-        {
-            otherSpec._includeExpressions = _includeExpressions.Clone();
-        }
-
-        if (!_includeStrings.IsEmpty)
-        {
-            otherSpec._includeStrings = _includeStrings.Clone();
-        }
-
-        if (!_orderExpressions.IsEmpty)
-        {
-            otherSpec._orderExpressions = _orderExpressions.Clone();
-        }
-
-        if (!_searchExpressions.IsEmpty)
-        {
-            otherSpec._searchExpressions = _searchExpressions.Clone();
-        }
-
-        if (!_queryTags.IsEmpty)
-        {
-            otherSpec._queryTags = _queryTags.Clone();
-        }
-
-        if (_items is not null)
-        {
-            otherSpec._items = new Dictionary<string, object>(_items);
+            target._items = new Dictionary<string, object>(source._items);
         }
     }
 }
