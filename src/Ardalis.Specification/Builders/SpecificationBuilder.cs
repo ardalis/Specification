@@ -37,7 +37,7 @@ internal class SpecificationBuilder<T, TResult> : SpecificationBuilder<T>,
     public new Specification<T, TResult> Specification { get; }
 
     public SpecificationBuilder(Specification<T, TResult> specification)
-        :base(specification)
+        : base(specification)
     {
         Specification = specification;
     }

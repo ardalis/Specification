@@ -26,8 +26,6 @@ public class Specification<T, TResult> : Specification<T>, ISpecification<T, TRe
 /// <inheritdoc cref="ISpecification{T}"/>
 public class Specification<T> : ISpecification<T>
 {
-    private const int DEFAULT_CAPACITY_SEARCH = 2;
-
     // It is utilized only during the building stage for the sub-chains. Once the state is built, we don't care about it anymore.
     // The initial value is not important since the value is always initialized by the root of the chain.
     // Therefore, we don't need ThreadLocal (it's more expensive).
@@ -43,8 +41,8 @@ public class Specification<T> : ISpecification<T>
     private OneOrMany<OrderExpressionInfo<T>> _orderExpressions = new();
     private OneOrMany<IncludeExpressionInfo> _includeExpressions = new();
     private OneOrMany<string> _includeStrings = new();
-    private Dictionary<string, object>? _items;
     private OneOrMany<string> _queryTags = new();
+    private Dictionary<string, object>? _items;
 
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
     protected virtual IInMemorySpecificationEvaluator Evaluator => InMemorySpecificationEvaluator.Default;
@@ -88,15 +86,6 @@ public class Specification<T> : ISpecification<T>
     /// <inheritdoc/>
     public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
 
-
-    // Specs are not intended to be thread-safe, so we don't need to worry about thread-safety here.
-    internal void Add(WhereExpressionInfo<T> whereExpression) => _whereExpressions.Add(whereExpression);
-    internal void Add(OrderExpressionInfo<T> orderExpression) => _orderExpressions.Add(orderExpression);
-    internal void Add(IncludeExpressionInfo includeExpression) => _includeExpressions.Add(includeExpression);
-    internal void Add(string includeString) => _includeStrings.Add(includeString);
-    internal void Add(SearchExpressionInfo<T> searchExpression) => _searchExpressions.AddSorted(searchExpression, SearchExpressionComparer<T>.Default);
-    internal void AddQueryTag(string queryTag) => _queryTags.Add(queryTag);
-
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
 
@@ -118,13 +107,6 @@ public class Specification<T> : ISpecification<T>
     /// <inheritdoc/>
     public IEnumerable<string> QueryTags => _queryTags.Values;
 
-    internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
-    internal OneOrMany<SearchExpressionInfo<T>> OneOrManySearchExpressions => _searchExpressions;
-    internal OneOrMany<OrderExpressionInfo<T>> OneOrManyOrderExpressions => _orderExpressions;
-    internal OneOrMany<IncludeExpressionInfo> OneOrManyIncludeExpressions => _includeExpressions;
-    internal OneOrMany<string> OneOrManyIncludeStrings => _includeStrings;
-    internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
-
     /// <inheritdoc/>
     public virtual IEnumerable<T> Evaluate(IEnumerable<T> entities)
     {
@@ -138,6 +120,20 @@ public class Specification<T> : ISpecification<T>
         var validator = Validator;
         return validator.IsValid(entity, this);
     }
+
+    internal OneOrMany<WhereExpressionInfo<T>> OneOrManyWhereExpressions => _whereExpressions;
+    internal OneOrMany<SearchExpressionInfo<T>> OneOrManySearchExpressions => _searchExpressions;
+    internal OneOrMany<OrderExpressionInfo<T>> OneOrManyOrderExpressions => _orderExpressions;
+    internal OneOrMany<IncludeExpressionInfo> OneOrManyIncludeExpressions => _includeExpressions;
+    internal OneOrMany<string> OneOrManyIncludeStrings => _includeStrings;
+    internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
+
+    internal void Add(WhereExpressionInfo<T> whereExpression) => _whereExpressions.Add(whereExpression);
+    internal void Add(SearchExpressionInfo<T> searchExpression) => _searchExpressions.AddSorted(searchExpression, SearchExpressionComparer<T>.Default);
+    internal void Add(OrderExpressionInfo<T> orderExpression) => _orderExpressions.Add(orderExpression);
+    internal void Add(IncludeExpressionInfo includeExpression) => _includeExpressions.Add(includeExpression);
+    internal void Add(string includeString) => _includeStrings.Add(includeString);
+    internal void AddQueryTag(string queryTag) => _queryTags.Add(queryTag);
 
     internal Specification<T> Clone()
     {

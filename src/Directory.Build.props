@@ -36,9 +36,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../../icon.png" Pack="true" PackagePath="\" />
-    <None Include="../../readme-nuget.md" Pack="true" PackagePath="\" />
-    <None Include="../../LICENSE" Pack="true" PackagePath="\" />
+    <None Include="../../icon.png" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="../../readme-nuget.md" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="\" Visible="false" />
   </ItemGroup>
 
 </Project>
