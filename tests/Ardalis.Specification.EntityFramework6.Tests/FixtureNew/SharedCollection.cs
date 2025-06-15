@@ -1,8 +1,6 @@
-﻿using Xunit;
+﻿namespace Tests.FixtureNew;
 
-namespace Tests.FixtureNew;
-
-[CollectionDefinition("SharedCollectionNew")]
+[CollectionDefinition("SharedCollection")]
 public class SharedCollection : ICollectionFixture<TestFactory>
 {
 }

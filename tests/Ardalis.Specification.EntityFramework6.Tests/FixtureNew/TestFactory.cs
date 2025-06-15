@@ -1,38 +1,27 @@
-﻿using System;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using MartinCostello.SqlLocalDb;
+﻿using MartinCostello.SqlLocalDb;
 using Testcontainers.MsSql;
-#if NET9_0_OR_GREATER
 using Respawn;
-#elif NET472
-using Respawn;
-#endif
 
 namespace Tests.FixtureNew;
 
 public class TestFactory : IAsyncLifetime
 {
+    // Flag to force using Docker SQL Server. Update it manually if you want to avoid localDb locally.
     private const bool FORCE_DOCKER = false;
+
     private string _connectionString = default!;
-#if NET9_0_OR_GREATER
-    private Respawner _respawner = default!;
-#elif NET472
-    private Checkpoint _respawner = default!;
-#endif
     private MsSqlContainer? _dbContainer = null;
 
     public string ConnectionString => _connectionString;
     public TestDbContext DbContext => new TestDbContext(_connectionString);
 
-    public async Task ResetDatabase()
-    {
 #if NET9_0_OR_GREATER
-        await _respawner.ResetAsync(_connectionString);
+    private Respawner _respawner = default!;
+    public async Task ResetDatabase() => await _respawner.ResetAsync(_connectionString);
 #elif NET472
-        await _respawner.Reset(_connectionString);
+    private Checkpoint _respawner = default!;
+    public Task ResetDatabase() => _respawner.Reset(_connectionString);
 #endif
-    }
 
     public async Task InitializeAsync()
     {
@@ -46,12 +35,20 @@ public class TestFactory : IAsyncLifetime
             }
             else
             {
-                _connectionString = $"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationEF6TestsDB_{Guid.NewGuid().ToString().Replace('-', '_')};Integrated Security=SSPI;TrustServerCertificate=True;";
+#if NET9_0_OR_GREATER
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestsDB_EF6_NET9;Integrated Security=SSPI;TrustServerCertificate=True;";
+#elif NET472
+
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestsDB_EF6_NETFFX;Integrated Security=SSPI;TrustServerCertificate=True;";
+#endif
             }
         }
 
+        Console.WriteLine($"Connection string: {_connectionString}");
+
         using (var dbContext = new TestDbContext(_connectionString))
         {
+            //dbContext.Database.Delete();
             dbContext.Database.CreateIfNotExists();
         }
 
@@ -80,8 +77,8 @@ public class TestFactory : IAsyncLifetime
         }
         else
         {
-            using var dbContext = new TestDbContext(_connectionString);
-            dbContext.Database.Delete();
+            //using var dbContext = new TestDbContext(_connectionString);
+            //dbContext.Database.Delete();
         }
     }
 

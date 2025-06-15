@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace Tests.FixtureNew;
 
@@ -38,7 +38,7 @@ public class IntegrationTest : IAsyncLifetime
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task SeedRangeAsync(System.Collections.IEnumerable entities)
+    public async Task SeedRangeAsync(IEnumerable entities)
     {
         using var dbContext = new TestDbContext(_testFactory.ConnectionString);
         foreach (var entity in entities)

@@ -29,7 +29,7 @@ public class TestFactory : IAsyncLifetime
             }
             else
             {
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationEFCoreTestsDB;Integrated Security=SSPI;TrustServerCertificate=True;";
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestsDB_EFCore;Integrated Security=SSPI;TrustServerCertificate=True;";
             }
         }
 
@@ -70,7 +70,7 @@ public class TestFactory : IAsyncLifetime
 
     private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithName("SpecificationEFCoreTestsDB")
+            .WithName("SpecificationTestsDB_EFCore")
             .WithPassword("P@ssW0rd!")
             .Build();
 }
