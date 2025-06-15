@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using Tests.Fixture;
+using System.Data.Entity;
 
 namespace Tests;
 

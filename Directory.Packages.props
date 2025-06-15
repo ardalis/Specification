@@ -28,7 +28,6 @@
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.0" />
     <PackageVersion Include="MartinCostello.SqlLocalDb" Version="4.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
-    <PackageVersion Include="Respawn" Version="6.2.1" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.5.0" />
     <PackageVersion Include="Polyfill" Version="7.33.0" />
     <PackageVersion Include="FluentAssertions" Version="7.2.0" />
@@ -36,6 +35,14 @@
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+  </ItemGroup>
+
+  <ItemGroup Label="Test projects dependencies NET FX" Condition=" '$(TargetFramework)' == 'net472' ">
+    <PackageVersion Include="Respawn" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Test projects dependencies NET 9" Condition=" '$(TargetFramework)' == 'net9.0' ">
+    <PackageVersion Include="Respawn" Version="6.2.1" />
   </ItemGroup>
 
   <ItemGroup Label="Sample projects dependencies">

@@ -1,4 +1,6 @@
-﻿namespace Tests;
+﻿using Tests.Fixture;
+
+namespace Tests;
 
 [Collection("WriteCollection")]
 public class RepositoryOfT_DeleteRangeAsync

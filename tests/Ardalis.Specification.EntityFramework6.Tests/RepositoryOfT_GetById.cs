@@ -1,4 +1,6 @@
-﻿namespace Tests;
+﻿using Tests.Fixture;
+
+namespace Tests;
 
 [Collection("ReadCollection")]
 public class RepositoryOfT_GetById
