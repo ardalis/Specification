@@ -89,26 +89,26 @@ public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factor
         actualSql.Should().Be(expectedSql);
     }
 
-    // TODO: Found out that EF6 include evaluator fails for multiple include chains. [Fati Iseni, 15/06/2025]
-    //[Fact]
-    //public void QueriesMatch_GivenThenIncludeExpression()
-    //{
-    //    var spec = new Specification<Store>();
-    //    spec.Query
-    //        .Include(x => x.Products)
-    //            .ThenInclude(x => x.Images)
-    //        .Include(x => x.Company)
-    //            .ThenInclude(x => x.Country);
 
-    //    var actual = _evaluator.GetQuery(DbContext.Stores, spec);
-    //    var actualSql = GetQueryString(DbContext, actual);
+    [Fact(Skip = "EF6 include evaluator fails for multiple include chains [Fati Iseni, 15/06/2025]")]
+    public void QueriesMatch_GivenThenIncludeExpression()
+    {
+        var spec = new Specification<Store>();
+        spec.Query
+            .Include(x => x.Products)
+                .ThenInclude(x => x.Images)
+            .Include(x => x.Company)
+                .ThenInclude(x => x.Country);
 
-    //    // EF6 doe't support ThenInclude, it uses string-based includes
-    //    var expected = DbContext.Stores
-    //        .Include($"{nameof(Store.Products)}.{nameof(Product.Images)}")
-    //        .Include($"{nameof(Store.Company)}.{nameof(Company.Country)}");
-    //    var expectedSql = GetQueryString(DbContext, expected);
+        var actual = _evaluator.GetQuery(DbContext.Stores, spec);
+        var actualSql = GetQueryString(DbContext, actual);
 
-    //    actualSql.Should().Be(expectedSql);
-    //}
+        // EF6 doe't support ThenInclude, it uses string-based includes
+        var expected = DbContext.Stores
+            .Include($"{nameof(Store.Products)}.{nameof(Product.Images)}")
+            .Include($"{nameof(Store.Company)}.{nameof(Company.Country)}");
+        var expectedSql = GetQueryString(DbContext, expected);
+
+        actualSql.Should().Be(expectedSql);
+    }
 }
