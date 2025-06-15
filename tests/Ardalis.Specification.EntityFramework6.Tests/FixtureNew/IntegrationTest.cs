@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 
 namespace Tests.FixtureNew;
 
@@ -12,9 +13,30 @@ public class IntegrationTest : IAsyncLifetime
         _testFactory = testFactory;
     }
 
+    public static string GetQueryString<T>(TestDbContext dbContext, IQueryable<T> queryable)
+    {
+        // The EF6 doesn't support ToQueryString, so we need to log the SQL manually
+        var writer = new StringWriter();
+        dbContext.Database.Log = writer.Write;
+        _ = queryable.ToList(); // Execute the query to log the SQL
+        var sql = writer.ToString();
+
+        // Remove metadata lines (connection open/close, timestamps, execution comments)
+        var filteredLines = sql.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries)
+            .Where(line =>
+                !line.StartsWith("Opened connection") &&
+                !line.StartsWith("Closed connection") &&
+                !line.StartsWith("-- Executing") &&
+                !line.StartsWith("-- Completed")
+            );
+        return string.Join(Environment.NewLine, filteredLines).Trim();
+    }
+
     public Task InitializeAsync()
     {
         DbContext = new TestDbContext(_testFactory.ConnectionString);
+        // On first access, there are additional queries and is skewing our tests.
+        _ = DbContext.Countries.Any();
         return Task.CompletedTask;
     }
 
