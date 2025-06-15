@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MartinCostello.SqlLocalDb"/>
-    <PackageReference Include="EntityFramework"/>
-    <PackageReference Include="System.Data.DataSetExtensions"/>
-    <PackageReference Include="Testcontainers.MsSql"/>
-    <PackageReference Include="Microsoft.CSharp"/>
+    <PackageReference Include="MartinCostello.SqlLocalDb" />
+    <PackageReference Include="EntityFramework" />
+    <PackageReference Include="Respawn" />
+    <PackageReference Include="System.Data.DataSetExtensions" />
+    <PackageReference Include="Testcontainers.MsSql" />
+    <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="Polyfill">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
