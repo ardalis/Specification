@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Tests.FixtureNew;
+﻿namespace Tests.FixtureNew;
 
 public record Address
 {
