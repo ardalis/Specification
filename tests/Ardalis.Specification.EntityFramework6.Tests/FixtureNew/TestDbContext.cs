@@ -8,8 +8,6 @@ public class TestDbContext : DbContext
     {
     }
 
-    public DbSet<Bar> Bars => Set<Bar>();
-    public DbSet<Foo> Foos => Set<Foo>();
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<Store> Stores => Set<Store>();
@@ -18,25 +16,16 @@ public class TestDbContext : DbContext
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
+        // Store-Address one-to-one (Address has StoreId FK)
         modelBuilder.Entity<Store>()
-            .HasOptional(x => x.Address)
-            .WithRequired(x => x.Store);
+            .HasOptional(s => s.Address)
+            .WithRequired(a => a.Store)
+            .Map(m => m.MapKey("StoreId"));
 
-        //modelBuilder.Entity<Store>()
-
-        //    .HasOne(x => x.Address)
-        //    .WithOne(x => x.Store)
-        //    .HasForeignKey<Address>(x => x.StoreId);
-
-        //modelBuilder.Entity<Country>()
-        //    .HasMany<Company>()
-        //    .WithOne(x => x.Country)
-        //    .HasForeignKey(x => x.CountryId);
-
-        //modelBuilder.Entity<Country>()
-        //    .HasQueryFilter(x => !x.IsDeleted);
-
-        //modelBuilder.Entity<BarDerived>()
-        //    .HasBaseType<BarChild>();
+        // Country-Company one-to-many (Company has CountryId FK)
+        modelBuilder.Entity<Company>()
+            .HasRequired(co => co.Country)
+            .WithMany()
+            .HasForeignKey(co => co.CountryId);
     }
 }
