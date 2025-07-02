@@ -36,10 +36,10 @@ public class TestFactory : IAsyncLifetime
             else
             {
 #if NET9_0_OR_GREATER
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestsDB_EF6_NET9;Integrated Security=SSPI;TrustServerCertificate=True;";
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NET9;Integrated Security=SSPI;TrustServerCertificate=True;";
 #elif NET472
 
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestsDB_EF6_NETFFX;Integrated Security=SSPI;TrustServerCertificate=True;";
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NETFFX;Integrated Security=SSPI;TrustServerCertificate=True;";
 #endif
             }
         }

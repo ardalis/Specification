@@ -103,7 +103,7 @@ public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factor
         var actual = _evaluator.GetQuery(DbContext.Stores, spec);
         var actualSql = GetQueryString(DbContext, actual);
 
-        // EF6 doe't support ThenInclude, it uses string-based includes
+        // EF6 doesn't support ThenInclude, it uses string-based includes
         var expected = DbContext.Stores
             .Include($"{nameof(Store.Products)}.{nameof(Product.Images)}")
             .Include($"{nameof(Store.Company)}.{nameof(Company.Country)}");
