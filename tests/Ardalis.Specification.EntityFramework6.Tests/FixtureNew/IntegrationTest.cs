@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 
 namespace Tests.FixtureNew;
@@ -30,6 +32,14 @@ public class IntegrationTest : IAsyncLifetime
                 !line.StartsWith("-- Completed")
             );
         return string.Join(Environment.NewLine, filteredLines).Trim();
+    }
+
+    public void ClearChangeTracker()
+    {
+        foreach (var entry in DbContext.ChangeTracker.Entries())
+        {
+            entry.State = EntityState.Detached;
+        }
     }
 
     public Task InitializeAsync()
