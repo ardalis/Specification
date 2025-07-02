@@ -19,6 +19,8 @@ public class TestFactory : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+        var dbName = "SpecificationTestDB_EFCore";
+
         using (var localDB = new SqlLocalDbApi())
         {
             if (FORCE_DOCKER || !localDB.IsLocalDBInstalled())
@@ -29,7 +31,7 @@ public class TestFactory : IAsyncLifetime
             }
             else
             {
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EFCore;Integrated Security=SSPI;TrustServerCertificate=True;";
+                _connectionString = $"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog={dbName};Integrated Security=SSPI;TrustServerCertificate=True;";
             }
         }
 
@@ -70,7 +72,6 @@ public class TestFactory : IAsyncLifetime
 
     private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithName("SpecificationTestDB_EFCore")
             .WithPassword("P@ssW0rd!")
             .Build();
 }

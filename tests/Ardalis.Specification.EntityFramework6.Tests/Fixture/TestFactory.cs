@@ -25,22 +25,27 @@ public class TestFactory : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+#if NET9_0_OR_GREATER
+        var dbName = "SpecificationTestDB_EF6_NET9";
+#elif NET472
+        var dbName = "SpecificationTestDB_EF6_NETFFX";
+#endif
+
         using (var localDB = new SqlLocalDbApi())
         {
             if (FORCE_DOCKER || !localDB.IsLocalDBInstalled())
             {
                 _dbContainer = CreateContainer();
                 await _dbContainer.StartAsync();
-                _connectionString = _dbContainer.GetConnectionString();
+                var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(_dbContainer.GetConnectionString())
+                {
+                    InitialCatalog = dbName
+                };
+                _connectionString = builder.ToString();
             }
             else
             {
-#if NET9_0_OR_GREATER
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NET9;Integrated Security=SSPI;TrustServerCertificate=True;";
-#elif NET472
-
-                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NETFFX;Integrated Security=SSPI;TrustServerCertificate=True;";
-#endif
+                _connectionString = $"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog={dbName};Integrated Security=SSPI;TrustServerCertificate=True;";
             }
         }
 
@@ -83,7 +88,7 @@ public class TestFactory : IAsyncLifetime
     }
 
     private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
-        .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-        .WithPassword("P@ssW0rd!")
-        .Build();
+            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+            .WithPassword("P@ssW0rd!")
+            .Build();
 }
