@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.IO;
 
-namespace Tests.FixtureNew;
+namespace Tests.Fixture;
 
 public class IntegrationTest : IAsyncLifetime
 {

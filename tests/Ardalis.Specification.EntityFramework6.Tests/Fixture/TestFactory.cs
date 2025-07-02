@@ -1,4 +1,5 @@
 ﻿using MartinCostello.SqlLocalDb;
+using Respawn;
 using Testcontainers.MsSql;
 
 namespace Tests.Fixture;
@@ -6,39 +7,66 @@ namespace Tests.Fixture;
 public class TestFactory : IAsyncLifetime
 {
     // Flag to force using Docker SQL Server. Update it manually if you want to avoid localDb locally.
-    private const bool _forceDocker = false;
+    private const bool FORCE_DOCKER = false;
+
+    private string _connectionString = default!;
     private MsSqlContainer? _dbContainer = null;
 
-    public string ConnectionString { get; private set; } = null!;
+    public string ConnectionString => _connectionString;
+    public TestDbContext DbContext => new TestDbContext(_connectionString);
+
+#if NET9_0_OR_GREATER
+    private Respawner _respawner = default!;
+    public async Task ResetDatabase() => await _respawner.ResetAsync(_connectionString);
+#elif NET472
+    private Checkpoint _respawner = default!;
+    public Task ResetDatabase() => _respawner.Reset(_connectionString);
+#endif
 
     public async Task InitializeAsync()
     {
         using (var localDB = new SqlLocalDbApi())
         {
-            if (_forceDocker || !localDB.IsLocalDBInstalled())
+            if (FORCE_DOCKER || !localDB.IsLocalDBInstalled())
             {
                 _dbContainer = CreateContainer();
                 await _dbContainer.StartAsync();
-                ConnectionString = _dbContainer.GetConnectionString();
+                _connectionString = _dbContainer.GetConnectionString();
             }
             else
             {
-                var databaseName = $"SpecificationEF6TestsDB_{Guid.NewGuid().ToString().Replace('-', '_')}";
-                ConnectionString = $"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog={databaseName};Integrated Security=SSPI;TrustServerCertificate=True;";
+#if NET9_0_OR_GREATER
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NET9;Integrated Security=SSPI;TrustServerCertificate=True;";
+#elif NET472
+
+                _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SpecificationTestDB_EF6_NETFFX;Integrated Security=SSPI;TrustServerCertificate=True;";
+#endif
             }
         }
 
-        using var dbContext = new TestDbContext(ConnectionString);
+        Console.WriteLine($"Connection string: {_connectionString}");
 
-        dbContext.Database.CreateIfNotExists();
+        using (var dbContext = new TestDbContext(_connectionString))
+        {
+            //dbContext.Database.Delete();
+            dbContext.Database.CreateIfNotExists();
+        }
 
-        dbContext.Countries.AddRange(CountrySeed.Get());
-        dbContext.Companies.AddRange(CompanySeed.Get());
-        dbContext.Stores.AddRange(StoreSeed.Get());
-        dbContext.Addresses.AddRange(AddressSeed.Get());
-        dbContext.Products.AddRange(ProductSeed.Get());
-
-        dbContext.SaveChanges();
+#if NET9_0_OR_GREATER
+        _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
+        {
+            DbAdapter = DbAdapter.SqlServer,
+            SchemasToInclude = new[] { "dbo" },
+        });
+        await ResetDatabase();
+#elif NET472
+        _respawner = new Checkpoint
+        {
+            DbAdapter = DbAdapter.SqlServer,
+            SchemasToInclude = new[] { "dbo" },
+        };
+        await ResetDatabase();
+#endif
     }
 
     public async Task DisposeAsync()
@@ -49,14 +77,13 @@ public class TestFactory : IAsyncLifetime
         }
         else
         {
-            using var dbContext = new TestDbContext(ConnectionString);
-            dbContext.Database.Delete();
+            //using var dbContext = new TestDbContext(_connectionString);
+            //dbContext.Database.Delete();
         }
     }
 
     private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            //.WithName("SpecificationEFCoreTestsDB")
-            .WithPassword("P@ssW0rd!")
-            .Build();
+        .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+        .WithPassword("P@ssW0rd!")
+        .Build();
 }

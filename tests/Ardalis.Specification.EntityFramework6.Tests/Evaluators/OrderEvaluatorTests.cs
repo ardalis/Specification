@@ -1,6 +1,4 @@
-﻿using Tests.FixtureNew;
-
-namespace Tests.Evaluators;
+﻿namespace Tests.Evaluators;
 
 [Collection("SharedCollection")]
 public class OrderEvaluatorTests(TestFactory factory) : IntegrationTest(factory)

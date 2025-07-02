@@ -1,4 +1,4 @@
-﻿namespace Tests.FixtureNew;
+﻿namespace Tests.Fixture;
 
 public record Store
 {

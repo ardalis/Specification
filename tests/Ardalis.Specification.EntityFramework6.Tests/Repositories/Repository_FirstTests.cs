@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using Tests.FixtureNew;
 
 namespace Tests.Repositories;
 

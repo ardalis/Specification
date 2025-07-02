@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
 namespace Tests.Fixture;
 
@@ -9,20 +8,24 @@ public class TestDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Country> Countries { get; set; } = null!;
-    public virtual DbSet<Company> Companies { get; set; } = null!;
-    public virtual DbSet<Store> Stores { get; set; } = null!;
-    public virtual DbSet<Address> Addresses { get; set; } = null!;
-    public virtual DbSet<Product> Products { get; set; } = null!;
+    public DbSet<Country> Countries => Set<Country>();
+    public DbSet<Company> Companies => Set<Company>();
+    public DbSet<Store> Stores => Set<Store>();
+    public DbSet<Address> Addresses => Set<Address>();
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Country>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-        modelBuilder.Entity<Company>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-        modelBuilder.Entity<Address>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-        modelBuilder.Entity<Product>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-        modelBuilder.Entity<Store>().Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+        // Store-Address one-to-one (Address has StoreId FK)
+        modelBuilder.Entity<Store>()
+            .HasOptional(s => s.Address)
+            .WithRequired(a => a.Store)
+            .Map(m => m.MapKey("StoreId"));
 
-        modelBuilder.Entity<Store>().HasOptional(x => x.Address).WithRequired(x => x!.Store!);
+        // Country-Company one-to-many (Company has CountryId FK)
+        modelBuilder.Entity<Company>()
+            .HasRequired(co => co.Country)
+            .WithMany()
+            .HasForeignKey(co => co.CountryId);
     }
 }
