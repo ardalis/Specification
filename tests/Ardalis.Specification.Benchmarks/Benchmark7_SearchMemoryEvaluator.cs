@@ -13,6 +13,13 @@ public class Benchmark7_SearchMemoryEvaluator
         |----------- |----------:|---------:|---------:|------:|--------:|--------:|----------:|------------:|
         | EvaluateV8 | 136.54 us | 2.571 us | 2.640 us |  1.00 |    0.03 | 28.8086 |  241832 B |       1.000 |
         | Evaluate   |  95.22 us | 1.554 us | 1.454 us |  0.70 |    0.02 |       - |      96 B |       0.000 |
+
+         Results from version 9.2.0 on .NET 9.0 (2025-06-12)
+
+        | Method     | Mean      | Error    | StdDev   | Ratio | Gen0    | Allocated | Alloc Ratio |
+        |----------- |----------:|---------:|---------:|------:|--------:|----------:|------------:|
+        | EvaluateV8 | 126.50 us | 0.741 us | 0.693 us |  1.00 | 28.8086 |  241832 B |       1.000 |
+        | Evaluate   |  90.88 us | 0.258 us | 0.229 us |  0.72 |       - |      96 B |       0.000 |
      */
 
     private List<Customer> _source = default!;
