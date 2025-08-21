@@ -14,7 +14,7 @@ public class Benchmark7_SearchMemoryEvaluator
         | EvaluateV8 | 136.54 us | 2.571 us | 2.640 us |  1.00 |    0.03 | 28.8086 |  241832 B |       1.000 |
         | Evaluate   |  95.22 us | 1.554 us | 1.454 us |  0.70 |    0.02 |       - |      96 B |       0.000 |
 
-         Results from version 9.2.0 on .NET 9.0 (2025-06-12)
+         Results from version 9.3.0 on .NET 9.0 (2025-08-21)
 
         | Method     | Mean      | Error    | StdDev   | Ratio | Gen0    | Allocated | Alloc Ratio |
         |----------- |----------:|---------:|---------:|------:|--------:|----------:|------------:|

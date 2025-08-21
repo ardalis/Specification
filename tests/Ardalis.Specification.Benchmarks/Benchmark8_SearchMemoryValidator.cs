@@ -13,6 +13,13 @@ public class Benchmark8_SearchMemoryValidator
         |----------- |----------:|---------:|---------:|------:|--------:|----------:|------------:|
         | ValidateV8 | 222.87 us | 1.797 us | 1.500 us |  1.00 | 73.9746 |  619016 B |        1.00 |
         | Validate   |  92.96 us | 0.261 us | 0.218 us |  0.42 |       - |         - |        0.00 |
+
+         Results from version 9.3.0 on .NET 9.0 (2025-08-21)
+
+        | Method     | Mean      | Error    | StdDev   | Ratio | Gen0    | Allocated | Alloc Ratio |
+        |----------- |----------:|---------:|---------:|------:|--------:|----------:|------------:|
+        | ValidateV8 | 232.00 us | 1.063 us | 0.887 us |  1.00 | 73.9746 |  619016 B |        1.00 |
+        | Validate   |  90.59 us | 0.224 us | 0.187 us |  0.39 |       - |         - |        0.00 |
      */
 
     private List<Customer> _source = default!;
