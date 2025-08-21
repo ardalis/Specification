@@ -26,6 +26,17 @@ public class Benchmark0_SpecSize
         | Spec   | 3    | 34.670 ns | 18.903 ns | 1.0361 ns | 0.0516 | 0.0001 |     432 B |
         | Spec   | 4    | 45.458 ns | 19.777 ns | 1.0841 ns | 0.0612 | 0.0001 |     512 B |
         | Spec   | 5    | 60.715 ns | 18.731 ns | 1.0267 ns | 0.0783 | 0.0001 |     656 B |
+
+         Results from version 9.3.0 on .NET 9.0 (2025-08-21)
+
+        | Method | Type | Mean      | Error      | StdDev    | Gen0   | Gen1   | Allocated |
+        |------- |----- |----------:|-----------:|----------:|-------:|-------:|----------:|
+        | Spec   | 0    |  4.965 ns |  3.4133 ns | 0.1871 ns | 0.0124 |      - |     104 B |
+        | Spec   | 1    |  7.727 ns |  1.6776 ns | 0.0920 ns | 0.0163 |      - |     136 B |
+        | Spec   | 2    | 12.055 ns |  0.0943 ns | 0.0052 ns | 0.0210 |      - |     176 B |
+        | Spec   | 3    | 15.822 ns |  6.0309 ns | 0.3306 ns | 0.0258 |      - |     216 B |
+        | Spec   | 4    | 44.709 ns | 13.0608 ns | 0.7159 ns | 0.0526 | 0.0001 |     440 B |
+        | Spec   | 5    | 63.358 ns | 12.7476 ns | 0.6987 ns | 0.0621 |      - |     520 B |
      */
 
     public static class Expressions
