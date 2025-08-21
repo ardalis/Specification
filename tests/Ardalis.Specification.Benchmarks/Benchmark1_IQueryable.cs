@@ -5,7 +5,7 @@ namespace Ardalis.Specification.Benchmarks;
 [MemoryDiagnoser]
 public class Benchmark1_IQueryable
 {
-    /* This benchmark measures building the IQueryable state. It's the pure overhead of using specifications.
+    /* This benchmark measures building the IQueryable state. It's the overhead of using specifications (there might be some jitter due to EFs internal caching).
      * Types:
      * 0 -> Empty
      * 1 -> Single Where clause
@@ -35,6 +35,28 @@ public class Benchmark1_IQueryable
         |        |      |               |             |             |        |         |        |           |             |
         | EFCore | 5    | 6,601.1200 ns |  44.9208 ns |  39.8211 ns |   1.00 |    0.01 | 0.9155 |    7728 B |        1.00 |
         | Spec   | 5    | 7,165.3328 ns | 137.3564 ns | 128.4833 ns |   1.09 |    0.02 | 0.9766 |    8272 B |        1.07 |
+
+         Results from version 9.3.0 on .NET 9.0 (2025-08-21)
+
+        | Method | Type | Mean          | Error      | StdDev     | Ratio  | RatioSD | Gen0   | Allocated | Alloc Ratio |
+        |------- |----- |--------------:|-----------:|-----------:|-------:|--------:|-------:|----------:|------------:|
+        | EFCore | 0    |     0.5752 ns |  0.0102 ns |  0.0085 ns |   1.00 |    0.02 |      - |         - |          NA |
+        | Spec   | 0    |   118.4065 ns |  0.5723 ns |  0.5073 ns | 205.89 |    3.01 | 0.0172 |     144 B |          NA |
+        |        |      |               |            |            |        |         |        |           |             |
+        | EFCore | 1    |   658.2708 ns | 12.4211 ns | 11.6187 ns |   1.00 |    0.02 | 0.1183 |    1016 B |        1.00 |
+        | Spec   | 1    |   929.8103 ns | 17.5015 ns | 16.3709 ns |   1.41 |    0.03 | 0.1421 |    1192 B |        1.17 |
+        |        |      |               |            |            |        |         |        |           |             |
+        | EFCore | 2    | 1,332.8425 ns |  9.0197 ns |  7.9958 ns |   1.00 |    0.01 | 0.2327 |    1952 B |        1.00 |
+        | Spec   | 2    | 1,596.2919 ns |  5.8616 ns |  4.5764 ns |   1.20 |    0.01 | 0.2594 |    2216 B |        1.14 |
+        |        |      |               |            |            |        |         |        |           |             |
+        | EFCore | 3    | 2,193.2508 ns | 12.5628 ns | 11.1366 ns |   1.00 |    0.01 | 0.3433 |    2912 B |        1.00 |
+        | Spec   | 3    | 2,728.9742 ns | 25.1605 ns | 21.0102 ns |   1.24 |    0.01 | 0.3815 |    3216 B |        1.10 |
+        |        |      |               |            |            |        |         |        |           |             |
+        | EFCore | 4    | 4,380.9674 ns | 66.0562 ns | 58.5571 ns |   1.00 |    0.02 | 0.6104 |    5168 B |        1.00 |
+        | Spec   | 4    | 5,327.0482 ns | 35.3173 ns | 29.4915 ns |   1.22 |    0.02 | 0.7019 |    5896 B |        1.14 |
+        |        |      |               |            |            |        |         |        |           |             |
+        | EFCore | 5    | 6,597.2443 ns | 53.6835 ns | 47.5891 ns |   1.00 |    0.01 | 0.8850 |    7440 B |        1.00 |
+        | Spec   | 5    | 7,307.0483 ns | 55.6593 ns | 49.3406 ns |   1.11 |    0.01 | 0.9766 |    8328 B |        1.12 |
      */
 
     private DbSet<Store> _queryable = default!;
