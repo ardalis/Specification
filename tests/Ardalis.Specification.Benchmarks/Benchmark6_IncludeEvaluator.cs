@@ -9,6 +9,13 @@ public class Benchmark6_IncludeEvaluator
     /*
      * This benchmark only measures applying Include to IQueryable.
      * It tends to measure the pure overhead of the reflection calls.
+
+         Results from version 9.3.0 on .NET 9.0 (2025-08-21)
+
+        | Method | Mean     | Error     | StdDev    | Ratio | Gen0   | Allocated | Alloc Ratio |
+        |------- |---------:|----------:|----------:|------:|-------:|----------:|------------:|
+        | EFCore | 1.119 us | 0.0086 us | 0.0080 us |  1.00 | 0.1106 |     928 B |        1.00 |
+        | Spec   | 1.226 us | 0.0089 us | 0.0083 us |  1.10 | 0.1144 |     968 B |        1.04 |
      */
 
     private static readonly Expression<Func<Store, Company>> _includeCompany = x => x.Company;
