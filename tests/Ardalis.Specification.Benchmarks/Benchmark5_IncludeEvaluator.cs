@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace Ardalis.Specification.Benchmarks;
 
 [MemoryDiagnoser]
-public class Benchmark6_IncludeEvaluator
+public class Benchmark5_IncludeEvaluator
 {
     /*
      * This benchmark only measures applying Include to IQueryable.

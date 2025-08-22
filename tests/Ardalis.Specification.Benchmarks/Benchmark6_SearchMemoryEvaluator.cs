@@ -1,7 +1,7 @@
 ﻿namespace Ardalis.Specification.Benchmarks;
 
 [MemoryDiagnoser]
-public class Benchmark7_SearchMemoryEvaluator
+public class Benchmark6_SearchMemoryEvaluator
 {
     /*
      * This benchmark measures search memory evaluation compared to version 8.

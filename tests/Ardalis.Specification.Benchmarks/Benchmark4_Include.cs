@@ -3,7 +3,7 @@
 namespace Ardalis.Specification.Benchmarks;
 
 [MemoryDiagnoser]
-public class Benchmark5_Include
+public class Benchmark4_Include
 {
     private DbSet<Store> _queryable = default!;
 
