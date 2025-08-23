@@ -7,6 +7,12 @@ public class WhereEvaluatorTests
     public record Customer(int Id);
 
     [Fact]
+    public void ReturnTrue_IsCriteriaEvaluator()
+    {
+        _evaluator.IsCriteriaEvaluator.Should().BeTrue();
+    }
+
+    [Fact]
     public void Filters_GivenSingleWhereExpression()
     {
         List<Customer> input = [new(1), new(2), new(3), new(4), new(5)];

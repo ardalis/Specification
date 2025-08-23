@@ -7,6 +7,12 @@ public class PaginationEvaluatorTests
     public record Customer(int Id);
 
     [Fact]
+    public void ReturnFalse_IsCriteriaEvaluator()
+    {
+        _evaluator.IsCriteriaEvaluator.Should().BeFalse();
+    }
+
+    [Fact]
     public void SkipsAndTakes_GivenSkipAndTake()
     {
         List<Customer> input = [new(1), new(2), new(3), new(4), new(5)];

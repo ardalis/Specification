@@ -7,6 +7,12 @@ public class OrderEvaluatorTests
     public record Customer(int Id, string? Name = null);
 
     [Fact]
+    public void ReturnFalse_IsCriteriaEvaluator()
+    {
+        _evaluator.IsCriteriaEvaluator.Should().BeFalse();
+    }
+
+    [Fact]
     public void ThrowsDuplicateOrderChainException_GivenMultipleOrderByChains()
     {
         List<Customer> input = [new(3), new(1), new(2), new(5), new(4)];
