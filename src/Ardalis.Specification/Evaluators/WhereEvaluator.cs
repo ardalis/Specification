@@ -24,13 +24,18 @@ public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
             {
                 return query.Where(whereExpression.Filter);
             }
+
+            foreach (var whereExpr in spec.OneOrManyWhereExpressions.List)
+            {
+                query = query.Where(whereExpr.Filter);
+            }
+            return query;
         }
 
         foreach (var whereExpression in specification.WhereExpressions)
         {
             query = query.Where(whereExpression.Filter);
         }
-
         return query;
     }
 
@@ -44,13 +49,18 @@ public class WhereEvaluator : IEvaluator, IInMemoryEvaluator
             {
                 return query.Where(whereExpression.FilterFunc);
             }
+
+            foreach (var whereExpr in spec.OneOrManyWhereExpressions.List)
+            {
+                query = query.Where(whereExpr.FilterFunc);
+            }
+            return query;
         }
 
         foreach (var whereExpression in specification.WhereExpressions)
         {
             query = query.Where(whereExpression.FilterFunc);
         }
-
         return query;
     }
 }

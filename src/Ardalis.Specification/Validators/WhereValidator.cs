@@ -14,13 +14,18 @@ public class WhereValidator : IValidator
             {
                 return whereExpression.FilterFunc(entity);
             }
+
+            foreach (var whereExpr in spec.OneOrManyWhereExpressions.List)
+            {
+                if (whereExpr.FilterFunc(entity) == false) return false;
+            }
+            return true;
         }
 
-        foreach (var whereExpression in specification.WhereExpressions)
+        foreach (var whereExpr in specification.WhereExpressions)
         {
-            if (whereExpression.FilterFunc(entity) == false) return false;
+            if (whereExpr.FilterFunc(entity) == false) return false;
         }
-
         return true;
     }
 }
