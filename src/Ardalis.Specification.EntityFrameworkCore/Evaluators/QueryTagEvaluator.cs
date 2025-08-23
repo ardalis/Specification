@@ -17,13 +17,18 @@ public class QueryTagEvaluator : IEvaluator
             {
                 return query.TagWith(spec.OneOrManyQueryTags.Single);
             }
+
+            foreach (var tag in spec.OneOrManyQueryTags.List)
+            {
+                query = query.TagWith(tag);
+            }
+            return query;
         }
 
         foreach (var tag in specification.QueryTags)
         {
             query = query.TagWith(tag);
         }
-
         return query;
     }
 }

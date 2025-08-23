@@ -24,13 +24,18 @@ public class SearchValidator : IValidator
         // This is just to cover the case where users have custom ISpecification<T> implementation but use our validator.
         // We'll fall back to LINQ for this case.
 
-        foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
-        {
-            if (!searchGroup.Any(c => c.SelectorFunc(entity)?.Like(c.SearchTerm) ?? false))
-                return false;
-        }
+        return Fallback(entity, specification);
 
-        return true;
+        static bool Fallback(T entity, ISpecification<T> specification)
+        {
+            foreach (var searchGroup in specification.SearchCriterias.GroupBy(x => x.SearchGroup))
+            {
+                if (!searchGroup.Any(c => c.SelectorFunc(entity)?.Like(c.SearchTerm) ?? false))
+                    return false;
+            }
+
+            return true;
+        }
     }
 
     // This would be simpler using Span<SearchExpressionInfo<T>>
