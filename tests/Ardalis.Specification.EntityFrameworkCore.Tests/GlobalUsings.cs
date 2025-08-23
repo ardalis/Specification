@@ -8,3 +8,4 @@ global using System.Linq;
 global using System.Threading.Tasks;
 global using Tests.Fixture;
 global using Xunit;
+global using NSubstitute;
