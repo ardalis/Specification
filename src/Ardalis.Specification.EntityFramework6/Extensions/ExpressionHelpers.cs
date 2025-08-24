@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Ardalis.Specification.EntityFramework6;
 
-public static class ExpressionHelpers
+internal static class ExpressionHelpers
 {
     public const char MEMBER_DELIMITER = '.';
 

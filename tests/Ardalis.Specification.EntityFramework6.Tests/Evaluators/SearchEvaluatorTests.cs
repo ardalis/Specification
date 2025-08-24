@@ -23,50 +23,51 @@ public class SearchEvaluatorTests(TestFactory factory) : IntegrationTest(factory
         actualSql.Should().Be(expectedSql);
     }
 
-    [Fact(Skip = "Not producing the same query, it's not parameterized and no null check [Fati Iseni, 15/06/2025]")]
+    [Fact]
     public void QueriesMatch_GivenSingleSearch()
     {
         var storeTerm = "ab1";
+        var searchTerm = $"%{storeTerm}%";
 
         var spec = new Specification<Company>();
         spec.Query
             .Where(x => x.Id > 0)
-            .Search(x => x.Name, $"%{storeTerm}%");
+            .Search(x => x.Name, searchTerm);
 
         var actual = _evaluator.GetQuery(DbContext.Companies, spec);
         var actualSql = GetQueryString(DbContext, actual);
 
         var expected = DbContext.Companies
-            .Where(x => DbFunctions.Like(x.Name, "%" + storeTerm + "%"));
+            .Where(x => DbFunctions.Like(x.Name, searchTerm));
         var expectedSql = GetQueryString(DbContext, expected);
 
         actualSql.Should().Be(expectedSql);
     }
 
-    [Fact(Skip = "Not producing the same query, it's not parameterized and no null check [Fati Iseni, 15/06/2025]")]
+    [Fact]
     public void QueriesMatch_GivenMultipleSearch()
     {
-        var storeTerm = "ab1";
-        var companyTerm = "ab2";
-        var countryTerm = "ab3";
-        var streetTerm = "ab4";
+        var storeTerm = "%ab1%";
+        var companyTerm = "%ab2%";
+        var countryTerm = "%ab3%";
+        var streetTerm = "%ab4%";
 
         var spec = new Specification<Store>();
         spec.Query
             .Where(x => x.Id > 0)
-            .Search(x => x.Name, $"%{storeTerm}%")
-            .Search(x => x.Company.Name, $"%{companyTerm}%")
-            .Search(x => x.Company.Country.Name, $"%{countryTerm}%", 3)
-            .Search(x => x.Address.Street, $"%{streetTerm}%", 2);
+            .Search(x => x.Name, storeTerm)
+            .Search(x => x.Company.Name, companyTerm)
+            .Search(x => x.Company.Country.Name, countryTerm, 3)
+            .Search(x => x.Address.Street, streetTerm, 2);
 
         var actual = _evaluator.GetQuery(DbContext.Stores, spec);
         var actualSql = GetQueryString(DbContext, actual);
 
         var expected = DbContext.Stores
-            .Where(x => DbFunctions.Like(x.Name, "%" + storeTerm + "%")
-                    || DbFunctions.Like(x.Company.Name, "%" + storeTerm + "%"))
-            .Where(x => DbFunctions.Like(x.Address.Street, "%" + storeTerm + "%"))
-            .Where(x => DbFunctions.Like(x.Company.Country.Name, "%" + storeTerm + "%"));
+            .Where(x => DbFunctions.Like(x.Name, storeTerm)
+                    || DbFunctions.Like(x.Company.Name, companyTerm))
+            .Where(x => DbFunctions.Like(x.Address.Street, streetTerm))
+            .Where(x => DbFunctions.Like(x.Company.Country.Name, countryTerm));
         var expectedSql = GetQueryString(DbContext, expected);
 
         actualSql.Should().Be(expectedSql);
