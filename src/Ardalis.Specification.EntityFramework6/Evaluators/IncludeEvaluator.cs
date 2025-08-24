@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-
-namespace Ardalis.Specification.EntityFramework6;
+﻿namespace Ardalis.Specification.EntityFramework6;
 
 public class IncludeEvaluator : IEvaluator
 {
@@ -11,11 +9,6 @@ public class IncludeEvaluator : IEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        foreach (var includeString in specification.IncludeStrings)
-        {
-            query = query.Include(includeString);
-        }
-
         foreach (var includeInfo in specification.IncludeExpressions)
         {
             if (includeInfo.Type == IncludeTypeEnum.Include)

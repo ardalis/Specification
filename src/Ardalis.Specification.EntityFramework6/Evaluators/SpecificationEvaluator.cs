@@ -14,6 +14,7 @@ public class SpecificationEvaluator : ISpecificationEvaluator
         {
             WhereEvaluator.Instance,
             SearchEvaluator.Instance,
+            IncludeStringEvaluator.Instance,
             IncludeEvaluator.Instance,
             OrderEvaluator.Instance,
             PaginationEvaluator.Instance,
