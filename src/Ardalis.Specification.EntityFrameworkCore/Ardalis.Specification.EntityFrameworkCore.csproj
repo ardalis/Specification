@@ -10,7 +10,7 @@
     <Description>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Description>
     <Summary>EF Core plugin package to Ardalis.Specification containing EF Core evaluator and abstract repository.</Summary>
     
-    <Version>9.3.0</Version>
+    <Version>9.3.1</Version>
     <PackageTags>spec;specification;repository;ddd;ef;ef core;entity framework;entity framework core</PackageTags>
     <PackageReleaseNotes>
       The change log and breaking changes are listed here.
