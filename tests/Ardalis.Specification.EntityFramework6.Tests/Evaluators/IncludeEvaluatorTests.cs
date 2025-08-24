@@ -89,7 +89,7 @@ public class IncludeEvaluatorTests(TestFactory factory) : IntegrationTest(factor
     }
 
 
-    [Fact(Skip = "EF6 include evaluator fails for multiple include chains [Fati Iseni, 15/06/2025]")]
+    [Fact]
     public void QueriesMatch_GivenThenIncludeExpression()
     {
         var spec = new Specification<Store>();

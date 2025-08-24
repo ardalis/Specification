@@ -1,4 +1,6 @@
-﻿namespace Ardalis.Specification.EntityFramework6;
+﻿using System.Data.Entity;
+
+namespace Ardalis.Specification.EntityFramework6;
 
 public class IncludeEvaluator : IEvaluator
 {
@@ -9,18 +11,49 @@ public class IncludeEvaluator : IEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
+        if (specification is Specification<T> spec)
+        {
+            if (spec.OneOrManyIncludeExpressions.IsEmpty) return query;
+            if (spec.OneOrManyIncludeExpressions.SingleOrDefault is { } includeExpression)
+            {
+                var includePath = ParseIncludePath(includeExpression);
+                return query.Include(includePath);
+            }
+        }
+
+        string includeString = null;
+
         foreach (var includeInfo in specification.IncludeExpressions)
         {
             if (includeInfo.Type == IncludeTypeEnum.Include)
             {
-                query = query.Include(includeInfo);
+                if (includeString is not null)
+                {
+                    query = query.Include(includeString);
+                }
+
+                includeString = ParseIncludePath(includeInfo);
             }
             else if (includeInfo.Type == IncludeTypeEnum.ThenInclude)
             {
-                query = query.ThenInclude(includeInfo);
+                includeString += ExpressionHelpers.MEMBER_DELIMITER + ParseIncludePath(includeInfo);
             }
         }
 
+        if (includeString is not null)
+        {
+            query = query.Include(includeString);
+        }
+
         return query;
+    }
+
+    private static string ParseIncludePath(IncludeExpressionInfo includeInfo)
+    {
+        if (!ExpressionHelpers.TryParsePath(includeInfo.LambdaExpression.Body, out var path) || path == null)
+        {
+            throw new InvalidIncludeExpressionException();
+        }
+        return path;
     }
 }
