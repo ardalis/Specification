@@ -4,6 +4,23 @@
 public class SearchExtensionTests(TestFactory factory) : IntegrationTest(factory)
 {
     [Fact]
+    public void QueriesMatch_GivenSingleSearch()
+    {
+        var storeTerm = "ab1";
+        var searchExpression = new SearchExpressionInfo<Store>(x => x.Name, $"%{storeTerm}%");
+
+        var actual = DbContext.Stores
+            .ApplySingleLike(searchExpression)
+            .ToQueryString();
+
+        var expected = DbContext.Stores
+            .Where(x => EF.Functions.Like(x.Name, $"%{storeTerm}%"))
+            .ToQueryString();
+
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
     public void QueriesMatch_GivenMultipleSearchAsSpan()
     {
         var storeTerm = "ab1";
