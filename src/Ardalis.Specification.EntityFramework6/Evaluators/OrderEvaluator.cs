@@ -1,6 +1,6 @@
 ﻿namespace Ardalis.Specification.EntityFramework6;
 
-public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
+public class OrderEvaluator : IEvaluator
 {
     private OrderEvaluator() { }
     public static OrderEvaluator Instance { get; } = new OrderEvaluator();
@@ -9,90 +9,51 @@ public class OrderEvaluator : IEvaluator, IInMemoryEvaluator
 
     public IQueryable<T> GetQuery<T>(IQueryable<T> query, ISpecification<T> specification) where T : class
     {
-        if (specification.OrderExpressions != null)
+        if (specification is Specification<T> spec)
         {
-            if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
-                    || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
+            if (spec.OneOrManyOrderExpressions.IsEmpty) return query;
+            if (spec.OneOrManyOrderExpressions.SingleOrDefault is { } orderExpression)
             {
-                throw new DuplicateOrderChainException();
-            }
-
-            IOrderedQueryable<T> orderedQuery = null;
-            foreach (var orderExpression in specification.OrderExpressions)
-            {
-                if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
+                return orderExpression.OrderType switch
                 {
-                    orderedQuery = Queryable.OrderBy((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
-                {
-                    orderedQuery = Queryable.OrderByDescending((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
-                {
-                    orderedQuery = Queryable.ThenBy((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
-                {
-                    orderedQuery = Queryable.ThenByDescending((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-            }
-
-            if (orderedQuery != null)
-            {
-                query = orderedQuery;
+                    OrderTypeEnum.OrderBy => Queryable.OrderBy(query, (dynamic)orderExpression.KeySelector.RemoveConvert()),
+                    OrderTypeEnum.OrderByDescending => Queryable.OrderByDescending(query, (dynamic)orderExpression.KeySelector.RemoveConvert()),
+                    _ => query
+                };
             }
         }
 
-        return query;
-    }
-
-    public IEnumerable<T> Evaluate<T>(IEnumerable<T> query, ISpecification<T> specification)
-    {
-        if (specification.OrderExpressions != null)
+        IOrderedQueryable<T> orderedQuery = null;
+        var chainCount = 0;
+        foreach (var orderExpression in specification.OrderExpressions)
         {
-            if (specification.OrderExpressions.Count(x => x.OrderType == OrderTypeEnum.OrderBy
-                    || x.OrderType == OrderTypeEnum.OrderByDescending) > 1)
+            if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
             {
-                throw new DuplicateOrderChainException();
+                chainCount++;
+                if (chainCount == 2) throw new DuplicateOrderChainException();
+                orderedQuery = Queryable.OrderBy(query, (dynamic)orderExpression.KeySelector.RemoveConvert());
             }
-
-            IOrderedEnumerable<T> orderedQuery = null;
-            foreach (var orderExpression in specification.OrderExpressions)
+            else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
             {
-                if (orderExpression.OrderType == OrderTypeEnum.OrderBy)
-                {
-                    orderedQuery = Queryable.OrderBy((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.OrderByDescending)
-                {
-                    orderedQuery = Queryable.OrderByDescending((dynamic)query, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
-                {
-                    orderedQuery = Queryable.ThenBy((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
-                else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
-                {
-                    orderedQuery = Queryable.ThenByDescending((dynamic)orderedQuery, (dynamic)RemoveConvert(orderExpression.KeySelector));
-                }
+                chainCount++;
+                if (chainCount == 2) throw new DuplicateOrderChainException();
+                orderedQuery = Queryable.OrderByDescending(query, (dynamic)orderExpression.KeySelector.RemoveConvert());
             }
-
-            if (orderedQuery != null)
+            else if (orderExpression.OrderType == OrderTypeEnum.ThenBy)
             {
-                query = orderedQuery;
+                orderedQuery = Queryable.ThenBy(orderedQuery, (dynamic)orderExpression.KeySelector.RemoveConvert());
+            }
+            else if (orderExpression.OrderType == OrderTypeEnum.ThenByDescending)
+            {
+                orderedQuery = Queryable.ThenByDescending(orderedQuery, (dynamic)orderExpression.KeySelector.RemoveConvert());
             }
         }
 
+        if (orderedQuery is not null)
+        {
+            query = orderedQuery;
+        }
+
         return query;
-    }
-
-    private LambdaExpression RemoveConvert(LambdaExpression source)
-    {
-        var body = source.Body;
-        while (body.NodeType == ExpressionType.Convert)
-            body = ((UnaryExpression)body).Operand;
-
-        return Expression.Lambda(body, source.Parameters);
     }
 }
