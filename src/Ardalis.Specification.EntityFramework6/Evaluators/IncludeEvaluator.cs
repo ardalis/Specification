@@ -36,7 +36,7 @@ public class IncludeEvaluator : IEvaluator
             }
             else if (includeInfo.Type == IncludeTypeEnum.ThenInclude)
             {
-                includeString += ExpressionHelpers.MEMBER_DELIMITER + ParseIncludePath(includeInfo);
+                includeString += ExpressionExtensions.MEMBER_DELIMITER + ParseIncludePath(includeInfo);
             }
         }
 
@@ -50,7 +50,7 @@ public class IncludeEvaluator : IEvaluator
 
     private static string ParseIncludePath(IncludeExpressionInfo includeInfo)
     {
-        if (!ExpressionHelpers.TryParsePath(includeInfo.LambdaExpression.Body, out var path) || path == null)
+        if (!ExpressionExtensions.TryParsePath(includeInfo.LambdaExpression.Body, out var path) || path == null)
         {
             throw new InvalidIncludeExpressionException();
         }

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Ardalis.Specification.EntityFramework6;
 
-internal static class ExpressionHelpers
+internal static class ExpressionExtensions
 {
     public const char MEMBER_DELIMITER = '.';
 
@@ -31,7 +31,7 @@ internal static class ExpressionHelpers
         return Expression.Lambda(body, source.Parameters);
     }
 
-    public static bool TryParsePath(Expression expression, out string path)
+    public static bool TryParsePath(this Expression expression, out string path)
     {
         path = null;
         var expr = expression.RemoveConvert();
@@ -73,6 +73,56 @@ internal static class ExpressionHelpers
             return false;
         }
 
+        return true;
+    }
+
+    // New iterative implementation of TryParsePath (non-recursive)
+    public static bool TryParsePathIterative(this Expression expression, out string path)
+    {
+        path = null;
+        var stack = new Stack<string>();
+        var expr = expression.RemoveConvert();
+
+        while (expr != null)
+        {
+            if (expr is MemberExpression memberExpression)
+            {
+                stack.Push(memberExpression.Member.Name);
+                expr = memberExpression.Expression.RemoveConvert();
+            }
+            else if (expr is MethodCallExpression methodCallExpression)
+            {
+                // Only handle .Select() with 2 arguments
+                if (methodCallExpression.Method.Name == "Select" && methodCallExpression.Arguments.Count == 2)
+                {
+                    // Parse the collection argument
+                    var collectionArg = methodCallExpression.Arguments[0];
+                    if (!TryParsePathIterative(collectionArg, out var collectionPath) || collectionPath == null)
+                        return false;
+
+                    // Parse the selector lambda
+                    if (methodCallExpression.Arguments[1] is LambdaExpression lambdaExpression)
+                    {
+                        if (!TryParsePathIterative(lambdaExpression.Body, out var selectorPath) || selectorPath == null)
+                            return false;
+                        stack.Push(selectorPath);
+                        stack.Push(collectionPath);
+                        path = string.Join(MEMBER_DELIMITER.ToString(), stack);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (stack.Count > 0)
+        {
+            path = string.Join(MEMBER_DELIMITER.ToString(), stack);
+        }
         return true;
     }
 
