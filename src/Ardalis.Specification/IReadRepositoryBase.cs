@@ -113,6 +113,12 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation. The task result contains the
     /// number of elements in the input sequence.
     /// </returns>
+    /// <remarks>
+    /// This method evaluates the specification's criteria directly against the underlying query provider
+    /// and does not apply <see cref="ISpecification{T}.PostProcessingAction"/>. If your specification relies
+    /// on <c>PostProcessingAction</c> to filter or transform results in-memory, the count returned here may
+    /// not match the number of items returned by <see cref="ListAsync(ISpecification{T}, CancellationToken)"/>.
+    /// </remarks>
     Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -135,6 +141,12 @@ public interface IReadRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation. The task result contains true if the 
     /// source sequence contains any elements; otherwise, false.
     /// </returns>
+    /// <remarks>
+    /// This method evaluates the specification's criteria directly against the underlying query provider
+    /// and does not apply <see cref="ISpecification{T}.PostProcessingAction"/>. If your specification relies
+    /// on <c>PostProcessingAction</c> to filter results in-memory, this result may not match what you'd get
+    /// by checking whether <see cref="ListAsync(ISpecification{T}, CancellationToken)"/> returns any items.
+    /// </remarks>
     Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
