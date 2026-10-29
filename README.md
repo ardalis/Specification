@@ -15,7 +15,7 @@
 
 ## Announcement!
 
-Ardalis.SmartEnum is moving to a commercial license. [Tell me more](https://nimbletools.io/news/ardalis-nuget-packages/)
+Ardalis.Specification is moving to a commercial license. [Tell me more](https://nimbletools.io/news/ardalis-nuget-packages/)
 
 ## Give a Star! :star:
 If you like or are using this project, please give it a star. Thanks!
