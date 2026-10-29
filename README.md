@@ -13,6 +13,10 @@
 
 [![Stars Sparkline](https://stars.medv.io/ardalis/specification.svg)](https://stars.medv.io/ardalis/specification)
 
+## Announcement!
+
+Ardalis.SmartEnum is moving to a commercial license. [Tell me more](https://nimbletools.io/news/ardalis-nuget-packages/)
+
 ## Give a Star! :star:
 If you like or are using this project, please give it a star. Thanks!
 # Specification
