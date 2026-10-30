@@ -46,3 +46,14 @@ public virtual async Task<List<T>> ListAsync(
         : spec.PostProcessingAction(result).ToList();
 }
 ```
+
+## Interaction with CountAsync and AnyAsync
+
+`CountAsync` and `AnyAsync` evaluate the specification's criteria directly against the underlying query
+provider (e.g., translated to SQL) and do **not** apply `PostProcessingAction`. This is intentional —
+applying `PostProcessingAction` would require materializing the full result set into memory before counting,
+which defeats the purpose of letting the database perform the count.
+
+If your specification depends on `PostProcessingAction` to filter or transform results in-memory, be aware
+that `CountAsync`/`AnyAsync` may return different results than what you'd derive from `ListAsync`. See
+[#550](https://github.com/ardalis/Specification/issues/550) for further discussion.
