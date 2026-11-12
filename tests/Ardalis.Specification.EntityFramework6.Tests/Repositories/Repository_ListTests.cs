@@ -147,7 +147,7 @@ public class Repository_ListTests(TestFactory factory) : IntegrationTest(factory
         result.Should().BeEquivalentTo(expected);
     }
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
     [Fact]
     public async Task AsAsyncEnumerable_ThrowsNotImplementedException()
     {

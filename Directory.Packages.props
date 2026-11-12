@@ -1,58 +1,49 @@
 <Project>
-
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
-
   <ItemGroup Label="Package dependencies NET FX">
     <PackageVersion Include="System.Buffers" Version="4.6.1" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
-    <PackageVersion Include="EntityFramework" Version="6.5.1" />
+    <PackageVersion Include="EntityFramework" Version="6.5.2" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageVersion Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-
-  <ItemGroup Label="Package dependencies NET 8" Condition=" '$(TargetFramework)' == 'net8.0' ">
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.19" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.19" />
+  <ItemGroup Label="Package dependencies NET 10" Condition=" '$(TargetFramework)' == 'net10.0' ">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.15" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.15" />
   </ItemGroup>
-
-  <ItemGroup Label="Package dependencies NET 9" Condition=" '$(TargetFramework)' == 'net9.0' ">
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.8" />
+  <ItemGroup Label="Package dependencies NET 11" Condition=" '$(TargetFramework)' == 'net11.0' ">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="11.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="11.0.0" />
   </ItemGroup>
-
   <ItemGroup Label="Test projects dependencies">
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="11.0.0" />
     <PackageVersion Include="ManagedObjectSize.ObjectPool" Version="0.0.7-gd53ba9da59" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.15.2" />
-    <PackageVersion Include="MartinCostello.SqlLocalDb" Version="4.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
-    <PackageVersion Include="Testcontainers.MsSql" Version="4.6.0" />
-    <PackageVersion Include="Polyfill" Version="8.8.0" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageVersion Include="MartinCostello.SqlLocalDb" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="11.0.0" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="4.16.0" />
+    <PackageVersion Include="Polyfill" Version="11.4.5" />
     <PackageVersion Include="FluentAssertions" Version="[7.2.0]" />
-    <PackageVersion Include="NSubstitute" Version="5.3.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="NSubstitute" Version="6.2.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
   </ItemGroup>
-
   <ItemGroup Label="Test projects dependencies NET FX" Condition=" '$(TargetFramework)' == 'net472' ">
     <PackageVersion Include="Respawn" Version="4.0.0" />
   </ItemGroup>
-
-  <ItemGroup Label="Test projects dependencies NET 9" Condition=" '$(TargetFramework)' == 'net9.0' ">
-    <PackageVersion Include="Respawn" Version="6.2.1" />
+  <ItemGroup Label="Test projects dependencies NET 11" Condition=" '$(TargetFramework)' == 'net11.0' ">
+    <PackageVersion Include="Respawn" Version="7.0.0" />
   </ItemGroup>
-
   <ItemGroup Label="Sample projects dependencies">
     <PackageVersion Include="AutoMapper" Version="[14.0.0]" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="11.0.1" />
   </ItemGroup>
-
   <ItemGroup Label="Transitive Updates">
   </ItemGroup>
-
 </Project>

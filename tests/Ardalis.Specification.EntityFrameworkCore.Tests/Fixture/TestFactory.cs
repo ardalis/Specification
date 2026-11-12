@@ -1,5 +1,7 @@
 ﻿using MartinCostello.SqlLocalDb;
+using Microsoft.Data.SqlClient;
 using Respawn;
+using System.Data.Common;
 using Testcontainers.MsSql;
 
 namespace Tests.Fixture;
@@ -10,12 +12,13 @@ public class TestFactory : IAsyncLifetime
     private const bool FORCE_DOCKER = false;
 
     private string _connectionString = default!;
+    private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;
     private MsSqlContainer? _dbContainer = null;
 
     public DbContextOptions<TestDbContext> DbContextOptions { get; private set; } = default!;
 
-    public Task ResetDatabase() => _respawner.ResetAsync(_connectionString);
+    public Task ResetDatabase() => _respawner.ResetAsync(_dbConnection);
 
     public async Task InitializeAsync()
     {
@@ -37,6 +40,8 @@ public class TestFactory : IAsyncLifetime
 
         Console.WriteLine($"Connection string: {_connectionString}");
 
+        _dbConnection = new SqlConnection(_connectionString);
+        await _dbConnection.OpenAsync();
         DbContextOptions = new DbContextOptionsBuilder<TestDbContext>()
             .UseSqlServer(_connectionString)
             .EnableDetailedErrors()
@@ -48,7 +53,7 @@ public class TestFactory : IAsyncLifetime
         //await dbContext.Database.EnsureDeletedAsync();
         await dbContext.Database.EnsureCreatedAsync();
 
-        _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
+        _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
         {
             DbAdapter = DbAdapter.SqlServer,
             SchemasToInclude = ["dbo"],
@@ -68,10 +73,16 @@ public class TestFactory : IAsyncLifetime
             //using var dbContext = new TestDbContext(DbContextOptions);
             //await dbContext.Database.EnsureDeletedAsync();
         }
+
+        if (_dbConnection is not null)
+        {
+            await _dbConnection.CloseAsync();
+            await _dbConnection.DisposeAsync();
+        }
     }
 
-    private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+    private static MsSqlContainer CreateContainer() =>
+        new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithPassword("P@ssW0rd!")
             .Build();
 }

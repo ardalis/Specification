@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0;net472;</TargetFrameworks>
+    <TargetFrameworks>net11.0;net472;</TargetFrameworks>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
@@ -11,6 +11,7 @@
     <PackageReference Include="EntityFramework" />
     <PackageReference Include="Respawn" />
     <PackageReference Include="System.Data.DataSetExtensions" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="Polyfill">

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Tests</RootNamespace>
-    <LangVersion>13.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>

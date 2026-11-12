@@ -12,7 +12,7 @@ public class OrderExpressionInfoTests
         sut.Should().Throw<ArgumentNullException>().WithParameterName("keySelector");
     }
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
     [Fact]
     public void Constructor_GivenValidValues()
     {
