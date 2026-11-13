@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace Tests.Evaluators;
+﻿namespace Tests.Evaluators;
 
 [Collection("SharedCollection")]
 public class QueryTagEvaluatorCustomTests(TestFactory factory) : IntegrationTest(factory)

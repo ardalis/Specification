@@ -175,7 +175,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         return await DbContext.Set<T>().AnyAsync(cancellationToken);
     }
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
     /// <inheritdoc/>
     public virtual IAsyncEnumerable<T> AsAsyncEnumerable(ISpecification<T> specification)
     {

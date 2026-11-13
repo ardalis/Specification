@@ -132,7 +132,7 @@ public class SpecificationTests
         newSpec.AsTracking.Should().Be(spec.AsTracking);
     }
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
     [Fact]
     public void Items_InitializesOnFirstAccess()
     {

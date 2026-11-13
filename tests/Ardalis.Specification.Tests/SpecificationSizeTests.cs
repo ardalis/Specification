@@ -1,4 +1,4 @@
-﻿#if NET8_0_OR_GREATER
+﻿#if NET10_0_OR_GREATER
 
 using ManagedObjectSize;
 using System.Runtime.CompilerServices;

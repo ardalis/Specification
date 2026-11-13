@@ -37,7 +37,7 @@ public static class SearchExtension
         return source.Where(Expression.Lambda<Func<T, bool>>(likeExpr, param));
     }
 
-#if NET9_0_OR_GREATER
+#if NET10_0_OR_GREATER
     [System.Runtime.CompilerServices.OverloadResolutionPriority(1)]
 #endif
     public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source, ReadOnlySpan<SearchExpressionInfo<T>> searchExpressions)

@@ -15,9 +15,10 @@ public class TestFactory : IAsyncLifetime
     public string ConnectionString => _connectionString;
     public TestDbContext DbContext => new TestDbContext(_connectionString);
 
-#if NET9_0_OR_GREATER
+#if NET10_0_OR_GREATER
+    private System.Data.Common.DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;
-    public async Task ResetDatabase() => await _respawner.ResetAsync(_connectionString);
+    public async Task ResetDatabase() => await _respawner.ResetAsync(_dbConnection);
 #elif NET472
     private Checkpoint _respawner = default!;
     public Task ResetDatabase() => _respawner.Reset(_connectionString);
@@ -25,7 +26,7 @@ public class TestFactory : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-#if NET9_0_OR_GREATER
+#if NET10_0_OR_GREATER
         var dbName = "SpecificationTestDB_EF6_NET9";
 #elif NET472
         var dbName = "SpecificationTestDB_EF6_NETFFX";
@@ -57,8 +58,11 @@ public class TestFactory : IAsyncLifetime
             dbContext.Database.CreateIfNotExists();
         }
 
-#if NET9_0_OR_GREATER
-        _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
+
+#if NET10_0_OR_GREATER
+        _dbConnection = new Microsoft.Data.SqlClient.SqlConnection(_connectionString);
+        await _dbConnection.OpenAsync();
+        _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
         {
             DbAdapter = DbAdapter.SqlServer,
             SchemasToInclude = new[] { "dbo" },
@@ -85,10 +89,19 @@ public class TestFactory : IAsyncLifetime
             //using var dbContext = new TestDbContext(_connectionString);
             //dbContext.Database.Delete();
         }
+
+#if NET10_0_OR_GREATER
+
+        if (_dbConnection is not null)
+        {
+            await _dbConnection.CloseAsync();
+            await _dbConnection.DisposeAsync();
+        }
+#endif
     }
 
-    private static MsSqlContainer CreateContainer() => new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+    private static MsSqlContainer CreateContainer() =>
+        new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithPassword("P@ssW0rd!")
             .Build();
 }

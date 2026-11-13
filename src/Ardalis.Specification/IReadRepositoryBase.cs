@@ -148,7 +148,7 @@ public interface IReadRepositoryBase<T> where T : class
     Task<bool> AnyAsync(CancellationToken cancellationToken = default);
 
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
     /// <summary>
     /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
     /// <paramref name="specification"/>, from the database.
