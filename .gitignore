@@ -383,3 +383,4 @@ FodyWeavers.xsd
 **/.idea/**/*.iml
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
+Specification.EntityFramework6/tests/Ardalis.Specification.EntityFramework6.IntegrationTests/Ardalis.Specification.EntityFramework6.IntegrationTests.csproj.lscache
