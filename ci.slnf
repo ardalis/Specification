@@ -1,6 +1,6 @@
 {
   "solution": {
-    "path": "Ardalis.Specification.sln",
+    "path": "Ardalis.Specification.slnx",
     "projects": [
       "src\\Ardalis.Specification.EntityFramework6\\Ardalis.Specification.EntityFramework6.csproj",
       "tests\\Ardalis.Specification.EntityFramework6.Tests\\Ardalis.Specification.EntityFramework6.Tests.csproj",
