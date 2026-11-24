@@ -6,8 +6,8 @@ namespace Tests.Fixture;
 
 public class TestFactory : IAsyncLifetime
 {
-    // Flag to force using Docker SQL Server. Update it manually if you want to avoid localDb locally.
-    private const bool FORCE_DOCKER = false;
+    // Use Docker SQL Server by default. Set to false to use LocalDB (when installed) instead.
+    private const bool FORCE_DOCKER = true;
 
     private string _connectionString = default!;
     private MsSqlContainer? _dbContainer = null;

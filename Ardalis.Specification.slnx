@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="samples/Ardalis.Sample.App1/Ardalis.Sample.App1.csproj" />
+    <Project Path="samples/Ardalis.Sample.App2/Ardalis.Sample.App2.csproj" />
+    <Project Path="samples/Ardalis.Sample.App3/Ardalis.Sample.App3.csproj" />
+    <Project Path="samples/Ardalis.Sample.Domain/Ardalis.Sample.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/Ardalis.Specification.Benchmarks/Ardalis.Specification.Benchmarks.csproj" />
+    <Project Path="tests/Ardalis.Specification.EntityFramework6.Tests/Ardalis.Specification.EntityFramework6.Tests.csproj" />
+    <Project Path="tests/Ardalis.Specification.EntityFrameworkCore.Tests/Ardalis.Specification.EntityFrameworkCore.Tests.csproj" />
+    <Project Path="tests/Ardalis.Specification.Tests/Ardalis.Specification.Tests.csproj" />
+  </Folder>
+  <Folder Name="/_Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/release.yml" />
+    <File Path=".gitignore" />
+    <File Path="coverage.sh" />
+    <File Path="Directory.Packages.props" />
+    <File Path="exclusion.dic" />
+    <File Path="readme-nuget.md" />
+    <File Path="README.md" />
+    <File Path="setup-sqllocaldb.ps1" />
+    <File Path="src/Directory.Build.props" />
+    <File Path="tests/Directory.Build.props" />
+  </Folder>
+  <Project Path="src/Ardalis.Specification.EntityFramework6/Ardalis.Specification.EntityFramework6.csproj" />
+  <Project Path="src/Ardalis.Specification.EntityFrameworkCore/Ardalis.Specification.EntityFrameworkCore.csproj" />
+  <Project Path="src/Ardalis.Specification/Ardalis.Specification.csproj" />
+</Solution>

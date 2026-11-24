@@ -1,25 +1,36 @@
-name: Release to Nuget
+name: Release to NuGet
 
-on: 
+on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write # required for NuGet trusted publishing (OIDC)
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 11.x
+        dotnet-version: |
+          10.x
+          11.x
     - name: Build
       run: dotnet build ci.slnf --configuration Release
     - name: Test
       run: dotnet test ci.slnf --configuration Release --no-build --no-restore --framework net11.0
     - name: Pack
-      run: dotnet pack ci.slnf --configuration Release --no-build --no-restore --output .
+      run: dotnet pack ci.slnf --configuration Release --no-build --no-restore --output ./artifacts
+    - name: NuGet login (trusted publishing)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ardalis
     - name: Push to NuGet
-      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "./artifacts/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
